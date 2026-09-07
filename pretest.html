@@ -368,6 +368,14 @@
             background: var(--box-bg);
             border-color: var(--primary);
         }
+        .btn-outline.danger {
+            border-color: #dc2626;
+            color: #dc2626;
+        }
+        .btn-outline.danger:hover {
+            background: #fef2f2;
+            border-color: #b91c1c;
+        }
 
         /* ===== HASIL ===== */
         #resultContainer {
@@ -511,6 +519,10 @@
             .btn-group {
                 flex-direction: column;
             }
+            .btn-group .btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
             #resultContainer {
                 padding: 20px 16px;
             }
@@ -618,13 +630,16 @@
             <!-- Soal akan di-render oleh JavaScript -->
         </form>
 
-        <!-- Tombol Submit -->
+        <!-- Tombol -->
         <div class="btn-group reveal delay-2">
             <button type="button" class="btn-primary" id="submitBtn">
                 <i class="fas fa-paper-plane"></i> Kirim Jawaban
             </button>
             <button type="button" class="btn-outline" id="resetBtn">
-                <i class="fas fa-undo-alt"></i> Reset
+                <i class="fas fa-redo-alt"></i> Ulangi Pretest
+            </button>
+            <button type="button" class="btn-outline danger" id="exitBtn">
+                <i class="fas fa-sign-out-alt"></i> Keluar
             </button>
             <span style="font-size:0.85rem; color:var(--sub-text); margin-left:4px;" id="statusText">
                 <i class="fas fa-info-circle"></i> Jawab semua soal
@@ -755,9 +770,10 @@
                 form.appendChild(div);
             });
 
-            // Tambahkan event listener untuk tombol submit
+            // Event listener untuk tombol
             document.getElementById('submitBtn').addEventListener('click', handleSubmit);
             document.getElementById('resetBtn').addEventListener('click', handleReset);
+            document.getElementById('exitBtn').addEventListener('click', handleExit);
 
             updateProgress();
         }
@@ -796,7 +812,6 @@
                     clearInterval(timerInterval);
                     timerInterval = null;
                     sudahTimeout = true;
-                    // Auto-submit
                     handleSubmit(true);
                 }
             }, 1000);
@@ -834,7 +849,6 @@
             if (answered.size < totalSoal && !fromTimeout) {
                 const sisa = totalSoal - answered.size;
                 if (!confirm(`Masih ada ${sisa} soal yang belum dijawab. Yakin ingin mengirim?`)) {
-                    // Lanjutkan timer
                     if (!timerInterval) startTimer();
                     return;
                 }
@@ -912,8 +926,6 @@
             // Sembunyikan form & tombol
             document.getElementById('pretestForm').style.display = 'none';
             document.querySelector('.btn-group').style.display = 'none';
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('resetBtn').style.display = 'none';
             document.getElementById('statusText').style.display = 'none';
 
             // Tampilkan tombol masuk
@@ -931,14 +943,45 @@
         }
 
         // ============================================================
-        //  7. RESET
+        //  7. RESET (Ulangi Pretest)
         // ============================================================
         function handleReset() {
-            if (sudahSubmit) return;
-            if (!confirm('Reset semua jawaban?')) return;
+            if (sudahSubmit) {
+                // Jika sudah submit, konfirmasi untuk mengulang dari awal
+                if (!confirm('Anda sudah menyelesaikan pretest. Ulangi dari awal?')) return;
+                // Hapus status submit
+                sudahSubmit = false;
+                sudahTimeout = false;
+                // Sembunyikan hasil
+                document.getElementById('resultContainer').classList.remove('show');
+                document.getElementById('resultContainer').style.display = 'none';
+                // Tampilkan form & tombol
+                document.getElementById('pretestForm').style.display = 'block';
+                document.querySelector('.btn-group').style.display = 'flex';
+                document.getElementById('statusText').style.display = 'inline';
+                // Reset jawaban
+                document.querySelectorAll('#pretestForm input[type="radio"]').forEach(r => { r.checked = false; });
+                // Reset timer
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+                waktu = 600;
+                updateTimerDisplay();
+                startTimer();
+                updateProgress();
+                // Hapus localStorage agar bisa pretest ulang
+                try {
+                    localStorage.removeItem('pretestDone');
+                    localStorage.removeItem('pretestScore');
+                    localStorage.removeItem('pretestDate');
+                } catch (e) { /* abaikan */ }
+                return;
+            }
+
+            // Jika belum submit, reset biasa
+            if (!confirm('Reset semua jawaban dan timer ke awal?')) return;
             document.querySelectorAll('#pretestForm input[type="radio"]').forEach(r => { r.checked = false; });
-            updateProgress();
-            // Reset timer
             if (timerInterval) {
                 clearInterval(timerInterval);
                 timerInterval = null;
@@ -946,25 +989,30 @@
             waktu = 600;
             updateTimerDisplay();
             startTimer();
+            updateProgress();
         }
 
         // ============================================================
-        //  8. CEK PRETEST SEBELUMNYA (localStorage)
+        //  8. EXIT (Keluar) - hanya peringatan
+        // ============================================================
+        function handleExit() {
+            alert('Pretest wajib diselesaikan sebelum mengakses materi pembelajaran.\n\nSilakan selesaikan pretest terlebih dahulu.');
+        }
+
+        // ============================================================
+        //  9. CEK PRETEST SEBELUMNYA (localStorage)
         // ============================================================
         function cekPretestSebelumnya() {
             try {
                 const done = localStorage.getItem('pretestDone');
                 if (done === 'true') {
                     const score = localStorage.getItem('pretestScore') || '?';
-                    // Tawarkan untuk langsung masuk atau mengulang
                     if (confirm(
                             `Anda sudah pernah mengerjakan pretest (skor: ${score}).\n\nKlik "OK" untuk langsung masuk ke web, atau "Batal" untuk mengulang pretest.`
                             )) {
-                        // Langsung masuk
                         window.location.href = 'index.html';
                         return true;
                     } else {
-                        // Hapus data pretest agar bisa ulang
                         localStorage.removeItem('pretestDone');
                         localStorage.removeItem('pretestScore');
                         localStorage.removeItem('pretestDate');
@@ -976,7 +1024,7 @@
         }
 
         // ============================================================
-        //  9. DARK MODE, BACK TO TOP, REVEAL
+        //  10. DARK MODE, BACK TO TOP, REVEAL
         // ============================================================
         // Dark Mode
         const darkToggle = document.getElementById('darkModeToggle');
@@ -1025,16 +1073,14 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         // ============================================================
-        //  10. INISIALISASI
+        //  11. INISIALISASI
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
-            // Cek pretest sebelumnya
             if (cekPretestSebelumnya()) return;
 
             renderSoal();
             updateTimerDisplay();
 
-            // Timer mulai saat pertama kali interaksi
             const startTimerOnce = function() {
                 if (!timerInterval && !sudahSubmit) {
                     startTimer();
@@ -1047,7 +1093,6 @@
             document.addEventListener('touchstart', startTimerOnce);
             document.addEventListener('keydown', startTimerOnce);
 
-            // Juga mulai setelah 2 detik jika belum
             setTimeout(function() {
                 if (!timerInterval && !sudahSubmit) {
                     startTimer();
