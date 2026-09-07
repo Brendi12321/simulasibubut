@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* [Sisipkan seluruh CSS yang Anda berikan di sini, tidak diubah] */
-        /* ... (CSS Anda sudah benar, silakan salin dari file Anda) ... */
-        
         /* GLOBAL STYLES */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f0f4fb; color: #1a2639; display: flex; flex-direction: column; min-height: 100vh; }
@@ -28,11 +25,15 @@
         .nav-links a.active { background: #2563eb; color: #fff; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         @media (max-width: 780px) { .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; } .nav-links { justify-content: center; padding-bottom: 10px; } .nav-links a { font-size: 0.7rem; padding: 6px 12px; } }
         @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } }
+
+        /* MAIN CONTENT */
         .main-content { flex: 1; max-width: 1280px; width: 100%; margin: 0 auto; padding: 30px 24px 40px; }
         .page-title { font-size: 1.8rem; font-weight: 800; color: #0b1a2e; margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
         .page-title i { color: #2563eb; }
         .page-sub { color: #475569; margin-bottom: 28px; border-left: 4px solid #2563eb; padding-left: 16px; font-weight: 500; }
         footer { text-align: center; padding: 24px 0 10px; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 20px; }
+
+        /* KHUSUS EVALUASI */
         #evaluasi .eval-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
         #evaluasi .eval-section { background: #ffffff; border-radius: 24px; padding: 24px 20px 32px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); border-top: 5px solid #2563eb; }
         #evaluasi .eval-section .section-title { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; color: #0b1a2e; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #eef2f6; }
@@ -62,7 +63,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR (Link Sudah Diperbaiki) -->
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-cogs"></i>
@@ -79,17 +80,166 @@
         </div>
     </nav>
 
-    <!-- [Bagian konten dan script tetap sama seperti milik Anda] -->
-    <!-- ... (Silakan salin bagian <div class="main-content"> dan <script> dari file Anda) ... -->
-
+    <!-- MAIN CONTENT : EVALUASI -->
     <div class="main-content">
         <div id="evaluasi">
-            <!-- ... (Konten Evaluasi Anda) ... -->
+            <h2 class="page-title"><i class="fas fa-clipboard-check"></i> Evaluasi Pembelajaran</h2>
+            <p class="page-sub">
+                <i class="fas fa-arrow-right" style="color:#2563eb;"></i> 
+                Kerjakan <strong>Pretest</strong> sebelum belajar dan <strong>Posttest</strong> setelah belajar untuk melihat peningkatan kompetensi Anda.
+            </p>
+
+            <div class="eval-wrapper">
+
+                <!-- PRETEST -->
+                <div class="eval-section" id="pretestSection">
+                    <div class="section-title">
+                        <i class="fas fa-file-signature"></i>
+                        Pretest
+                        <span class="badge"><i class="far fa-clock"></i> Sebelum Belajar</span>
+                    </div>
+                    <div id="pretestContainer"></div>
+                    <button class="btn-submit pretest" id="pretestSubmit">
+                        <i class="fas fa-paper-plane"></i> Kirim Jawaban Pretest
+                    </button>
+                    <div id="pretestResult" class="score-result"></div>
+                </div>
+
+                <!-- POSTTEST -->
+                <div class="eval-section" id="posttestSection">
+                    <div class="section-title">
+                        <i class="fas fa-certificate"></i>
+                        Posttest
+                        <span class="badge"><i class="far fa-clock"></i> Setelah Belajar</span>
+                    </div>
+                    <div id="posttestContainer"></div>
+                    <button class="btn-submit posttest" id="posttestSubmit">
+                        <i class="fas fa-paper-plane"></i> Kirim Jawaban Posttest
+                    </button>
+                    <div id="posttestResult" class="score-result"></div>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 36px; background: #eef2f6; border-radius: 16px; padding: 18px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                <i class="fas fa-chart-line" style="font-size: 1.8rem; color: #2563eb;"></i>
+                <div>
+                    <strong style="color: #0b1a2e;">Mengapa Pretest & Posttest?</strong>
+                    <span style="color: #475569;">Pretest mengukur pengetahuan awal Anda. Posttest mengukur pemahaman setelah belajar. Bandingkan skor untuk melihat peningkatan Anda!</span>
+                </div>
+            </div>
         </div>
+
+        <footer>
+            <i class="fas fa-copyright"></i> 2026 SMK Negeri 5 Medan – Media Pembelajaran Interaktif Mesin Bubut
+        </footer>
     </div>
 
+    <!-- JAVASCRIPT : EVALUASI (Pretest & Posttest) -->
     <script>
-        // ... (Script Evaluasi Anda) ...
+        // DATA SOAL PRETEST (5 soal - tingkat dasar)
+        const pretestData = [
+            { q: 'Mesin bubut digunakan untuk memproses benda kerja yang...', o: ['Berputar', 'Diam', 'Bergerak translasi', 'Bergetar'], a: 0 },
+            { q: 'Nama lain dari kepala tetap pada mesin bubut adalah...', o: ['Headstock', 'Tailstock', 'Carriage', 'Bed'], a: 0 },
+            { q: 'Parameter yang mengatur tebal sayatan pahat pada mesin bubut adalah...', o: ['DOC (Depth of Cut)', 'RPM', 'Feed', 'Clearance'], a: 0 },
+            { q: 'Pahat potong (parting tool) pada mesin bubut digunakan untuk...', o: ['Memotong benda kerja menjadi dua bagian', 'Membuat ulir', 'Menghaluskan permukaan', 'Membuat alur'], a: 0 },
+            { q: 'Alat yang digunakan untuk menjepit benda kerja pada mesin bubut adalah...', o: ['Chuck', 'Collet', 'Vise', 'Jig'], a: 0 }
+        ];
+
+        // DATA SOAL POSTTEST (5 soal - tingkat lanjutan)
+        const posttestData = [
+            { q: 'Jika diameter benda kerja 40 mm dan kecepatan potong yang diinginkan 25 m/min, maka RPM yang tepat adalah sekitar...', o: ['200 RPM', '400 RPM', '800 RPM', '1600 RPM'], a: 1 },
+            { q: 'Pahat HSS (High Speed Steel) memiliki ketahanan panas hingga suhu sekitar...', o: ['400°C', '600°C', '900°C', '1200°C'], a: 1 },
+            { q: 'Gerakan pahat yang sejajar dengan sumbu benda kerja pada proses pembubutan disebut...', o: ['Feeding axial (memanjang)', 'Feeding radial (melintang)', 'Facing', 'Grooving'], a: 0 },
+            { q: 'Fungsi utama lead screw pada mesin bubut adalah...', o: ['Menggerakkan carriage secara otomatis', 'Memutar spindle', 'Menahan tailstock', 'Mengatur RPM'], a: 0 },
+            { q: 'Jenis pahat yang memiliki ujung berbentuk runcing khusus untuk membuat ulir adalah...', o: ['Threading tool', 'Turning tool', 'Grooving tool', 'Boring tool'], a: 0 }
+        ];
+
+        // FUNGSI RENDER SOAL
+        function renderEval(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            data.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-box';
+
+                const qDiv = document.createElement('div');
+                qDiv.className = 'q';
+                qDiv.innerHTML = `<span>${idx + 1}.</span> ${item.q}`;
+                div.appendChild(qDiv);
+
+                item.o.forEach((opt, oi) => {
+                    const label = document.createElement('label');
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `${prefix}_${idx}`;
+                    radio.value = oi;
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(opt));
+                    div.appendChild(label);
+                });
+
+                container.appendChild(div);
+            });
+        }
+
+        // Render Pretest & Posttest
+        renderEval('pretestContainer', pretestData, 'pretest');
+        renderEval('posttestContainer', posttestData, 'posttest');
+
+        // FUNGSI PENILAIAN
+        function hitungSkor(containerId, data, prefix, resultId) {
+            let benar = 0;
+            const total = data.length;
+
+            data.forEach((item, idx) => {
+                const selected = document.querySelector(`input[name="${prefix}_${idx}"]:checked`);
+                if (selected && parseInt(selected.value) === item.a) {
+                    benar++;
+                }
+            });
+
+            const persen = Math.round((benar / total) * 100);
+            const resultDiv = document.getElementById(resultId);
+
+            let icon = '';
+            let kelas = '';
+            let saran = '';
+
+            if (benar === total) {
+                icon = '🎉'; kelas = 'green'; saran = 'Sempurna! Anda sangat menguasai materi ini.';
+            } else if (benar >= 4) {
+                icon = '😊'; kelas = 'green'; saran = 'Bagus! Tingkatkan dengan mempelajari ulang soal yang salah.';
+            } else if (benar >= 3) {
+                icon = '📖'; kelas = 'yellow'; saran = 'Cukup. Pelajari kembali materi yang terkait dengan soal yang salah.';
+            } else {
+                icon = '💪'; kelas = 'red'; saran = 'Perlu belajar lebih giat. Baca ulang seluruh materi dan coba lagi.';
+            }
+
+            const label = prefix === 'pretest' ? 'Pretest' : 'Posttest';
+
+            resultDiv.className = `score-result ${kelas}`;
+            resultDiv.innerHTML = `
+                <span>${icon}</span>
+                <strong>${label}:</strong> ${benar} / ${total} (${persen}%)
+                <span class="sub">${saran}</span>
+            `;
+
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // EVENT LISTENER : PRETEST
+        document.getElementById('pretestSubmit').addEventListener('click', function() {
+            hitungSkor('pretestContainer', pretestData, 'pretest', 'pretestResult');
+        });
+
+        // EVENT LISTENER : POSTTEST
+        document.getElementById('posttestSubmit').addEventListener('click', function() {
+            hitungSkor('posttestContainer', posttestData, 'posttest', 'posttestResult');
+        });
+
+        console.log('✅ Evaluasi (Pretest & Posttest) siap! Selamat mengerjakan.');
     </script>
 
 </body>
