@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video - Media Pembelajaran Mesin Bubut</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================
+           GLOBAL STYLES
+           ========================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4fb;
+            color: #1a2639;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .navbar {
+            background: #0b1a2e;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            border-bottom: 2px solid #2a4b6e;
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 12px 0;
+        }
+        .navbar .logo i {
+            color: #60a5fa;
+            font-size: 1.4rem;
+        }
+        .navbar .logo span {
+            color: #94b8d9;
+            font-weight: 400;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 8px 0;
+        }
+        .nav-links a {
+            background: transparent;
+            border: none;
+            color: #b0c9e0;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            background: #1a334d;
+            color: #fff;
+        }
+        .nav-links a.active {
+            background: #2563eb;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        @media (max-width: 780px) {
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0 12px;
+            }
+            .nav-links {
+                justify-content: center;
+                padding-bottom: 10px;
+            }
+            .nav-links a {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+        }
+        @media (max-width: 500px) {
+            .nav-links a {
+                font-size: 0.6rem;
+                padding: 4px 8px;
+            }
+            .nav-links a i {
+                display: none;
+            }
+        }
+
+        /* ---------- MAIN CONTENT ---------- */
+        .main-content {
+            flex: 1;
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px 24px 40px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0b1a2e;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .page-title i {
+            color: #2563eb;
+        }
+        .page-sub {
+            color: #475569;
+            margin-bottom: 28px;
+            border-left: 4px solid #2563eb;
+            padding-left: 16px;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px 0 10px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+
+        /* ==========================================================
+           KHUSUS: STYLE UNTUK VIDEO (#video)
+           ========================================================== */
+        #video .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+        }
+        #video .video-item {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            transition: 0.2s ease;
+        }
+        #video .video-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+        #video .video-item iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: none;
+            display: block;
+        }
+        #video .video-item .info {
+            padding: 16px 20px 20px;
+        }
+        #video .video-item .info h4 {
+            font-size: 1.05rem;
+            color: #0b1a2e;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #video .video-item .info h4 i {
+            color: #2563eb;
+        }
+        #video .video-item .info p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+        #video .video-item .info .tag {
+            display: inline-block;
+            background: #eef2f6;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #2563eb;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 1.4rem;
+            }
+            #video .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-cogs"></i>
+            <span>SMK N 5 Medan</span> · Bubut
+        </div>
+        <div class="nav-links">
+            <a href="#"><i class="fas fa-home"></i> Beranda</a>
+            <a href="#"><i class="fas fa-book"></i> Materi</a>
+            <a href="#" class="active"><i class="fas fa-play-circle"></i> Video</a>
+            <a href="#"><i class="fas fa-cubes"></i> Simulasi</a>
+            <a href="#"><i class="fas fa-puzzle-piece"></i> Kuis</a>
+            <a href="#"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
+            <a href="#"><i class="fas fa-user-graduate"></i> Profil</a>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    MAIN CONTENT : VIDEO
+    ============================================================ -->
+    <div class="main-content">
+        <div id="video">
+            <h2 class="page-title"><i class="fas fa-video"></i> Video Pembelajaran</h2>
+            <p class="page-sub">Tonton dan pahami proses pembubutan dari sumber terpercaya.</p>
+
+            <div class="video-grid">
+
+                <!-- Video 1 -->
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/gWUQwpr50qU" allowfullscreen></iframe>
+                    <div class="info">
+                        <h4><i class="fas fa-play-circle"></i> Cara Kerja Mesin Bubut</h4>
+                        <p>Pengenalan komponen dan fungsi dasar mesin bubut konvensional. Video ini menjelaskan bagian-bagian utama seperti headstock, tailstock, carriage, dan cara pengoperasiannya.</p>
+                        <span class="tag"><i class="far fa-clock"></i> 12:34</span>
+                        <span class="tag"><i class="fas fa-tag"></i> Dasar</span>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/R1T6hP3n2cM" allowfullscreen></iframe>
+                    <div class="info">
+                        <h4><i class="fas fa-play-circle"></i> Proses Pembubutan & Feeding</h4>
+                        <p>Demonstrasi gerakan pahat secara axial dan radial, serta pengaturan kecepatan putar (RPM) dan kecepatan pemakanan (feed) untuk menghasilkan permukaan yang optimal.</p>
+                        <span class="tag"><i class="far fa-clock"></i> 15:20</span>
+                        <span class="tag"><i class="fas fa-tag"></i> Menengah</span>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/v62AT9IqHEY" allowfullscreen></iframe>
+                    <div class="info">
+                        <h4><i class="fas fa-play-circle"></i> Teknik Penggunaan Pahat</h4>
+                        <p>Jenis-jenis pahat bubut (turning, grooving, threading, parting) dan cara pemasangan yang benar. Dilengkapi dengan tips memilih pahat berdasarkan material benda kerja.</p>
+                        <span class="tag"><i class="far fa-clock"></i> 18:05</span>
+                        <span class="tag"><i class="fas fa-tag"></i> Lanjutan</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Info tambahan -->
+            <div style="margin-top: 36px; background: #eef2f6; border-radius: 16px; padding: 20px 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                <i class="fas fa-info-circle" style="font-size: 1.8rem; color: #2563eb;"></i>
+                <div>
+                    <strong style="color: #0b1a2e;">Tips Belajar:</strong>
+                    <span style="color: #475569;">Tonton video dengan saksama, catat poin-poin penting, dan jangan ragu untuk mengulang bagian yang sulit dipahami.</span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <i class="fas fa-copyright"></i> 2026 SMK Negeri 5 Medan – Media Pembelajaran Interaktif Mesin Bubut
+        </footer>
+    </div>
+
+</body>
+</html>
