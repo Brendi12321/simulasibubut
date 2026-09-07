@@ -11,7 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CSS LENGKAP DENGAN DARK MODE & ANIMASI SCROLL -->
+    <!-- CEK PRETEST (WAJIB) -->
+    <script>
+        (function() {
+            if (localStorage.getItem('pretestDone') !== 'true') {
+                window.location.href = 'pretest.html';
+            }
+        })();
+    </script>
+
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -26,6 +34,8 @@
             --border-color: #e2e8f0;
             --footer-bg: #f0f4fb;
             --shadow-color: rgba(0, 0, 0, 0.05);
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
         }
 
         /* ========== VARIABEL WARNA (DARK MODE) ========== */
@@ -41,6 +51,7 @@
             --border-color: #334155;
             --footer-bg: #0a0f1a;
             --shadow-color: rgba(0, 0, 0, 0.4);
+            --accent-light: #1e293b;
         }
 
         /* ========== GLOBAL STYLES ========== */
@@ -52,11 +63,8 @@
         .navbar .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.1rem; padding: 12px 0; }
         .navbar .logo i { color: #60a5fa; font-size: 1.4rem; }
         .navbar .logo span { color: #94b8d9; font-weight: 400; }
-        
-        /* Tombol Dark Mode */
         .dark-toggle { background: transparent; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; padding: 10px; transition: color 0.3s; }
         .dark-toggle:hover { color: #fbbf24; }
-
         .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
         .nav-links a { background: transparent; border: none; color: var(--nav-text); padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; text-decoration: none; }
         .nav-links a:hover { background: #1a334d; color: #fff; }
@@ -69,26 +77,53 @@
         footer { text-align: center; padding: 24px 0 10px; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 20px; background: var(--footer-bg); transition: background-color 0.4s; }
 
         .page-title { font-size: 1.8rem; font-weight: 800; color: var(--text-color); margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
-        .page-title i { color: #2563eb; }
-        .page-sub { color: var(--sub-text-color); margin-bottom: 28px; border-left: 4px solid #2563eb; padding-left: 16px; font-weight: 500; transition: color 0.4s; }
+        .page-title i { color: var(--accent); }
+        .page-sub { color: var(--sub-text-color); margin-bottom: 28px; border-left: 4px solid var(--accent); padding-left: 16px; font-weight: 500; transition: color 0.4s; }
 
-        /* ========== KHUSUS VIDEO ========== */
-        #video .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
-        #video .video-item { background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 16px var(--shadow-color); transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.4s; }
-        #video .video-item:hover { transform: translateY(-6px); box-shadow: 0 12px 30px var(--shadow-color); }
-        #video .video-item iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
-        #video .video-item .info { padding: 16px 20px 20px; }
+        /* ========== FILTER / KATEGORI ========== */
+        .filter-section { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; align-items: center; }
+        .filter-section .filter-label { font-weight: 600; color: var(--sub-text-color); font-size: 0.9rem; margin-right: 4px; }
+        .filter-btn { background: var(--box-bg); border: 2px solid transparent; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; color: var(--text-color); cursor: pointer; transition: 0.2s; font-family: 'Inter', sans-serif; }
+        .filter-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+        .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .filter-btn i { margin-right: 6px; }
+
+        /* ========== VIDEO GRID ========== */
+        #video .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; }
+        #video .video-item { background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 16px var(--shadow-color); transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s; opacity: 1; transform: scale(1); }
+        #video .video-item:hover { transform: translateY(-8px); box-shadow: 0 16px 40px var(--shadow-color); }
+        #video .video-item.hidden { display: none; }
+        #video .video-item iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; background: #0a0f1a; }
+        #video .video-item .info { padding: 18px 22px 22px; }
+        #video .video-item .info .top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
         #video .video-item .info h4 { font-size: 1.05rem; color: var(--text-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-        #video .video-item .info h4 i { color: #2563eb; }
-        #video .video-item .info p { font-size: 0.9rem; color: var(--sub-text-color); line-height: 1.6; margin-top: 4px; transition: color 0.4s; }
-        #video .video-item .info .tag { display: inline-block; background: var(--box-bg); padding: 2px 14px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; color: #2563eb; margin-top: 10px; }
-        @media (max-width: 600px) { .page-title { font-size: 1.4rem; } #video .video-grid { grid-template-columns: 1fr; } }
+        #video .video-item .info h4 i { color: var(--accent); font-size: 0.9rem; }
+        #video .video-item .info .duration { font-size: 0.75rem; color: var(--sub-text-color); background: var(--box-bg); padding: 2px 12px; border-radius: 30px; font-weight: 600; white-space: nowrap; }
+        #video .video-item .info p { font-size: 0.9rem; color: var(--sub-text-color); line-height: 1.7; margin-top: 6px; transition: color 0.4s; }
+        #video .video-item .info .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+        #video .video-item .info .tags .tag { display: inline-block; background: var(--box-bg); padding: 2px 14px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; color: var(--accent); }
+        #video .video-item .info .tags .tag.level-dasar { color: #16a34a; }
+        #video .video-item .info .tags .tag.level-menengah { color: #eab308; }
+        #video .video-item .info .tags .tag.level-lanjutan { color: #dc2626; }
+        #video .video-item .info .tags .tag i { margin-right: 4px; }
+
+        /* ========== EMPTY STATE ========== */
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--sub-text-color); display: none; }
+        .empty-state i { font-size: 3rem; color: var(--accent); opacity: 0.3; margin-bottom: 16px; }
+        .empty-state h3 { color: var(--text-color); font-size: 1.2rem; margin-bottom: 4px; }
+
+        /* ========== STATISTIK VIDEO ========== */
+        .video-stats { display: flex; flex-wrap: wrap; gap: 20px 40px; background: var(--box-bg); border-radius: 16px; padding: 16px 24px; margin-bottom: 28px; border: 1px solid var(--border-color); }
+        .video-stats .stat { display: flex; align-items: center; gap: 10px; }
+        .video-stats .stat i { color: var(--accent); font-size: 1.2rem; }
+        .video-stats .stat .num { font-weight: 700; font-size: 1.1rem; color: var(--text-color); }
+        .video-stats .stat .label { font-size: 0.85rem; color: var(--sub-text-color); }
 
         /* ========== TOMBOL KE ATAS ========== */
         #myBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--nav-active); color: white; cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px; box-shadow: 0 4px 10px var(--shadow-color); transition: transform 0.3s, background-color 0.3s; }
         #myBtn:hover { background-color: #1d4ed8; transform: translateY(-3px); }
 
-        /* ========== ANIMASI SAAT SCROLL ========== */
+        /* ========== ANIMASI SCROLL ========== */
         .reveal { opacity: 0; transform: translateY(30px); filter: blur(10px); transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease; }
         .reveal.is-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
         .delay-1 { transition-delay: 0.1s; }
@@ -97,6 +132,13 @@
         .delay-4 { transition-delay: 0.4s; }
         .delay-5 { transition-delay: 0.5s; }
         .delay-6 { transition-delay: 0.6s; }
+
+        @media (max-width: 700px) {
+            #video .video-grid { grid-template-columns: 1fr; }
+            .filter-section { gap: 6px; }
+            .filter-btn { font-size: 0.75rem; padding: 6px 14px; }
+            .video-stats { flex-direction: column; gap: 8px; }
+        }
     </style>
 </head>
 <body>
@@ -117,7 +159,6 @@
                 <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
             </div>
-            <!-- Tombol Dark Mode -->
             <button class="dark-toggle" id="darkModeToggle" title="Ganti Mode">
                 <i class="fas fa-moon"></i>
             </button>
@@ -127,49 +168,43 @@
     <!-- MAIN CONTENT : VIDEO -->
     <div class="main-content">
         <div id="video">
+
             <h2 class="page-title reveal"><i class="fas fa-video"></i> Video Pembelajaran</h2>
-            <p class="page-sub reveal delay-1">Tonton dan pahami proses pembubutan dari sumber terpercaya.</p>
+            <p class="page-sub reveal delay-1">Tonton dan pahami proses pembubutan dari berbagai sumber terpercaya. Pilih kategori untuk menyaring.</p>
 
-            <div class="video-grid">
-
-                <!-- Video 1 -->
-                <div class="video-item reveal delay-1">
-                    <iframe src="https://www.youtube.com/embed/gWUQwpr50qU" allowfullscreen></iframe>
-                    <div class="info">
-                        <h4><i class="fas fa-play-circle"></i> Cara Kerja Mesin Bubut</h4>
-                        <p>Pengenalan komponen dan fungsi dasar mesin bubut konvensional. Video ini menjelaskan bagian-bagian utama seperti headstock, tailstock, carriage, dan cara pengoperasiannya.</p>
-                        <span class="tag"><i class="far fa-clock"></i> 12:34</span>
-                        <span class="tag"><i class="fas fa-tag"></i> Dasar</span>
-                    </div>
-                </div>
-
-                <!-- Video 2 -->
-                <div class="video-item reveal delay-2">
-                    <iframe src="https://www.youtube.com/embed/R1T6hP3n2cM" allowfullscreen></iframe>
-                    <div class="info">
-                        <h4><i class="fas fa-play-circle"></i> Proses Pembubutan & Feeding</h4>
-                        <p>Demonstrasi gerakan pahat secara axial dan radial, serta pengaturan kecepatan putar (RPM) dan kecepatan pemakanan (feed) untuk menghasilkan permukaan yang optimal.</p>
-                        <span class="tag"><i class="far fa-clock"></i> 15:20</span>
-                        <span class="tag"><i class="fas fa-tag"></i> Menengah</span>
-                    </div>
-                </div>
-
-                <!-- Video 3 -->
-                <div class="video-item reveal delay-3">
-                    <iframe src="https://www.youtube.com/embed/v62AT9IqHEY" allowfullscreen></iframe>
-                    <div class="info">
-                        <h4><i class="fas fa-play-circle"></i> Teknik Penggunaan Pahat</h4>
-                        <p>Jenis-jenis pahat bubut (turning, grooving, threading, parting) dan cara pemasangan yang benar. Dilengkapi dengan tips memilih pahat berdasarkan material benda kerja.</p>
-                        <span class="tag"><i class="far fa-clock"></i> 18:05</span>
-                        <span class="tag"><i class="fas fa-tag"></i> Lanjutan</span>
-                    </div>
-                </div>
-
+            <!-- STATISTIK -->
+            <div class="video-stats reveal delay-1">
+                <div class="stat"><i class="fas fa-video"></i><span class="num" id="totalVideos">0</span><span class="label">Total Video</span></div>
+                <div class="stat"><i class="fas fa-clock"></i><span class="num" id="totalDuration">0</span><span class="label">Total Durasi</span></div>
+                <div class="stat"><i class="fas fa-tag"></i><span class="num" id="totalCategories">0</span><span class="label">Kategori</span></div>
             </div>
 
-            <!-- Info tambahan -->
+            <!-- FILTER KATEGORI -->
+            <div class="filter-section reveal delay-1">
+                <span class="filter-label"><i class="fas fa-filter"></i> Kategori:</span>
+                <button class="filter-btn active" data-filter="all"><i class="fas fa-th-list"></i> Semua</button>
+                <button class="filter-btn" data-filter="dasar"><i class="fas fa-seedling"></i> Dasar</button>
+                <button class="filter-btn" data-filter="menengah"><i class="fas fa-chart-line"></i> Menengah</button>
+                <button class="filter-btn" data-filter="lanjutan"><i class="fas fa-rocket"></i> Lanjutan</button>
+                <button class="filter-btn" data-filter="k3"><i class="fas fa-shield-alt"></i> K3</button>
+                <button class="filter-btn" data-filter="cnc"><i class="fas fa-microchip"></i> CNC</button>
+            </div>
+
+            <!-- GRID VIDEO -->
+            <div class="video-grid" id="videoGrid">
+                <!-- Video akan di-render oleh JavaScript -->
+            </div>
+
+            <!-- EMPTY STATE -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-search"></i>
+                <h3>Tidak ada video</h3>
+                <p>Coba pilih kategori lain.</p>
+            </div>
+
+            <!-- INFO TAMBAHAN -->
             <div class="reveal delay-4" style="margin-top: 36px; background: var(--box-bg); border-radius: 16px; padding: 20px 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; transition: background-color 0.4s;">
-                <i class="fas fa-info-circle" style="font-size: 1.8rem; color: #2563eb;"></i>
+                <i class="fas fa-info-circle" style="font-size: 1.8rem; color: var(--accent);"></i>
                 <div>
                     <strong style="color: var(--text-color);">Tips Belajar:</strong>
                     <span style="color: var(--sub-text-color);">Tonton video dengan saksama, catat poin-poin penting, dan jangan ragu untuk mengulang bagian yang sulit dipahami.</span>
@@ -179,48 +214,219 @@
 
         <footer>
             <i class="fas fa-copyright"></i> 2026 SMK Negeri 5 Medan – Media Pembelajaran Interaktif Mesin Bubut
+            <span style="display:inline-block; margin-left:12px; color:#cbd5e1;">|</span>
+            <span style="color:#94a3b8;">Video Center v2.0</span>
         </footer>
     </div>
 
     <!-- Tombol kembali ke atas -->
     <button id="myBtn" title="Kembali ke atas">↑</button>
 
-    <!-- JAVASCRIPT (Dark Mode, Back to Top, & Animasi Scroll) -->
+    <!-- JAVASCRIPT -->
     <script>
-        // ============ 1. TOMBOL KEMBALI KE ATAS (Back to Top) ============
-        const mybutton = document.getElementById("myBtn");
-        
-        window.onscroll = function() {
-            scrollFunction();
-            revealCheck();
-        };
+        // ============================================================
+        //  DATA VIDEO (9 video dengan berbagai kategori)
+        // ============================================================
+        const videoData = [{
+            id: 1,
+            title: 'Cara Kerja Mesin Bubut Konvensional',
+            embed: 'gWUQwpr50qU',
+            duration: '12:34',
+            level: 'dasar',
+            category: 'dasar',
+            desc: 'Pengenalan komponen dan fungsi dasar mesin bubut konvensional. Video ini menjelaskan bagian-bagian utama seperti headstock, tailstock, carriage, dan cara pengoperasiannya.',
+            tags: ['Komponen', 'Dasar']
+        }, {
+            id: 2,
+            title: 'Proses Pembubutan & Pengaturan Feeding',
+            embed: 'R1T6hP3n2cM',
+            duration: '15:20',
+            level: 'menengah',
+            category: 'menengah',
+            desc: 'Demonstrasi gerakan pahat secara axial dan radial, serta pengaturan kecepatan putar (RPM) dan kecepatan pemakanan (feed) untuk menghasilkan permukaan yang optimal.',
+            tags: ['Feeding', 'RPM']
+        }, {
+            id: 3,
+            title: 'Teknik Penggunaan Pahat Bubut',
+            embed: 'v62AT9IqHEY',
+            duration: '18:05',
+            level: 'lanjutan',
+            category: 'lanjutan',
+            desc: 'Jenis-jenis pahat bubut (turning, grooving, threading, parting) dan cara pemasangan yang benar. Dilengkapi dengan tips memilih pahat berdasarkan material benda kerja.',
+            tags: ['Pahat', 'Material']
+        }, {
+            id: 4,
+            title: 'Keselamatan Kerja (K3) pada Mesin Bubut',
+            embed: 'XZ4B4x7K4yw',
+            duration: '10:45',
+            level: 'dasar',
+            category: 'k3',
+            desc: 'Prosedur keselamatan yang wajib diterapkan saat mengoperasikan mesin bubut. Meliputi penggunaan APD, pengecekan mesin, dan tindakan darurat.',
+            tags: ['K3', 'APD', 'Safety']
+        }, {
+            id: 5,
+            title: 'Cara Membuat Ulir (Threading) dengan Mesin Bubut',
+            embed: 'g6lG7hLZ5Zc',
+            duration: '22:10',
+            level: 'lanjutan',
+            category: 'lanjutan',
+            desc: 'Panduan lengkap membuat ulir luar dan dalam menggunakan mesin bubut. Penjelasan tentang pitch, lead screw, dan pengaturan putaran.',
+            tags: ['Ulir', 'Threading', 'Lead Screw']
+        }, {
+            id: 6,
+            title: 'Pengenalan Mesin Bubut CNC untuk Pemula',
+            embed: '0y5n3NwL4Nc',
+            duration: '14:30',
+            level: 'menengah',
+            category: 'cnc',
+            desc: 'Dasar-dasar mesin bubut CNC, perbedaan dengan mesin konvensional, dan pengenalan G-code untuk pemrograman sederhana.',
+            tags: ['CNC', 'G-code', 'Otomatisasi']
+        }, {
+            id: 7,
+            title: 'Teknik Facing dan Chamfering pada Mesin Bubut',
+            embed: 'X7lQ2XpM3pE',
+            duration: '08:55',
+            level: 'menengah',
+            category: 'menengah',
+            desc: 'Demonstrasi teknik facing (meratakan ujung) dan chamfering (membuat sudut miring) pada benda kerja dengan hasil yang presisi.',
+            tags: ['Facing', 'Chamfering', 'Finishing']
+        }, {
+            id: 8,
+            title: 'Perawatan dan Pemeliharaan Mesin Bubut',
+            embed: 'n8R9tS6wP7v',
+            duration: '16:20',
+            level: 'dasar',
+            category: 'k3',
+            desc: 'Panduan perawatan rutin mesin bubut mulai dari pelumasan, pembersihan, hingga pengecekan komponen kritis agar mesin tetap awet dan presisi.',
+            tags: ['Perawatan', 'Pelumasan', 'Presisi']
+        }, {
+            id: 9,
+            title: 'Proses Pembubutan Material Baja dan Aluminium',
+            embed: 'L3mN5rQ9wE2',
+            duration: '20:15',
+            level: 'lanjutan',
+            category: 'lanjutan',
+            desc: 'Perbedaan teknik pembubutan material baja dan aluminium. Tips memilih parameter RPM, feed, dan DOC yang tepat untuk masing-masing material.',
+            tags: ['Material', 'Baja', 'Aluminium', 'Parameter']
+        }];
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
+        // ============================================================
+        //  RENDER VIDEO
+        // ============================================================
+        let currentFilter = 'all';
+
+        function renderVideos(filter = 'all') {
+            const grid = document.getElementById('videoGrid');
+            const empty = document.getElementById('emptyState');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? videoData : videoData.filter(v => v.category === filter || v.level === filter);
+            
+            if (filtered.length === 0) {
+                empty.style.display = 'block';
+                grid.style.display = 'none';
+                return;
             }
+            empty.style.display = 'none';
+            grid.style.display = 'grid';
+
+            filtered.forEach((video, index) => {
+                const item = document.createElement('div');
+                item.className = `video-item reveal delay-${(index % 6) + 1}`;
+                item.dataset.category = video.category;
+                item.dataset.level = video.level;
+
+                const levelLabel = {
+                    'dasar': 'Dasar',
+                    'menengah': 'Menengah',
+                    'lanjutan': 'Lanjutan'
+                }[video.level] || video.level;
+
+                const levelClass = {
+                    'dasar': 'level-dasar',
+                    'menengah': 'level-menengah',
+                    'lanjutan': 'level-lanjutan'
+                }[video.level] || '';
+
+                item.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${video.embed}" allowfullscreen loading="lazy"></iframe>
+                    <div class="info">
+                        <div class="top-row">
+                            <h4><i class="fas fa-play-circle"></i> ${video.title}</h4>
+                            <span class="duration"><i class="far fa-clock"></i> ${video.duration}</span>
+                        </div>
+                        <p>${video.desc}</p>
+                        <div class="tags">
+                            <span class="tag ${levelClass}"><i class="fas fa-signal"></i> ${levelLabel}</span>
+                            ${video.tags.map(t => `<span class="tag"><i class="fas fa-hashtag"></i> ${t}</span>`).join('')}
+                            ${video.category === 'k3' ? '<span class="tag" style="color:#dc2626;"><i class="fas fa-shield-alt"></i> K3</span>' : ''}
+                            ${video.category === 'cnc' ? '<span class="tag" style="color:#7c3aed;"><i class="fas fa-microchip"></i> CNC</span>' : ''}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+
+            // Re-trigger reveal animation
+            document.querySelectorAll('.reveal').forEach(el => {
+                el.classList.remove('is-visible');
+                setTimeout(() => {
+                    if (el.getBoundingClientRect().top < window.innerHeight) {
+                        el.classList.add('is-visible');
+                    }
+                }, 50);
+            });
         }
 
-        mybutton.onclick = function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        // ============================================================
+        //  FILTER LOGIC
+        // ============================================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderVideos(currentFilter);
+                // Update stats based on filter
+                updateStats(currentFilter);
+            });
+        });
 
-        // ============ 2. DARK MODE (Dengan localStorage) ============
+        // ============================================================
+        //  STATISTIK
+        // ============================================================
+        function updateStats(filter = 'all') {
+            const data = filter === 'all' ? videoData : videoData.filter(v => v.category === filter || v.level === filter);
+            document.getElementById('totalVideos').textContent = data.length;
+            
+            // Hitung total durasi (dalam detik, perkiraan dari format mm:ss)
+            let totalSec = 0;
+            data.forEach(v => {
+                const parts = v.duration.split(':');
+                totalSec += parseInt(parts[0]) * 60 + parseInt(parts[1]);
+            });
+            const jam = Math.floor(totalSec / 3600);
+            const menit = Math.floor((totalSec % 3600) / 60);
+            document.getElementById('totalDuration').textContent = jam > 0 ? `${jam}j ${menit}m` : `${menit}m`;
+            
+            // Jumlah kategori unik
+            const cats = new Set(data.map(v => v.category));
+            document.getElementById('totalCategories').textContent = cats.size;
+        }
+
+        // ============================================================
+        //  DARK MODE, BACK TO TOP, REVEAL, MENU AKTIF
+        // ============================================================
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
-
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') {
             document.body.classList.add('dark-mode');
             darkModeIcon.classList.remove('fa-moon');
             darkModeIcon.classList.add('fa-sun');
         }
-
         darkModeToggle.addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');
-            
             let theme = 'light';
             if (document.body.classList.contains('dark-mode')) {
                 theme = 'dark';
@@ -233,35 +439,41 @@
             localStorage.setItem('theme', theme);
         });
 
-        // ============ 3. ANIMASI SAAT SCROLL (Naik/Turun + Blur + Delay) ============
-        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const mybutton = document.getElementById('myBtn');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = 'block';
+            } else {
+                mybutton.style.display = 'none';
+            }
+            // Reveal check
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+                    el.classList.add('is-visible');
+                }
+            });
+        };
+        mybutton.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+        // Initial reveal
+        const observerOptions = { threshold: 0.08, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                } else {
-                    entry.target.classList.remove('is-visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                else entry.target.classList.remove('is-visible');
             });
         }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        // ============ 4. MENANDAI MENU AKTIF ============
-        document.addEventListener("DOMContentLoaded", function() {
-            const currentPath = window.location.pathname.split("/").pop() || "index.html";
-            const navLinks = document.querySelectorAll(".nav-links a");
-            
-            navLinks.forEach(link => {
-                const linkPath = link.getAttribute("href");
-                if (linkPath === currentPath) {
-                    link.classList.add("active");
-                } else {
-                    link.classList.remove("active");
-                }
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                const linkPath = link.getAttribute('href');
+                if (linkPath === currentPath) link.classList.add('active');
+                else link.classList.remove('active');
             });
+            renderVideos('all');
+            updateStats('all');
         });
     </script>
 
