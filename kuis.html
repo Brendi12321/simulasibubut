@@ -11,8 +11,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <!-- CEK PRETEST (WAJIB) -->
+    <script>
+        (function() {
+            if (localStorage.getItem('pretestDone') !== 'true') {
+                window.location.href = 'pretest.html';
+            }
+        })();
+    </script>
+
     <style>
-        /* CSS lengkap milik Anda (tidak diubah) */
+        /* ===== CSS LENGKAP (TIDAK DIUBAH) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f0f4fb; color: #1a2639; display: flex; flex-direction: column; min-height: 100vh; }
         .navbar { background: #0b1a2e; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); border-bottom: 2px solid #2a4b6e; }
@@ -49,7 +58,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR (SUDAH DIPERBAIKI) -->
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-cogs"></i>
@@ -94,7 +103,7 @@
         </footer>
     </div>
 
-    <!-- JAVASCRIPT : KUIS (LENGKAP) -->
+    <!-- JAVASCRIPT : KUIS -->
     <script>
         // DATA SOAL KUIS (10 soal)
         const kuisData = [
