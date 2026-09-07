@@ -46,20 +46,8 @@
         }
 
         /* ===== GLOBAL ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.4s, color 0.4s;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; transition: background-color 0.4s, color 0.4s; }
 
         /* ===== NAVBAR ===== */
         .navbar {
@@ -85,14 +73,8 @@
             font-size: 1.1rem;
             padding: 12px 0;
         }
-        .navbar .logo i {
-            color: #60a5fa;
-            font-size: 1.4rem;
-        }
-        .navbar .logo span {
-            color: #94b8d9;
-            font-weight: 400;
-        }
+        .navbar .logo i { color: #60a5fa; font-size: 1.4rem; }
+        .navbar .logo span { color: #94b8d9; font-weight: 400; }
         .dark-toggle {
             background: transparent;
             border: none;
@@ -102,9 +84,7 @@
             padding: 10px;
             transition: color 0.3s;
         }
-        .dark-toggle:hover {
-            color: #fbbf24;
-        }
+        .dark-toggle:hover { color: #fbbf24; }
         .nav-links {
             display: flex;
             flex-wrap: wrap;
@@ -137,28 +117,13 @@
             pointer-events: auto;
         }
         @media (max-width: 780px) {
-            .navbar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 0 12px;
-            }
-            .nav-links {
-                justify-content: center;
-                padding-bottom: 10px;
-            }
-            .nav-links a {
-                font-size: 0.7rem;
-                padding: 6px 12px;
-            }
+            .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; }
+            .nav-links { justify-content: center; padding-bottom: 10px; }
+            .nav-links a { font-size: 0.7rem; padding: 6px 12px; }
         }
         @media (max-width: 500px) {
-            .nav-links a {
-                font-size: 0.6rem;
-                padding: 4px 8px;
-            }
-            .nav-links a i {
-                display: none;
-            }
+            .nav-links a { font-size: 0.6rem; padding: 4px 8px; }
+            .nav-links a i { display: none; }
         }
 
         /* ===== MAIN ===== */
@@ -169,7 +134,6 @@
             margin: 0 auto;
             padding: 30px 24px 40px;
         }
-
         .page-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -179,9 +143,7 @@
             align-items: center;
             gap: 12px;
         }
-        .page-title i {
-            color: var(--primary);
-        }
+        .page-title i { color: var(--primary); }
         .page-sub {
             color: var(--sub-text);
             margin-bottom: 24px;
@@ -212,24 +174,17 @@
             font-weight: 700;
             font-size: 1.3rem;
         }
-        .pretest-header .timer-box i {
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
+        .pretest-header .timer-box i { color: var(--primary); font-size: 1.5rem; }
         .pretest-header .timer-box .time {
             font-variant-numeric: tabular-nums;
             min-width: 72px;
         }
-        .pretest-header .timer-box .time.warning {
-            color: #dc2626;
-        }
+        .pretest-header .timer-box .time.warning { color: #dc2626; }
         .pretest-header .progress-info {
             font-size: 0.95rem;
             color: var(--sub-text);
         }
-        .pretest-header .progress-info strong {
-            color: var(--text-color);
-        }
+        .pretest-header .progress-info strong { color: var(--text-color); }
         .pretest-header .progress-bar-bg {
             width: 100%;
             height: 6px;
@@ -264,10 +219,7 @@
             display: flex;
             gap: 10px;
         }
-        #pretestForm .soal-item .q .num {
-            color: var(--primary);
-            min-width: 28px;
-        }
+        #pretestForm .soal-item .q .num { color: var(--primary); min-width: 28px; }
         #pretestForm .soal-item label {
             display: flex;
             align-items: center;
@@ -279,9 +231,7 @@
             color: var(--text-color);
             transition: background 0.15s;
         }
-        #pretestForm .soal-item label:hover {
-            background: var(--box-bg);
-        }
+        #pretestForm .soal-item label:hover { background: var(--box-bg); }
         #pretestForm .soal-item input[type="radio"] {
             accent-color: var(--primary);
             width: 18px;
@@ -289,9 +239,7 @@
             flex-shrink: 0;
             cursor: pointer;
         }
-        #pretestForm .soal-item .option-text {
-            line-height: 1.5;
-        }
+        #pretestForm .soal-item .option-text { line-height: 1.5; }
 
         /* ===== TOMBOL ===== */
         .btn-group {
@@ -387,9 +335,7 @@
             display: none;
             transition: background-color 0.4s;
         }
-        #resultContainer.show {
-            display: block;
-        }
+        #resultContainer.show { display: block; }
         #resultContainer .score-big {
             font-size: 3.2rem;
             font-weight: 800;
@@ -427,32 +373,18 @@
             font-size: 0.92rem;
             color: var(--text-color);
         }
-        #resultContainer .detail-answers .detail-item:last-child {
-            border-bottom: none;
-        }
+        #resultContainer .detail-answers .detail-item:last-child { border-bottom: none; }
         #resultContainer .detail-answers .detail-item .icon-result {
             font-size: 1.1rem;
             min-width: 28px;
             text-align: center;
             margin-top: 1px;
         }
-        #resultContainer .detail-answers .detail-item .icon-result.correct {
-            color: var(--correct);
-        }
-        #resultContainer .detail-answers .detail-item .icon-result.wrong {
-            color: var(--wrong);
-        }
-        #resultContainer .detail-answers .detail-item .detail-text {
-            line-height: 1.6;
-        }
-        #resultContainer .detail-answers .detail-item .detail-text .jawaban-benar {
-            color: var(--correct);
-            font-weight: 600;
-        }
-        #resultContainer .detail-answers .detail-item .detail-text .jawaban-salah {
-            color: var(--wrong);
-            font-weight: 600;
-        }
+        #resultContainer .detail-answers .detail-item .icon-result.correct { color: var(--correct); }
+        #resultContainer .detail-answers .detail-item .icon-result.wrong { color: var(--wrong); }
+        #resultContainer .detail-answers .detail-item .detail-text { line-height: 1.6; }
+        #resultContainer .detail-answers .detail-item .detail-text .jawaban-benar { color: var(--correct); font-weight: 600; }
+        #resultContainer .detail-answers .detail-item .detail-text .jawaban-salah { color: var(--wrong); font-weight: 600; }
 
         /* ===== FOOTER ===== */
         footer {
@@ -491,44 +423,21 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) {
-            .page-title {
-                font-size: 1.4rem;
-            }
-            #pretestForm .soal-item {
-                padding: 16px 18px;
-            }
-            #pretestForm .soal-item .q {
-                font-size: 0.95rem;
-            }
-            #pretestForm .soal-item label {
-                font-size: 0.85rem;
-                padding: 6px 8px;
-            }
-            .pretest-header {
-                padding: 16px 18px;
-            }
-            .pretest-header .timer-box {
-                font-size: 1.1rem;
-            }
-            .btn-primary,
-            .btn-success {
+            .page-title { font-size: 1.4rem; }
+            #pretestForm .soal-item { padding: 16px 18px; }
+            #pretestForm .soal-item .q { font-size: 0.95rem; }
+            #pretestForm .soal-item label { font-size: 0.85rem; padding: 6px 8px; }
+            .pretest-header { padding: 16px 18px; }
+            .pretest-header .timer-box { font-size: 1.1rem; }
+            .btn-primary, .btn-success {
                 width: 100%;
                 justify-content: center;
                 padding: 12px 20px;
             }
-            .btn-group {
-                flex-direction: column;
-            }
-            .btn-group .btn-outline {
-                width: 100%;
-                justify-content: center;
-            }
-            #resultContainer {
-                padding: 20px 16px;
-            }
-            #resultContainer .score-big {
-                font-size: 2.6rem;
-            }
+            .btn-group { flex-direction: column; }
+            .btn-group .btn-outline { width: 100%; justify-content: center; }
+            #resultContainer { padding: 20px 16px; }
+            #resultContainer .score-big { font-size: 2.6rem; }
         }
 
         /* ===== ANIMASI REVEAL ===== */
@@ -606,9 +515,12 @@
         </div>
 
         <!-- ===== FORM SOAL ===== -->
-        <form id="pretestForm">
+        <div id="pretestForm">
             <!-- Soal akan di-render oleh JavaScript -->
-        </form>
+            <p style="text-align:center; color:var(--sub-text); padding:40px 0;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat soal...
+            </p>
+        </div>
 
         <!-- Tombol -->
         <div class="btn-group reveal delay-2">
@@ -678,11 +590,18 @@
         const totalSoal = soalData.length;
 
         // ============================================================
-        //  3. RENDER SOAL
+        //  3. RENDER SOAL (DENGAN DEBUG)
         // ============================================================
         function renderSoal() {
-            const form = document.getElementById('pretestForm');
-            form.innerHTML = '';
+            console.log('✅ renderSoal() dipanggil');
+            const container = document.getElementById('pretestForm');
+            if (!container) {
+                console.error('❌ Element #pretestForm tidak ditemukan!');
+                return;
+            }
+
+            // Kosongkan container
+            container.innerHTML = '';
 
             soalData.forEach((item, idx) => {
                 const div = document.createElement('div');
@@ -699,7 +618,6 @@
                     radio.type = 'radio';
                     radio.name = `soal_${idx}`;
                     radio.value = oi;
-                    radio.dataset.index = idx;
                     radio.addEventListener('change', function() {
                         updateProgress();
                     });
@@ -711,14 +629,25 @@
                     div.appendChild(label);
                 });
 
-                form.appendChild(div);
+                container.appendChild(div);
             });
 
+            // Setel event listener untuk tombol
             document.getElementById('submitBtn').addEventListener('click', handleSubmit);
             document.getElementById('resetBtn').addEventListener('click', handleReset);
             document.getElementById('exitBtn').addEventListener('click', handleExit);
 
             updateProgress();
+            console.log('✅ Soal berhasil dirender, total:', soalData.length);
+
+            // Aktifkan animasi reveal untuk elemen yang baru ditambahkan
+            document.querySelectorAll('#pretestForm .reveal').forEach(el => {
+                observer.observe(el);
+                // Jika sudah terlihat, langsung tampilkan
+                if (el.getBoundingClientRect().top < window.innerHeight) {
+                    el.classList.add('is-visible');
+                }
+            });
         }
 
         // ============================================================
@@ -908,9 +837,13 @@
         }
 
         // ============================================================
-        //  9. CEK PRETEST SEBELUMNYA (localStorage)
+        //  9. CEK PRETEST SEBELUMNYA (localStorage) - DINONAKTIFKAN SEMENTARA
         // ============================================================
         function cekPretestSebelumnya() {
+            // ===== UNTUK DEBUG: DINONAKTIFKAN SEMENTARA =====
+            // Kembalikan false agar soal selalu tampil.
+            // Jika ingin mengaktifkan kembali, hapus tanda komentar di bawah.
+            /*
             try {
                 const done = localStorage.getItem('pretestDone');
                 if (done === 'true') {
@@ -925,7 +858,9 @@
                         return false;
                     }
                 }
-            } catch (e) { /* abaikan */ }
+            } catch (e) { /* abaikan * / }
+            */
+            console.log('🔧 Debug mode: cekPretestSebelumnya() dinonaktifkan, soal akan selalu tampil.');
             return false;
         }
 
@@ -977,13 +912,19 @@
         //  11. INISIALISASI
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DOMContentLoaded fired');
+
+            // Cek pretest sebelumnya (tapi sekarang dinonaktifkan)
             if (cekPretestSebelumnya()) return;
 
+            // Render soal
             renderSoal();
             updateTimerDisplay();
 
+            // Mulai timer setelah interaksi pertama atau 2 detik
             const startTimerOnce = function() {
                 if (!timerInterval && !sudahSubmit) {
+                    console.log('⏱️ Timer dimulai');
                     startTimer();
                 }
                 document.removeEventListener('click', startTimerOnce);
@@ -996,6 +937,7 @@
 
             setTimeout(function() {
                 if (!timerInterval && !sudahSubmit) {
+                    console.log('⏱️ Timer dimulai (timeout 2 detik)');
                     startTimer();
                 }
             }, 2000);
