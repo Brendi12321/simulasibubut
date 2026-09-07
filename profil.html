@@ -11,7 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CSS LENGKAP DENGAN DARK MODE & ANIMASI SCROLL -->
+    <!-- CEK PRETEST (WAJIB) -->
+    <script>
+        (function() {
+            if (localStorage.getItem('pretestDone') !== 'true') {
+                window.location.href = 'pretest.html';
+            }
+        })();
+    </script>
+
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -52,11 +60,8 @@
         .navbar .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.1rem; padding: 12px 0; }
         .navbar .logo i { color: #60a5fa; font-size: 1.4rem; }
         .navbar .logo span { color: #94b8d9; font-weight: 400; }
-        
-        /* Tombol Dark Mode */
         .dark-toggle { background: transparent; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; padding: 10px; transition: color 0.3s; }
         .dark-toggle:hover { color: #fbbf24; }
-
         .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
         .nav-links a { background: transparent; border: none; color: var(--nav-text); padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; text-decoration: none; }
         .nav-links a:hover { background: #1a334d; color: #fff; }
@@ -186,11 +191,11 @@
 
                     <ul class="petunjuk-list">
                         <li><span class="icon">📌</span><div><strong>Navigasi</strong> — Gunakan menu di atas untuk berpindah antar modul (Beranda, Materi, Video, Simulasi, Kuis, Evaluasi, Profil).</div></li>
-                        <li><span class="icon">📚</span><div><strong>Materi</strong> — Pelajari 6 topik utama tentang mesin bubut sebelum mengerjakan kuis.</div></li>
+                        <li><span class="icon">📚</span><div><strong>Materi</strong> — Pelajari 10 topik utama tentang mesin bubut sebelum mengerjakan kuis.</div></li>
                         <li><span class="icon">🎬</span><div><strong>Video</strong> — Tonton video pembelajaran untuk memahami proses pembubutan secara visual.</div></li>
                         <li><span class="icon">🔄</span><div><strong>Simulasi 3D</strong> — Eksplorasi model mesin bubut 3D. Atur RPM dan kedalaman potong, lalu tekan Mulai.</div></li>
                         <li><span class="icon">🧠</span><div><strong>Kuis</strong> — Uji pemahaman Anda dengan 10 soal pilihan ganda. Tekan "Periksa Jawaban" untuk melihat skor.</div></li>
-                        <li><span class="icon">📝</span><div><strong>Evaluasi</strong> — Ikuti Pretest (sebelum) dan Posttest (setelah) untuk mengukur peningkatan kompetensi.</div></li>
+                        <li><span class="icon">📝</span><div><strong>Evaluasi</strong> — Ikuti <strong>Tes Awal</strong> (sebelum belajar) dan <strong>Tes Akhir</strong> (setelah belajar) untuk mengukur peningkatan kompetensi.</div></li>
                         <li><span class="icon">💡</span><div><strong>Tips</strong> — Pelajari materi, tonton video, lalu uji dengan kuis. Ulangi jika perlu!</div></li>
                     </ul>
                 </div>
@@ -350,5 +355,6 @@
             });
         });
     </script>
+
 </body>
 </html>
