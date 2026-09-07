@@ -37,6 +37,7 @@
             --border-color: #e2e8f0;
             --shadow-color: rgba(0, 0, 0, 0.05);
             --modal-overlay: rgba(0, 0, 0, 0.6);
+            --sub-text-color: #475569;
         }
 
         /* ========== VARIABEL WARNA (DARK MODE) ========== */
@@ -55,6 +56,7 @@
             --border-color: #334155;
             --shadow-color: rgba(0, 0, 0, 0.4);
             --modal-overlay: rgba(0, 0, 0, 0.75);
+            --sub-text-color: #94a3b8;
         }
 
         /* ========== GLOBAL STYLES ========== */
@@ -112,13 +114,41 @@
         .card-item i { font-size: 2rem; color: #2563eb; margin-bottom: 12px; }
         .card-item h3 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 8px; }
         .card-item p { font-size: 0.95rem; color: var(--text-color); opacity: 0.7; line-height: 1.6; }
-        .card-item .click-hint { 
-            font-size: 0.7rem; 
-            color: var(--nav-active); 
-            opacity: 0.5; 
-            margin-top: 12px; 
-            display: block; 
+        .card-item .click-hint { font-size: 0.7rem; color: var(--nav-active); opacity: 0.5; margin-top: 12px; display: block; }
+
+        /* ========== DETAIL CARD (untuk komponen & K3) ========== */
+        .detail-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px 30px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            margin-bottom: 28px;
+            border-left: 6px solid #2563eb;
+            transition: background-color 0.4s;
         }
+        .detail-card .img-placeholder {
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 16px 0;
+            background: var(--box-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--nav-active);
+            border: 2px dashed var(--border-color);
+            padding: 30px 0;
+        }
+        .detail-card .img-placeholder i { font-size: 4rem; }
+        .detail-card .img-placeholder img { width: 100%; max-height: 260px; object-fit: contain; border-radius: 12px; }
+        .detail-card h3 { font-size: 1.3rem; color: var(--text-color); margin-bottom: 8px; }
+        .detail-card h3 i { color: #2563eb; margin-right: 10px; }
+        .detail-card p { color: var(--sub-text-color); line-height: 1.8; font-size: 0.98rem; }
+        .detail-card ul { padding-left: 24px; color: var(--sub-text-color); line-height: 1.8; font-size: 0.95rem; }
+        .detail-card ul li { margin-bottom: 6px; }
+        .detail-card ul li b { color: var(--text-color); }
 
         /* ========== FLOW ========== */
         .flow-container { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin: 20px 0 40px; }
@@ -161,9 +191,7 @@
             align-items: center;
             animation: fadeIn 0.3s ease;
         }
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
         .modal-box {
             background: var(--card-bg);
             border-radius: 24px;
@@ -187,26 +215,10 @@
             opacity: 0.5;
             transition: 0.2s;
         }
-        .modal-box .close-btn:hover {
-            opacity: 1;
-            transform: rotate(90deg);
-        }
-        .modal-box .modal-icon {
-            font-size: 2.8rem;
-            color: #2563eb;
-            margin-bottom: 8px;
-        }
-        .modal-box h3 {
-            font-size: 1.5rem;
-            color: var(--text-color);
-            margin-bottom: 8px;
-        }
-        .modal-box p {
-            color: var(--sub-text-color);
-            line-height: 1.7;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
+        .modal-box .close-btn:hover { opacity: 1; transform: rotate(90deg); }
+        .modal-box .modal-icon { font-size: 2.8rem; color: #2563eb; margin-bottom: 8px; }
+        .modal-box h3 { font-size: 1.5rem; color: var(--text-color); margin-bottom: 8px; }
+        .modal-box p { color: var(--sub-text-color); line-height: 1.7; font-size: 0.95rem; margin-bottom: 20px; }
         .modal-box .modal-btn {
             display: inline-block;
             background: #2563eb;
@@ -221,34 +233,22 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
         }
-        .modal-box .modal-btn:hover {
-            background: #3b82f6;
-            transform: translateY(-2px);
-        }
+        .modal-box .modal-btn:hover { background: #3b82f6; transform: translateY(-2px); }
         .modal-box .modal-btn.secondary {
             background: transparent;
             color: var(--text-color);
             border: 2px solid var(--border-color);
             margin-left: 10px;
         }
-        .modal-box .modal-btn.secondary:hover {
-            background: var(--box-bg);
-            border-color: #2563eb;
-        }
+        .modal-box .modal-btn.secondary:hover { background: var(--box-bg); border-color: #2563eb; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(30px) scale(0.95); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 600px) {
             .modal-box { padding: 24px 20px; }
             .modal-box h3 { font-size: 1.2rem; }
+            .detail-card { padding: 20px 16px; }
         }
     </style>
 </head>
@@ -284,7 +284,6 @@
                 <h1 class="delay-2 reveal">Media Pembelajaran <br><span>Mesin Bubut</span> Interaktif</h1>
                 <p class="delay-3 reveal">Selamat datang di portal pembelajaran berbasis web untuk meningkatkan kompetensi praktik dan teori mesin bubut.</p>
                 <div class="hero-buttons delay-4 reveal">
-                    <!-- Tombol Mulai Belajar langsung ke Materi -->
                     <a href="materi.html" class="btn-hero"><i class="fas fa-rocket"></i> Mulai Belajar</a>
                     <a href="pretest.html" class="btn-hero secondary"><i class="fas fa-file-signature"></i> Pretest Masuk (Wajib)</a>
                 </div>
@@ -298,111 +297,196 @@
                     <div class="card-item reveal">
                         <i class="fas fa-lightbulb"></i>
                         <h3>Pemahaman Konsep</h3>
-                        <p>Memahami prinsip kerja, fungsi, dan komponen mesin bubut secara menyeluruh.</p>
+                        <p>Memahami prinsip kerja, fungsi, dan komponen mesin bubut secara menyeluruh, termasuk parameter pemotongan dan jenis pahat.</p>
                     </div>
                     <div class="card-item reveal">
                         <i class="fas fa-tools"></i>
                         <h3>Keterampilan Praktik</h3>
-                        <p>Menguasai teknik dasar pengoperasian mesin bubut melalui simulasi 3D.</p>
+                        <p>Menguasai teknik dasar pengoperasian mesin bubut melalui simulasi 3D interaktif dan video demonstrasi.</p>
                     </div>
                     <div class="card-item reveal">
                         <i class="fas fa-shield-alt"></i>
                         <h3>Kesadaran K3</h3>
-                        <p>Menerapkan prosedur Keselamatan dan Kesehatan Kerja (K3) saat bekerja.</p>
+                        <p>Menerapkan prosedur Keselamatan dan Kesehatan Kerja (K3) secara disiplin untuk mencegah kecelakaan kerja.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. FITUR PEMBELAJARAN (Card dengan pop-up) -->
+            <!-- 3. FITUR PEMBELAJARAN (dengan pop-up) -->
             <div class="reveal delay-2">
                 <h2 class="section-title"><i class="fas fa-layer-group"></i> Fitur Pembelajaran</h2>
-                <p class="section-sub">Klik pada fitur untuk melihat penjelasan singkat.</p>
+                <p class="section-sub">Klik pada setiap fitur untuk melihat penjelasan lengkap dan akses langsung.</p>
                 <div class="card-grid">
-                    <div class="card-item reveal" data-feature="materi" data-title="Materi" data-desc="Pelajari 10 topik lengkap tentang mesin bubut, mulai dari definisi, komponen, parameter, hingga teknik dan K3." data-link="materi.html">
+                    <div class="card-item reveal" data-feature="materi" data-title="Materi" data-desc="Pelajari 10 topik lengkap tentang mesin bubut, meliputi definisi, jenis mesin, komponen utama, prinsip kerja, parameter pemotongan (RPM, feed, DOC, cutting speed), jenis pahat berdasarkan bahan dan fungsi, teknik pembubutan (turning, facing, grooving, threading, parting, boring), K3, perawatan, serta kesalahan umum dan solusinya. Setiap topik disajikan dengan penjelasan mendalam dan ilustrasi pendukung." data-link="materi.html">
                         <i class="fas fa-book-open"></i>
                         <h3>Materi</h3>
-                        <p>10 modul lengkap tentang mesin bubut.</p>
+                        <p>10 modul lengkap dengan penjelasan rinci.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal" data-feature="video" data-title="Video" data-desc="Tonton video pembelajaran interaktif tentang proses pembubutan, teknik penggunaan pahat, dan keselamatan kerja." data-link="video.html">
+                    <div class="card-item reveal" data-feature="video" data-title="Video" data-desc="Tonton 9 video pembelajaran yang mencakup cara kerja mesin bubut, teknik feeding, penggunaan berbagai jenis pahat, prosedur K3, threading, facing, chamfering, perawatan mesin, serta perbedaan material baja dan aluminium. Video disusun dari tingkat dasar hingga lanjutan dengan durasi bervariasi." data-link="video.html">
                         <i class="fas fa-play-circle"></i>
                         <h3>Video</h3>
-                        <p>Video pembelajaran untuk pemahaman visual.</p>
+                        <p>9 video pembelajaran visual dari dasar hingga lanjutan.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal" data-feature="simulasi" data-title="Simulasi 3D" data-desc="Eksplorasi model mesin bubut 3D. Atur RPM, kedalaman potong, dan lihat efeknya secara real-time." data-link="simulasi.html">
+                    <div class="card-item reveal" data-feature="simulasi" data-title="Simulasi 3D" data-desc="Eksplorasi model 3D mesin bubut secara interaktif. Anda dapat mengatur kecepatan putar (RPM) dari 100 hingga 3000, mengatur kedalaman potong (DOC) 0.1–2.0 mm, dan melihat efeknya secara real-time pada diameter benda kerja serta posisi pahat. Cocok untuk memahami hubungan parameter dengan hasil pemotongan." data-link="simulasi.html">
                         <i class="fas fa-cubes"></i>
                         <h3>Simulasi 3D</h3>
-                        <p>Interaksi langsung dengan model mesin bubut.</p>
+                        <p>Interaksi langsung dengan model 3D dan kontrol parameter.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal" data-feature="kuis" data-title="Kuis" data-desc="Uji pemahaman Anda dengan 10 soal pilihan ganda. Dapatkan skor dan feedback langsung." data-link="kuis.html">
+                    <div class="card-item reveal" data-feature="kuis" data-title="Kuis" data-desc="Uji pemahaman Anda dengan 10 soal pilihan ganda yang mencakup seluruh materi mesin bubut. Setelah menjawab, Anda akan mendapatkan skor dan feedback langsung berupa saran belajar yang dipersonalisasi berdasarkan tingkat pencapaian." data-link="kuis.html">
                         <i class="fas fa-puzzle-piece"></i>
                         <h3>Kuis</h3>
-                        <p>Uji pemahaman dengan 10 soal interaktif.</p>
+                        <p>10 soal interaktif dengan penilaian dan saran langsung.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal" data-feature="evaluasi" data-title="Evaluasi" data-desc="Kerjakan Tes Awal dan Tes Akhir untuk mengukur peningkatan kompetensi Anda." data-link="evaluasi.html">
+                    <div class="card-item reveal" data-feature="evaluasi" data-title="Evaluasi" data-desc="Ikuti Tes Awal (sebelum belajar) dan Tes Akhir (setelah belajar) yang masing-masing terdiri dari 5 soal. Sistem akan membandingkan skor Anda untuk mengukur peningkatan kompetensi secara kuantitatif dan memberikan rekomendasi belajar lanjutan." data-link="evaluasi.html">
                         <i class="fas fa-clipboard-check"></i>
                         <h3>Evaluasi</h3>
-                        <p>Tes Awal & Tes Akhir untuk mengukur peningkatan.</p>
+                        <p>Tes Awal & Akhir untuk mengukur peningkatan Anda.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal" data-feature="profil" data-title="Profil" data-desc="Lihat identitas pengembang, petunjuk penggunaan, dan teknologi yang digunakan." data-link="profil.html">
-                        <i class="fas fa-chart-line"></i>
+                    <div class="card-item reveal" data-feature="profil" data-title="Profil" data-desc="Lihat profil pengembang, visi dan misi pembelajaran, petunjuk penggunaan setiap fitur, serta teknologi yang digunakan (HTML5, CSS3, JavaScript, Three.js, Font Awesome, YouTube Embed). Juga tersedia informasi kontak dan lisensi." data-link="profil.html">
+                        <i class="fas fa-user-graduate"></i>
                         <h3>Profil</h3>
-                        <p>Pantau progres dan skor Anda secara langsung.</p>
+                        <p>Informasi pengembang, petunjuk, dan teknologi.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. MENGENAL MESIN BUBUT -->
+            <!-- 4. MENGENAL MESIN BUBUT (dengan gambar) -->
             <div class="reveal delay-3">
                 <h2 class="section-title"><i class="fas fa-cog"></i> Mengenal Mesin Bubut</h2>
-                <p class="section-sub">Definisi dan fungsi dasar mesin bubut.</p>
-                <div class="card-item reveal" style="border-left-color: #f59e0b; cursor: default;">
-                    <p style="font-size: 1.1rem;">Mesin bubut adalah mesin perkakas yang memutar benda kerja pada sumbu putar (spindle) untuk melakukan proses pemotongan, pembentukan, dan finishing menggunakan pahat. Mesin ini menjadi fondasi utama dalam industri manufaktur logam.</p>
+                <p class="section-sub">Definisi, fungsi, dan ilustrasi mesin bubut.</p>
+                <div class="detail-card">
+                    <div class="img-placeholder">
+                        <!-- Gambar ilustrasi mesin bubut menggunakan ikon + latar -->
+                        <i class="fas fa-industry" style="font-size:5rem; color:var(--nav-active);"></i>
+                        <span style="margin-left:20px; font-size:1.2rem; font-weight:600; color:var(--text-color);">Mesin Bubut Konvensional</span>
+                    </div>
+                    <h3><i class="fas fa-info-circle"></i> Apa itu Mesin Bubut?</h3>
+                    <p><strong>Mesin bubut (lathe machine)</strong> adalah salah satu mesin perkakas tertua dan paling fundamental dalam dunia manufaktur. Mesin ini bekerja dengan cara <strong>memutar benda kerja</strong> pada sumbu putar (spindle) sementara sebuah pahat pemotong bergerak secara translasi (lurus) untuk menyayat material. Proses ini menghasilkan berbagai bentuk geometri seperti silinder, kerucut, alur, ulir, dan permukaan datar (facing).</p>
+                    <p><strong>Fungsi utama mesin bubut</strong> meliputi:</p>
+                    <ul>
+                        <li><b>Membubut (Turning)</b> – menghasilkan permukaan silinder luar.</li>
+                        <li><b>Facing</b> – meratakan permukaan ujung benda kerja.</li>
+                        <li><b>Membuat alur (Grooving)</b> – membuat ceruk atau alur pada benda.</li>
+                        <li><b>Membuat ulir (Threading)</b> – membuat ulir luar atau dalam.</li>
+                        <li><b>Memotong (Parting)</b> – memotong benda kerja menjadi dua bagian.</li>
+                        <li><b>Boring</b> – memperbesar atau menghaluskan lubang bagian dalam.</li>
+                    </ul>
+                    <p style="margin-top: 12px;"><strong>Keunggulan mesin bubut</strong> terletak pada kemampuannya memproduksi komponen dengan tingkat presisi tinggi (hingga 0,01 mm) dan fleksibilitas dalam mengerjakan berbagai material logam dan non-logam. Mesin ini menjadi tulang punggung industri otomotif, penerbangan, perkapalan, dan manufaktur umum.</p>
+                    <div style="background: var(--box-bg); padding: 16px 20px; border-radius: 12px; margin-top: 16px; border-left: 4px solid #f59e0b;">
+                        <strong><i class="fas fa-lightbulb" style="color:#f59e0b;"></i> Fakta:</strong> Mesin bubut pertama kali ditemukan oleh orang Mesir kuno sekitar 1300 SM, namun baru berkembang pesat pada abad ke-18 dengan ditemukannya mesin bubut otomatis.
+                    </div>
                 </div>
             </div>
 
-            <!-- 5. KOMPONEN MESIN BUBUT -->
+            <!-- 5. KOMPONEN MESIN BUBUT (dengan gambar dan penjelasan rinci) -->
             <div class="reveal delay-4">
-                <h2 class="section-title"><i class="fas fa-microchip"></i> Komponen Mesin Bubut</h2>
-                <p class="section-sub">Bagian-bagian utama yang perlu Anda ketahui.</p>
-                <div class="card-grid">
-                    <div class="card-item reveal">
-                        <i class="fas fa-arrows-spin"></i>
-                        <h3>Headstock</h3>
-                        <p>Tempat spindle & pengatur kecepatan putar.</p>
+                <h2 class="section-title"><i class="fas fa-microchip"></i> Komponen Utama Mesin Bubut</h2>
+                <p class="section-sub">Setiap bagian memiliki peran penting dalam proses pembubutan.</p>
+
+                <!-- Headstock -->
+                <div class="detail-card">
+                    <h3><i class="fas fa-arrows-spin"></i> 1. Headstock (Kepala Tetap)</h3>
+                    <div class="img-placeholder"><i class="fas fa-cogs" style="font-size:3rem;"></i><span style="margin-left:12px;">Headstock</span></div>
+                    <p><strong>Headstock</strong> adalah bagian yang terletak di ujung kiri mesin bubut. Di dalamnya terdapat <strong>spindle</strong> utama yang berfungsi sebagai poros tempat chuck dan benda kerja terpasang. Headstock juga memuat <strong>sistem transmisi</strong> berupa gearbox yang mengatur kecepatan putaran (RPM) melalui tuas pengatur. Komponen ini juga dilengkapi dengan <strong>bearing</strong> presisi untuk menjaga kestabilan putaran dan mengurangi getaran.</p>
+                    <ul>
+                        <li><b>Spindle</b> – poros berongga yang memutar benda kerja.</li>
+                        <li><b>Gearbox</b> – mengubah kecepatan putaran sesuai material.</li>
+                        <li><b>Chuck mount</b> – tempat pemasangan chuck atau collet.</li>
+                    </ul>
+                </div>
+
+                <!-- Tailstock -->
+                <div class="detail-card">
+                    <h3><i class="fas fa-arrows-alt-v"></i> 2. Tailstock (Kepala Lepas)</h3>
+                    <div class="img-placeholder"><i class="fas fa-arrow-up" style="font-size:3rem;"></i><span style="margin-left:12px;">Tailstock</span></div>
+                    <p><strong>Tailstock</strong> terletak di ujung kanan mesin dan berfungsi sebagai <strong>penyangga</strong> benda kerja yang panjang (misalnya poros) agar tidak melendut saat diputar. Tailstock dapat digeser sepanjang bed dan dikunci pada posisi tertentu. Bagian ini juga dapat dilengkapi dengan <strong>pusat putar (live center)</strong> yang berputar bersama benda kerja, atau <strong>pusat mati (dead center)</strong> yang diam. Selain itu, tailstock dapat digunakan untuk menahan mata bor saat proses <strong>pengeboran</strong> dari ujung benda.</p>
+                    <ul>
+                        <li><b>Live center</b> – berputar bersama benda kerja, mengurangi gesekan.</li>
+                        <li><b>Dead center</b> – diam, hanya untuk penyangga ringan.</li>
+                        <li><b>Drill chuck</b> – untuk memasang mata bor.</li>
+                    </ul>
+                </div>
+
+                <!-- Carriage -->
+                <div class="detail-card">
+                    <h3><i class="fas fa-tools"></i> 3. Carriage (Eretan)</h3>
+                    <div class="img-placeholder"><i class="fas fa-arrows-alt-h" style="font-size:3rem;"></i><span style="margin-left:12px;">Carriage</span></div>
+                    <p><strong>Carriage</strong> adalah bagian yang membawa pahat potong dan bergerak sepanjang bed (alas) mesin. Carriage terdiri dari beberapa komponen:</p>
+                    <ul>
+                        <li><b>Apron</b> – bagian depan yang berisi mekanisme penggerak otomatis.</li>
+                        <li><b>Cross slide</b> – menggerakkan pahat secara radial (melintang).</li>
+                        <li><b>Compound rest</b> – dapat diputar untuk membuat sudut tirus.</li>
+                        <li><b>Tool post</b> – tempat menjepit pahat.</li>
+                    </ul>
+                    <p>Gerakan carriage dapat dilakukan secara <strong>manual</strong> melalui roda tangan atau secara <strong>otomatis</strong> menggunakan lead screw untuk pembuatan ulir dan pemakanan.</p>
+                </div>
+
+                <!-- Bed -->
+                <div class="detail-card">
+                    <h3><i class="fas fa-th-large"></i> 4. Bed (Alas)</h3>
+                    <div class="img-placeholder"><i class="fas fa-grip-lines" style="font-size:3rem;"></i><span style="margin-left:12px;">Bed</span></div>
+                    <p><strong>Bed</strong> adalah rangka dasar mesin yang terbuat dari besi cor padat untuk menahan getaran dan menjaga kestabilan. Di atas bed terdapat <strong>rel pemandu (ways)</strong> yang menjadi jalur gerak carriage dan tailstock. Bed harus dijaga kebersihannya dan dilumasi secara teratur agar gerakan komponen tetap halus dan presisi. Permukaan bed juga menjadi acuan kerataan seluruh mesin.</p>
+                </div>
+
+                <!-- Chuck -->
+                <div class="detail-card">
+                    <h3><i class="fas fa-grip"></i> 5. Chuck</h3>
+                    <div class="img-placeholder"><i class="fas fa-hand-grip" style="font-size:3rem;"></i><span style="margin-left:12px;">Chuck</span></div>
+                    <p><strong>Chuck</strong> adalah alat penjepit benda kerja yang dipasang pada ujung spindle. Terdapat beberapa jenis chuck:</p>
+                    <ul>
+                        <li><b>3-rahang (self-centering)</b> – menjepit benda kerja silindris secara otomatis terpusat.</li>
+                        <li><b>4-rahang (independent)</b> – setiap rahang dapat diatur sendiri, cocok untuk benda kerja tidak beraturan.</li>
+                        <li><b>Collet chuck</b> – untuk benda kerja berdiameter kecil dengan presisi tinggi.</li>
+                    </ul>
+                    <p>Chuck harus dikencangkan dengan kuat menggunakan kunci chuck agar benda kerja tidak terlepas saat berputar.</p>
+                </div>
+
+                <!-- Lead Screw & lainnya -->
+                <div class="detail-card">
+                    <h3><i class="fas fa-arrow-right"></i> 6. Lead Screw dan Feed Rod</h3>
+                    <div class="img-placeholder"><i class="fas fa-arrows-spin" style="font-size:3rem;"></i><span style="margin-left:12px;">Lead Screw</span></div>
+                    <p><strong>Lead screw</strong> adalah poros berulir yang digunakan untuk menggerakkan carriage secara otomatis, terutama saat proses pembuatan ulir. <strong>Feed rod</strong> (batang pemakan) digunakan untuk pemakanan biasa (turning, facing) yang tidak memerlukan ulir presisi. Kedua komponen ini terhubung ke gearbox melalui mekanisme kopling, sehingga operator dapat memilih gerakan otomatis sesuai kebutuhan.</p>
+                </div>
+            </div>
+
+            <!-- 6. K3 MESIN BUBUT (dengan gambar dan prosedur rinci) -->
+            <div class="reveal delay-6">
+                <h2 class="section-title"><i class="fas fa-shield-alt"></i> K3 Mesin Bubut</h2>
+                <p class="section-sub">Keselamatan dan Kesehatan Kerja (K3) adalah prioritas utama dalam pengoperasian mesin bubut.</p>
+
+                <div class="detail-card">
+                    <div class="img-placeholder">
+                        <i class="fas fa-hard-hat" style="font-size:4rem; color:var(--nav-active);"></i>
+                        <span style="margin-left:16px; font-weight:600;">Safety First!</span>
                     </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-arrows-alt-v"></i>
-                        <h3>Tailstock</h3>
-                        <p>Penyangga benda kerja panjang agar stabil.</p>
-                    </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-tools"></i>
-                        <h3>Carriage</h3>
-                        <p>Membawa pahat dan bergerak memanjang/melintang.</p>
-                    </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-th-large"></i>
-                        <h3>Bed (Alas)</h3>
-                        <p>Rangka dasar mesin yang menjadi landasan komponen.</p>
-                    </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-grip"></i>
-                        <h3>Chuck</h3>
-                        <p>Penjepit benda kerja agar berputar bersama spindle.</p>
+                    <h3><i class="fas fa-exclamation-triangle"></i> Prosedur Keselamatan</h3>
+                    <p>Kecelakaan pada mesin bubut dapat berakibat fatal. Oleh karena itu, setiap operator wajib mematuhi aturan berikut:</p>
+                    <ul>
+                        <li><b><i class="fas fa-glasses"></i> Kacamata Pelindung</b> – wajib digunakan setiap saat untuk melindungi mata dari serpihan logam yang beterbangan.</li>
+                        <li><b><i class="fas fa-user-tie"></i> Pakaian Kerja</b> – gunakan pakaian yang rapi (tidak longgar), rambut pendek atau diikat, dan hindari perhiasan yang dapat tersangkut.</li>
+                        <li><b><i class="fas fa-hand-paper"></i> Jangan Sentuh</b> – dilarang keras menyentuh benda kerja atau pahat saat mesin masih berputar. Tunggu hingga spindle berhenti total.</li>
+                        <li><b><i class="fas fa-tools"></i> Pastikan Chuck Kencang</b> – periksa kekencangan chuck sebelum menghidupkan mesin. Benda kerja yang lepas dapat terpental dan membahayakan.</li>
+                        <li><b><i class="fas fa-oil-can"></i> Gunakan Coolant</b> – cairan pendingin mengurangi panas dan gesekan, memperpanjang umur pahat dan mencegah deformasi benda kerja.</li>
+                        <li><b><i class="fas fa-broom"></i> Jaga Kebersihan</b> – bersihkan serpihan logam dan minyak di area mesin untuk mencegah slip dan kebakaran.</li>
+                        <li><b><i class="fas fa-power-off"></i> Matikan Mesin</b> – selalu matikan mesin saat akan mengganti pahat atau mengukur benda kerja.</li>
+                        <li><b><i class="fas fa-first-aid"></i> Perlengkapan Darurat</b> – pastikan alat pemadam kebakaran dan kotak P3K tersedia di dekat area kerja.</li>
+                    </ul>
+                    <div style="background: var(--box-bg); padding: 16px 20px; border-radius: 12px; margin-top: 16px; border-left: 4px solid #dc2626;">
+                        <strong><i class="fas fa-bell" style="color:#dc2626;"></i> Peringatan:</strong> Mengabaikan prosedur K3 dapat menyebabkan cedera serius seperti putusnya jari, luka terpotong, atau kerusakan mata. Keselamatan adalah tanggung jawab bersama.
                     </div>
                 </div>
             </div>
 
-            <!-- 6. ALUR PEMBELAJARAN -->
+            <!-- 7. ALUR PEMBELAJARAN -->
             <div class="reveal delay-5">
                 <h2 class="section-title"><i class="fas fa-route"></i> Alur Pembelajaran</h2>
-                <p class="section-sub">Ikuti alur ini agar mendapatkan hasil belajar yang maksimal.</p>
+                <p class="section-sub">Ikuti alur ini agar hasil belajar optimal.</p>
                 <div class="flow-container">
                     <div class="flow-step"><i class="fas fa-file-signature"></i> PRETEST (Wajib)</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
@@ -418,34 +502,6 @@
                 </div>
             </div>
 
-            <!-- 7. K3 MESIN BUBUT -->
-            <div class="reveal delay-6">
-                <h2 class="section-title"><i class="fas fa-shield-alt"></i> K3 Mesin Bubut</h2>
-                <p class="section-sub">Keselamatan dan Kesehatan Kerja adalah prioritas utama.</p>
-                <div class="card-grid">
-                    <div class="card-item reveal">
-                        <i class="fas fa-glasses"></i>
-                        <h3>Kacamata Pelindung</h3>
-                        <p>Melindungi mata dari serpihan logam.</p>
-                    </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-hand-paper"></i>
-                        <h3>Jangan Sentuh</h3>
-                        <p>Dilarang menyentuh benda kerja saat mesin berputar.</p>
-                    </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-fire-extinguisher"></i>
-                        <h3>Cairan Pendingin</h3>
-                        <p>Gunakan coolant untuk mengurangi panas dan gesekan.</p>
-                    </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-user-tie"></i>
-                        <h3>Pakaian Kerja</h3>
-                        <p>Gunakan pakaian rapi, hindari sarung tangan longgar.</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- 8. TANTANGAN / KUIS -->
             <div class="reveal" style="margin-top: 40px;">
                 <h2 class="section-title"><i class="fas fa-gamepad"></i> Tantangan / Kuis</h2>
@@ -454,7 +510,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                         <div>
                             <h3>Kuis Pemahaman Mesin Bubut</h3>
-                            <p style="margin-top: 8px;">10 soal pilihan ganda untuk menguji penguasaan materi Anda.</p>
+                            <p style="margin-top: 8px;">10 soal pilihan ganda untuk menguji penguasaan materi Anda. Dapatkan skor dan saran belajar langsung.</p>
                         </div>
                         <a href="kuis.html" class="btn-hero" style="text-decoration: none;"><i class="fas fa-puzzle-piece"></i> Kerjakan Kuis</a>
                     </div>
@@ -469,12 +525,12 @@
                     <div class="card-item reveal">
                         <i class="fas fa-file-signature"></i>
                         <h3>Tes Awal</h3>
-                        <p>Kerjakan sebelum belajar untuk mengukur pengetahuan awal.</p>
+                        <p>5 soal untuk mengukur pengetahuan awal Anda. Kerjakan sebelum mempelajari materi.</p>
                     </div>
                     <div class="card-item reveal">
                         <i class="fas fa-certificate"></i>
                         <h3>Tes Akhir</h3>
-                        <p>Kerjakan setelah belajar untuk mengukur pemahaman akhir.</p>
+                        <p>5 soal setelah belajar untuk melihat peningkatan pemahaman Anda.</p>
                     </div>
                 </div>
             </div>
@@ -486,8 +542,8 @@
                 <div class="stats-grid">
                     <div class="stat-card reveal"><div class="num">10</div><div class="label">Modul Pembelajaran</div></div>
                     <div class="stat-card reveal"><div class="num">3D</div><div class="label">Simulasi Realistis</div></div>
-                    <div class="stat-card reveal"><div class="num">20+</div><div class="label">Soal Latihan</div></div>
-                    <div class="stat-card reveal"><div class="num">✔</div><div class="label">Evaluasi Tes Awal/Akhir</div></div>
+                    <div class="stat-card reveal"><div class="num">20+</div><div class="label">Soal Latihan & Evaluasi</div></div>
+                    <div class="stat-card reveal"><div class="num">✔</div><div class="label">Tes Awal & Akhir</div></div>
                 </div>
             </div>
 
@@ -496,7 +552,7 @@
                 <i class="fas fa-users" style="font-size: 2.5rem; color: #2563eb; margin-bottom: 16px;"></i>
                 <h2 class="section-title" style="justify-content: center;">Tentang Media</h2>
                 <p style="max-width: 700px; margin: 0 auto; line-height: 1.8; opacity: 0.8;">
-                    Media ini dikembangkan untuk mendukung pembelajaran mandiri dan peningkatan kompetensi siswa Kelas X Teknik Pemesinan SMK Negeri 5 Medan. Dibangun dengan HTML, CSS, JavaScript, dan Three.js untuk memberikan pengalaman belajar yang interaktif.
+                    Media ini dikembangkan untuk mendukung pembelajaran mandiri dan peningkatan kompetensi siswa Kelas X Teknik Pemesinan SMK Negeri 5 Medan. Dibangun dengan HTML, CSS, JavaScript, dan Three.js untuk memberikan pengalaman belajar yang interaktif dan menyenangkan.
                 </p>
             </div>
 
@@ -587,7 +643,7 @@
             });
         });
 
-        // ============ 5. MODAL / POP-UP UNTUK FITUR ============
+        // ============ 5. MODAL / POP-UP ============
         const modal = document.getElementById('featureModal');
         const modalClose = document.getElementById('modalClose');
         const modalCloseBtn = document.getElementById('modalCloseBtn');
@@ -596,90 +652,73 @@
         const modalDesc = document.getElementById('modalDesc');
         const modalLink = document.getElementById('modalLink');
 
-        // Data fitur (sesuai dengan atribut data-* pada card)
         const featureData = {
             materi: {
                 icon: '<i class="fas fa-book-open"></i>',
                 title: 'Materi',
-                desc: 'Pelajari 10 topik lengkap tentang mesin bubut, mulai dari definisi, komponen, parameter, hingga teknik dan K3. Dilengkapi dengan daftar isi dan penjelasan mendalam.',
+                desc: 'Pelajari 10 topik lengkap tentang mesin bubut, meliputi definisi, jenis mesin, komponen utama, prinsip kerja, parameter pemotongan (RPM, feed, DOC, cutting speed), jenis pahat berdasarkan bahan dan fungsi, teknik pembubutan (turning, facing, grooving, threading, parting, boring), K3, perawatan, serta kesalahan umum dan solusinya. Setiap topik disajikan dengan penjelasan mendalam dan ilustrasi pendukung.',
                 link: 'materi.html'
             },
             video: {
                 icon: '<i class="fas fa-play-circle"></i>',
                 title: 'Video',
-                desc: 'Tonton video pembelajaran interaktif tentang proses pembubutan, teknik penggunaan pahat, dan keselamatan kerja. Tersedia 9 video dengan berbagai tingkat kesulitan.',
+                desc: 'Tonton 9 video pembelajaran yang mencakup cara kerja mesin bubut, teknik feeding, penggunaan berbagai jenis pahat, prosedur K3, threading, facing, chamfering, perawatan mesin, serta perbedaan material baja dan aluminium. Video disusun dari tingkat dasar hingga lanjutan dengan durasi bervariasi.',
                 link: 'video.html'
             },
             simulasi: {
                 icon: '<i class="fas fa-cubes"></i>',
                 title: 'Simulasi 3D',
-                desc: 'Eksplorasi model mesin bubut 3D secara interaktif. Atur RPM, kedalaman potong, dan lihat efeknya secara real-time pada benda kerja.',
+                desc: 'Eksplorasi model 3D mesin bubut secara interaktif. Anda dapat mengatur kecepatan putar (RPM) dari 100 hingga 3000, mengatur kedalaman potong (DOC) 0.1–2.0 mm, dan melihat efeknya secara real-time pada diameter benda kerja serta posisi pahat. Cocok untuk memahami hubungan parameter dengan hasil pemotongan.',
                 link: 'simulasi.html'
             },
             kuis: {
                 icon: '<i class="fas fa-puzzle-piece"></i>',
                 title: 'Kuis',
-                desc: 'Uji pemahaman Anda dengan 10 soal pilihan ganda. Dapatkan skor dan feedback langsung setelah menjawab semua soal.',
+                desc: 'Uji pemahaman Anda dengan 10 soal pilihan ganda yang mencakup seluruh materi mesin bubut. Setelah menjawab, Anda akan mendapatkan skor dan feedback langsung berupa saran belajar yang dipersonalisasi berdasarkan tingkat pencapaian.',
                 link: 'kuis.html'
             },
             evaluasi: {
                 icon: '<i class="fas fa-clipboard-check"></i>',
                 title: 'Evaluasi',
-                desc: 'Kerjakan Tes Awal sebelum belajar dan Tes Akhir setelah belajar untuk mengukur peningkatan kompetensi Anda secara kuantitatif.',
+                desc: 'Ikuti Tes Awal (sebelum belajar) dan Tes Akhir (setelah belajar) yang masing-masing terdiri dari 5 soal. Sistem akan membandingkan skor Anda untuk mengukur peningkatan kompetensi secara kuantitatif dan memberikan rekomendasi belajar lanjutan.',
                 link: 'evaluasi.html'
             },
             profil: {
                 icon: '<i class="fas fa-user-graduate"></i>',
                 title: 'Profil',
-                desc: 'Lihat identitas pengembang, petunjuk penggunaan, visi & misi pembelajaran, serta teknologi yang digunakan dalam pengembangan media ini.',
+                desc: 'Lihat profil pengembang, visi dan misi pembelajaran, petunjuk penggunaan setiap fitur, serta teknologi yang digunakan (HTML5, CSS3, JavaScript, Three.js, Font Awesome, YouTube Embed). Juga tersedia informasi kontak dan lisensi.',
                 link: 'profil.html'
             }
         };
 
-        // Event listener untuk setiap card fitur
         document.querySelectorAll('.card-item[data-feature]').forEach(card => {
             card.addEventListener('click', function(e) {
                 const feature = this.dataset.feature;
                 const data = featureData[feature];
                 if (!data) return;
-
-                // Isi modal
                 modalIcon.innerHTML = data.icon;
                 modalTitle.textContent = data.title;
                 modalDesc.textContent = data.desc;
                 modalLink.href = data.link;
-
-                // Tampilkan modal dengan animasi
                 modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // nonaktifkan scroll
+                document.body.style.overflow = 'hidden';
             });
         });
 
-        // Fungsi tutup modal
         function closeModal() {
             modal.classList.remove('active');
             document.body.style.overflow = '';
         }
-
-        // Event close
         modalClose.addEventListener('click', closeModal);
         modalCloseBtn.addEventListener('click', closeModal);
-
-        // Tutup modal jika klik di luar area modal (overlay)
         modal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+            if (e.target === this) closeModal();
         });
-
-        // Tutup modal dengan tombol ESC
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
         });
 
-        console.log('✅ Beranda dengan pop-up fitur siap!');
+        console.log('✅ Beranda dengan konten rinci dan ilustrasi siap!');
     </script>
 
 </body>
