@@ -12,14 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* ==========================================================
-           GLOBAL STYLES (untuk halaman Beranda)
-           ========================================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* GLOBAL STYLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: #f0f4fb;
@@ -29,7 +23,7 @@
             min-height: 100vh;
         }
 
-        /* ---------- NAVBAR (opsional, jika ingin menu penuh) ---------- */
+        /* NAVBAR */
         .navbar {
             background: #0b1a2e;
             padding: 0 24px;
@@ -52,14 +46,8 @@
             font-size: 1.1rem;
             padding: 12px 0;
         }
-        .navbar .logo i {
-            color: #60a5fa;
-            font-size: 1.4rem;
-        }
-        .navbar .logo span {
-            color: #94b8d9;
-            font-weight: 400;
-        }
+        .navbar .logo i { color: #60a5fa; font-size: 1.4rem; }
+        .navbar .logo span { color: #94b8d9; font-weight: 400; }
         .nav-links {
             display: flex;
             flex-wrap: wrap;
@@ -82,41 +70,23 @@
             font-family: 'Inter', sans-serif;
             text-decoration: none;
         }
-        .nav-links a:hover {
-            background: #1a334d;
-            color: #fff;
-        }
+        .nav-links a:hover { background: #1a334d; color: #fff; }
         .nav-links a.active {
             background: #2563eb;
             color: #fff;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
         @media (max-width: 780px) {
-            .navbar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 0 12px;
-            }
-            .nav-links {
-                justify-content: center;
-                padding-bottom: 10px;
-            }
-            .nav-links a {
-                font-size: 0.7rem;
-                padding: 6px 12px;
-            }
+            .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; }
+            .nav-links { justify-content: center; padding-bottom: 10px; }
+            .nav-links a { font-size: 0.7rem; padding: 6px 12px; }
         }
         @media (max-width: 500px) {
-            .nav-links a {
-                font-size: 0.6rem;
-                padding: 4px 8px;
-            }
-            .nav-links a i {
-                display: none;
-            }
+            .nav-links a { font-size: 0.6rem; padding: 4px 8px; }
+            .nav-links a i { display: none; }
         }
 
-        /* ---------- MAIN CONTENT ---------- */
+        /* MAIN CONTENT */
         .main-content {
             flex: 1;
             max-width: 1280px;
@@ -134,9 +104,7 @@
             margin-top: 20px;
         }
 
-        /* ==========================================================
-           KHUSUS: STYLE UNTUK BERANDA (#beranda)
-           ========================================================== */
+        /* KHUSUS BERANDA */
         #beranda .hero {
             background: linear-gradient(135deg, #0b1a2e 0%, #1a3a5a 100%);
             border-radius: 28px;
@@ -156,14 +124,8 @@
             opacity: 0.06;
             transform: rotate(-15deg);
         }
-        #beranda .hero h1 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-        #beranda .hero h1 span {
-            color: #60a5fa;
-        }
+        #beranda .hero h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.2; }
+        #beranda .hero h1 span { color: #60a5fa; }
         #beranda .hero p {
             font-size: 1.1rem;
             max-width: 600px;
@@ -180,9 +142,7 @@
             font-size: 0.85rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        #beranda .badge i {
-            color: #fbbf24;
-        }
+        #beranda .badge i { color: #fbbf24; }
         #beranda .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -196,17 +156,8 @@
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
-        #beranda .stat-card .num {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #60a5fa;
-        }
-        #beranda .stat-card .label {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-
+        #beranda .stat-card .num { font-size: 2rem; font-weight: 800; color: #60a5fa; }
+        #beranda .stat-card .label { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
         #beranda .grid-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -219,30 +170,16 @@
             padding: 20px;
             text-align: center;
         }
-        #beranda .grid-info .box i {
-            font-size: 2rem;
-            color: #2563eb;
-        }
-        #beranda .grid-info .box h4 {
-            margin-top: 8px;
-        }
-        #beranda .grid-info .box p {
-            font-size: 0.9rem;
-            color: #475569;
-        }
-
+        #beranda .grid-info .box i { font-size: 2rem; color: #2563eb; }
+        #beranda .grid-info .box h4 { margin-top: 8px; }
+        #beranda .grid-info .box p { font-size: 0.9rem; color: #475569; }
         @media (max-width: 600px) {
-            #beranda .hero h1 {
-                font-size: 1.8rem;
-            }
+            #beranda .hero h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    NAVBAR (opsional, untuk navigasi ke menu lain)
-    ============================================================ -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-cogs"></i>
@@ -250,7 +187,6 @@
         </div>
         <div class="nav-links">
             <a href="#" class="active"><i class="fas fa-home"></i> Beranda</a>
-            <!-- Link ke menu lain (jika dalam satu website) -->
             <a href="#"><i class="fas fa-book"></i> Materi</a>
             <a href="#"><i class="fas fa-play-circle"></i> Video</a>
             <a href="#"><i class="fas fa-cubes"></i> Simulasi</a>
@@ -260,9 +196,6 @@
         </div>
     </nav>
 
-    <!-- ============================================================
-    MAIN CONTENT : BERANDA
-    ============================================================ -->
     <div class="main-content">
         <div id="beranda">
             <div class="hero">
