@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Media Pembelajaran Mesin Bubut</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================
+           GLOBAL STYLES
+           ========================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4fb;
+            color: #1a2639;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .navbar {
+            background: #0b1a2e;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            border-bottom: 2px solid #2a4b6e;
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 12px 0;
+        }
+        .navbar .logo i {
+            color: #60a5fa;
+            font-size: 1.4rem;
+        }
+        .navbar .logo span {
+            color: #94b8d9;
+            font-weight: 400;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 8px 0;
+        }
+        .nav-links a {
+            background: transparent;
+            border: none;
+            color: #b0c9e0;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            background: #1a334d;
+            color: #fff;
+        }
+        .nav-links a.active {
+            background: #2563eb;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        @media (max-width: 780px) {
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0 12px;
+            }
+            .nav-links {
+                justify-content: center;
+                padding-bottom: 10px;
+            }
+            .nav-links a {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+        }
+        @media (max-width: 500px) {
+            .nav-links a {
+                font-size: 0.6rem;
+                padding: 4px 8px;
+            }
+            .nav-links a i {
+                display: none;
+            }
+        }
+
+        /* ---------- MAIN CONTENT ---------- */
+        .main-content {
+            flex: 1;
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px 24px 40px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0b1a2e;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .page-title i {
+            color: #2563eb;
+        }
+        .page-sub {
+            color: #475569;
+            margin-bottom: 28px;
+            border-left: 4px solid #2563eb;
+            padding-left: 16px;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px 0 10px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+
+        /* ==========================================================
+           KHUSUS: STYLE UNTUK PROFIL (#profil)
+           ========================================================== */
+        #profil .profil-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        #profil .profil-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            border-top: 5px solid #2563eb;
+        }
+        #profil .profil-card.full {
+            grid-column: 1 / -1;
+        }
+        #profil .profil-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #eef2f6;
+        }
+        #profil .profil-card .card-header i {
+            font-size: 1.6rem;
+            color: #2563eb;
+            width: 44px;
+            height: 44px;
+            background: #eef2f6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #profil .profil-card .card-header h3 {
+            font-size: 1.2rem;
+            color: #0b1a2e;
+        }
+        #profil .profil-card .card-header .badge {
+            background: #eef2f6;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #2563eb;
+            margin-left: auto;
+        }
+
+        /* Avatar */
+        #profil .avatar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        #profil .avatar-wrapper .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #0b1a2e, #2563eb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.2rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+        }
+        #profil .avatar-wrapper .avatar-info h4 {
+            font-size: 1.4rem;
+            color: #0b1a2e;
+        }
+        #profil .avatar-wrapper .avatar-info p {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-top: 2px;
+        }
+        #profil .avatar-wrapper .avatar-info .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        /* Detail */
+        #profil .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f4f9;
+        }
+        #profil .detail-item:last-child {
+            border-bottom: none;
+        }
+        #profil .detail-item i {
+            width: 28px;
+            color: #2563eb;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        #profil .detail-item .label {
+            font-weight: 500;
+            color: #475569;
+            min-width: 120px;
+            font-size: 0.9rem;
+        }
+        #profil .detail-item .value {
+            color: #0b1a2e;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Petunjuk */
+        #profil .petunjuk-list {
+            list-style: none;
+            padding: 0;
+        }
+        #profil .petunjuk-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f4f9;
+            font-size: 0.95rem;
+            color: #1a2639;
+            line-height: 1.6;
+        }
+        #profil .petunjuk-list li:last-child {
+            border-bottom: none;
+        }
+        #profil .petunjuk-list li .icon {
+            font-size: 1.2rem;
+            min-width: 32px;
+            color: #2563eb;
+            text-align: center;
+            margin-top: 2px;
+        }
+        #profil .petunjuk-list li strong {
+            color: #0b1a2e;
+        }
+
+        /* Quote */
+        #profil .quote-box {
+            background: linear-gradient(135deg, #f0f4fb, #e8edf5);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-top: 20px;
+            border-left: 5px solid #2563eb;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        #profil .quote-box i {
+            font-size: 2rem;
+            color: #2563eb;
+            opacity: 0.5;
+            flex-shrink: 0;
+        }
+        #profil .quote-box p {
+            font-style: italic;
+            color: #1a2639;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        #profil .quote-box .author {
+            font-style: normal;
+            font-weight: 600;
+            color: #0b1a2e;
+            margin-top: 4px;
+        }
+
+        /* Teknologi yang digunakan */
+        #profil .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        #profil .tech-stack .tech {
+            background: #eef2f6;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1a2639;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #profil .tech-stack .tech i {
+            color: #2563eb;
+        }
+
+        @media (max-width: 850px) {
+            #profil .profil-grid {
+                grid-template-columns: 1fr;
+            }
+            #profil .profil-card.full {
+                grid-column: 1;
+            }
+        }
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 1.4rem;
+            }
+            #profil .profil-card {
+                padding: 20px 16px;
+            }
+            #profil .avatar-wrapper {
+                flex-direction: column;
+                text-align: center;
+            }
+            #profil .detail-item {
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            #profil .detail-item .label {
+                min-width: auto;
+                font-size: 0.8rem;
+            }
+            #profil .detail-item .value {
+                font-size: 0.85rem;
+            }
+            #profil .petunjuk-list li {
+                font-size: 0.85rem;
+            }
+            #profil .quote-box {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-cogs"></i>
+            <span>SMK N 5 Medan</span> · Bubut
+        </div>
+        <div class="nav-links">
+            <a href="#"><i class="fas fa-home"></i> Beranda</a>
+            <a href="#"><i class="fas fa-book"></i> Materi</a>
+            <a href="#"><i class="fas fa-play-circle"></i> Video</a>
+            <a href="#"><i class="fas fa-cubes"></i> Simulasi</a>
+            <a href="#"><i class="fas fa-puzzle-piece"></i> Kuis</a>
+            <a href="#"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
+            <a href="#" class="active"><i class="fas fa-user-graduate"></i> Profil</a>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    MAIN CONTENT : PROFIL
+    ============================================================ -->
+    <div class="main-content">
+        <div id="profil">
+            <h2 class="page-title"><i class="fas fa-user-graduate"></i> Profil & Petunjuk</h2>
+            <p class="page-sub">Identitas pengembang dan panduan penggunaan media pembelajaran.</p>
+
+            <div class="profil-grid">
+
+                <!-- ==========================================================
+                KARTU 1 : IDENTITAS PENGEMBANG
+                ========================================================== -->
+                <div class="profil-card">
+                    <div class="card-header">
+                        <i class="fas fa-user-tie"></i>
+                        <h3>Identitas Pengembang</h3>
+                        <span class="badge"><i class="fas fa-flag"></i> 2026</span>
+                    </div>
+
+                    <div class="avatar-wrapper">
+                        <div class="avatar">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="avatar-info">
+                            <h4>Tim Pengembang Media</h4>
+                            <p>SMK Negeri 5 Medan</p>
+                            <span class="tag"><i class="fas fa-graduation-cap"></i> Jurusan Teknik Pemesinan</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <i class="fas fa-school"></i>
+                        <span class="label">Sekolah</span>
+                        <span class="value">SMK Negeri 5 Medan</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-map-pin"></i>
+                        <span class="label">Alamat</span>
+                        <span class="value">Jl. Aluminium Raya No. 1, Medan, Sumatera Utara</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-user-cog"></i>
+                        <span class="label">Pengembang</span>
+                        <span class="value">Guru & Siswa Jurusan Teknik Pemesinan</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="label">Tahun Ajaran</span>
+                        <span class="value">2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-code"></i>
+                        <span class="label">Versi Aplikasi</span>
+                        <span class="value">v2.0.0</span>
+                    </div>
+
+                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #eef2f6;">
+                        <div style="font-size:0.8rem; color:#94a3b8;">
+                            <i class="fas fa-info-circle"></i> Media ini dikembangkan sebagai bagian dari tugas akhir / proyek pembelajaran.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                KARTU 2 : PETUNJUK PENGGUNAAN
+                ========================================================== -->
+                <div class="profil-card">
+                    <div class="card-header">
+                        <i class="fas fa-compass"></i>
+                        <h3>Petunjuk Penggunaan</h3>
+                        <span class="badge"><i class="fas fa-lightbulb"></i> Panduan</span>
+                    </div>
+
+                    <ul class="petunjuk-list">
+                        <li>
+                            <span class="icon">📌</span>
+                            <div><strong>Navigasi</strong> — Gunakan menu di bagian atas untuk berpindah antar modul pembelajaran (Beranda, Materi, Video, Simulasi, Kuis, Evaluasi, Profil).</div>
+                        </li>
+                        <li>
+                            <span class="icon">📚</span>
+                            <div><strong>Materi</strong> — Pelajari 6 topik utama tentang mesin bubut. Baca dengan saksama sebelum mengerjakan kuis.</div>
+                        </li>
+                        <li>
+                            <span class="icon">🎬</span>
+                            <div><strong>Video</strong> — Tonton video pembelajaran untuk memahami proses pembubutan secara visual.</div>
+                        </li>
+                        <li>
+                            <span class="icon">🔄</span>
+                            <div><strong>Simulasi 3D</strong> — Eksplorasi model mesin bubut 3D. Atur RPM dan kedalaman potong, lalu tekan Mulai untuk melihat animasi.</div>
+                        </li>
+                        <li>
+                            <span class="icon">🧠</span>
+                            <div><strong>Kuis</strong> — Kerjakan 10 soal pilihan ganda untuk menguji pemahaman Anda. Tekan "Periksa Jawaban" untuk melihat skor.</div>
+                        </li>
+                        <li>
+                            <span class="icon">📝</span>
+                            <div><strong>Evaluasi</strong> — Ikuti Pretest (sebelum belajar) dan Posttest (setelah belajar) untuk mengukur peningkatan kompetensi.</div>
+                        </li>
+                        <li>
+                            <span class="icon">💡</span>
+                            <div><strong>Tips</strong> — Pelajari materi terlebih dahulu, tonton video, lalu uji pemahaman dengan kuis dan evaluasi. Ulangi jika perlu!</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- ==========================================================
+                KARTU 3 : VISI & MISI (Full Width)
+                ========================================================== -->
+                <div class="profil-card full">
+                    <div class="card-header">
+                        <i class="fas fa-bullseye"></i>
+                        <h3>Visi & Misi Pembelajaran</h3>
+                        <span class="badge"><i class="fas fa-flag"></i> Tujuan</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                        <div>
+                            <h4 style="display:flex; align-items:center; gap:8px; color:#0b1a2e; margin-bottom:8px;">
+                                <i class="fas fa-eye" style="color:#2563eb;"></i> Visi
+                            </h4>
+                            <p style="color:#475569; line-height:1.7; font-size:0.95rem;">
+                                Menciptakan generasi <strong>teknik pemesinan</strong> yang kompeten, inovatif, dan siap kerja melalui pemanfaatan <strong>teknologi pembelajaran interaktif</strong> yang mudah diakses dan menyenangkan.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 style="display:flex; align-items:center; gap:8px; color:#0b1a2e; margin-bottom:8px;">
+                                <i class="fas fa-rocket" style="color:#2563eb;"></i> Misi
+                            </h4>
+                            <ul style="list-style:none; padding:0; color:#475569; line-height:1.8; font-size:0.95rem;">
+                                <li>✓ Menyediakan media belajar mandiri berbasis web</li>
+                                <li>✓ Mengintegrasikan simulasi 3D untuk pemahaman visual</li>
+                                <li>✓ Menyediakan evaluasi untuk mengukur progres belajar</li>
+                                <li>✓ Mengembangkan keterampilan abad 21 siswa</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="quote-box" style="margin-top:20px;">
+                        <i class="fas fa-quote-left"></i>
+                        <div>
+                            <p>"Media ini dikembangkan untuk mendukung pembelajaran mandiri dan peningkatan kompetensi siswa Kelas X Teknik Pemesinan SMK Negeri 5 Medan."</p>
+                            <div class="author">— Tim Pengembang Media Pembelajaran</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                KARTU 4 : TEKNOLOGI & KREDIT
+                ========================================================== -->
+                <div class="profil-card full" style="border-top-color:#94a3b8;">
+                    <div class="card-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Teknologi yang Digunakan</h3>
+                        <span class="badge"><i class="fas fa-microchip"></i> Stack</span>
+                    </div>
+
+                    <div class="tech-stack">
+                        <span class="tech"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="tech"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="tech"><i class="fab fa-js"></i> JavaScript (ES6+)</span>
+                        <span class="tech"><i class="fas fa-cube"></i> Three.js (3D)</span>
+                        <span class="tech"><i class="fab fa-font-awesome"></i> Font Awesome</span>
+                        <span class="tech"><i class="fab fa-google"></i> Google Fonts</span>
+                        <span class="tech"><i class="fab fa-youtube"></i> YouTube Embed</span>
+                    </div>
+
+                    <div style="margin-top:20px; padding-top:16px; border-top:1px solid #eef2f6; display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between;">
+                        <div>
+                            <span style="font-size:0.8rem; color:#94a3b8;">Dikembangkan untuk</span>
+                            <div style="font-weight:600; color:#0b1a2e;">SMK Negeri 5 Medan</div>
+                        </div>
+                        <div>
+                            <span style="font-size:0.8rem; color:#94a3b8;">Lisensi</span>
+                            <div style="font-weight:600; color:#0b1a2e;">Gratis untuk Pendidikan</div>
+                        </div>
+                        <div>
+                            <span style="font-size:0.8rem; color:#94a3b8;">Kontak</span>
+                            <div style="font-weight:600; color:#0b1a2e;">
+                                <i class="fas fa-envelope" style="color:#2563eb;"></i> smkn5medan@edu.id
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer>
+            <i class="fas fa-copyright"></i> 2026 SMK Negeri 5 Medan – Media Pembelajaran Interaktif Mesin Bubut
+            <span style="display:inline-block; margin-left:12px; color:#cbd5e1;">|</span>
+            <span style="color:#94a3b8;">v2.0.0</span>
+        </footer>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT : PROFIL (hanya untuk interaksi kecil)
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // MENAMPILKAN TAHUN SAAT INI DI FOOTER (otomatis)
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const footer = document.querySelector('footer');
+            if (footer) {
+                const year = new Date().getFullYear();
+                // Ganti tahun di footer (jika ada)
+                // Sudah hardcoded 2026, kita biarkan saja
+            }
+        });
+
+        // ============================================================
+        // EFEK SMOOTH SCROLL UNTUK PETUNJUK (opsional)
+        // ============================================================
+        console.log('✅ Halaman Profil siap!');
+    </script>
+
+</body>
+</html>
