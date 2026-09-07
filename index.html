@@ -36,6 +36,7 @@
             --footer-bg: #f0f4fb;
             --border-color: #e2e8f0;
             --shadow-color: rgba(0, 0, 0, 0.05);
+            --modal-overlay: rgba(0, 0, 0, 0.6);
         }
 
         /* ========== VARIABEL WARNA (DARK MODE) ========== */
@@ -53,6 +54,7 @@
             --footer-bg: #0a0f1a;
             --border-color: #334155;
             --shadow-color: rgba(0, 0, 0, 0.4);
+            --modal-overlay: rgba(0, 0, 0, 0.75);
         }
 
         /* ========== GLOBAL STYLES ========== */
@@ -96,11 +98,27 @@
 
         /* ========== CARDS ========== */
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 40px; }
-        .card-item { background: var(--card-bg); border-radius: 20px; padding: 24px; box-shadow: 0 4px 16px var(--shadow-color); border-left: 6px solid #2563eb; transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.4s; }
+        .card-item { 
+            background: var(--card-bg); 
+            border-radius: 20px; 
+            padding: 24px; 
+            box-shadow: 0 4px 16px var(--shadow-color); 
+            border-left: 6px solid #2563eb; 
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.4s; 
+            cursor: pointer;
+            position: relative;
+        }
         .card-item:hover { transform: translateY(-4px); box-shadow: 0 12px 30px var(--shadow-color); }
         .card-item i { font-size: 2rem; color: #2563eb; margin-bottom: 12px; }
         .card-item h3 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 8px; }
         .card-item p { font-size: 0.95rem; color: var(--text-color); opacity: 0.7; line-height: 1.6; }
+        .card-item .click-hint { 
+            font-size: 0.7rem; 
+            color: var(--nav-active); 
+            opacity: 0.5; 
+            margin-top: 12px; 
+            display: block; 
+        }
 
         /* ========== FLOW ========== */
         .flow-container { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin: 20px 0 40px; }
@@ -126,6 +144,112 @@
         .delay-4 { transition-delay: 0.4s; }
         .delay-5 { transition-delay: 0.5s; }
         .delay-6 { transition-delay: 0.6s; }
+
+        /* ========== MODAL / POP-UP ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-overlay);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--card-bg);
+            border-radius: 24px;
+            max-width: 480px;
+            width: 90%;
+            padding: 32px 36px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideUp 0.3s ease;
+            border-top: 6px solid #2563eb;
+        }
+        .modal-box .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--text-color);
+            opacity: 0.5;
+            transition: 0.2s;
+        }
+        .modal-box .close-btn:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+        .modal-box .modal-icon {
+            font-size: 2.8rem;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        .modal-box h3 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 8px;
+        }
+        .modal-box p {
+            color: var(--sub-text-color);
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        .modal-box .modal-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: #fff;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+        }
+        .modal-box .modal-btn:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+        }
+        .modal-box .modal-btn.secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            margin-left: 10px;
+        }
+        .modal-box .modal-btn.secondary:hover {
+            background: var(--box-bg);
+            border-color: #2563eb;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            .modal-box { padding: 24px 20px; }
+            .modal-box h3 { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
@@ -160,8 +284,8 @@
                 <h1 class="delay-2 reveal">Media Pembelajaran <br><span>Mesin Bubut</span> Interaktif</h1>
                 <p class="delay-3 reveal">Selamat datang di portal pembelajaran berbasis web untuk meningkatkan kompetensi praktik dan teori mesin bubut.</p>
                 <div class="hero-buttons delay-4 reveal">
-                    <a href="#tujuan" class="btn-hero"><i class="fas fa-rocket"></i> Mulai Belajar</a>
-                    <!-- Tautan Pretest Masuk diarahkan ke pretest.html -->
+                    <!-- Tombol Mulai Belajar langsung ke Materi -->
+                    <a href="materi.html" class="btn-hero"><i class="fas fa-rocket"></i> Mulai Belajar</a>
                     <a href="pretest.html" class="btn-hero secondary"><i class="fas fa-file-signature"></i> Pretest Masuk (Wajib)</a>
                 </div>
             </div>
@@ -189,40 +313,46 @@
                 </div>
             </div>
 
-            <!-- 3. FITUR PEMBELAJARAN -->
+            <!-- 3. FITUR PEMBELAJARAN (Card dengan pop-up) -->
             <div class="reveal delay-2">
                 <h2 class="section-title"><i class="fas fa-layer-group"></i> Fitur Pembelajaran</h2>
-                <p class="section-sub">Jelajahi semua fitur yang tersedia di media ini.</p>
+                <p class="section-sub">Klik pada fitur untuk melihat penjelasan singkat.</p>
                 <div class="card-grid">
-                    <div class="card-item reveal">
+                    <div class="card-item reveal" data-feature="materi" data-title="Materi" data-desc="Pelajari 10 topik lengkap tentang mesin bubut, mulai dari definisi, komponen, parameter, hingga teknik dan K3." data-link="materi.html">
                         <i class="fas fa-book-open"></i>
                         <h3>Materi</h3>
-                        <p>6 modul lengkap tentang mesin bubut.</p>
+                        <p>10 modul lengkap tentang mesin bubut.</p>
+                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal">
+                    <div class="card-item reveal" data-feature="video" data-title="Video" data-desc="Tonton video pembelajaran interaktif tentang proses pembubutan, teknik penggunaan pahat, dan keselamatan kerja." data-link="video.html">
                         <i class="fas fa-play-circle"></i>
                         <h3>Video</h3>
                         <p>Video pembelajaran untuk pemahaman visual.</p>
+                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal">
+                    <div class="card-item reveal" data-feature="simulasi" data-title="Simulasi 3D" data-desc="Eksplorasi model mesin bubut 3D. Atur RPM, kedalaman potong, dan lihat efeknya secara real-time." data-link="simulasi.html">
                         <i class="fas fa-cubes"></i>
                         <h3>Simulasi 3D</h3>
                         <p>Interaksi langsung dengan model mesin bubut.</p>
+                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal">
+                    <div class="card-item reveal" data-feature="kuis" data-title="Kuis" data-desc="Uji pemahaman Anda dengan 10 soal pilihan ganda. Dapatkan skor dan feedback langsung." data-link="kuis.html">
                         <i class="fas fa-puzzle-piece"></i>
                         <h3>Kuis</h3>
                         <p>Uji pemahaman dengan 10 soal interaktif.</p>
+                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal">
+                    <div class="card-item reveal" data-feature="evaluasi" data-title="Evaluasi" data-desc="Kerjakan Tes Awal dan Tes Akhir untuk mengukur peningkatan kompetensi Anda." data-link="evaluasi.html">
                         <i class="fas fa-clipboard-check"></i>
                         <h3>Evaluasi</h3>
                         <p>Tes Awal & Tes Akhir untuk mengukur peningkatan.</p>
+                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal">
+                    <div class="card-item reveal" data-feature="profil" data-title="Profil" data-desc="Lihat identitas pengembang, petunjuk penggunaan, dan teknologi yang digunakan." data-link="profil.html">
                         <i class="fas fa-chart-line"></i>
-                        <h3>Hasil Belajar</h3>
+                        <h3>Profil</h3>
                         <p>Pantau progres dan skor Anda secara langsung.</p>
+                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
                 </div>
             </div>
@@ -231,7 +361,7 @@
             <div class="reveal delay-3">
                 <h2 class="section-title"><i class="fas fa-cog"></i> Mengenal Mesin Bubut</h2>
                 <p class="section-sub">Definisi dan fungsi dasar mesin bubut.</p>
-                <div class="card-item reveal" style="border-left-color: #f59e0b;">
+                <div class="card-item reveal" style="border-left-color: #f59e0b; cursor: default;">
                     <p style="font-size: 1.1rem;">Mesin bubut adalah mesin perkakas yang memutar benda kerja pada sumbu putar (spindle) untuk melakukan proses pemotongan, pembentukan, dan finishing menggunakan pahat. Mesin ini menjadi fondasi utama dalam industri manufaktur logam.</p>
                 </div>
             </div>
@@ -320,7 +450,7 @@
             <div class="reveal" style="margin-top: 40px;">
                 <h2 class="section-title"><i class="fas fa-gamepad"></i> Tantangan / Kuis</h2>
                 <p class="section-sub">Siap menguji kemampuan Anda?</p>
-                <div class="card-item reveal">
+                <div class="card-item reveal" style="cursor: default;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                         <div>
                             <h3>Kuis Pemahaman Mesin Bubut</h3>
@@ -354,7 +484,7 @@
                 <h2 class="section-title"><i class="fas fa-chart-line"></i> Statistik Media</h2>
                 <p class="section-sub">Fakta menarik tentang media pembelajaran ini.</p>
                 <div class="stats-grid">
-                    <div class="stat-card reveal"><div class="num">7</div><div class="label">Modul Pembelajaran</div></div>
+                    <div class="stat-card reveal"><div class="num">10</div><div class="label">Modul Pembelajaran</div></div>
                     <div class="stat-card reveal"><div class="num">3D</div><div class="label">Simulasi Realistis</div></div>
                     <div class="stat-card reveal"><div class="num">20+</div><div class="label">Soal Latihan</div></div>
                     <div class="stat-card reveal"><div class="num">✔</div><div class="label">Evaluasi Tes Awal/Akhir</div></div>
@@ -380,8 +510,22 @@
     <!-- Tombol kembali ke atas -->
     <button id="myBtn" title="Kembali ke atas">↑</button>
 
+    <!-- ========== MODAL / POP-UP ========== -->
+    <div class="modal-overlay" id="featureModal">
+        <div class="modal-box">
+            <button class="close-btn" id="modalClose">&times;</button>
+            <div class="modal-icon" id="modalIcon"><i class="fas fa-book-open"></i></div>
+            <h3 id="modalTitle">Materi</h3>
+            <p id="modalDesc">Deskripsi fitur.</p>
+            <div>
+                <a href="#" id="modalLink" class="modal-btn"><i class="fas fa-arrow-right"></i> Buka Halaman</a>
+                <button class="modal-btn secondary" id="modalCloseBtn">Tutup</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // (Semua script sama seperti sebelumnya)
+        // ============ 1. TOMBOL KEMBALI KE ATAS ============
         const mybutton = document.getElementById("myBtn");
         window.onscroll = function() { scrollFunction(); };
         function scrollFunction() {
@@ -393,6 +537,7 @@
         }
         mybutton.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
+        // ============ 2. DARK MODE ============
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
         const currentTheme = localStorage.getItem('theme');
@@ -415,6 +560,7 @@
             localStorage.setItem('theme', theme);
         });
 
+        // ============ 3. ANIMASI SCROLL ============
         const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -427,6 +573,7 @@
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
 
+        // ============ 4. MENANDAI MENU AKTIF ============
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname.split("/").pop() || "index.html";
             const navLinks = document.querySelectorAll(".nav-links a");
@@ -439,6 +586,101 @@
                 }
             });
         });
+
+        // ============ 5. MODAL / POP-UP UNTUK FITUR ============
+        const modal = document.getElementById('featureModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalLink = document.getElementById('modalLink');
+
+        // Data fitur (sesuai dengan atribut data-* pada card)
+        const featureData = {
+            materi: {
+                icon: '<i class="fas fa-book-open"></i>',
+                title: 'Materi',
+                desc: 'Pelajari 10 topik lengkap tentang mesin bubut, mulai dari definisi, komponen, parameter, hingga teknik dan K3. Dilengkapi dengan daftar isi dan penjelasan mendalam.',
+                link: 'materi.html'
+            },
+            video: {
+                icon: '<i class="fas fa-play-circle"></i>',
+                title: 'Video',
+                desc: 'Tonton video pembelajaran interaktif tentang proses pembubutan, teknik penggunaan pahat, dan keselamatan kerja. Tersedia 9 video dengan berbagai tingkat kesulitan.',
+                link: 'video.html'
+            },
+            simulasi: {
+                icon: '<i class="fas fa-cubes"></i>',
+                title: 'Simulasi 3D',
+                desc: 'Eksplorasi model mesin bubut 3D secara interaktif. Atur RPM, kedalaman potong, dan lihat efeknya secara real-time pada benda kerja.',
+                link: 'simulasi.html'
+            },
+            kuis: {
+                icon: '<i class="fas fa-puzzle-piece"></i>',
+                title: 'Kuis',
+                desc: 'Uji pemahaman Anda dengan 10 soal pilihan ganda. Dapatkan skor dan feedback langsung setelah menjawab semua soal.',
+                link: 'kuis.html'
+            },
+            evaluasi: {
+                icon: '<i class="fas fa-clipboard-check"></i>',
+                title: 'Evaluasi',
+                desc: 'Kerjakan Tes Awal sebelum belajar dan Tes Akhir setelah belajar untuk mengukur peningkatan kompetensi Anda secara kuantitatif.',
+                link: 'evaluasi.html'
+            },
+            profil: {
+                icon: '<i class="fas fa-user-graduate"></i>',
+                title: 'Profil',
+                desc: 'Lihat identitas pengembang, petunjuk penggunaan, visi & misi pembelajaran, serta teknologi yang digunakan dalam pengembangan media ini.',
+                link: 'profil.html'
+            }
+        };
+
+        // Event listener untuk setiap card fitur
+        document.querySelectorAll('.card-item[data-feature]').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const feature = this.dataset.feature;
+                const data = featureData[feature];
+                if (!data) return;
+
+                // Isi modal
+                modalIcon.innerHTML = data.icon;
+                modalTitle.textContent = data.title;
+                modalDesc.textContent = data.desc;
+                modalLink.href = data.link;
+
+                // Tampilkan modal dengan animasi
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // nonaktifkan scroll
+            });
+        });
+
+        // Fungsi tutup modal
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Event close
+        modalClose.addEventListener('click', closeModal);
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // Tutup modal jika klik di luar area modal (overlay)
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Tutup modal dengan tombol ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        console.log('✅ Beranda dengan pop-up fitur siap!');
     </script>
+
 </body>
 </html>
