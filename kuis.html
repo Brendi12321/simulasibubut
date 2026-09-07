@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* [Sisipkan SELURUH CSS milik Anda di sini, persis sama] */
+        /* CSS lengkap milik Anda (tidak diubah) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f0f4fb; color: #1a2639; display: flex; flex-direction: column; min-height: 100vh; }
         .navbar { background: #0b1a2e; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); border-bottom: 2px solid #2a4b6e; }
@@ -66,7 +66,7 @@
         </div>
     </nav>
 
-    <!-- [Bagian Main Content dan Script Anda tetap sama] -->
+    <!-- MAIN CONTENT -->
     <div class="main-content">
         <div id="kuis">
             <h2 class="page-title"><i class="fas fa-puzzle-piece"></i> Kuis Pemahaman</h2>
@@ -88,33 +88,106 @@
                 </div>
             </div>
         </div>
+
         <footer>
             <i class="fas fa-copyright"></i> 2026 SMK Negeri 5 Medan – Media Pembelajaran Interaktif Mesin Bubut
         </footer>
     </div>
 
-    <!-- [Script Kuis Anda tetap sama] -->
+    <!-- JAVASCRIPT : KUIS (LENGKAP) -->
     <script>
-        // [Sisipkan SELURUH JavaScript Anda di sini, persis sama]
-        const kuisData = [ /* data soal Anda */ ];
-        // ... fungsi renderKuis dan listener kuisSubmit ...
-        
-        // Contoh penggalan (saya salin dari kode Anda):
+        // DATA SOAL KUIS (10 soal)
         const kuisData = [
             { q: 'Apa fungsi utama spindle pada mesin bubut?', o: ['Memutar benda kerja', 'Menggerakkan pahat', 'Mendinginkan benda', 'Menjepit pahat'], a: 0 },
-            // ... (lanjutkan 9 soal lainnya persis seperti milik Anda)
+            { q: 'Bagian yang berfungsi sebagai penyangga benda kerja panjang adalah...', o: ['Kepala tetap (Headstock)', 'Kepala lepas (Tailstock)', 'Eretan (Carriage)', 'Chuck'], a: 1 },
+            { q: 'Jika kecepatan putar (RPM) terlalu tinggi, hasil permukaan benda kerja cenderung...', o: ['Kasar', 'Halus', 'Tidak berubah', 'Bergelombang'], a: 1 },
+            { q: 'Satuan untuk kecepatan pemakanan (feed) pada mesin bubut adalah...', o: ['mm/putaran', 'RPM', 'mm/menit', 'N/m²'], a: 0 },
+            { q: 'Pahat yang digunakan untuk membuat alur pada benda kerja dinamakan...', o: ['Grooving tool', 'Turning tool', 'Threading tool', 'Parting tool'], a: 0 },
+            { q: 'Bagian mesin yang membawa pahat dan bergerak sepanjang bed (alas) adalah...', o: ['Carriage (Eretan)', 'Spindle', 'Tailstock', 'Lead screw'], a: 0 },
+            { q: 'Kedalaman potong (DOC) yang terlalu dalam dapat menyebabkan...', o: ['Pahat cepat aus', 'Permukaan menjadi halus', 'Spindle berhenti', 'Benda kerja memuai'], a: 0 },
+            { q: 'Cairan pendingin (coolant) pada mesin bubut digunakan untuk...', o: ['Mengurangi panas & gesekan', 'Mengeraskan benda kerja', 'Mempercepat putaran', 'Membersihkan pahat'], a: 0 },
+            { q: 'Chuck pada mesin bubut berfungsi untuk...', o: ['Menjepit benda kerja', 'Memutar pahat', 'Mengatur kecepatan', 'Menahan tailstock'], a: 0 },
+            { q: 'Proses membubut permukaan ujung (depan) benda kerja disebut...', o: ['Facing', 'Turning', 'Grooving', 'Drilling'], a: 0 }
         ];
 
+        // RENDER SOAL KE HALAMAN
         function renderKuis() {
-            // ... logika render kuis Anda ...
+            const container = document.getElementById('kuisContainer');
+            container.innerHTML = '';
+
+            kuisData.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-box';
+                div.id = `quiz-${idx}`;
+
+                const qDiv = document.createElement('div');
+                qDiv.className = 'q';
+                qDiv.innerHTML = `<span>${idx + 1}.</span> ${item.q}`;
+                div.appendChild(qDiv);
+
+                item.o.forEach((opt, oi) => {
+                    const label = document.createElement('label');
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `k${idx}`;
+                    radio.value = oi;
+                    radio.id = `k${idx}_${oi}`;
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(opt));
+                    label.htmlFor = `k${idx}_${oi}`;
+                    div.appendChild(label);
+                });
+
+                container.appendChild(div);
+            });
         }
 
+        renderKuis();
+
+        // PERIKSA JAWABAN
         document.getElementById('kuisSubmit').addEventListener('click', function() {
-            // ... logika hitung skor Anda ...
+            let benar = 0;
+            const total = kuisData.length;
+
+            kuisData.forEach((item, idx) => {
+                const selected = document.querySelector(`input[name="k${idx}"]:checked`);
+                if (selected && parseInt(selected.value) === item.a) {
+                    benar++;
+                }
+            });
+
+            const persen = Math.round((benar / total) * 100);
+            const resultDiv = document.getElementById('kuisResult');
+
+            let icon = '';
+            let kelas = '';
+            if (benar === total) {
+                icon = '🎉'; kelas = 'green';
+            } else if (benar >= 7) {
+                icon = '😊'; kelas = 'green';
+            } else if (benar >= 5) {
+                icon = '📖'; kelas = 'yellow';
+            } else {
+                icon = '💪'; kelas = 'red';
+            }
+
+            resultDiv.className = `score-result ${kelas}`;
+            resultDiv.innerHTML = `
+                <span class="icon">${icon}</span>
+                Nilai Kuis: <strong>${benar}</strong> / ${total} (${persen}%)
+                <br>
+                <span style="font-size:0.8rem; font-weight:400; color:#475569;">
+                    ${benar === total ? 'Sempurna! Anda menguasai materi dengan baik!' :
+                      benar >= 7 ? 'Bagus! Tingkatkan lagi dengan mempelajari soal yang salah.' :
+                      benar >= 5 ? 'Cukup. Pelajari kembali materi tentang mesin bubut.' :
+                      'Perlu belajar lebih giat. Baca ulang materi dan coba lagi!'}
+                </span>
+            `;
+
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
-        renderKuis();
-        console.log('✅ Kuis siap!');
+        console.log('✅ Kuis siap! Selamat mengerjakan.');
     </script>
 
 </body>
