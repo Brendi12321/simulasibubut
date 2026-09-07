@@ -12,233 +12,56 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* ==========================================================
-           GLOBAL STYLES
-           ========================================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f4fb;
-            color: #1a2639;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* ---------- NAVBAR ---------- */
-        .navbar {
-            background: #0b1a2e;
-            padding: 0 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            border-bottom: 2px solid #2a4b6e;
-        }
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #fff;
-            font-weight: 800;
-            font-size: 1.1rem;
-            padding: 12px 0;
-        }
-        .navbar .logo i {
-            color: #60a5fa;
-            font-size: 1.4rem;
-        }
-        .navbar .logo span {
-            color: #94b8d9;
-            font-weight: 400;
-        }
-        .nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            padding: 8px 0;
-        }
-        .nav-links a {
-            background: transparent;
-            border: none;
-            color: #b0c9e0;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Inter', sans-serif;
-            text-decoration: none;
-        }
-        .nav-links a:hover {
-            background: #1a334d;
-            color: #fff;
-        }
-        .nav-links a.active {
-            background: #2563eb;
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-        @media (max-width: 780px) {
-            .navbar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 0 12px;
-            }
-            .nav-links {
-                justify-content: center;
-                padding-bottom: 10px;
-            }
-            .nav-links a {
-                font-size: 0.7rem;
-                padding: 6px 12px;
-            }
-        }
-        @media (max-width: 500px) {
-            .nav-links a {
-                font-size: 0.6rem;
-                padding: 4px 8px;
-            }
-            .nav-links a i {
-                display: none;
-            }
-        }
-
-        /* ---------- MAIN CONTENT ---------- */
-        .main-content {
-            flex: 1;
-            max-width: 1280px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 30px 24px 40px;
-        }
-
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #0b1a2e;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .page-title i {
-            color: #2563eb;
-        }
-        .page-sub {
-            color: #475569;
-            margin-bottom: 28px;
-            border-left: 4px solid #2563eb;
-            padding-left: 16px;
-            font-weight: 500;
-        }
-
-        footer {
-            text-align: center;
-            padding: 24px 0 10px;
-            color: #94a3b8;
-            font-size: 0.85rem;
-            border-top: 1px solid #e2e8f0;
-            margin-top: 20px;
-        }
-
-        /* ==========================================================
-           KHUSUS: STYLE UNTUK MATERI (#materi)
-           ========================================================== */
-        #materi .materi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-        #materi .materi-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-            border-left: 6px solid #2563eb;
-            transition: 0.2s ease;
-        }
-        #materi .materi-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
-        }
-        #materi .materi-card h3 {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-            color: #0b1a2e;
-            margin-bottom: 8px;
-        }
-        #materi .materi-card h3 i {
-            color: #2563eb;
-            width: 24px;
-            font-size: 1.1rem;
-        }
-        #materi .materi-card p {
-            color: #475569;
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
-        #materi .materi-card ul {
-            padding-left: 20px;
-            color: #475569;
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-        #materi .materi-card ul li {
-            margin-bottom: 2px;
-        }
-        #materi .materi-card ul li b {
-            color: #1a2639;
-        }
-
-        @media (max-width: 600px) {
-            .page-title {
-                font-size: 1.4rem;
-            }
-            #materi .materi-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        /* [Sisipkan SELURUH CSS milik Anda di sini, persis sama] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f4fb; color: #1a2639; display: flex; flex-direction: column; min-height: 100vh; }
+        .navbar { background: #0b1a2e; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); border-bottom: 2px solid #2a4b6e; }
+        .navbar .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.1rem; padding: 12px 0; }
+        .navbar .logo i { color: #60a5fa; font-size: 1.4rem; }
+        .navbar .logo span { color: #94b8d9; font-weight: 400; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
+        .nav-links a { background: transparent; border: none; color: #b0c9e0; padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; text-decoration: none; }
+        .nav-links a:hover { background: #1a334d; color: #fff; }
+        .nav-links a.active { background: #2563eb; color: #fff; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        @media (max-width: 780px) { .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; } .nav-links { justify-content: center; padding-bottom: 10px; } .nav-links a { font-size: 0.7rem; padding: 6px 12px; } }
+        @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } }
+        .main-content { flex: 1; max-width: 1280px; width: 100%; margin: 0 auto; padding: 30px 24px 40px; }
+        .page-title { font-size: 1.8rem; font-weight: 800; color: #0b1a2e; margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
+        .page-title i { color: #2563eb; }
+        .page-sub { color: #475569; margin-bottom: 28px; border-left: 4px solid #2563eb; padding-left: 16px; font-weight: 500; }
+        footer { text-align: center; padding: 24px 0 10px; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 20px; }
+        #materi .materi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        #materi .materi-card { background: #ffffff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); border-left: 6px solid #2563eb; transition: 0.2s ease; }
+        #materi .materi-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07); }
+        #materi .materi-card h3 { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; color: #0b1a2e; margin-bottom: 8px; }
+        #materi .materi-card h3 i { color: #2563eb; width: 24px; font-size: 1.1rem; }
+        #materi .materi-card p { color: #475569; line-height: 1.7; font-size: 0.95rem; }
+        #materi .materi-card ul { padding-left: 20px; color: #475569; font-size: 0.9rem; line-height: 1.8; }
+        #materi .materi-card ul li { margin-bottom: 2px; }
+        #materi .materi-card ul li b { color: #1a2639; }
+        @media (max-width: 600px) { .page-title { font-size: 1.4rem; } #materi .materi-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    NAVBAR
-    ============================================================ -->
+    <!-- NAVBAR (SUDAH DIPERBAIKI) -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-cogs"></i>
             <span>SMK N 5 Medan</span> · Bubut
         </div>
         <div class="nav-links">
-            <a href="#"><i class="fas fa-home"></i> Beranda</a>
-            <a href="#" class="active"><i class="fas fa-book"></i> Materi</a>
-            <a href="#"><i class="fas fa-play-circle"></i> Video</a>
-            <a href="#"><i class="fas fa-cubes"></i> Simulasi</a>
-            <a href="#"><i class="fas fa-puzzle-piece"></i> Kuis</a>
-            <a href="#"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
-            <a href="#"><i class="fas fa-user-graduate"></i> Profil</a>
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="materi.html" class="active"><i class="fas fa-book"></i> Materi</a>
+            <a href="video.html"><i class="fas fa-play-circle"></i> Video</a>
+            <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
+            <a href="kuis.html"><i class="fas fa-puzzle-piece"></i> Kuis</a>
+            <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
+            <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
         </div>
     </nav>
 
-    <!-- ============================================================
-    MAIN CONTENT : MATERI
-    ============================================================ -->
+    <!-- MAIN CONTENT : MATERI (Persis sama dengan milik Anda) -->
     <div class="main-content">
         <div id="materi">
             <h2 class="page-title"><i class="fas fa-book-open"></i> Materi Mesin Bubut</h2>
