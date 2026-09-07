@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pretest - Media Pembelajaran Mesin Bubut</title>
+    <title>Pretest Masuk (Wajib) - Media Pembelajaran Mesin Bubut</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -543,36 +543,16 @@
             transform: translateY(0);
             filter: blur(0);
         }
-        .delay-1 {
-            transition-delay: 0.08s;
-        }
-        .delay-2 {
-            transition-delay: 0.16s;
-        }
-        .delay-3 {
-            transition-delay: 0.24s;
-        }
-        .delay-4 {
-            transition-delay: 0.32s;
-        }
-        .delay-5 {
-            transition-delay: 0.40s;
-        }
-        .delay-6 {
-            transition-delay: 0.48s;
-        }
-        .delay-7 {
-            transition-delay: 0.56s;
-        }
-        .delay-8 {
-            transition-delay: 0.64s;
-        }
-        .delay-9 {
-            transition-delay: 0.72s;
-        }
-        .delay-10 {
-            transition-delay: 0.80s;
-        }
+        .delay-1 { transition-delay: 0.08s; }
+        .delay-2 { transition-delay: 0.16s; }
+        .delay-3 { transition-delay: 0.24s; }
+        .delay-4 { transition-delay: 0.32s; }
+        .delay-5 { transition-delay: 0.40s; }
+        .delay-6 { transition-delay: 0.48s; }
+        .delay-7 { transition-delay: 0.56s; }
+        .delay-8 { transition-delay: 0.64s; }
+        .delay-9 { transition-delay: 0.72s; }
+        .delay-10 { transition-delay: 0.80s; }
     </style>
 </head>
 <body>
@@ -602,7 +582,7 @@
     <!-- ===== MAIN ===== -->
     <div class="main-content">
 
-        <h2 class="page-title reveal"><i class="fas fa-file-signature"></i> Pretest</h2>
+        <h2 class="page-title reveal"><i class="fas fa-file-signature"></i> Pretest Masuk (Wajib)</h2>
         <p class="page-sub reveal delay-1">
             <i class="fas fa-arrow-right" style="color:var(--primary);"></i>
             Kerjakan <strong>10 soal</strong> ini sebelum memasuki web pembelajaran.
@@ -652,7 +632,7 @@
             <div class="score-label">dari 10 soal</div>
             <div class="feedback" id="feedbackText">
                 <span class="emoji">🎯</span>
-                <span id="feedbackMsg">Selamat! Anda telah menyelesaikan pretest.</span>
+                <span id="feedbackMsg">Selamat! Anda telah menyelesaikan pretest masuk.</span>
             </div>
             <div style="text-align:center; margin-top:8px;">
                 <a href="index.html" class="btn-success" id="enterBtn">
@@ -675,54 +655,18 @@
         // ============================================================
         //  1. DATA SOAL (10 soal tentang mesin bubut)
         // ============================================================
-        const soalData = [{
-            q: 'Apa fungsi utama mesin bubut?',
-            o: [
-                'Memutar benda kerja untuk proses pemotongan',
-                'Menggerinda permukaan logam',
-                'Mengebor lubang pada logam',
-                'Menghaluskan permukaan dengan amplas'
-            ],
-            a: 0
-        }, {
-            q: 'Bagian yang berfungsi sebagai penjepit benda kerja pada mesin bubut adalah...',
-            o: ['Chuck', 'Tailstock', 'Carriage', 'Bed'],
-            a: 0
-        }, {
-            q: 'Kecepatan putar spindle pada mesin bubut diukur dalam satuan...',
-            o: ['RPM (Revolutions Per Minute)', 'mm/menit', 'm/s', 'N/m²'],
-            a: 0
-        }, {
-            q: 'Pahat yang digunakan untuk membuat ulir pada mesin bubut disebut...',
-            o: ['Grooving tool', 'Threading tool', 'Parting tool', 'Turning tool'],
-            a: 1
-        }, {
-            q: 'Gerakan pahat yang sejajar dengan sumbu benda kerja disebut...',
-            o: ['Feeding radial (melintang)', 'Facing', 'Feeding axial (memanjang)', 'Grooving'],
-            a: 2
-        }, {
-            q: 'Alat yang digunakan untuk menyangga benda kerja panjang pada mesin bubut adalah...',
-            o: ['Headstock (kepala tetap)', 'Tailstock (kepala lepas)', 'Carriage', 'Lead screw'],
-            a: 1
-        }, {
-            q: 'Kedalaman potong (DOC) yang terlalu dalam dapat menyebabkan...',
-            o: ['Permukaan menjadi halus', 'Spindle berhenti', 'Pahat cepat aus', 'Benda kerja memuai'],
-            a: 2
-        }, {
-            q: 'Cairan pendingin (coolant) pada mesin bubut berfungsi untuk...',
-            o: ['Mengeraskan benda kerja', 'Mengurangi panas dan gesekan', 'Mempercepat putaran',
-                'Membersihkan pahat'
-            ],
-            a: 1
-        }, {
-            q: 'Proses membubut permukaan ujung (depan) benda kerja disebut...',
-            o: ['Turning', 'Grooving', 'Facing', 'Drilling'],
-            a: 2
-        }, {
-            q: 'Bagian mesin yang membawa pahat dan bergerak sepanjang bed (alas) adalah...',
-            o: ['Spindle', 'Tailstock', 'Carriage (Eretan)', 'Lead screw'],
-            a: 2
-        }];
+        const soalData = [
+            { q: 'Apa fungsi utama mesin bubut?', o: ['Memutar benda kerja untuk proses pemotongan', 'Menggerinda permukaan logam', 'Mengebor lubang pada logam', 'Menghaluskan permukaan dengan amplas'], a: 0 },
+            { q: 'Bagian yang berfungsi sebagai penjepit benda kerja pada mesin bubut adalah...', o: ['Chuck', 'Tailstock', 'Carriage', 'Bed'], a: 0 },
+            { q: 'Kecepatan putar spindle pada mesin bubut diukur dalam satuan...', o: ['RPM (Revolutions Per Minute)', 'mm/menit', 'm/s', 'N/m²'], a: 0 },
+            { q: 'Pahat yang digunakan untuk membuat ulir pada mesin bubut disebut...', o: ['Grooving tool', 'Threading tool', 'Parting tool', 'Turning tool'], a: 1 },
+            { q: 'Gerakan pahat yang sejajar dengan sumbu benda kerja disebut...', o: ['Feeding radial (melintang)', 'Facing', 'Feeding axial (memanjang)', 'Grooving'], a: 2 },
+            { q: 'Alat yang digunakan untuk menyangga benda kerja panjang pada mesin bubut adalah...', o: ['Headstock (kepala tetap)', 'Tailstock (kepala lepas)', 'Carriage', 'Lead screw'], a: 1 },
+            { q: 'Kedalaman potong (DOC) yang terlalu dalam dapat menyebabkan...', o: ['Permukaan menjadi halus', 'Spindle berhenti', 'Pahat cepat aus', 'Benda kerja memuai'], a: 2 },
+            { q: 'Cairan pendingin (coolant) pada mesin bubut berfungsi untuk...', o: ['Mengeraskan benda kerja', 'Mengurangi panas dan gesekan', 'Mempercepat putaran', 'Membersihkan pahat'], a: 1 },
+            { q: 'Proses membubut permukaan ujung (depan) benda kerja disebut...', o: ['Turning', 'Grooving', 'Facing', 'Drilling'], a: 2 },
+            { q: 'Bagian mesin yang membawa pahat dan bergerak sepanjang bed (alas) adalah...', o: ['Spindle', 'Tailstock', 'Carriage (Eretan)', 'Lead screw'], a: 2 }
+        ];
 
         // ============================================================
         //  2. STATE
@@ -770,7 +714,6 @@
                 form.appendChild(div);
             });
 
-            // Event listener untuk tombol
             document.getElementById('submitBtn').addEventListener('click', handleSubmit);
             document.getElementById('resetBtn').addEventListener('click', handleReset);
             document.getElementById('exitBtn').addEventListener('click', handleExit);
@@ -784,9 +727,7 @@
         function updateProgress() {
             const radios = document.querySelectorAll('#pretestForm input[type="radio"]');
             const answered = new Set();
-            radios.forEach(r => {
-                if (r.checked) answered.add(r.name);
-            });
+            radios.forEach(r => { if (r.checked) answered.add(r.name); });
             const count = answered.size;
             document.getElementById('answeredCount').textContent = count;
             const pct = (count / totalSoal) * 100;
@@ -839,12 +780,9 @@
                 timerInterval = null;
             }
 
-            // Cek apakah semua soal sudah dijawab
             const radios = document.querySelectorAll('#pretestForm input[type="radio"]');
             const answered = new Set();
-            radios.forEach(r => {
-                if (r.checked) answered.add(r.name);
-            });
+            radios.forEach(r => { if (r.checked) answered.add(r.name); });
 
             if (answered.size < totalSoal && !fromTimeout) {
                 const sisa = totalSoal - answered.size;
@@ -854,7 +792,6 @@
                 }
             }
 
-            // Hitung skor
             let benar = 0;
             const detail = [];
 
@@ -875,7 +812,6 @@
 
             sudahSubmit = true;
 
-            // Tampilkan hasil
             const container = document.getElementById('resultContainer');
             container.classList.add('show');
 
@@ -883,58 +819,44 @@
 
             const persen = Math.round((benar / totalSoal) * 100);
             let emoji, msg;
-            if (persen === 100) { emoji = '🎉';
-                msg = 'Sempurna! Anda benar-benar menguasai materi dasar mesin bubut!'; } else if (persen >= 80) { emoji =
-                    '🌟';
-                msg = 'Sangat baik! Tingkatkan dengan mempelajari ulang soal yang salah.'; } else if (persen >= 60) { emoji =
-                    '📖';
-                msg = 'Cukup. Pelajari kembali materi tentang mesin bubut.'; } else if (persen >= 40) { emoji = '💪';
-                msg = 'Perlu belajar lebih giat. Baca ulang materi dan coba lagi.'; } else { emoji = '📚';
-                msg = 'Masih banyak yang perlu dipelajari. Jangan menyerah!'; }
+            if (persen === 100) { emoji = '🎉'; msg = 'Sempurna! Anda benar-benar menguasai materi dasar mesin bubut!'; }
+            else if (persen >= 80) { emoji = '🌟'; msg = 'Sangat baik! Tingkatkan dengan mempelajari ulang soal yang salah.'; }
+            else if (persen >= 60) { emoji = '📖'; msg = 'Cukup. Pelajari kembali materi tentang mesin bubut.'; }
+            else if (persen >= 40) { emoji = '💪'; msg = 'Perlu belajar lebih giat. Baca ulang materi dan coba lagi.'; }
+            else { emoji = '📚'; msg = 'Masih banyak yang perlu dipelajari. Jangan menyerah!'; }
 
             document.getElementById('feedbackMsg').textContent = msg;
             document.getElementById('feedbackText').querySelector('.emoji').textContent = emoji;
 
-            // Detail jawaban
             const detailDiv = document.getElementById('detailAnswers');
             detailDiv.innerHTML = '';
             detail.forEach((d) => {
                 const div = document.createElement('div');
                 div.className = 'detail-item';
-
                 const icon = document.createElement('span');
                 icon.className = `icon-result ${d.isBenar ? 'correct' : 'wrong'}`;
                 icon.textContent = d.isBenar ? '✅' : '❌';
-
                 const text = document.createElement('span');
                 text.className = 'detail-text';
                 const userAns = d.jawabanUser >= 0 ? d.optionLabels[d.jawabanUser] : '(tidak dijawab)';
                 const correctAns = d.optionLabels[d.jawabanBenar];
                 if (d.isBenar) {
-                    text.innerHTML =
-                        `<strong>${d.index + 1}.</strong> ${d.soal}<br>Jawaban: <span class="jawaban-benar">${userAns}</span> (benar)`;
+                    text.innerHTML = `<strong>${d.index + 1}.</strong> ${d.soal}<br>Jawaban: <span class="jawaban-benar">${userAns}</span> (benar)`;
                 } else {
-                    text.innerHTML =
-                        `<strong>${d.index + 1}.</strong> ${d.soal}<br>Jawaban: <span class="jawaban-salah">${userAns}</span> &nbsp;→&nbsp; Jawaban benar: <span class="jawaban-benar">${correctAns}</span>`;
+                    text.innerHTML = `<strong>${d.index + 1}.</strong> ${d.soal}<br>Jawaban: <span class="jawaban-salah">${userAns}</span> &nbsp;→&nbsp; Jawaban benar: <span class="jawaban-benar">${correctAns}</span>`;
                 }
-
                 div.appendChild(icon);
                 div.appendChild(text);
                 detailDiv.appendChild(div);
             });
 
-            // Sembunyikan form & tombol
             document.getElementById('pretestForm').style.display = 'none';
             document.querySelector('.btn-group').style.display = 'none';
             document.getElementById('statusText').style.display = 'none';
-
-            // Tampilkan tombol masuk
             document.getElementById('enterBtn').style.display = 'inline-flex';
 
-            // Scroll ke hasil
             container.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // Simpan di localStorage agar tidak perlu pretest lagi
             try {
                 localStorage.setItem('pretestDone', 'true');
                 localStorage.setItem('pretestScore', `${benar}/${totalSoal}`);
@@ -947,30 +869,20 @@
         // ============================================================
         function handleReset() {
             if (sudahSubmit) {
-                // Jika sudah submit, konfirmasi untuk mengulang dari awal
                 if (!confirm('Anda sudah menyelesaikan pretest. Ulangi dari awal?')) return;
-                // Hapus status submit
                 sudahSubmit = false;
                 sudahTimeout = false;
-                // Sembunyikan hasil
                 document.getElementById('resultContainer').classList.remove('show');
                 document.getElementById('resultContainer').style.display = 'none';
-                // Tampilkan form & tombol
                 document.getElementById('pretestForm').style.display = 'block';
                 document.querySelector('.btn-group').style.display = 'flex';
                 document.getElementById('statusText').style.display = 'inline';
-                // Reset jawaban
                 document.querySelectorAll('#pretestForm input[type="radio"]').forEach(r => { r.checked = false; });
-                // Reset timer
-                if (timerInterval) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                }
+                if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
                 waktu = 600;
                 updateTimerDisplay();
                 startTimer();
                 updateProgress();
-                // Hapus localStorage agar bisa pretest ulang
                 try {
                     localStorage.removeItem('pretestDone');
                     localStorage.removeItem('pretestScore');
@@ -979,13 +891,9 @@
                 return;
             }
 
-            // Jika belum submit, reset biasa
             if (!confirm('Reset semua jawaban dan timer ke awal?')) return;
             document.querySelectorAll('#pretestForm input[type="radio"]').forEach(r => { r.checked = false; });
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
             waktu = 600;
             updateTimerDisplay();
             startTimer();
@@ -1007,9 +915,7 @@
                 const done = localStorage.getItem('pretestDone');
                 if (done === 'true') {
                     const score = localStorage.getItem('pretestScore') || '?';
-                    if (confirm(
-                            `Anda sudah pernah mengerjakan pretest (skor: ${score}).\n\nKlik "OK" untuk langsung masuk ke web, atau "Batal" untuk mengulang pretest.`
-                            )) {
+                    if (confirm(`Anda sudah pernah mengerjakan pretest (skor: ${score}).\n\nKlik "OK" untuk langsung masuk ke web, atau "Batal" untuk mengulang pretest.`)) {
                         window.location.href = 'index.html';
                         return true;
                     } else {
@@ -1026,7 +932,6 @@
         // ============================================================
         //  10. DARK MODE, BACK TO TOP, REVEAL
         // ============================================================
-        // Dark Mode
         const darkToggle = document.getElementById('darkModeToggle');
         const darkIcon = darkToggle.querySelector('i');
         const theme = localStorage.getItem('theme');
@@ -1049,7 +954,6 @@
             localStorage.setItem('theme', t);
         });
 
-        // Back to Top
         const myBtn = document.getElementById('myBtn');
         window.onscroll = function() {
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -1058,11 +962,8 @@
                 myBtn.style.display = 'none';
             }
         };
-        myBtn.onclick = function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        myBtn.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-        // Reveal Animation
         const observerOpts = { threshold: 0.08, rootMargin: '0px 0px -30px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => {
