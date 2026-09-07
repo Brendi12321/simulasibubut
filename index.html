@@ -11,7 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CSS LENGKAP DENGAN SEMUA SECTION -->
+    <!-- CEK PRETEST (WAJIB) -->
+    <script>
+        (function() {
+            if (localStorage.getItem('pretestDone') !== 'true') {
+                window.location.href = 'pretest.html';
+            }
+        })();
+    </script>
+
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -86,7 +94,7 @@
         #beranda .btn-hero.secondary { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
         #beranda .btn-hero.secondary:hover { background: rgba(255,255,255,0.2); }
 
-        /* ========== CARDS (TUJUAN, FITUR, DLL) ========== */
+        /* ========== CARDS ========== */
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 40px; }
         .card-item { background: var(--card-bg); border-radius: 20px; padding: 24px; box-shadow: 0 4px 16px var(--shadow-color); border-left: 6px solid #2563eb; transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.4s; }
         .card-item:hover { transform: translateY(-4px); box-shadow: 0 12px 30px var(--shadow-color); }
@@ -94,7 +102,7 @@
         .card-item h3 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 8px; }
         .card-item p { font-size: 0.95rem; color: var(--text-color); opacity: 0.7; line-height: 1.6; }
 
-        /* ========== FLOW / ALUR PEMBELAJARAN ========== */
+        /* ========== FLOW ========== */
         .flow-container { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin: 20px 0 40px; }
         .flow-step { background: var(--box-bg); border: 2px dashed #2563eb; padding: 14px 24px; border-radius: 40px; font-weight: 700; color: var(--text-color); display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
         .flow-arrow { color: #2563eb; font-size: 1.4rem; align-self: center; }
@@ -109,7 +117,7 @@
         #myBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--nav-active); color: white; cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px; box-shadow: 0 4px 10px var(--shadow-color); transition: transform 0.3s, background-color 0.3s; }
         #myBtn:hover { background-color: #1d4ed8; transform: translateY(-3px); }
 
-        /* ========== ANIMASI SAAT SCROLL ========== */
+        /* ========== ANIMASI SCROLL ========== */
         .reveal { opacity: 0; transform: translateY(30px); filter: blur(10px); transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease; }
         .reveal.is-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
         .delay-1 { transition-delay: 0.1s; }
@@ -153,7 +161,8 @@
                 <p class="delay-3 reveal">Selamat datang di portal pembelajaran berbasis web untuk meningkatkan kompetensi praktik dan teori mesin bubut.</p>
                 <div class="hero-buttons delay-4 reveal">
                     <a href="#tujuan" class="btn-hero"><i class="fas fa-rocket"></i> Mulai Belajar</a>
-                    <a href="evaluasi.html" class="btn-hero secondary"><i class="fas fa-file-signature"></i> Pretest</a>
+                    <!-- Tautan Pretest Masuk diarahkan ke pretest.html -->
+                    <a href="pretest.html" class="btn-hero secondary"><i class="fas fa-file-signature"></i> Pretest Masuk (Wajib)</a>
                 </div>
             </div>
 
@@ -208,7 +217,7 @@
                     <div class="card-item reveal">
                         <i class="fas fa-clipboard-check"></i>
                         <h3>Evaluasi</h3>
-                        <p>Pretest & Posttest untuk mengukur peningkatan.</p>
+                        <p>Tes Awal & Tes Akhir untuk mengukur peningkatan.</p>
                     </div>
                     <div class="card-item reveal">
                         <i class="fas fa-chart-line"></i>
@@ -265,7 +274,7 @@
                 <h2 class="section-title"><i class="fas fa-route"></i> Alur Pembelajaran</h2>
                 <p class="section-sub">Ikuti alur ini agar mendapatkan hasil belajar yang maksimal.</p>
                 <div class="flow-container">
-                    <div class="flow-step"><i class="fas fa-file-signature"></i> PRETEST</div>
+                    <div class="flow-step"><i class="fas fa-file-signature"></i> PRETEST (Wajib)</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step"><i class="fas fa-book"></i> MATERI</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
@@ -275,7 +284,7 @@
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step"><i class="fas fa-puzzle-piece"></i> KUIS</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="flow-step"><i class="fas fa-clipboard-check"></i> POSTTEST</div>
+                    <div class="flow-step"><i class="fas fa-clipboard-check"></i> TES AKHIR</div>
                 </div>
             </div>
 
@@ -329,12 +338,12 @@
                 <div class="card-grid">
                     <div class="card-item reveal">
                         <i class="fas fa-file-signature"></i>
-                        <h3>Pretest</h3>
+                        <h3>Tes Awal</h3>
                         <p>Kerjakan sebelum belajar untuk mengukur pengetahuan awal.</p>
                     </div>
                     <div class="card-item reveal">
                         <i class="fas fa-certificate"></i>
-                        <h3>Posttest</h3>
+                        <h3>Tes Akhir</h3>
                         <p>Kerjakan setelah belajar untuk mengukur pemahaman akhir.</p>
                     </div>
                 </div>
@@ -348,7 +357,7 @@
                     <div class="stat-card reveal"><div class="num">7</div><div class="label">Modul Pembelajaran</div></div>
                     <div class="stat-card reveal"><div class="num">3D</div><div class="label">Simulasi Realistis</div></div>
                     <div class="stat-card reveal"><div class="num">20+</div><div class="label">Soal Latihan</div></div>
-                    <div class="stat-card reveal"><div class="num">✔</div><div class="label">Evaluasi Pretest/Posttest</div></div>
+                    <div class="stat-card reveal"><div class="num">✔</div><div class="label">Evaluasi Tes Awal/Akhir</div></div>
                 </div>
             </div>
 
@@ -371,9 +380,8 @@
     <!-- Tombol kembali ke atas -->
     <button id="myBtn" title="Kembali ke atas">↑</button>
 
-    <!-- JAVASCRIPT -->
     <script>
-        // 1. TOMBOL KEMBALI KE ATAS
+        // (Semua script sama seperti sebelumnya)
         const mybutton = document.getElementById("myBtn");
         window.onscroll = function() { scrollFunction(); };
         function scrollFunction() {
@@ -385,7 +393,6 @@
         }
         mybutton.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-        // 2. DARK MODE
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
         const currentTheme = localStorage.getItem('theme');
@@ -408,7 +415,6 @@
             localStorage.setItem('theme', theme);
         });
 
-        // 3. ANIMASI SCROLL
         const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -421,7 +427,6 @@
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
 
-        // 4. MENANDAI MENU AKTIF
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname.split("/").pop() || "index.html";
             const navLinks = document.querySelectorAll(".nav-links a");
