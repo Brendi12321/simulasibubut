@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -56,12 +59,49 @@
         .navbar .logo span { color: #94b8d9; font-weight: 400; }
         .dark-toggle { background: transparent; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; padding: 10px; transition: color 0.3s; }
         .dark-toggle:hover { color: #fbbf24; }
-        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; align-items: center; }
         .nav-links a { background: transparent; border: none; color: var(--nav-text); padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; text-decoration: none; }
         .nav-links a:hover { background: #1a334d; color: #fff; }
         .nav-links a.active { background: var(--nav-active); color: #fff; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .nav-links a.login-guru { background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(96, 165, 250, 0.25); color: #93c5fd; }
+        .nav-links a.login-guru:hover { background: #2563eb; color: white; }
+        .nav-links a.dashboard-guru { background: #16a34a; color: white; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25); }
+        .nav-links a.dashboard-guru:hover { background: #15803d; }
+        .nav-links button.btn-logout-siswa {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Inter', sans-serif;
+            margin-left: 4px;
+        }
+        .nav-links button.btn-logout-siswa:hover { background: #dc2626; color: #fff; border-color: #dc2626; }
+        .nav-user-info {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(22, 163, 74, 0.15);
+            border: 1px solid rgba(22, 163, 74, 0.3);
+            color: #4ade80;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        .nav-user-info i { font-size: 0.85rem; }
+        @media (max-width: 900px) {
+            .nav-user-info { font-size: 0.7rem; padding: 5px 10px; }
+            .nav-links button.btn-logout-siswa { font-size: 0.7rem; padding: 6px 10px; }
+        }
         @media (max-width: 780px) { .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; } .nav-links { justify-content: center; padding-bottom: 10px; } .nav-links a { font-size: 0.7rem; padding: 6px 12px; } }
-        @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } }
+        @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } .nav-links button.btn-logout-siswa i { display: inline; } }
 
         /* ========== MAIN CONTENT & FOOTER ========== */
         .main-content { flex: 1; max-width: 1280px; width: 100%; margin: 0 auto; padding: 30px 24px 40px; }
@@ -146,8 +186,22 @@
                 <a href="materi.html"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html" class="active"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
+                <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Kuis</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
+
+                <span id="navUserInfo" class="nav-user-info" style="display:none;">
+                    <i class="fas fa-user"></i>
+                    <span id="navUserText">-</span>
+                </span>
+
+                <button id="btnLogoutSiswa" class="btn-logout-siswa" style="display:none;" onclick="keluarSiswa()">
+                    <i class="fas fa-right-from-bracket"></i> Keluar
+                </button>
+
+                <a href="#" id="guruModeBtn" class="login-guru" style="display:none;">
+                    <i class="fas fa-user-tie"></i>
+                    <span id="guruModeText">Login Guru</span>
+                </a>
             </div>
             <button class="dark-toggle" id="darkModeToggle" title="Ganti Mode">
                 <i class="fas fa-moon"></i>
@@ -214,6 +268,13 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        // ============================================================
+        //  SUPABASE CONFIG
+        // ============================================================
+        const SUPABASE_URL = "https://fxsshzwljalwxpxpbjgn.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NKOVw8rMBJ5SdPRmPihu8w_IKg9G_Tf";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
         // ============================================================
         //  DATA VIDEO (9 video dengan berbagai kategori)
         // ============================================================
@@ -357,7 +418,6 @@
                 grid.appendChild(item);
             });
 
-            // Re-trigger reveal animation
             document.querySelectorAll('.reveal').forEach(el => {
                 el.classList.remove('is-visible');
                 setTimeout(() => {
@@ -399,6 +459,64 @@
             
             const cats = new Set(data.map(v => v.category));
             document.getElementById('totalCategories').textContent = cats.size;
+        }
+
+        // ============================================================
+        //  CEK IDENTITAS SISWA
+        // ============================================================
+        function cekIdentitasSiswa() {
+            const userMode = sessionStorage.getItem("userMode");
+            const siswaNama = sessionStorage.getItem("siswaNama");
+            const siswaKelas = sessionStorage.getItem("siswaKelas");
+
+            const navUserInfo = document.getElementById("navUserInfo");
+            const navUserText = document.getElementById("navUserText");
+            const btnLogoutSiswa = document.getElementById("btnLogoutSiswa");
+            const guruModeBtn = document.getElementById("guruModeBtn");
+            const guruModeText = document.getElementById("guruModeText");
+
+            if (userMode === "siswa" && siswaNama && siswaKelas) {
+                navUserInfo.style.display = "inline-flex";
+                navUserText.textContent = `${siswaNama} · ${siswaKelas}`;
+                btnLogoutSiswa.style.display = "inline-flex";
+
+                guruModeBtn.style.display = "inline-flex";
+                guruModeBtn.className = "login-guru";
+                guruModeBtn.href = "login.html";
+                guruModeText.textContent = "Login Guru";
+            } else if (userMode === "guru") {
+                guruModeBtn.style.display = "inline-flex";
+                supabaseClient.auth.getSession().then(({ data }) => {
+                    if (data.session) {
+                        guruModeBtn.className = "dashboard-guru";
+                        guruModeBtn.href = "guru.html";
+                        guruModeText.textContent = "Dashboard Guru";
+                    } else {
+                        guruModeBtn.className = "login-guru";
+                        guruModeBtn.href = "login.html";
+                        guruModeText.textContent = "Login Guru";
+                    }
+                });
+            } else {
+                guruModeBtn.style.display = "inline-flex";
+                guruModeBtn.className = "login-guru";
+                guruModeBtn.href = "login.html";
+                guruModeText.textContent = "Login Guru";
+            }
+        }
+
+        // ============================================================
+        //  KELUAR SISWA
+        // ============================================================
+        function keluarSiswa() {
+            const nama = sessionStorage.getItem("siswaNama");
+            if (!confirm(`Keluar dari akun "${nama}"?\n\nAnda akan kembali ke halaman login siswa.`)) {
+                return;
+            }
+            sessionStorage.removeItem("userMode");
+            sessionStorage.removeItem("siswaNama");
+            sessionStorage.removeItem("siswaKelas");
+            window.location.href = "index.html";
         }
 
         // ============================================================
@@ -454,12 +572,18 @@
             const currentPath = window.location.pathname.split('/').pop() || 'index.html';
             document.querySelectorAll('.nav-links a').forEach(link => {
                 const linkPath = link.getAttribute('href');
+                if (link.id === 'guruModeBtn') return;
                 if (linkPath === currentPath) link.classList.add('active');
                 else link.classList.remove('active');
             });
             renderVideos('all');
             updateStats('all');
         });
+
+        // ============================================================
+        //  START
+        // ============================================================
+        cekIdentitasSiswa();
     </script>
 
 </body>
