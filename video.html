@@ -11,15 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CEK PRETEST (WAJIB) -->
-    <script>
-        (function() {
-            if (localStorage.getItem('pretestDone') !== 'true') {
-                window.location.href = 'pretest.html';
-            }
-        })();
-    </script>
-
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -155,7 +146,6 @@
                 <a href="materi.html"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html" class="active"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="kuis.html"><i class="fas fa-puzzle-piece"></i> Kuis</a>
                 <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
             </div>
@@ -387,7 +377,6 @@
                 this.classList.add('active');
                 currentFilter = this.dataset.filter;
                 renderVideos(currentFilter);
-                // Update stats based on filter
                 updateStats(currentFilter);
             });
         });
@@ -399,7 +388,6 @@
             const data = filter === 'all' ? videoData : videoData.filter(v => v.category === filter || v.level === filter);
             document.getElementById('totalVideos').textContent = data.length;
             
-            // Hitung total durasi (dalam detik, perkiraan dari format mm:ss)
             let totalSec = 0;
             data.forEach(v => {
                 const parts = v.duration.split(':');
@@ -409,7 +397,6 @@
             const menit = Math.floor((totalSec % 3600) / 60);
             document.getElementById('totalDuration').textContent = jam > 0 ? `${jam}j ${menit}m` : `${menit}m`;
             
-            // Jumlah kategori unik
             const cats = new Set(data.map(v => v.category));
             document.getElementById('totalCategories').textContent = cats.size;
         }
@@ -446,7 +433,6 @@
             } else {
                 mybutton.style.display = 'none';
             }
-            // Reveal check
             document.querySelectorAll('.reveal').forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight - 50) {
                     el.classList.add('is-visible');
@@ -455,7 +441,6 @@
         };
         mybutton.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-        // Initial reveal
         const observerOptions = { threshold: 0.08, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
