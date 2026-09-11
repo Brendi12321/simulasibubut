@@ -675,6 +675,9 @@
 
             if (session) {
 
+                // Pastikan mode guru juga tersimpan
+                localStorage.setItem("userMode", "guru");
+
                 window.location.href = "guru.html";
 
             }
@@ -767,6 +770,10 @@
                     // Login berhasil
 
                     if (data.session) {
+
+                        // ⭐ SET MODE GURU — agar splash tidak muncul lagi di index
+                        localStorage.setItem("userMode", "guru");
+
 
                         showMessage(
                             "Login berhasil. Mengarahkan ke dashboard guru...",
