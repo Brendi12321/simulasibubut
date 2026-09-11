@@ -6,16 +6,10 @@
 
     <title>Beranda - Media Pembelajaran Mesin Bubut</title>
 
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -68,7 +62,7 @@
         }
 
         /* =====================================================
-           SPLASH / PILIHAN MASUK
+           SPLASH SCREEN
            ===================================================== */
         #splashScreen {
             position: fixed;
@@ -117,12 +111,7 @@
             box-shadow: 0 12px 32px rgba(37, 99, 235, 0.4);
         }
 
-        .splash-box h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
+        .splash-box h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
         .splash-box h1 span { color: #60a5fa; }
 
         .splash-box .splash-sub {
@@ -172,25 +161,9 @@
 
         .splash-option.guru .opt-icon { color: #34d399; }
 
-        .splash-option h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
+        .splash-option h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
 
-        .splash-option p {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            line-height: 1.5;
-        }
-
-        .splash-loading {
-            margin-top: 26px;
-            color: #94a3b8;
-            font-size: 0.85rem;
-        }
-
-        .splash-loading i { margin-right: 6px; }
+        .splash-option p { font-size: 0.85rem; color: #94a3b8; line-height: 1.5; }
 
         /* =====================================================
            NAVBAR
@@ -235,12 +208,7 @@
 
         .dark-toggle:hover { color: #fbbf24; }
 
-        .nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            padding: 8px 0;
-        }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
 
         .nav-links a {
             background: transparent;
@@ -267,7 +235,7 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
-        /* Tombol Dashboard Guru (hanya muncul jika guru sudah login) */
+        /* Tombol Dashboard Guru (jika sudah login) */
         .nav-links a.dashboard-guru {
             background: #16a34a;
             color: white;
@@ -276,7 +244,7 @@
 
         .nav-links a.dashboard-guru:hover { background: #15803d; }
 
-        /* Tombol Login Guru (untuk berpindah dari mode siswa ke guru) */
+        /* Tombol Login Guru (jika belum login / mode siswa) */
         .nav-links a.login-guru {
             background: rgba(37, 99, 235, 0.12);
             border: 1px solid rgba(96, 165, 250, 0.25);
@@ -714,11 +682,6 @@
                     <p>Login dengan akun guru untuk mengelola materi</p>
                 </button>
             </div>
-
-            <div class="splash-loading" id="splashLoading" style="display:none;">
-                <i class="fas fa-spinner fa-spin"></i>
-                Memeriksa sesi login...
-            </div>
         </div>
     </div>
 
@@ -752,8 +715,8 @@
                     <i class="fas fa-user-graduate"></i> Profil
                 </a>
 
-                <!-- Tombol dinamis: Dashboard Guru (jika login) atau Login Guru (jika belum) -->
-                <a href="#" id="guruModeBtn" class="login-guru" style="display:none;">
+                <!-- TOMBOL DINAMIS GURU -->
+                <a href="#" id="guruModeBtn" class="login-guru">
                     <i class="fas fa-user-tie"></i>
                     <span id="guruModeText">Login Guru</span>
                 </a>
@@ -945,50 +908,46 @@
         );
 
         // =====================================================
-        // 2. KONTROL SPLASH SCREEN
+        // 2. ELEMENT REF
         // =====================================================
         const splashScreen = document.getElementById("splashScreen");
         const guruModeBtn = document.getElementById("guruModeBtn");
         const guruModeText = document.getElementById("guruModeText");
 
-        /**
-         * Tampilkan splash screen hanya jika user belum memilih mode.
-         * Gunakan localStorage 'userMode' untuk mengingat pilihan.
-         */
-        function cekModeAwal() {
+        // =====================================================
+        // 3. CEK MODE AWAL
+        // =====================================================
+        async function cekModeAwal() {
             const userMode = localStorage.getItem("userMode");
 
-            // Jika belum pernah memilih, tampilkan splash
             if (!userMode) {
+                // Belum pernah memilih → tampilkan splash
                 splashScreen.classList.remove("hidden");
+                guruModeBtn.style.display = "none";
             } else {
+                // Sudah pernah memilih → sembunyikan splash
                 splashScreen.classList.add("hidden");
-                // Update tombol guru di navbar sesuai mode
-                updateTombolGuru(userMode);
+                await updateTombolGuru(userMode);
             }
         }
 
-        /**
-         * Update tombol guru di navbar berdasarkan mode user.
-         * - mode = "guru" & session aktif -> Dashboard Guru
-         * - mode = "guru" & session tidak aktif -> Login Guru
-         * - mode = "siswa" -> sembunyikan tombol (atau tampilkan Login Guru)
-         */
+        // =====================================================
+        // 4. UPDATE TOMBOL GURU DI NAVBAR
+        // =====================================================
         async function updateTombolGuru(mode) {
+            guruModeBtn.style.display = "inline-flex";
+
             if (mode !== "guru") {
-                // Mode siswa: tampilkan tombol Login Guru (untuk pindah mode)
-                guruModeBtn.style.display = "inline-flex";
+                // Mode siswa → tampilkan Login Guru
                 guruModeBtn.className = "login-guru";
                 guruModeBtn.href = "login.html";
                 guruModeText.textContent = "Login Guru";
                 return;
             }
 
-            // Mode guru: cek apakah session masih aktif
+            // Mode guru → cek session
             const { data } = await supabaseClient.auth.getSession();
             const session = data.session;
-
-            guruModeBtn.style.display = "inline-flex";
 
             if (session) {
                 guruModeBtn.className = "dashboard-guru";
@@ -1002,50 +961,45 @@
         }
 
         // =====================================================
-        // 3. AKSI TOMBOL SPLASH
+        // 5. AKSI TOMBOL SPLASH
         // =====================================================
         function masukSebagaiSiswa() {
-            // Simpan mode siswa
             localStorage.setItem("userMode", "siswa");
-
-            // Sembunyikan splash dengan animasi
             splashScreen.classList.add("hidden");
-
-            // Update tombol guru di navbar
             updateTombolGuru("siswa");
         }
 
         async function masukSebagaiGuru() {
-            // Simpan mode guru
             localStorage.setItem("userMode", "guru");
 
-            // Cek apakah sudah login
+            // Sembunyikan splash dulu
+            splashScreen.classList.add("hidden");
+
+            // Cek session
             const { data } = await supabaseClient.auth.getSession();
             const session = data.session;
 
-            splashScreen.classList.add("hidden");
-
             if (session) {
-                // Sudah login -> langsung ke dashboard
+                // Sudah login → langsung dashboard
                 window.location.href = "guru.html";
             } else {
-                // Belum login -> ke halaman login
+                // Belum login → halaman login
                 window.location.href = "login.html";
             }
         }
 
         // =====================================================
-        // 4. MONITOR PERUBAHAN LOGIN
+        // 6. MONITOR PERUBAHAN LOGIN
         // =====================================================
         supabaseClient.auth.onAuthStateChange(async function(event, session) {
             const userMode = localStorage.getItem("userMode");
-            if (userMode === "guru") {
-                await updateTombolGuru("guru");
+            if (userMode) {
+                await updateTombolGuru(userMode);
             }
         });
 
         // =====================================================
-        // 5. TOMBOL KEMBALI KE ATAS
+        // 7. TOMBOL KEMBALI KE ATAS
         // =====================================================
         const mybutton = document.getElementById("myBtn");
 
@@ -1062,7 +1016,7 @@
         };
 
         // =====================================================
-        // 6. DARK MODE
+        // 8. DARK MODE
         // =====================================================
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
@@ -1088,7 +1042,7 @@
         });
 
         // =====================================================
-        // 7. ANIMASI SCROLL
+        // 9. ANIMASI SCROLL
         // =====================================================
         const observerOptions = {
             threshold: 0.1,
@@ -1110,7 +1064,7 @@
         });
 
         // =====================================================
-        // 8. MENANDAI MENU AKTIF
+        // 10. MENANDAI MENU AKTIF
         // =====================================================
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname.split("/").pop() || "index.html";
@@ -1118,7 +1072,6 @@
             document.querySelectorAll(".nav-links a").forEach(link => {
                 const linkPath = link.getAttribute("href");
 
-                // Skip tombol guru (dinamis)
                 if (link.id === "guruModeBtn") return;
 
                 if (linkPath === currentPath) {
@@ -1130,7 +1083,7 @@
         });
 
         // =====================================================
-        // 9. START
+        // 11. START
         // =====================================================
         cekModeAwal();
 
