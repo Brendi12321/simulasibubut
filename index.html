@@ -1301,20 +1301,16 @@
                 return;
             }
 
-            // Simpan data siswa ke sessionStorage
             sessionStorage.setItem("userMode", "siswa");
             sessionStorage.setItem("siswaNama", nama);
             sessionStorage.setItem("siswaKelas", kelas);
 
-            // Sembunyikan splash
             splashScreen.classList.add("hidden");
 
-            // Update UI
             updateTombolGuru("siswa");
             updateIdentitasSiswa();
             tampilkanSapaan("siswa");
 
-            // Catat login ke Supabase
             try {
                 const { error } = await supabaseClient
                     .from("siswa_login")
