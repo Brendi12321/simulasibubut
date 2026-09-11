@@ -60,9 +60,7 @@
             transition: background-color 0.4s, color 0.4s;
         }
 
-        /* =====================================================
-           SPLASH SCREEN
-           ===================================================== */
+        /* SPLASH SCREEN */
         #splashScreen {
             position: fixed;
             inset: 0;
@@ -166,9 +164,7 @@
 
         .splash-option p { font-size: 0.85rem; color: #94a3b8; line-height: 1.5; }
 
-        /* =====================================================
-           FORM LOGIN SISWA
-           ===================================================== */
+        /* FORM LOGIN SISWA */
         .splash-form {
             max-width: 440px;
             margin: 0 auto;
@@ -286,9 +282,7 @@
             display: none;
         }
 
-        /* =====================================================
-           NAVBAR
-           ===================================================== */
+        /* NAVBAR */
         .navbar {
             background: var(--navbar-bg);
             padding: 0 24px;
@@ -406,9 +400,7 @@
             .nav-links a i { display: none; }
         }
 
-        /* =====================================================
-           BANNER SAPAAN
-           ===================================================== */
+        /* BANNER SAPAAN */
         .greeting-banner {
             background: linear-gradient(135deg, #2563eb, #4f46e5);
             color: #fff;
@@ -511,9 +503,7 @@
             }
         }
 
-        /* =====================================================
-           MAIN
-           ===================================================== */
+        /* MAIN */
         .main-content {
             flex: 1;
             max-width: 1280px;
@@ -946,15 +936,9 @@
                         <label for="siswaKelas">Kelas</label>
                         <select id="siswaKelas">
                             <option value="">-- Pilih Kelas --</option>
-                            <option value="X TP 1">X TP 1</option>
-                            <option value="X TP 2">X TP 2</option>
-                            <option value="X TP 3">X TP 3</option>
-                            <option value="XI TP 1">XI TP 1</option>
-                            <option value="XI TP 2">XI TP 2</option>
-                            <option value="XI TP 3">XI TP 3</option>
-                            <option value="XII TP 1">XII TP 1</option>
-                            <option value="XII TP 2">XII TP 2</option>
-                            <option value="XII TP 3">XII TP 3</option>
+                            <option value="X Teknik Mesin 1">X Teknik Mesin 1</option>
+                            <option value="X Teknik Mesin 2">X Teknik Mesin 2</option>
+                            <option value="X Teknik Mesin 3">X Teknik Mesin 3</option>
                         </select>
                     </div>
 
@@ -1018,9 +1002,6 @@
 
     <div class="main-content">
 
-        <!-- =====================================================
-             BANNER SAPAAN (muncul setelah login)
-             ===================================================== -->
         <div id="greetingBanner" class="greeting-banner" style="display:none;">
             <div class="greeting-icon" id="greetingIcon">
                 <i class="fas fa-user-graduate"></i>
@@ -1211,7 +1192,6 @@
         const navUserInfo = document.getElementById("navUserInfo");
         const navUserText = document.getElementById("navUserText");
 
-        // Banner sapaan
         const greetingBanner = document.getElementById("greetingBanner");
         const greetingIcon = document.getElementById("greetingIcon");
         const greetingTitle = document.getElementById("greetingTitle");
@@ -1224,7 +1204,6 @@
             const userMode = sessionStorage.getItem("userMode");
 
             if (!userMode) {
-                // Belum pernah memilih di sesi ini → tampilkan splash
                 splashScreen.classList.remove("hidden");
                 splashChoice.classList.remove("hidden-form");
                 splashFormSiswa.classList.add("hidden-form");
@@ -1232,7 +1211,6 @@
                 navUserInfo.style.display = "none";
                 greetingBanner.style.display = "none";
             } else {
-                // Sudah pernah memilih → sembunyikan splash
                 splashScreen.classList.add("hidden");
                 await updateTombolGuru(userMode);
                 updateIdentitasSiswa();
@@ -1279,19 +1257,14 @@
                 return;
             }
 
-            // Simpan data siswa ke sessionStorage
             sessionStorage.setItem("userMode", "siswa");
             sessionStorage.setItem("siswaNama", nama);
             sessionStorage.setItem("siswaKelas", kelas);
 
-            // Sembunyikan splash
             splashScreen.classList.add("hidden");
 
-            // Update UI
             updateTombolGuru("siswa");
             updateIdentitasSiswa();
-
-            // Tampilkan sapaan
             tampilkanSapaan("siswa");
 
             console.log("✅ Data siswa tersimpan:", { nama, kelas });
