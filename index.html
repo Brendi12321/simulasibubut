@@ -366,7 +366,6 @@
 
         .nav-links a.login-guru:hover { background: #2563eb; color: white; }
 
-        /* Tombol Keluar Siswa */
         .nav-links button.btn-logout-siswa {
             background: rgba(220, 38, 38, 0.15);
             border: 1px solid rgba(220, 38, 38, 0.3);
@@ -1259,7 +1258,6 @@
             btnLogoutSiswa.style.display = "none";
             greetingBanner.style.display = "none";
 
-            // Reset form
             document.getElementById("siswaNama").value = "";
             document.getElementById("siswaKelas").value = "";
         }
@@ -1279,9 +1277,9 @@
         }
 
         // =====================================================
-        // 6. SIMPAN DATA SISWA
+        // 6. SIMPAN DATA SISWA + CATAT LOGIN KE SUPABASE
         // =====================================================
-        function simpanDataSiswa() {
+        async function simpanDataSiswa() {
             const nama = document.getElementById("siswaNama").value.trim();
             const kelas = document.getElementById("siswaKelas").value;
 
@@ -1303,17 +1301,36 @@
                 return;
             }
 
+            // Simpan data siswa ke sessionStorage
             sessionStorage.setItem("userMode", "siswa");
             sessionStorage.setItem("siswaNama", nama);
             sessionStorage.setItem("siswaKelas", kelas);
 
+            // Sembunyikan splash
             splashScreen.classList.add("hidden");
 
+            // Update UI
             updateTombolGuru("siswa");
             updateIdentitasSiswa();
             tampilkanSapaan("siswa");
 
-            console.log("✅ Data siswa tersimpan:", { nama, kelas });
+            // ⭐ CATAT LOGIN KE SUPABASE (fire & forget)
+            try {
+                const { error } = await supabaseClient
+                    .from("siswa_login")
+                    .insert([{
+                        nama: nama,
+                        kelas: kelas
+                    }]);
+
+                if (error) {
+                    console.error("Gagal catat login:", error);
+                } else {
+                    console.log("✅ Login tercatat di Supabase:", nama, "·", kelas);
+                }
+            } catch (err) {
+                console.error("Error catat login:", err);
+            }
         }
 
         // =====================================================
@@ -1326,15 +1343,11 @@
                 return;
             }
 
-            // Hapus semua data siswa
             sessionStorage.removeItem("userMode");
             sessionStorage.removeItem("siswaNama");
             sessionStorage.removeItem("siswaKelas");
 
-            // Reset UI
             tampilkanSplash();
-
-            // Update tombol guru (kembali ke login guru)
             guruModeBtn.style.display = "none";
 
             console.log("✅ Siswa keluar");
@@ -1539,7 +1552,7 @@
         // =====================================================
         cekModeAwal();
 
-        console.log("✅ Beranda + Form Siswa + Logout Siswa siap!");
+        console.log("✅ Beranda + Form Siswa + Catat Login siap!");
     </script>
 
 </body>
