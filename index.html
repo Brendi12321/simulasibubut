@@ -372,7 +372,6 @@
 
         .nav-links a.login-guru:hover { background: #2563eb; color: white; }
 
-        /* Badge identitas siswa */
         .nav-user-info {
             display: inline-flex;
             align-items: center;
@@ -405,6 +404,111 @@
         @media (max-width: 500px) {
             .nav-links a { font-size: 0.6rem; padding: 4px 8px; }
             .nav-links a i { display: none; }
+        }
+
+        /* =====================================================
+           BANNER SAPAAN
+           ===================================================== */
+        .greeting-banner {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: #fff;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 12px 32px rgba(37, 99, 235, 0.35);
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 0.6s ease;
+        }
+
+        .greeting-banner.guru-banner {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            box-shadow: 0 12px 32px rgba(22, 163, 74, 0.35);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .greeting-banner::after {
+            content: "👋";
+            position: absolute;
+            right: 20px;
+            bottom: -20px;
+            font-size: 120px;
+            opacity: 0.1;
+            transform: rotate(-10deg);
+        }
+
+        .greeting-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+            backdrop-filter: blur(6px);
+        }
+
+        .greeting-text {
+            flex: 1;
+            z-index: 1;
+        }
+
+        .greeting-text h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .greeting-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .greeting-close {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .greeting-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .greeting-banner {
+                padding: 20px 20px;
+                gap: 14px;
+            }
+            .greeting-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+            .greeting-text h2 {
+                font-size: 1.1rem;
+            }
+            .greeting-text p {
+                font-size: 0.82rem;
+            }
         }
 
         /* =====================================================
@@ -451,7 +555,6 @@
             font-size: 0.95rem;
         }
 
-        /* HERO */
         #beranda .hero {
             background: linear-gradient(135deg, var(--hero-bg1) 0%, var(--hero-bg2) 100%);
             border-radius: 28px;
@@ -537,7 +640,6 @@
             #beranda .hero p { font-size: 1rem; }
         }
 
-        /* FITUR CARD */
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -644,7 +746,6 @@
         .feature-card .fc-arrow i { transition: transform 0.2s ease; }
         .feature-card:hover .fc-arrow i { transform: translateX(4px); }
 
-        /* STATISTIK */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -680,7 +781,6 @@
             font-weight: 500;
         }
 
-        /* ALUR */
         .flow-container {
             display: flex;
             flex-wrap: wrap;
@@ -720,7 +820,6 @@
 
         @media (max-width: 600px) { .flow-arrow { transform: rotate(90deg); } }
 
-        /* CTA */
         .cta-card {
             background: linear-gradient(135deg, #0b1a2e, #1a3a5a);
             border-radius: 24px;
@@ -755,7 +854,6 @@
             .cta-card h3 { font-size: 1.2rem; }
         }
 
-        /* SCROLL TOP */
         #myBtn {
             display: none;
             position: fixed;
@@ -776,7 +874,6 @@
 
         #myBtn:hover { background-color: #1d4ed8; transform: translateY(-3px); }
 
-        /* REVEAL */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -798,13 +895,9 @@
 
 <body>
 
-    <!-- =====================================================
-         SPLASH SCREEN — PILIHAN MASUK
-         ===================================================== -->
     <div id="splashScreen">
         <div class="splash-box">
 
-            <!-- PILIHAN AWAL -->
             <div id="splashChoice">
                 <div class="splash-logo">
                     <i class="fas fa-cogs"></i>
@@ -830,7 +923,6 @@
                 </div>
             </div>
 
-            <!-- FORM LOGIN SISWA -->
             <div id="splashFormSiswa" class="hidden-form">
                 <div class="splash-form">
                     <h2><i class="fas fa-user-graduate" style="color:#60a5fa;"></i> Data Siswa</h2>
@@ -880,9 +972,6 @@
         </div>
     </div>
 
-    <!-- =====================================================
-         NAVBAR
-         ===================================================== -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-cogs"></i>
@@ -910,13 +999,11 @@
                     <i class="fas fa-user-graduate"></i> Profil
                 </a>
 
-                <!-- IDENTITAS SISWA -->
                 <span id="navUserInfo" class="nav-user-info" style="display:none;">
                     <i class="fas fa-user"></i>
                     <span id="navUserText">-</span>
                 </span>
 
-                <!-- TOMBOL DINAMIS GURU -->
                 <a href="#" id="guruModeBtn" class="login-guru">
                     <i class="fas fa-user-tie"></i>
                     <span id="guruModeText">Login Guru</span>
@@ -929,13 +1016,26 @@
         </div>
     </nav>
 
-    <!-- =====================================================
-         MAIN CONTENT
-         ===================================================== -->
     <div class="main-content">
+
+        <!-- =====================================================
+             BANNER SAPAAN (muncul setelah login)
+             ===================================================== -->
+        <div id="greetingBanner" class="greeting-banner" style="display:none;">
+            <div class="greeting-icon" id="greetingIcon">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="greeting-text">
+                <h2 id="greetingTitle">Halo, Siswa!</h2>
+                <p id="greetingSub">Selamat datang di Media Pembelajaran Mesin Bubut. Selamat belajar!</p>
+            </div>
+            <button class="greeting-close" onclick="tutupSapaan()" title="Tutup">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
         <div id="beranda">
 
-            <!-- 1. HERO -->
             <div class="hero reveal">
                 <div class="badge">
                     <i class="fas fa-graduation-cap"></i>
@@ -961,7 +1061,6 @@
                 </div>
             </div>
 
-            <!-- 2. TUJUAN -->
             <div class="reveal delay-1" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-bullseye"></i> Tujuan Pembelajaran
@@ -987,7 +1086,6 @@
                 </div>
             </div>
 
-            <!-- 3. FITUR -->
             <div class="reveal delay-2" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-layer-group"></i> Fitur Pembelajaran
@@ -1028,7 +1126,6 @@
                 </div>
             </div>
 
-            <!-- 4. ALUR -->
             <div class="reveal delay-3" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-route"></i> Alur Pembelajaran
@@ -1046,7 +1143,6 @@
                 </div>
             </div>
 
-            <!-- 5. STATISTIK -->
             <div class="reveal" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-chart-line"></i> Statistik Media
@@ -1073,7 +1169,6 @@
                 </div>
             </div>
 
-            <!-- 6. CTA -->
             <div class="cta-card reveal">
                 <div class="cta-text">
                     <h3>Siap Menguji Kemampuan?</h3>
@@ -1116,6 +1211,12 @@
         const navUserInfo = document.getElementById("navUserInfo");
         const navUserText = document.getElementById("navUserText");
 
+        // Banner sapaan
+        const greetingBanner = document.getElementById("greetingBanner");
+        const greetingIcon = document.getElementById("greetingIcon");
+        const greetingTitle = document.getElementById("greetingTitle");
+        const greetingSub = document.getElementById("greetingSub");
+
         // =====================================================
         // 3. CEK MODE AWAL
         // =====================================================
@@ -1129,11 +1230,13 @@
                 splashFormSiswa.classList.add("hidden-form");
                 guruModeBtn.style.display = "none";
                 navUserInfo.style.display = "none";
+                greetingBanner.style.display = "none";
             } else {
                 // Sudah pernah memilih → sembunyikan splash
                 splashScreen.classList.add("hidden");
                 await updateTombolGuru(userMode);
                 updateIdentitasSiswa();
+                tampilkanSapaan(userMode);
             }
         }
 
@@ -1188,11 +1291,50 @@
             updateTombolGuru("siswa");
             updateIdentitasSiswa();
 
+            // Tampilkan sapaan
+            tampilkanSapaan("siswa");
+
             console.log("✅ Data siswa tersimpan:", { nama, kelas });
         }
 
         // =====================================================
-        // 6. UPDATE IDENTITAS SISWA DI NAVBAR
+        // 6. TAMPILKAN BANNER SAPAAN
+        // =====================================================
+        async function tampilkanSapaan(mode) {
+            if (mode === "siswa") {
+                const nama = sessionStorage.getItem("siswaNama");
+                const kelas = sessionStorage.getItem("siswaKelas");
+
+                if (nama && kelas) {
+                    greetingBanner.className = "greeting-banner";
+                    greetingIcon.innerHTML = '<i class="fas fa-user-graduate"></i>';
+                    greetingTitle.textContent = `Halo, ${nama}! 👋`;
+                    greetingSub.textContent = `Selamat datang di Media Pembelajaran Mesin Bubut. Kamu dari kelas ${kelas}. Selamat belajar!`;
+                    greetingBanner.style.display = "flex";
+                }
+            } else if (mode === "guru") {
+                const { data } = await supabaseClient.auth.getSession();
+                const session = data.session;
+
+                if (session) {
+                    const email = session.user.email;
+                    const namaGuru = email.split("@")[0];
+
+                    greetingBanner.className = "greeting-banner guru-banner";
+                    greetingIcon.innerHTML = '<i class="fas fa-user-tie"></i>';
+                    greetingTitle.textContent = `Halo, ${namaGuru}! 👋`;
+                    greetingSub.textContent = `Selamat datang kembali di Dashboard Guru Media Pembelajaran Mesin Bubut.`;
+                    greetingBanner.style.display = "flex";
+                }
+            }
+        }
+
+        function tutupSapaan() {
+            greetingBanner.style.display = "none";
+        }
+
+        // =====================================================
+        // 7. UPDATE IDENTITAS SISWA DI NAVBAR
         // =====================================================
         function updateIdentitasSiswa() {
             const userMode = sessionStorage.getItem("userMode");
@@ -1208,20 +1350,18 @@
         }
 
         // =====================================================
-        // 7. UPDATE TOMBOL GURU DI NAVBAR
+        // 8. UPDATE TOMBOL GURU DI NAVBAR
         // =====================================================
         async function updateTombolGuru(mode) {
             guruModeBtn.style.display = "inline-flex";
 
             if (mode !== "guru") {
-                // Mode siswa → tampilkan Login Guru
                 guruModeBtn.className = "login-guru";
                 guruModeBtn.href = "login.html";
                 guruModeText.textContent = "Login Guru";
                 return;
             }
 
-            // Mode guru → cek session
             const { data } = await supabaseClient.auth.getSession();
             const session = data.session;
 
@@ -1237,7 +1377,7 @@
         }
 
         // =====================================================
-        // 8. MASUK SEBAGAI GURU
+        // 9. MASUK SEBAGAI GURU
         // =====================================================
         async function masukSebagaiGuru() {
             sessionStorage.setItem("userMode", "guru");
@@ -1255,17 +1395,18 @@
         }
 
         // =====================================================
-        // 9. MONITOR PERUBAHAN LOGIN
+        // 10. MONITOR PERUBAHAN LOGIN
         // =====================================================
         supabaseClient.auth.onAuthStateChange(async function(event, session) {
             const userMode = sessionStorage.getItem("userMode");
             if (userMode) {
                 await updateTombolGuru(userMode);
+                tampilkanSapaan(userMode);
             }
         });
 
         // =====================================================
-        // 10. TOMBOL KEMBALI KE ATAS
+        // 11. TOMBOL KEMBALI KE ATAS
         // =====================================================
         const mybutton = document.getElementById("myBtn");
 
@@ -1282,7 +1423,7 @@
         };
 
         // =====================================================
-        // 11. DARK MODE
+        // 12. DARK MODE
         // =====================================================
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
@@ -1308,7 +1449,7 @@
         });
 
         // =====================================================
-        // 12. ANIMASI SCROLL
+        // 13. ANIMASI SCROLL
         // =====================================================
         const observerOptions = {
             threshold: 0.1,
@@ -1330,7 +1471,7 @@
         });
 
         // =====================================================
-        // 13. MENANDAI MENU AKTIF
+        // 14. MENANDAI MENU AKTIF
         // =====================================================
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname.split("/").pop() || "index.html";
@@ -1349,11 +1490,11 @@
         });
 
         // =====================================================
-        // 14. START
+        // 15. START
         // =====================================================
         cekModeAwal();
 
-        console.log("✅ Beranda + Form Siswa siap!");
+        console.log("✅ Beranda + Form Siswa + Sapaan siap!");
     </script>
 
 </body>
