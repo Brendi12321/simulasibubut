@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard Guru - Mesin Bubut</title>
 
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- ================= FONT ================= -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
 
-    <!-- Font Awesome -->
+
+    <!-- ================= FONT AWESOME ================= -->
+
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Supabase -->
+
+    <!-- ================= SUPABASE ================= -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
@@ -29,17 +43,24 @@
             box-sizing: border-box;
         }
 
+
         body {
+
             font-family: 'Inter', sans-serif;
+
             background: #f0f4fb;
+
             color: #1a2639;
+
             min-height: 100vh;
+
         }
 
 
         /* ================= NAVBAR ================= */
 
         .navbar {
+
             background: #0b1a2e;
 
             min-height: 70px;
@@ -47,7 +68,9 @@
             padding: 0 30px;
 
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
 
             color: white;
@@ -56,54 +79,87 @@
 
             box-shadow:
                 0 4px 20px rgba(0,0,0,0.15);
+
         }
 
+
         .logo {
+
             display: flex;
+
             align-items: center;
+
             gap: 10px;
 
             font-size: 1rem;
+
             font-weight: 800;
+
         }
+
 
         .logo i {
+
             color: #60a5fa;
+
             font-size: 1.4rem;
+
         }
 
+
         .logo span {
+
             color: #94b8d9;
+
             font-weight: 400;
+
         }
 
 
         /* ================= USER ================= */
 
         .user-area {
+
             display: flex;
+
             align-items: center;
+
             gap: 14px;
+
         }
+
 
         .user-info {
+
             text-align: right;
+
         }
+
 
         .user-name {
+
             font-size: 0.85rem;
+
             font-weight: 700;
+
         }
+
 
         .user-email {
+
             font-size: 0.7rem;
+
             color: #94a3b8;
+
         }
 
+
         .logout-btn {
+
             border: none;
 
             background: #dc2626;
+
             color: white;
 
             padding: 9px 15px;
@@ -113,20 +169,27 @@
             cursor: pointer;
 
             font-family: 'Inter', sans-serif;
+
             font-weight: 700;
 
             transition: 0.25s;
+
         }
 
+
         .logout-btn:hover {
+
             background: #b91c1c;
+
             transform: translateY(-1px);
+
         }
 
 
         /* ================= MAIN ================= */
 
         .container {
+
             max-width: 1250px;
 
             width: 100%;
@@ -134,16 +197,21 @@
             margin: auto;
 
             padding: 35px 24px 50px;
+
         }
 
 
         /* ================= HEADER ================= */
 
         .page-header {
+
             margin-bottom: 28px;
+
         }
 
+
         .page-header h1 {
+
             font-size: 2rem;
 
             font-weight: 800;
@@ -151,18 +219,23 @@
             color: #0b1a2e;
 
             margin-bottom: 7px;
+
         }
 
+
         .page-header p {
+
             color: #64748b;
 
             font-size: 0.95rem;
+
         }
 
 
-        /* ================= STAT CARD ================= */
+        /* ================= STAT ================= */
 
         .stats {
+
             display: grid;
 
             grid-template-columns:
@@ -171,9 +244,12 @@
             gap: 18px;
 
             margin-bottom: 30px;
+
         }
 
+
         .stat-card {
+
             background: white;
 
             border-radius: 18px;
@@ -186,13 +262,18 @@
                 0 5px 18px rgba(0,0,0,0.05);
 
             display: flex;
+
             align-items: center;
 
             gap: 15px;
+
         }
 
+
         .stat-icon {
+
             width: 50px;
+
             height: 50px;
 
             border-radius: 14px;
@@ -202,26 +283,38 @@
             color: #2563eb;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             font-size: 1.3rem;
+
         }
+
 
         .stat-number {
+
             font-size: 1.6rem;
+
             font-weight: 800;
+
         }
 
+
         .stat-label {
+
             color: #64748b;
+
             font-size: 0.78rem;
+
         }
 
 
         /* ================= SECTION ================= */
 
         .section {
+
             background: white;
 
             border-radius: 20px;
@@ -234,39 +327,53 @@
             margin-bottom: 25px;
 
             overflow: hidden;
+
         }
 
+
         .section-header {
+
             padding: 22px 24px;
 
             border-bottom: 1px solid #e2e8f0;
 
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
 
             gap: 15px;
+
         }
 
+
         .section-header h2 {
+
             font-size: 1.15rem;
 
             font-weight: 800;
 
             display: flex;
+
             align-items: center;
 
             gap: 9px;
+
         }
 
+
         .section-header h2 i {
+
             color: #2563eb;
+
         }
 
 
         /* ================= BUTTON ================= */
 
         .btn-add {
+
             border: none;
 
             background: #2563eb;
@@ -284,33 +391,45 @@
             cursor: pointer;
 
             display: flex;
+
             align-items: center;
 
             gap: 7px;
 
             transition: 0.25s;
+
         }
 
+
         .btn-add:hover {
+
             background: #1d4ed8;
 
             transform: translateY(-1px);
+
         }
 
 
         /* ================= TABLE ================= */
 
         .table-wrapper {
+
             overflow-x: auto;
+
         }
 
+
         table {
+
             width: 100%;
 
             border-collapse: collapse;
+
         }
 
+
         th {
+
             text-align: left;
 
             padding: 15px 20px;
@@ -324,42 +443,96 @@
             text-transform: uppercase;
 
             letter-spacing: 0.3px;
+
         }
 
+
         td {
+
             padding: 17px 20px;
 
             border-top: 1px solid #edf2f7;
 
             font-size: 0.85rem;
+
         }
+
 
         .materi-title {
+
             font-weight: 700;
+
         }
 
+
         .materi-desc {
+
             color: #64748b;
 
             font-size: 0.75rem;
 
             margin-top: 4px;
+
+            line-height: 1.5;
+
+            max-width: 500px;
+
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 0.7rem;
+
+            font-weight: 700;
+
+        }
+
+
+        .status-aktif {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        .status-draft {
+
+            background: #fef3c7;
+
+            color: #a16207;
+
         }
 
 
         /* ================= ACTION ================= */
 
         .action-buttons {
+
             display: flex;
 
             gap: 7px;
+
         }
+
 
         .btn-edit,
         .btn-delete {
+
             border: none;
 
             width: 36px;
+
             height: 36px;
 
             border-radius: 9px;
@@ -367,29 +540,40 @@
             cursor: pointer;
 
             transition: 0.2s;
+
         }
 
+
         .btn-edit {
+
             background: #eff6ff;
 
             color: #2563eb;
+
         }
 
+
         .btn-delete {
+
             background: #fef2f2;
 
             color: #dc2626;
+
         }
+
 
         .btn-edit:hover,
         .btn-delete:hover {
+
             transform: translateY(-2px);
+
         }
 
 
         /* ================= QUICK MENU ================= */
 
         .quick-grid {
+
             display: grid;
 
             grid-template-columns:
@@ -398,9 +582,12 @@
             gap: 15px;
 
             padding: 24px;
+
         }
 
+
         .quick-card {
+
             border: 1px solid #e2e8f0;
 
             border-radius: 15px;
@@ -412,56 +599,361 @@
             color: #1a2639;
 
             transition: 0.25s;
+
         }
 
+
         .quick-card:hover {
+
             border-color: #2563eb;
 
             transform: translateY(-3px);
 
             box-shadow:
                 0 8px 20px rgba(0,0,0,0.06);
+
         }
 
+
         .quick-card i {
+
             font-size: 1.4rem;
 
             color: #2563eb;
 
             margin-bottom: 12px;
+
         }
 
+
         .quick-card h3 {
+
             font-size: 0.95rem;
 
             margin-bottom: 5px;
+
         }
 
+
         .quick-card p {
+
             color: #64748b;
 
             font-size: 0.75rem;
 
             line-height: 1.5;
+
         }
 
 
-        /* ================= FOOTER ================= */
+        /* ================= MODAL ================= */
 
-        footer {
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(15, 23, 42, 0.65);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 10000;
+
+        }
+
+
+        .modal.active {
+
+            display: flex;
+
+        }
+
+
+        .modal-box {
+
+            width: 100%;
+
+            max-width: 700px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.25);
+
+        }
+
+
+        .modal-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .modal-header h2 {
+
+            font-size: 1.25rem;
+
+        }
+
+
+        .close-btn {
+
+            border: none;
+
+            background: #f1f5f9;
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 1rem;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 17px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 0.8rem;
+
+            font-weight: 700;
+
+        }
+
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+
+            width: 100%;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 10px;
+
+            padding: 11px 13px;
+
+            font-family: 'Inter', sans-serif;
+
+            font-size: 0.85rem;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,0.1);
+
+        }
+
+
+        .form-group textarea {
+
+            min-height: 180px;
+
+            resize: vertical;
+
+            line-height: 1.6;
+
+        }
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        .modal-actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .btn-cancel,
+        .btn-save {
+
+            border: none;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-family: 'Inter', sans-serif;
+
+            font-weight: 700;
+
+        }
+
+
+        .btn-cancel {
+
+            background: #e2e8f0;
+
+            color: #334155;
+
+        }
+
+
+        .btn-save {
+
+            background: #2563eb;
+
+            color: white;
+
+        }
+
+
+        .btn-save:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+
             text-align: center;
+
+            padding: 45px 20px;
 
             color: #94a3b8;
 
-            font-size: 0.75rem;
+        }
 
-            padding: 20px;
+
+        .empty i {
+
+            font-size: 2rem;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        /* ================= TOAST ================= */
+
+        .toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            background: #0f172a;
+
+            color: white;
+
+            padding: 14px 18px;
+
+            border-radius: 12px;
+
+            font-size: 0.8rem;
+
+            font-weight: 600;
+
+            opacity: 0;
+
+            transform: translateY(20px);
+
+            pointer-events: none;
+
+            transition: 0.3s;
+
+            z-index: 20000;
+
+        }
+
+
+        .toast.show {
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+        }
+
+
+        .toast.success {
+
+            background: #15803d;
+
+        }
+
+
+        .toast.error {
+
+            background: #dc2626;
+
         }
 
 
         /* ================= LOADING ================= */
 
         #loading {
+
             position: fixed;
 
             inset: 0;
@@ -471,17 +963,25 @@
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             z-index: 9999;
+
         }
+
 
         .loading-box {
+
             text-align: center;
+
         }
 
+
         .spinner {
+
             width: 42px;
+
             height: 42px;
 
             border: 4px solid #dbeafe;
@@ -493,12 +993,33 @@
             animation: spin 0.8s linear infinite;
 
             margin: auto auto 15px;
+
         }
 
+
         @keyframes spin {
+
             to {
+
                 transform: rotate(360deg);
+
             }
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 0.75rem;
+
+            padding: 20px;
+
         }
 
 
@@ -507,35 +1028,66 @@
         @media (max-width: 600px) {
 
             .navbar {
+
                 padding: 12px 16px;
 
                 flex-direction: column;
 
                 gap: 12px;
+
             }
 
+
             .user-area {
+
                 width: 100%;
 
                 justify-content: space-between;
+
             }
+
 
             .user-info {
+
                 text-align: left;
+
             }
+
 
             .container {
+
                 padding: 25px 15px;
+
             }
+
 
             .page-header h1 {
+
                 font-size: 1.6rem;
+
             }
 
+
             .section-header {
+
                 align-items: flex-start;
 
                 flex-direction: column;
+
+            }
+
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .modal-box {
+
+                padding: 20px;
+
             }
 
         }
@@ -548,7 +1100,9 @@
 <body>
 
 
-<!-- ================= LOADING ================= -->
+<!-- ================================================= -->
+<!-- LOADING -->
+<!-- ================================================= -->
 
 <div id="loading">
 
@@ -563,7 +1117,10 @@
 </div>
 
 
-<!-- ================= NAVBAR ================= -->
+
+<!-- ================================================= -->
+<!-- NAVBAR -->
+<!-- ================================================= -->
 
 <nav class="navbar">
 
@@ -584,18 +1141,16 @@
                 Guru
             </div>
 
-            <div
-                class="user-email"
-                id="userEmail">
+            <div class="user-email"
+                 id="userEmail">
                 Memuat...
             </div>
 
         </div>
 
 
-        <button
-            class="logout-btn"
-            id="logoutBtn">
+        <button class="logout-btn"
+                id="logoutBtn">
 
             <i class="fas fa-right-from-bracket"></i>
 
@@ -608,7 +1163,10 @@
 </nav>
 
 
-<!-- ================= MAIN ================= -->
+
+<!-- ================================================= -->
+<!-- MAIN -->
+<!-- ================================================= -->
 
 <main class="container">
 
@@ -629,7 +1187,10 @@
     </div>
 
 
-    <!-- ================= STATISTIK ================= -->
+
+    <!-- ================================================= -->
+    <!-- STATISTIK -->
+    <!-- ================================================= -->
 
     <div class="stats">
 
@@ -644,21 +1205,23 @@
 
             <div>
 
-                <div
-                    class="stat-number"
-                    id="materiCount">
+                <div class="stat-number"
+                     id="materiCount">
 
                     0
 
                 </div>
 
                 <div class="stat-label">
+
                     Materi
+
                 </div>
 
             </div>
 
         </div>
+
 
 
         <div class="stat-card">
@@ -672,16 +1235,21 @@
             <div>
 
                 <div class="stat-number">
+
                     9
+
                 </div>
 
                 <div class="stat-label">
+
                     Video
+
                 </div>
 
             </div>
 
         </div>
+
 
 
         <div class="stat-card">
@@ -695,16 +1263,21 @@
             <div>
 
                 <div class="stat-number">
+
                     20
+
                 </div>
 
                 <div class="stat-label">
+
                     Soal Evaluasi
+
                 </div>
 
             </div>
 
         </div>
+
 
 
         <div class="stat-card">
@@ -718,21 +1291,29 @@
             <div>
 
                 <div class="stat-number">
+
                     -
+
                 </div>
 
                 <div class="stat-label">
+
                     Siswa
+
                 </div>
 
             </div>
 
         </div>
 
+
     </div>
 
 
-    <!-- ================= MATERI ================= -->
+
+    <!-- ================================================= -->
+    <!-- KELOLA MATERI -->
+    <!-- ================================================= -->
 
     <section class="section">
 
@@ -748,9 +1329,8 @@
             </h2>
 
 
-            <button
-                class="btn-add"
-                id="addMateriBtn">
+            <button class="btn-add"
+                    id="addMateriBtn">
 
                 <i class="fas fa-plus"></i>
 
@@ -759,6 +1339,7 @@
             </button>
 
         </div>
+
 
 
         <div class="table-wrapper">
@@ -771,6 +1352,10 @@
 
                         <th>
                             Materi
+                        </th>
+
+                        <th>
+                            Urutan
                         </th>
 
                         <th>
@@ -788,28 +1373,6 @@
 
                 <tbody id="materiTable">
 
-                    <tr>
-
-                        <td colspan="3"
-                            style="
-                            text-align:center;
-                            padding:35px;
-                            color:#94a3b8;
-                            ">
-
-                            <i class="fas fa-database"></i>
-
-                            <br><br>
-
-                            Belum ada data materi.
-                            <br>
-                            Data akan terhubung ke Supabase
-                            pada tahap berikutnya.
-
-                        </td>
-
-                    </tr>
-
                 </tbody>
 
             </table>
@@ -819,9 +1382,13 @@
     </section>
 
 
-    <!-- ================= MENU CEPAT ================= -->
+
+    <!-- ================================================= -->
+    <!-- MENU CEPAT -->
+    <!-- ================================================= -->
 
     <section class="section">
+
 
         <div class="section-header">
 
@@ -839,9 +1406,8 @@
         <div class="quick-grid">
 
 
-            <a
-                href="index.html"
-                class="quick-card">
+            <a href="index.html"
+               class="quick-card">
 
                 <i class="fas fa-home"></i>
 
@@ -857,9 +1423,9 @@
             </a>
 
 
-            <a
-                href="materi.html"
-                class="quick-card">
+
+            <a href="materi.html"
+               class="quick-card">
 
                 <i class="fas fa-book"></i>
 
@@ -875,9 +1441,9 @@
             </a>
 
 
-            <a
-                href="video.html"
-                class="quick-card">
+
+            <a href="video.html"
+               class="quick-card">
 
                 <i class="fas fa-play-circle"></i>
 
@@ -892,9 +1458,9 @@
             </a>
 
 
-            <a
-                href="evaluasi.html"
-                class="quick-card">
+
+            <a href="evaluasi.html"
+               class="quick-card">
 
                 <i class="fas fa-clipboard-check"></i>
 
@@ -918,7 +1484,10 @@
 </main>
 
 
-<!-- ================= FOOTER ================= -->
+
+<!-- ================================================= -->
+<!-- FOOTER -->
+<!-- ================================================= -->
 
 <footer>
 
@@ -928,14 +1497,209 @@
 </footer>
 
 
-<!-- ================= JAVASCRIPT ================= -->
+
+<!-- ================================================= -->
+<!-- MODAL TAMBAH / EDIT -->
+<!-- ================================================= -->
+
+<div class="modal"
+     id="materiModal">
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+
+                Tambah Materi
+
+            </h2>
+
+
+            <button class="close-btn"
+                    id="closeModal">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <form id="materiForm">
+
+
+            <input type="hidden"
+                   id="materiId">
+
+
+
+            <!-- JUDUL -->
+
+            <div class="form-group">
+
+                <label for="judul">
+
+                    Judul Materi
+
+                </label>
+
+                <input type="text"
+                       id="judul"
+                       placeholder="Contoh: Pengenalan Mesin Bubut"
+                       required>
+
+            </div>
+
+
+
+            <!-- DESKRIPSI -->
+
+            <div class="form-group">
+
+                <label for="deskripsi">
+
+                    Deskripsi Singkat
+
+                </label>
+
+                <input type="text"
+                       id="deskripsi"
+                       placeholder="Masukkan deskripsi materi">
+
+            </div>
+
+
+
+            <!-- ISI -->
+
+            <div class="form-group">
+
+                <label for="isi">
+
+                    Isi Materi
+
+                </label>
+
+                <textarea id="isi"
+                          placeholder="Tuliskan isi materi pembelajaran di sini..."
+                          required></textarea>
+
+            </div>
+
+
+
+            <!-- URUTAN + STATUS -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label for="urutan">
+
+                        Urutan Materi
+
+                    </label>
+
+                    <input type="number"
+                           id="urutan"
+                           min="1"
+                           value="1"
+                           required>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="status">
+
+                        Status
+
+                    </label>
+
+                    <select id="status">
+
+                        <option value="aktif">
+                            Aktif
+                        </option>
+
+                        <option value="draft">
+                            Draft
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ACTION -->
+
+            <div class="modal-actions">
+
+                <button type="button"
+                        class="btn-cancel"
+                        id="cancelBtn">
+
+                    Batal
+
+                </button>
+
+
+                <button type="submit"
+                        class="btn-save"
+                        id="saveBtn">
+
+                    <i class="fas fa-save"></i>
+
+                    Simpan Materi
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- TOAST -->
+<!-- ================================================= -->
+
+<div class="toast"
+     id="toast">
+
+    Berhasil
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
 
 <script>
 
 
-// =====================================================
-// SUPABASE CONFIGURATION
-// =====================================================
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
 
 const SUPABASE_URL =
     "https://fxsshzwljalwxpxpbjgn.supabase.co";
@@ -952,9 +1716,77 @@ const supabaseClient =
     );
 
 
-// =====================================================
-// CEK LOGIN
-// =====================================================
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const loading =
+    document.getElementById("loading");
+
+const materiTable =
+    document.getElementById("materiTable");
+
+const materiCount =
+    document.getElementById("materiCount");
+
+const modal =
+    document.getElementById("materiModal");
+
+const materiForm =
+    document.getElementById("materiForm");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const materiId =
+    document.getElementById("materiId");
+
+const judul =
+    document.getElementById("judul");
+
+const deskripsi =
+    document.getElementById("deskripsi");
+
+const isi =
+    document.getElementById("isi");
+
+const urutan =
+    document.getElementById("urutan");
+
+const status =
+    document.getElementById("status");
+
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message, type = "success") {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.className =
+        "toast show " + type;
+
+    setTimeout(() => {
+
+        toast.className =
+            "toast";
+
+    }, 3000);
+
+}
+
+
+
+/* =====================================================
+   CEK LOGIN
+===================================================== */
 
 async function checkLogin() {
 
@@ -983,8 +1815,6 @@ async function checkLogin() {
             data.session;
 
 
-        // Belum login
-
         if (!session) {
 
             window.location.href =
@@ -995,19 +1825,17 @@ async function checkLogin() {
         }
 
 
-        // Sudah login
-
         document.getElementById(
             "userEmail"
         ).textContent =
             session.user.email;
 
 
-        // Hilangkan loading
+        loading.style.display =
+            "none";
 
-        document.getElementById(
-            "loading"
-        ).style.display = "none";
+
+        loadMateri();
 
 
     } catch (error) {
@@ -1022,76 +1850,670 @@ async function checkLogin() {
 }
 
 
-checkLogin();
+
+/* =====================================================
+   LOAD MATERI
+===================================================== */
+
+async function loadMateri() {
+
+    materiTable.innerHTML = `
+
+        <tr>
+
+            <td colspan="4">
+
+                <div class="empty">
+
+                    <i class="fas fa-spinner fa-spin"></i>
+
+                    <br><br>
+
+                    Memuat data materi...
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    `;
 
 
-// =====================================================
-// LOGOUT
-// =====================================================
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
 
-document.getElementById(
-    "logoutBtn"
-).addEventListener(
-    "click",
-    async function () {
+        .from("materi")
 
+        .select("*")
 
-        const konfirmasi =
-            confirm(
-                "Apakah kamu yakin ingin keluar?"
-            );
+        .order("urutan", {
+            ascending: true
+        });
 
 
-        if (!konfirmasi) {
-            return;
-        }
+    if (error) {
 
+        console.error(error);
 
-        const {
-            error
-        } =
-        await supabaseClient.auth.signOut();
+        materiTable.innerHTML = `
 
+            <tr>
 
-        if (error) {
+                <td colspan="4">
 
-            alert(
-                "Gagal keluar: " +
-                error.message
-            );
+                    <div class="empty">
 
-            return;
+                        <i class="fas fa-triangle-exclamation"></i>
 
-        }
+                        <br><br>
 
+                        Gagal memuat materi.
 
-        window.location.href =
-            "login.html";
+                        <br>
+
+                        ${escapeHTML(error.message)}
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
 
     }
-);
 
 
-// =====================================================
-// TOMBOL TAMBAH MATERI
-// =====================================================
+    materiCount.textContent =
+        data.length;
 
-document.getElementById(
-    "addMateriBtn"
-).addEventListener(
-    "click",
-    function () {
 
-        alert(
-            "Fitur tambah materi akan kita hubungkan ke database Supabase pada tahap berikutnya."
+    if (data.length === 0) {
+
+        materiTable.innerHTML = `
+
+            <tr>
+
+                <td colspan="4">
+
+                    <div class="empty">
+
+                        <i class="fas fa-book-open"></i>
+
+                        <br><br>
+
+                        Belum ada materi.
+
+                        <br>
+
+                        Klik "Tambah Materi"
+                        untuk membuat materi pertama.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    materiTable.innerHTML =
+        data.map(item => `
+
+            <tr>
+
+                <td>
+
+                    <div class="materi-title">
+
+                        ${escapeHTML(item.judul)}
+
+                    </div>
+
+                    <div class="materi-desc">
+
+                        ${escapeHTML(
+                            item.deskripsi || "Tidak ada deskripsi"
+                        )}
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    ${item.urutan}
+
+                </td>
+
+
+                <td>
+
+                    <span class="status
+                        ${
+                            item.status === "aktif"
+                            ? "status-aktif"
+                            : "status-draft"
+                        }">
+
+                        ${
+                            item.status === "aktif"
+                            ? "Aktif"
+                            : "Draft"
+                        }
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="action-buttons">
+
+                        <button
+                            class="btn-edit"
+                            title="Edit"
+                            onclick="editMateri(${item.id})">
+
+                            <i class="fas fa-pen"></i>
+
+                        </button>
+
+
+                        <button
+                            class="btn-delete"
+                            title="Hapus"
+                            onclick="deleteMateri(${item.id})">
+
+                            <i class="fas fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `).join("");
+
+}
+
+
+
+/* =====================================================
+   TAMBAH MATERI
+===================================================== */
+
+document
+    .getElementById("addMateriBtn")
+    .addEventListener(
+        "click",
+        function () {
+
+            materiForm.reset();
+
+            materiId.value = "";
+
+            urutan.value = 1;
+
+            status.value = "aktif";
+
+            modalTitle.textContent =
+                "Tambah Materi";
+
+            modal.classList.add("active");
+
+            judul.focus();
+
+        }
+    );
+
+
+
+/* =====================================================
+   EDIT MATERI
+===================================================== */
+
+async function editMateri(id) {
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+
+        .from("materi")
+
+        .select("*")
+
+        .eq("id", id)
+
+        .single();
+
+
+    if (error) {
+
+        showToast(
+            "Gagal mengambil data materi.",
+            "error"
         );
 
+        console.error(error);
+
+        return;
+
+    }
+
+
+    materiId.value =
+        data.id;
+
+    judul.value =
+        data.judul;
+
+    deskripsi.value =
+        data.deskripsi || "";
+
+    isi.value =
+        data.isi;
+
+    urutan.value =
+        data.urutan || 1;
+
+    status.value =
+        data.status;
+
+
+    modalTitle.textContent =
+        "Edit Materi";
+
+
+    modal.classList.add("active");
+
+}
+
+
+
+/* =====================================================
+   SIMPAN MATERI
+===================================================== */
+
+materiForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const id =
+            materiId.value;
+
+
+        const dataMateri = {
+
+            judul:
+                judul.value.trim(),
+
+            deskripsi:
+                deskripsi.value.trim(),
+
+            isi:
+                isi.value.trim(),
+
+            urutan:
+                parseInt(urutan.value),
+
+            status:
+                status.value
+
+        };
+
+
+        if (!dataMateri.judul) {
+
+            showToast(
+                "Judul materi wajib diisi.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (!dataMateri.isi) {
+
+            showToast(
+                "Isi materi wajib diisi.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const saveBtn =
+            document.getElementById("saveBtn");
+
+
+        saveBtn.disabled = true;
+
+        saveBtn.innerHTML = `
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Menyimpan...
+
+        `;
+
+
+        let result;
+
+
+        if (id) {
+
+            /* ================= EDIT ================= */
+
+            result =
+                await supabaseClient
+
+                    .from("materi")
+
+                    .update(dataMateri)
+
+                    .eq("id", id);
+
+        } else {
+
+            /* ================= TAMBAH ================= */
+
+            result =
+                await supabaseClient
+
+                    .from("materi")
+
+                    .insert([dataMateri]);
+
+        }
+
+
+        saveBtn.disabled = false;
+
+        saveBtn.innerHTML = `
+
+            <i class="fas fa-save"></i>
+
+            Simpan Materi
+
+        `;
+
+
+        if (result.error) {
+
+            console.error(result.error);
+
+            showToast(
+                "Gagal menyimpan: " +
+                result.error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        closeModal();
+
+
+        showToast(
+            id
+            ? "Materi berhasil diperbarui."
+            : "Materi berhasil ditambahkan."
+        );
+
+
+        loadMateri();
+
     }
 );
+
+
+
+/* =====================================================
+   HAPUS MATERI
+===================================================== */
+
+async function deleteMateri(id) {
+
+    const konfirmasi =
+        confirm(
+            "Apakah kamu yakin ingin menghapus materi ini?"
+        );
+
+
+    if (!konfirmasi) {
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+
+        .from("materi")
+
+        .delete()
+
+        .eq("id", id);
+
+
+    if (error) {
+
+        console.error(error);
+
+        showToast(
+            "Gagal menghapus materi: " +
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    showToast(
+        "Materi berhasil dihapus."
+    );
+
+
+    loadMateri();
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal() {
+
+    modal.classList.remove("active");
+
+    materiForm.reset();
+
+    materiId.value = "";
+
+}
+
+
+
+/* =====================================================
+   BUTTON CLOSE
+===================================================== */
+
+document
+    .getElementById("closeModal")
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+document
+    .getElementById("cancelBtn")
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+
+/* =====================================================
+   KLIK LUAR MODAL
+===================================================== */
+
+modal.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === modal) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   ESCAPE UNTUK TUTUP MODAL
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            modal.classList.contains("active")
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async function () {
+
+
+            const konfirmasi =
+                confirm(
+                    "Apakah kamu yakin ingin keluar?"
+                );
+
+
+            if (!konfirmasi) {
+
+                return;
+
+            }
+
+
+            const {
+                error
+            } =
+            await supabaseClient.auth.signOut();
+
+
+            if (error) {
+
+                showToast(
+                    "Gagal keluar: " +
+                    error.message,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
+
+
+/* =====================================================
+   ESCAPE HTML
+   Mencegah teks materi menjadi HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+
+/* =====================================================
+   JALANKAN
+===================================================== */
+
+checkLogin();
 
 
 </script>
 
 
 </body>
+
 </html>
