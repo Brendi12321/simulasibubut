@@ -11,15 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CEK PRETEST (WAJIB) -->
-    <script>
-        (function() {
-            if (localStorage.getItem('pretestDone') !== 'true') {
-                window.location.href = 'pretest.html';
-            }
-        })();
-    </script>
-
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -156,7 +147,7 @@
         /* ========== BADGE ========== */
         .badge-tag { display: inline-block; background: var(--accent-light); color: var(--accent); padding: 2px 14px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; margin-left: 8px; }
 
-        /* ========== MODAL / POP-UP (SAMA SEPERTI INDEX.HTML) ========== */
+        /* ========== MODAL / POP-UP ========== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -246,7 +237,6 @@
                 <a href="materi.html" class="active"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="kuis.html"><i class="fas fa-puzzle-piece"></i> Kuis</a>
                 <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
             </div>
@@ -538,7 +528,7 @@
     <!-- Tombol kembali ke atas -->
     <button id="myBtn" title="Kembali ke atas">↑</button>
 
-    <!-- ========== MODAL / POP-UP (SAMA SEPERTI INDEX.HTML) ========== -->
+    <!-- ========== MODAL / POP-UP ========== -->
     <div class="modal-overlay" id="topicModal">
         <div class="modal-box">
             <button class="close-btn" id="modalClose">&times;</button>
@@ -692,7 +682,6 @@
         // Event listener untuk setiap card materi
         document.querySelectorAll('.materi-card[data-topic]').forEach(card => {
             card.addEventListener('click', function(e) {
-                // Jangan trigger jika klik di dalam link atau tombol
                 if (e.target.closest('a') || e.target.closest('button')) return;
 
                 const topic = this.dataset.topic;
