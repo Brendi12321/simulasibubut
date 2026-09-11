@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluasi - Media Pembelajaran Mesin Bubut</title>
+    <title>Kuis - Media Pembelajaran Mesin Bubut</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,40 +120,39 @@
             .greeting-text p { font-size: 0.8rem; }
         }
 
-        /* EVALUASI */
-        #evaluasi .eval-section { background: var(--card-bg); border-radius: 24px; padding: 28px 26px 32px; box-shadow: 0 4px 16px var(--shadow-color); border-top: 5px solid var(--nav-active); transition: background-color 0.4s; }
-        #evaluasi .eval-section .section-title { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; font-weight: 700; color: var(--text-color); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border-color); }
-        #evaluasi .eval-section .section-title i { color: var(--nav-active); font-size: 1.4rem; }
-        #evaluasi .eval-section .section-title .badge { background: var(--box-bg); padding: 4px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; color: var(--nav-active); margin-left: auto; }
+        /* KUIS */
+        #kuis .eval-section { background: var(--card-bg); border-radius: 24px; padding: 28px 26px 32px; box-shadow: 0 4px 16px var(--shadow-color); border-top: 5px solid var(--nav-active); transition: background-color 0.4s; }
+        #kuis .eval-section .section-title { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; font-weight: 700; color: var(--text-color); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border-color); }
+        #kuis .eval-section .section-title i { color: var(--nav-active); font-size: 1.4rem; }
+        #kuis .eval-section .section-title .badge { background: var(--box-bg); padding: 4px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; color: var(--nav-active); margin-left: auto; }
 
-        #evaluasi .progress-info { background: var(--box-bg); border-radius: 12px; padding: 12px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 0.9rem; color: var(--sub-text-color); }
-        #evaluasi .progress-info i { color: var(--nav-active); font-size: 1.1rem; }
-        #evaluasi .progress-info strong { color: var(--text-color); }
-        #evaluasi .progress-bar-wrap { flex: 1; min-width: 140px; height: 8px; background: #dbe3ee; border-radius: 20px; overflow: hidden; }
-        #evaluasi .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #60a5fa); width: 0%; transition: width 0.3s ease; border-radius: 20px; }
+        #kuis .progress-info { background: var(--box-bg); border-radius: 12px; padding: 12px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 0.9rem; color: var(--sub-text-color); }
+        #kuis .progress-info i { color: var(--nav-active); font-size: 1.1rem; }
+        #kuis .progress-info strong { color: var(--text-color); }
+        #kuis .progress-bar-wrap { flex: 1; min-width: 140px; height: 8px; background: #dbe3ee; border-radius: 20px; overflow: hidden; }
+        #kuis .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #60a5fa); width: 0%; transition: width 0.3s ease; border-radius: 20px; }
 
-        #evaluasi .quiz-box { background: var(--box-bg); border-radius: 16px; padding: 18px 20px; margin-bottom: 18px; border-left: 4px solid #94a3b8; transition: 0.15s ease; }
-        #evaluasi .quiz-box:hover { background: var(--card-bg); }
-        #evaluasi .quiz-box.answered { border-left-color: var(--nav-active); background: #f0f7ff; }
-        #evaluasi .quiz-box.unanswered-highlight { border-left-color: #dc2626; background: #fef2f2; animation: shake 0.4s; }
+        #kuis .quiz-box { background: var(--box-bg); border-radius: 16px; padding: 18px 20px; margin-bottom: 18px; border-left: 4px solid #94a3b8; transition: 0.15s ease; }
+        #kuis .quiz-box:hover { background: var(--card-bg); }
+        #kuis .quiz-box.answered { border-left-color: var(--nav-active); background: #f0f7ff; }
+        #kuis .quiz-box.unanswered-highlight { border-left-color: #dc2626; background: #fef2f2; animation: shake 0.4s; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-6px); }
             75% { transform: translateX(6px); }
         }
-        #evaluasi .quiz-box .q { font-weight: 600; font-size: 0.98rem; margin-bottom: 12px; display: flex; gap: 8px; color: var(--text-color); }
-        #evaluasi .quiz-box .q span { color: var(--nav-active); font-weight: 800; min-width: 24px; }
-        #evaluasi .quiz-box label { display: flex; align-items: center; gap: 10px; padding: 6px 10px; cursor: pointer; border-radius: 8px; transition: 0.1s; font-size: 0.9rem; color: var(--text-color); }
-        #evaluasi .quiz-box label:hover { background: var(--box-bg); }
-        #evaluasi .quiz-box input[type="radio"] { accent-color: #2563eb; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
-        #evaluasi .quiz-box input[type="radio"]:disabled { cursor: not-allowed; }
-        #evaluasi .quiz-box.locked { opacity: 0.85; }
+        #kuis .quiz-box .q { font-weight: 600; font-size: 0.98rem; margin-bottom: 12px; display: flex; gap: 8px; color: var(--text-color); }
+        #kuis .quiz-box .q span { color: var(--nav-active); font-weight: 800; min-width: 24px; }
+        #kuis .quiz-box label { display: flex; align-items: center; gap: 10px; padding: 6px 10px; cursor: pointer; border-radius: 8px; transition: 0.1s; font-size: 0.9rem; color: var(--text-color); }
+        #kuis .quiz-box label:hover { background: var(--box-bg); }
+        #kuis .quiz-box input[type="radio"] { accent-color: #2563eb; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+        #kuis .quiz-box input[type="radio"]:disabled { cursor: not-allowed; }
 
-        #evaluasi .btn-submit { background: var(--navbar-bg); color: #fff; border: none; padding: 14px 32px; border-radius: 40px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; width: 100%; justify-content: center; }
-        #evaluasi .btn-submit:hover { background: #1a334d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11, 26, 46, 0.15); }
-        #evaluasi .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+        #kuis .btn-submit { background: var(--navbar-bg); color: #fff; border: none; padding: 14px 32px; border-radius: 40px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; width: 100%; justify-content: center; }
+        #kuis .btn-submit:hover { background: #1a334d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11, 26, 46, 0.15); }
+        #kuis .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        #evaluasi .btn-ulang {
+        #kuis .btn-ulang {
             background: transparent;
             color: var(--nav-active);
             border: 2px solid var(--nav-active);
@@ -171,25 +170,25 @@
             justify-content: center;
             font-family: inherit;
         }
-        #evaluasi .btn-ulang:hover {
+        #kuis .btn-ulang:hover {
             background: var(--nav-active);
             color: #fff;
         }
 
-        #evaluasi .score-result { margin-top: 20px; padding: 18px 22px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; background: var(--box-bg); display: none; border: 2px solid transparent; transition: 0.2s; text-align: center; color: var(--text-color); }
-        #evaluasi .score-result.show { display: block; }
-        #evaluasi .score-result.green { border-color: #16a34a; color: #16a34a; background: #f0fdf4; }
-        #evaluasi .score-result.yellow { border-color: #eab308; color: #eab308; background: #fefce8; }
-        #evaluasi .score-result.red { border-color: #dc2626; color: #dc2626; background: #fef2f2; }
-        #evaluasi .score-result.warning { border-color: #f59e0b; color: #b45309; background: #fffbeb; }
-        #evaluasi .score-result .sub { font-weight: 400; font-size: 0.85rem; display: block; margin-top: 6px; color: var(--sub-text-color); }
+        #kuis .score-result { margin-top: 20px; padding: 18px 22px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; background: var(--box-bg); display: none; border: 2px solid transparent; transition: 0.2s; text-align: center; color: var(--text-color); }
+        #kuis .score-result.show { display: block; }
+        #kuis .score-result.green { border-color: #16a34a; color: #16a34a; background: #f0fdf4; }
+        #kuis .score-result.yellow { border-color: #eab308; color: #eab308; background: #fefce8; }
+        #kuis .score-result.red { border-color: #dc2626; color: #dc2626; background: #fef2f2; }
+        #kuis .score-result.warning { border-color: #f59e0b; color: #b45309; background: #fffbeb; }
+        #kuis .score-result .sub { font-weight: 400; font-size: 0.85rem; display: block; margin-top: 6px; color: var(--sub-text-color); }
 
         @media (max-width: 600px) {
             .page-title { font-size: 1.4rem; }
-            #evaluasi .eval-section { padding: 18px 14px 24px; }
-            #evaluasi .quiz-box { padding: 14px 14px; }
-            #evaluasi .quiz-box .q { font-size: 0.88rem; }
-            #evaluasi .quiz-box label { font-size: 0.82rem; padding: 5px 8px; }
+            #kuis .eval-section { padding: 18px 14px 24px; }
+            #kuis .quiz-box { padding: 14px 14px; }
+            #kuis .quiz-box .q { font-size: 0.88rem; }
+            #kuis .quiz-box label { font-size: 0.82rem; padding: 5px 8px; }
         }
     </style>
 </head>
@@ -206,7 +205,7 @@
                 <a href="materi.html"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="evaluasi.html" class="active"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
+                <a href="evaluasi.html" class="active"><i class="fas fa-clipboard-check"></i> Kuis</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
 
                 <span id="navUserInfo" class="nav-user-info" style="display:none;">
@@ -230,21 +229,21 @@
             <div class="greeting-icon"><i class="fas fa-clipboard-check"></i></div>
             <div class="greeting-text">
                 <h2 id="greetingTitle">Halo, Siswa!</h2>
-                <p id="greetingSub">Kerjakan evaluasi dengan jujur dan teliti. Semoga sukses!</p>
+                <p id="greetingSub">Kerjakan kuis dengan jujur dan teliti. Semoga sukses!</p>
             </div>
         </div>
 
-        <div id="evaluasi">
-            <h2 class="page-title"><i class="fas fa-clipboard-check"></i> Evaluasi Pembelajaran</h2>
+        <div id="kuis">
+            <h2 class="page-title"><i class="fas fa-clipboard-check"></i> Kuis Pembelajaran</h2>
             <p class="page-sub">
                 <i class="fas fa-arrow-right" style="color:#2563eb;"></i> 
-                Kerjakan <strong>Posttest</strong> berikut yang terdiri dari <strong>20 soal</strong> untuk mengukur pemahaman Anda setelah mempelajari materi mesin bubut.
+                Kerjakan <strong>Kuis</strong> berikut yang terdiri dari <strong>20 soal</strong> untuk mengukur pemahaman Anda setelah mempelajari materi mesin bubut.
             </p>
 
-            <div class="eval-section" id="posttestSection">
+            <div class="eval-section" id="kuisSection">
                 <div class="section-title">
                     <i class="fas fa-certificate"></i>
-                    Posttest
+                    Kuis
                     <span class="badge"><i class="fas fa-list-ol"></i> 20 Soal</span>
                 </div>
 
@@ -257,17 +256,17 @@
                     <span id="progressStatus" style="font-weight:600; color:#dc2626;">Belum lengkap</span>
                 </div>
 
-                <div id="posttestContainer"></div>
+                <div id="kuisContainer"></div>
 
-                <button class="btn-submit" id="posttestSubmit" disabled>
-                    <i class="fas fa-paper-plane"></i> Kirim Jawaban Posttest
+                <button class="btn-submit" id="kuisSubmit" disabled>
+                    <i class="fas fa-paper-plane"></i> Kirim Jawaban Kuis
                 </button>
 
                 <button class="btn-ulang" id="btnUlang" onclick="kerjakanUlang()">
                     <i class="fas fa-rotate-right"></i> Kerjakan Ulang
                 </button>
 
-                <div id="posttestResult" class="score-result"></div>
+                <div id="kuisResult" class="score-result"></div>
             </div>
 
             <div style="margin-top: 36px; background: var(--box-bg); border-radius: 16px; padding: 18px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
@@ -304,22 +303,19 @@
         const siswaKelas = sessionStorage.getItem("siswaKelas");
 
         if (userMode === "siswa" && siswaNama && siswaKelas) {
-            // Banner sapaan
             const greetingBanner = document.getElementById("greetingBanner");
             const greetingTitle = document.getElementById("greetingTitle");
             const greetingSub = document.getElementById("greetingSub");
 
             greetingTitle.textContent = `Halo, ${siswaNama}! 👋`;
-            greetingSub.textContent = `Kamu dari kelas ${siswaKelas}. Kerjakan evaluasi dengan jujur dan teliti. Semangat!`;
+            greetingSub.textContent = `Kamu dari kelas ${siswaKelas}. Kerjakan kuis dengan jujur dan teliti. Semangat!`;
             greetingBanner.style.display = "flex";
 
-            // Badge di navbar
             const navUserInfo = document.getElementById("navUserInfo");
             const navUserText = document.getElementById("navUserText");
             navUserInfo.style.display = "inline-flex";
             navUserText.textContent = `${siswaNama} · ${siswaKelas}`;
         } else if (userMode === "guru") {
-            // Guru login — tampilkan tombol Dashboard Guru
             const guruModeBtn = document.getElementById("guruModeBtn");
             const guruModeText = document.getElementById("guruModeText");
             guruModeBtn.style.display = "inline-flex";
@@ -336,15 +332,14 @@
                 }
             });
         } else {
-            // Belum pilih mode — redirect ke beranda
             alert("Silakan pilih mode dan isi data terlebih dahulu.");
             window.location.href = "index.html";
         }
 
         // =====================================================
-        // 3. DATA SOAL POSTTEST
+        // 3. DATA SOAL KUIS
         // =====================================================
-        const posttestData = [
+        const kuisData = [
             { q: 'Mesin bubut digunakan untuk memproses benda kerja yang...', o: ['Berputar', 'Diam', 'Bergerak translasi', 'Bergetar'], a: 0 },
             { q: 'Nama lain dari kepala tetap pada mesin bubut adalah...', o: ['Headstock', 'Tailstock', 'Carriage', 'Bed'], a: 0 },
             { q: 'Parameter yang mengatur tebal sayatan pahat pada mesin bubut adalah...', o: ['DOC (Depth of Cut)', 'RPM', 'Feed', 'Clearance'], a: 0 },
@@ -367,14 +362,13 @@
             { q: 'Yang harus dilakukan sebelum mengganti pahat atau mengukur benda kerja adalah...', o: ['Mematikan mesin terlebih dahulu', 'Menambah RPM', 'Membuka chuck', 'Menyalakan coolant'], a: 0 }
         ];
 
-        const prefix = 'posttest';
-        const totalSoal = posttestData.length;
-        let sudahSubmit = false;
+        const prefix = 'kuis';
+        const totalSoal = kuisData.length;
 
         // =====================================================
         // 4. RENDER SOAL
         // =====================================================
-        function renderEval(containerId, data, pfx) {
+        function renderKuis(containerId, data, pfx) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
 
@@ -425,7 +419,7 @@
             document.getElementById('progressBar').style.width = persen + '%';
 
             const statusEl = document.getElementById('progressStatus');
-            const submitBtn = document.getElementById('posttestSubmit');
+            const submitBtn = document.getElementById('kuisSubmit');
 
             if (answered === totalSoal) {
                 statusEl.textContent = 'Lengkap ✓';
@@ -511,7 +505,6 @@
                 icon = '❗'; kelas = 'red'; saran = 'Perlu belajar lebih giat. Baca ulang seluruh materi dari awal.';
             }
 
-            // Tampilkan hasil sementara
             resultDiv.className = `score-result show ${kelas}`;
             resultDiv.innerHTML = `
                 <span>${icon}</span>
@@ -522,7 +515,6 @@
 
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-            // Simpan ke Supabase
             const hasil = await simpanHasilKeSupabase(
                 siswaNama,
                 siswaKelas,
@@ -541,31 +533,22 @@
                 saveStatus.style.color = "#dc2626";
             }
 
-            // Kunci jawaban (disable semua radio)
             document.querySelectorAll(`input[name^="${pfx}_"]`).forEach(r => {
                 r.disabled = true;
             });
 
-            // Tandai semua box sebagai locked
-            document.querySelectorAll(`#${resultId}`).forEach(() => {});
-
-            // Tampilkan tombol "Kerjakan Ulang"
             document.getElementById("btnUlang").style.display = "inline-flex";
-
-            // Sembunyikan tombol submit
-            document.getElementById("posttestSubmit").style.display = "none";
-
-            sudahSubmit = true;
+            document.getElementById("kuisSubmit").style.display = "none";
         }
 
         // =====================================================
-        // 8. TAMPILKAN PERINGATAN JIKA BELUM LENGKAP
+        // 8. PERINGATAN JIKA BELUM LENGKAP
         // =====================================================
         function showIncompleteWarning() {
             const answered = countAnswered();
             const belum = totalSoal - answered;
 
-            const resultDiv = document.getElementById('posttestResult');
+            const resultDiv = document.getElementById('kuisResult');
             resultDiv.className = 'score-result show warning';
             resultDiv.innerHTML = `
                 <span>⚠️</span>
@@ -598,45 +581,37 @@
         // 9. KERJAKAN ULANG
         // =====================================================
         function kerjakanUlang() {
-            if (!confirm("Kerjakan ulang posttest?\n\nJawaban sebelumnya akan dihapus, tetapi hasil yang sudah tersimpan di server tetap ada.")) {
+            if (!confirm("Kerjakan ulang kuis?\n\nJawaban sebelumnya akan dihapus, tetapi hasil yang sudah tersimpan di server tetap ada.")) {
                 return;
             }
 
-            // Reset semua radio
             document.querySelectorAll(`input[name^="${prefix}_"]`).forEach(r => {
                 r.checked = false;
                 r.disabled = false;
             });
 
-            // Sembunyikan hasil
-            const resultDiv = document.getElementById('posttestResult');
+            const resultDiv = document.getElementById('kuisResult');
             resultDiv.className = 'score-result';
             resultDiv.innerHTML = '';
 
-            // Sembunyikan tombol ulang
             document.getElementById("btnUlang").style.display = "none";
 
-            // Tampilkan kembali tombol submit
-            const submitBtn = document.getElementById("posttestSubmit");
+            const submitBtn = document.getElementById("kuisSubmit");
             submitBtn.style.display = "inline-flex";
             submitBtn.disabled = true;
 
-            // Reset progress
             updateProgress();
 
-            sudahSubmit = false;
-
-            // Scroll ke atas
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
         // =====================================================
         // 10. RENDER + EVENT
         // =====================================================
-        renderEval('posttestContainer', posttestData, prefix);
+        renderKuis('kuisContainer', kuisData, prefix);
         updateProgress();
 
-        document.getElementById('posttestSubmit').addEventListener('click', function() {
+        document.getElementById('kuisSubmit').addEventListener('click', function() {
             const answered = countAnswered();
 
             if (answered < totalSoal) {
@@ -644,7 +619,7 @@
                 return;
             }
 
-            hitungSkorDanSimpan(posttestData, prefix, 'posttestResult', 'Posttest');
+            hitungSkorDanSimpan(kuisData, prefix, 'kuisResult', 'Kuis');
         });
 
         // =====================================================
@@ -673,7 +648,7 @@
             localStorage.setItem('theme', theme);
         });
 
-        console.log('✅ Evaluasi (Posttest 20 soal) siap! Hasil akan tersimpan di Supabase.');
+        console.log('✅ Kuis (20 soal) siap! Hasil akan tersimpan di Supabase.');
     </script>
 
 </body>
