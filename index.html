@@ -946,7 +946,7 @@
                     <h2><i class="fas fa-user-graduate" style="color:#60a5fa;"></i> Data Siswa</h2>
                     <p class="form-desc">
                         Isi nama lengkap dan kelas Anda.<br>
-                        Data ini akan digunakan untuk semua aktivitas simulasi & evaluasi.
+                        Data ini akan digunakan untuk semua aktivitas simulasi & kuis.
                     </p>
 
                     <div class="form-group">
@@ -1005,7 +1005,7 @@
                     <i class="fas fa-cubes"></i> Simulasi
                 </a>
                 <a href="evaluasi.html">
-                    <i class="fas fa-clipboard-check"></i> Evaluasi
+                    <i class="fas fa-clipboard-check"></i> Kuis
                 </a>
                 <a href="profil.html">
                     <i class="fas fa-user-graduate"></i> Profil
@@ -1126,8 +1126,8 @@
                     </a>
                     <a href="evaluasi.html" class="feature-card reveal">
                         <div class="fc-icon green"><i class="fas fa-clipboard-check"></i></div>
-                        <h3>Evaluasi</h3>
-                        <p>Posttest untuk mengukur pemahaman Anda.</p>
+                        <h3>Kuis</h3>
+                        <p>Kuis untuk mengukur pemahaman Anda.</p>
                         <div class="fc-arrow">Buka <i class="fas fa-arrow-right"></i></div>
                     </a>
                     <a href="profil.html" class="feature-card reveal">
@@ -1152,7 +1152,7 @@
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step"><i class="fas fa-cubes"></i> Simulasi</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="flow-step active-step"><i class="fas fa-clipboard-check"></i> Posttest</div>
+                    <div class="flow-step active-step"><i class="fas fa-clipboard-check"></i> Kuis</div>
                 </div>
             </div>
 
@@ -1177,7 +1177,7 @@
                     </div>
                     <div class="stat-card">
                         <div class="num">20</div>
-                        <div class="label">Soal Posttest</div>
+                        <div class="label">Soal Kuis</div>
                     </div>
                 </div>
             </div>
@@ -1185,10 +1185,10 @@
             <div class="cta-card reveal">
                 <div class="cta-text">
                     <h3>Siap Menguji Kemampuan?</h3>
-                    <p>Kerjakan posttest untuk mengukur pemahaman Anda tentang mesin bubut.</p>
+                    <p>Kerjakan kuis untuk mengukur pemahaman Anda tentang mesin bubut.</p>
                 </div>
                 <a href="evaluasi.html" class="btn-hero">
-                    <i class="fas fa-clipboard-check"></i> Kerjakan Posttest
+                    <i class="fas fa-clipboard-check"></i> Kerjakan Kuis
                 </a>
             </div>
         </div>
@@ -1314,7 +1314,7 @@
             updateIdentitasSiswa();
             tampilkanSapaan("siswa");
 
-            // ⭐ CATAT LOGIN KE SUPABASE (fire & forget)
+            // Catat login ke Supabase
             try {
                 const { error } = await supabaseClient
                     .from("siswa_login")
