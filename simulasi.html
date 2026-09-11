@@ -51,7 +51,7 @@
         #simulasi .sim-overlay-info { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 12px 20px; border-radius: 40px; color: #cbd5e1; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.06); pointer-events: none; z-index: 10; }
         #simulasi .sim-overlay-info i { color: #60a5fa; margin-right: 8px; }
 
-        /* STATUS INDICATOR */
+        /* PHASE INDICATOR */
         .phase-indicator { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 40px; color: #fff; font-size: 0.78rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.1); z-index: 15; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
         .phase-indicator .dot { width: 10px; height: 10px; border-radius: 50%; background: #94a3b8; transition: 0.3s; }
         .phase-indicator.phase-idle .dot { background: #94a3b8; }
@@ -62,27 +62,9 @@
         @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
 
         /* ============ MATERIAL MODAL ============ */
-        .material-modal {
-            position: fixed; inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            z-index: 5000;
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px;
-            transition: opacity 0.4s, visibility 0.4s;
-        }
+        .material-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.4s, visibility 0.4s; }
         .material-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        .material-modal-content {
-            background: linear-gradient(135deg, #1a2639, #0b1a2e);
-            border-radius: 24px;
-            max-width: 720px; width: 100%;
-            padding: 32px 36px;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-            border: 1px solid #2a4b6e;
-            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
+        .material-modal-content { background: linear-gradient(135deg, #1a2639, #0b1a2e); border-radius: 24px; max-width: 720px; width: 100%; padding: 32px 36px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); border: 1px solid #2a4b6e; animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); max-height: 90vh; overflow-y: auto; }
         @keyframes modalPop { from { transform: scale(0.9) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
         .material-modal-content .modal-icon { font-size: 3rem; text-align: center; margin-bottom: 8px; }
         .material-modal-content h2 { color: #fff; font-size: 1.5rem; text-align: center; margin-bottom: 6px; font-weight: 800; }
@@ -91,16 +73,7 @@
         .material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
         @media (max-width: 600px) { .material-grid { grid-template-columns: repeat(2, 1fr); } .material-modal-content { padding: 24px 20px; } }
 
-        .material-card {
-            background: rgba(255,255,255,0.04);
-            border: 2px solid transparent;
-            border-radius: 14px;
-            padding: 14px 12px;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.2s;
-            position: relative;
-        }
+        .material-card { background: rgba(255,255,255,0.04); border: 2px solid transparent; border-radius: 14px; padding: 14px 12px; cursor: pointer; text-align: center; transition: 0.2s; position: relative; }
         .material-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
         .material-card.selected { border-color: #60a5fa; background: rgba(96,165,250,0.15); box-shadow: 0 0 0 3px rgba(96,165,250,0.2); }
         .material-card.selected::after { content: '✓'; position: absolute; top: 6px; right: 8px; color: #60a5fa; font-weight: 900; font-size: 0.9rem; }
@@ -114,18 +87,147 @@
         .btn-pick:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
         .btn-pick:disabled { background: #4a5a6a; cursor: not-allowed; opacity: 0.6; }
 
-        /* ============ RESULT OVERLAY ============ */
-        .result-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(4px); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 40px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 20; }
+        /* ============ ANALYSIS RESULT OVERLAY ============ */
+        .result-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 20; }
         .result-overlay.active { opacity: 1; pointer-events: auto; }
-        .result-card { background: linear-gradient(135deg, #16a34a, #22c55e); color: #fff; border-radius: 20px; padding: 20px 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; transform: translateY(30px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90%; }
-        .result-overlay.active .result-card { transform: translateY(0); }
-        .result-card .result-icon { font-size: 2.5rem; }
-        .result-card .result-text h4 { font-size: 1.15rem; margin-bottom: 2px; font-weight: 800; }
-        .result-card .result-text p { font-size: 0.85rem; opacity: 0.9; }
-        .result-card .result-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
-        .btn-result { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.35); color: #fff; padding: 8px 18px; border-radius: 30px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; transition: 0.2s; }
-        .btn-result:hover { background: rgba(255,255,255,0.35); transform: translateY(-2px); }
-        .btn-result.primary { background: #fff; color: #16a34a; border-color: #fff; }
+
+        .analysis-panel {
+            background: linear-gradient(150deg, #0f1722, #1a2639);
+            border-radius: 24px;
+            width: 100%; max-width: 780px;
+            max-height: 90%;
+            overflow-y: auto;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+            border: 1px solid #2a4b6e;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        .result-overlay.active .analysis-panel { transform: scale(1) translateY(0); }
+
+        .analysis-header {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-radius: 24px 24px 0 0;
+        }
+        .analysis-header .icon-circle {
+            width: 52px; height: 52px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #fff;
+            flex-shrink: 0;
+        }
+        .analysis-header .header-text h3 { color: #fff; font-size: 1.3rem; font-weight: 800; margin-bottom: 2px; }
+        .analysis-header .header-text p { color: rgba(255,255,255,0.85); font-size: 0.85rem; }
+
+        .analysis-body { padding: 22px 28px; }
+
+        .analysis-section-title {
+            display: flex; align-items: center; gap: 10px;
+            color: #fff; font-size: 0.95rem; font-weight: 700;
+            margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 1px solid #2a3a4e;
+        }
+        .analysis-section-title i { color: #60a5fa; }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px; margin-bottom: 20px;
+        }
+        .analysis-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 12px 14px;
+            border-left: 3px solid #2563eb;
+        }
+        .analysis-item .ai-label {
+            color: #94a3b8; font-size: 0.7rem;
+            font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 4px;
+        }
+        .analysis-item .ai-value {
+            color: #fff; font-size: 1.05rem; font-weight: 800;
+        }
+        .analysis-item .ai-value small { font-size: 0.72rem; font-weight: 500; color: #94a3b8; margin-left: 2px; }
+        .analysis-item.green { border-left-color: #22c55e; }
+        .analysis-item.orange { border-left-color: #f59e0b; }
+        .analysis-item.purple { border-left-color: #a855f7; }
+        .analysis-item.cyan { border-left-color: #06b6d4; }
+
+        .quality-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2563eb;
+            display: flex; align-items: center; gap: 16px;
+            flex-wrap: wrap;
+        }
+        .quality-card .quality-stars {
+            font-size: 1.6rem; letter-spacing: 2px;
+            color: #fbbf24; white-space: nowrap;
+        }
+        .quality-card .quality-stars .empty { color: #475569; }
+        .quality-card .quality-info { flex: 1; min-width: 200px; }
+        .quality-card .quality-info .q-title {
+            color: #fff; font-weight: 800; font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .quality-card .quality-info .q-desc {
+            color: #94a3b8; font-size: 0.82rem; line-height: 1.5;
+        }
+
+        .analysis-notes {
+            background: rgba(37,99,235,0.1);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            border-left: 3px solid #2563eb;
+        }
+        .analysis-notes h5 {
+            color: #60a5fa; font-size: 0.82rem;
+            font-weight: 700; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .analysis-notes ul {
+            list-style: none; padding: 0;
+            color: #cbd5e1; font-size: 0.82rem; line-height: 1.7;
+        }
+        .analysis-notes ul li { padding-left: 18px; position: relative; }
+        .analysis-notes ul li::before {
+            content: '▸'; position: absolute; left: 0;
+            color: #60a5fa; font-weight: 700;
+        }
+
+        .analysis-actions {
+            display: flex; gap: 10px; flex-wrap: wrap;
+            padding-top: 16px; border-top: 1px solid #2a3a4e;
+        }
+        .btn-analysis {
+            flex: 1; min-width: 140px;
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 700; font-size: 0.85rem;
+            cursor: pointer; font-family: inherit;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            transition: 0.2s; border: none;
+        }
+        .btn-analysis.primary {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            box-shadow: 0 6px 16px rgba(37,99,235,0.3);
+        }
+        .btn-analysis.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,99,235,0.4); }
+        .btn-analysis.secondary {
+            background: rgba(255,255,255,0.06);
+            color: #cbd5e1;
+            border: 2px solid #334155;
+        }
+        .btn-analysis.secondary:hover { background: rgba(255,255,255,0.12); color: #fff; }
 
         /* ============ SEGMENT EDITOR ============ */
         .segment-editor { background: #1a2639; padding: 20px 24px; border-top: 1px solid #2a3a4e; }
@@ -197,6 +299,18 @@
             .segment-row .seg-len-val { display: none; }
         }
 
+        @media (max-width: 600px) {
+            .analysis-panel { max-height: 94%; }
+            .analysis-header { padding: 16px 20px; }
+            .analysis-header .icon-circle { width: 42px; height: 42px; font-size: 1.2rem; }
+            .analysis-header .header-text h3 { font-size: 1.05rem; }
+            .analysis-body { padding: 16px 18px; }
+            .analysis-grid { grid-template-columns: repeat(2, 1fr); }
+            .quality-card { padding: 12px 14px; }
+            .quality-card .quality-stars { font-size: 1.2rem; }
+            .btn-analysis { min-width: 100%; }
+        }
+
         #myBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--nav-active); color: white; cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px; }
         #myBtn:hover { background-color: #1d4ed8; transform: translateY(-3px); }
 
@@ -240,7 +354,7 @@
     <div class="main-content">
         <div id="simulasi">
             <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D Pro</h2>
-            <p class="page-sub reveal delay-1">Pilih material → pilih preset bentuk → atur parameter → mulai bubut. Pahat akan bergerak maju saat mulai dan mundur saat selesai.</p>
+            <p class="page-sub reveal delay-1">Pilih material → pilih preset bentuk → atur parameter → mulai bubut. Setelah selesai, akan muncul analisis lengkap.</p>
 
             <div class="sim-container reveal delay-2">
                 <div id="sim3d-container"></div>
@@ -250,16 +364,43 @@
                     <span id="phaseText">Siap — Pahat di posisi mundur</span>
                 </div>
 
+                <!-- ANALYSIS RESULT OVERLAY -->
                 <div class="result-overlay" id="resultOverlay">
-                    <div class="result-card">
-                        <div class="result-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="result-text">
-                            <h4>Benda Kerja Selesai!</h4>
-                            <p>Hasil pembubutan telah keluar dari mesin.</p>
+                    <div class="analysis-panel">
+                        <div class="analysis-header">
+                            <div class="icon-circle"><i class="fas fa-check"></i></div>
+                            <div class="header-text">
+                                <h3>Benda Kerja Selesai!</h3>
+                                <p>Hasil pembubutan telah keluar dari mesin</p>
+                            </div>
                         </div>
-                        <div class="result-buttons">
-                            <button class="btn-result primary" id="btnBackToMachine"><i class="fas fa-undo"></i> Kembali ke Mesin</button>
-                            <button class="btn-result" id="btnNewDesign"><i class="fas fa-plus"></i> Rancang Ulang</button>
+                        <div class="analysis-body">
+                            <div class="analysis-section-title">
+                                <i class="fas fa-chart-bar"></i> Analisis Parameter Pemotongan
+                            </div>
+                            <div class="analysis-grid" id="analysisGrid"></div>
+
+                            <div class="quality-card">
+                                <div class="quality-stars" id="qualityStars"></div>
+                                <div class="quality-info">
+                                    <div class="q-title" id="qualityTitle">Penilaian</div>
+                                    <div class="q-desc" id="qualityDesc"></div>
+                                </div>
+                            </div>
+
+                            <div class="analysis-notes" id="analysisNotes" style="display: none;">
+                                <h5><i class="fas fa-lightbulb"></i> Catatan & Saran</h5>
+                                <ul id="notesList"></ul>
+                            </div>
+
+                            <div class="analysis-actions">
+                                <button class="btn-analysis primary" id="btnBackToMachine">
+                                    <i class="fas fa-undo"></i> Kembali ke Mesin
+                                </button>
+                                <button class="btn-analysis secondary" id="btnNewDesign">
+                                    <i class="fas fa-plus"></i> Rancang Ulang
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -366,6 +507,7 @@
         };
 
         let selectedMaterial = null;
+        let selectedMaterialKey = null;
 
         function buildMaterialGrid() {
             const grid = document.getElementById('materialGrid');
@@ -384,7 +526,8 @@
                 card.addEventListener('click', () => {
                     document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
-                    selectedMaterial = key;
+                    selectedMaterial = mat;
+                    selectedMaterialKey = key;
                     document.getElementById('materialPickBtn').disabled = false;
                 });
                 grid.appendChild(card);
@@ -394,7 +537,7 @@
 
         document.getElementById('materialPickBtn').addEventListener('click', () => {
             if (!selectedMaterial) return;
-            applyMaterial(selectedMaterial);
+            applyMaterial(selectedMaterialKey);
             document.getElementById('materialModal').classList.add('hidden');
         });
         document.getElementById('simChangeMaterial').addEventListener('click', () => {
@@ -584,23 +727,16 @@
         // ============ SEGMENT SYSTEM ============
         const SCALE_FACTOR = 40;
 
-        // Posisi penting
-        const WORKPIECE_LEFT_EDGE = -3.3;    // ujung kiri benda kerja (dalam chuck)
-        const CUT_START_X = -3.1;             // posisi carriage saat mulai potong (tepat di depan chuck)
-        const APPROACH_GAP = 2.5;             // jarak carriage dari posisi cut saat idle (ke kanan)
+        // Posisi penting (REVISI: pahat sekarang di atas benda kerja, bukan di ujung chuck)
+        const WORKPIECE_LEFT_EDGE = -3.3;
+        const CHUCK_FRONT_EDGE = -3.1;              // depan chuck
+        const CUT_START_X = CHUCK_FRONT_EDGE + 0.5; // + 0.5 → pahat sedikit ke kanan, di tengah area workpiece
+        const APPROACH_GAP = 2.5;
 
         const SHAPE_NAMES = {
-            silinder: 'Silinder (rata)',
-            taper_naik: 'Tirus Naik',
-            taper_turun: 'Tirus Turun',
-            alur: 'Beralur',
-            ulir: 'Berulir',
-            chamfer: 'Chamfer',
-            bulat: 'Bulat (radius)',
-            kepala_baut: 'Kepala Baut',
-            pulley_alur: 'Pulley (alur V)',
-            pasak: 'Pasak',
-            mur_segi: 'Mur Segi'
+            silinder: 'Silinder (rata)', taper_naik: 'Tirus Naik', taper_turun: 'Tirus Turun',
+            alur: 'Beralur', ulir: 'Berulir', chamfer: 'Chamfer', bulat: 'Bulat (radius)',
+            kepala_baut: 'Kepala Baut', pulley_alur: 'Pulley (alur V)', pasak: 'Pasak', mur_segi: 'Mur Segi'
         };
 
         const PRESETS = {
@@ -610,46 +746,20 @@
                 { shape: 'ulir', length: 40 },
                 { shape: 'chamfer', length: 12 }
             ],
-            mur: [
-                { shape: 'mur_segi', length: 25 },
-                { shape: 'chamfer', length: 15 }
-            ],
-            pipa: [
-                { shape: 'chamfer', length: 15 },
-                { shape: 'silinder', length: 70 },
-                { shape: 'chamfer', length: 15 }
-            ],
+            mur: [{ shape: 'mur_segi', length: 25 }, { shape: 'chamfer', length: 15 }],
+            pipa: [{ shape: 'chamfer', length: 15 }, { shape: 'silinder', length: 70 }, { shape: 'chamfer', length: 15 }],
             poros: [
-                { shape: 'silinder', length: 25 },
-                { shape: 'taper_turun', length: 15 },
-                { shape: 'silinder', length: 30 },
-                { shape: 'taper_turun', length: 15 },
+                { shape: 'silinder', length: 25 }, { shape: 'taper_turun', length: 15 },
+                { shape: 'silinder', length: 30 }, { shape: 'taper_turun', length: 15 },
                 { shape: 'silinder', length: 25 }
             ],
-            ulir: [
-                { shape: 'silinder', length: 20 },
-                { shape: 'ulir', length: 60 },
-                { shape: 'chamfer', length: 15 }
-            ],
-            tirus: [
-                { shape: 'taper_turun', length: 55 },
-                { shape: 'taper_naik', length: 55 }
-            ],
-            alur: [
-                { shape: 'silinder', length: 30 },
-                { shape: 'alur', length: 40 },
-                { shape: 'silinder', length: 35 }
-            ],
-            pasak: [
-                { shape: 'kepala_baut', length: 10 },
-                { shape: 'pasak', length: 70 },
-                { shape: 'chamfer', length: 10 }
-            ],
+            ulir: [{ shape: 'silinder', length: 20 }, { shape: 'ulir', length: 60 }, { shape: 'chamfer', length: 15 }],
+            tirus: [{ shape: 'taper_turun', length: 55 }, { shape: 'taper_naik', length: 55 }],
+            alur: [{ shape: 'silinder', length: 30 }, { shape: 'alur', length: 40 }, { shape: 'silinder', length: 35 }],
+            pasak: [{ shape: 'kepala_baut', length: 10 }, { shape: 'pasak', length: 70 }, { shape: 'chamfer', length: 10 }],
             pulley: [
-                { shape: 'silinder', length: 15 },
-                { shape: 'pulley_alur', length: 25 },
-                { shape: 'silinder', length: 10 },
-                { shape: 'pulley_alur', length: 25 },
+                { shape: 'silinder', length: 15 }, { shape: 'pulley_alur', length: 25 },
+                { shape: 'silinder', length: 10 }, { shape: 'pulley_alur', length: 25 },
                 { shape: 'silinder', length: 15 }
             ]
         };
@@ -664,28 +774,19 @@
         let workpieceTexture = null;
 
         // ============ STATE MACHINE ============
-        // phase: 'idle' | 'approaching' | 'cutting' | 'retracting' | 'showing'
         let phase = 'idle';
         let phaseT = 0;
         const APPROACH_DURATION = 1.2;
         const RETRACT_DURATION = 1.2;
 
-        function getApproachX() {
-            // Pahat idle di sebelah kanan benda kerja (mundur)
-            return CUT_START_X + lengthScene + APPROACH_GAP;
-        }
-        function getEndCutX() {
-            return CUT_START_X + maxTravel;
-        }
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
+        function getApproachX() { return CUT_START_X + lengthScene + APPROACH_GAP; }
+        function getEndCutX() { return CUT_START_X + maxTravel; }
+        function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
-        // ============ ROTATION-VISIBLE TEXTURE ============
+        // ============ TEXTURE ============
         function createRotationTexture() {
             const canvas = document.createElement('canvas');
-            canvas.width = 1024;
-            canvas.height = 256;
+            canvas.width = 1024; canvas.height = 256;
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = '#d8d8d8';
             ctx.fillRect(0, 0, 1024, 256);
@@ -700,25 +801,17 @@
                 const y = j * 16;
                 ctx.strokeStyle = 'rgba(0,0,0,0.08)';
                 ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(1024, y);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1024, y); ctx.stroke();
             }
             ctx.strokeStyle = 'rgba(0,0,0,0.06)';
             ctx.lineWidth = 1;
             for (let k = 0; k < 128; k++) {
-                ctx.beginPath();
-                ctx.moveTo(k * 8, 0);
-                ctx.lineTo(k * 8 + 32, 256);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(k * 8, 0); ctx.lineTo(k * 8 + 32, 256); ctx.stroke();
             }
             const tex = new THREE.CanvasTexture(canvas);
             tex.wrapS = THREE.RepeatWrapping;
             tex.wrapT = THREE.RepeatWrapping;
             tex.anisotropy = 8;
-            tex.minFilter = THREE.LinearMipMapLinearFilter;
-            tex.magFilter = THREE.LinearFilter;
             return tex;
         }
         workpieceTexture = createRotationTexture();
@@ -787,7 +880,7 @@
             resetSimulation();
         }
 
-        // ============ SHAPE PROFILE ============
+        // ============ SHAPE ============
         function applyShape(shape, localT, origR, depth) {
             switch (shape) {
                 case 'silinder': return Math.max(origR - depth, 0.02);
@@ -856,22 +949,17 @@
             return applyShape(activeSeg.shape, localT, origR, depth);
         }
 
-        // ============ BUILD GEOMETRY ============
+        // ============ GEOMETRY ============
         function buildWorkpieceGeometry(lengthInScene, radiusFn) {
-            const segLength = 160;
-            const segAngle = 48;
-            const positions = [];
-            const normals = [];
-            const indices = [];
-            const uvs = [];
+            const segLength = 160, segAngle = 48;
+            const positions = [], normals = [], indices = [], uvs = [];
             for (let i = 0; i <= segLength; i++) {
                 const t = i / segLength;
                 const x = t * lengthInScene;
                 const r = Math.max(radiusFn(t), 0.015);
                 for (let j = 0; j <= segAngle; j++) {
                     const theta = (j / segAngle) * Math.PI * 2;
-                    const cy = Math.cos(theta);
-                    const sy = Math.sin(theta);
+                    const cy = Math.cos(theta), sy = Math.sin(theta);
                     positions.push(x, r * cy, r * sy);
                     normals.push(0, cy, sy);
                     uvs.push(t * 2, j / segAngle);
@@ -880,11 +968,8 @@
             for (let i = 0; i < segLength; i++) {
                 for (let j = 0; j < segAngle; j++) {
                     const a = i * (segAngle + 1) + j;
-                    const b = a + 1;
-                    const c = a + segAngle + 1;
-                    const d = c + 1;
-                    indices.push(a, c, b);
-                    indices.push(b, c, d);
+                    const b = a + 1, c = a + segAngle + 1, d = c + 1;
+                    indices.push(a, c, b, b, c, d);
                 }
             }
             const geo = new THREE.BufferGeometry();
@@ -897,12 +982,9 @@
         }
 
         const workMat = new THREE.MeshStandardMaterial({
-            color: 0x8a9bb0,
-            map: workpieceTexture,
-            roughness: 0.45,
-            metalness: 0.75,
-            emissive: 0x112233,
-            emissiveIntensity: 0.1,
+            color: 0x8a9bb0, map: workpieceTexture,
+            roughness: 0.45, metalness: 0.75,
+            emissive: 0x112233, emissiveIntensity: 0.1,
             side: THREE.DoubleSide
         });
 
@@ -948,19 +1030,16 @@
             if (currentToolGroup) carriageGroup.remove(currentToolGroup);
             const toolGroup = new THREE.Group();
             toolGroup.position.set(0, 1.25, 0.3);
-
             const shankMat = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.4, metalness: 0.6 });
             const shank = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.15, 0.9), shankMat);
             shank.position.set(0, 0, 0.45);
             shank.castShadow = true;
             toolGroup.add(shank);
-
             const tipMat = new THREE.MeshStandardMaterial({ color: 0xff8844, roughness: 0.2, metalness: 0.3, emissive: 0xff5500, emissiveIntensity: 0.15 });
             const tip = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.2, 4), tipMat);
             tip.rotation.z = -Math.PI / 2;
             tip.position.set(0, 0, -0.08);
             toolGroup.add(tip);
-
             currentToolGroup = toolGroup;
             carriageGroup.add(toolGroup);
         }
@@ -990,7 +1069,7 @@
         const labelWork = createLabel('Benda Kerja', '#a855f7', new THREE.Vector3(0, 3.8, 0));
         scene.add(labelHead); scene.add(labelTail); scene.add(labelChuck); scene.add(labelTool); scene.add(labelWork);
 
-        // ============ SIMULATION STATE ============
+        // ============ SIM STATE ============
         let simTime = 0;
         let toolPosX = 0;
         let toolFeed = 0.2;
@@ -1111,7 +1190,6 @@
             cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
             maxTravel = lengthScene;
 
-            // Carriage mundur (jauh dari chuck)
             const approachX = getApproachX();
             carriageGroup.position.set(approachX, 0.6, originalRadiusScene + 0.4);
 
@@ -1128,13 +1206,131 @@
             startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
 
             workMat.emissiveIntensity = 0.08;
-
             updateWorkpieceGeometry();
             updateUI();
             updatePhaseIndicator();
         }
 
-        // ============ RESULT SHOW MODE ============
+        // ============ BUILD ANALYSIS RESULT ============
+        function buildAnalysis() {
+            const mat = selectedMaterial || MATERIALS.baja;
+            const diameterAwal = originalRadiusScene * 2 * SCALE_FACTOR;
+            const rAkhir = getRadiusAt(1, originalRadiusScene, cutDepthScene);
+            const diameterAkhir = rAkhir * 2 * SCALE_FACTOR;
+            const vc = (Math.PI * diameterAwal * rpm) / 1000;
+
+            // Hitung estimasi chip removal rate
+            const feedMmPerMin = toolFeed * rpm; // mm/menit
+            const mrr = vc * 1000 * toolFeed * depthOfCut; // mm³/min (approx)
+
+            // Nilai kualitas
+            let score = 0, totalWeight = 0;
+            const notes = [];
+
+            // 1. RPM terhadap material
+            const rpmDeviation = Math.abs(rpm - mat.rpm) / mat.rpm;
+            const rpmScore = Math.max(0, 1 - rpmDeviation * 1.5);
+            score += rpmScore * 30; totalWeight += 30;
+            if (rpmDeviation > 0.4) {
+                notes.push(`RPM (${rpm}) terlalu ${rpm > mat.rpm ? 'tinggi' : 'rendah'} untuk ${mat.name}. Rekomendasi: ${mat.rpm} RPM.`);
+            }
+
+            // 2. DOC dalam rentang optimal
+            const docScore = (depthOfCut >= 0.3 && depthOfCut <= 1.5) ? 1 : (depthOfCut < 0.3 ? 0.6 : 0.7);
+            score += docScore * 25; totalWeight += 25;
+            if (depthOfCut > 1.5) notes.push(`Kedalaman potong (${depthOfCut} mm) terlalu dalam → pahat cepat aus.`);
+            if (depthOfCut < 0.3) notes.push(`Kedalaman potong (${depthOfCut} mm) terlalu tipis → proses jadi lama.`);
+
+            // 3. Feed dalam rentang optimal
+            const feedScore = (toolFeed >= 0.1 && toolFeed <= 0.3) ? 1 : (toolFeed < 0.1 ? 0.7 : 0.6);
+            score += feedScore * 25; totalWeight += 25;
+            if (toolFeed > 0.3) notes.push(`Feed (${toolFeed} mm/rev) terlalu besar → permukaan kasar.`);
+            if (toolFeed < 0.1) notes.push(`Feed (${toolFeed} mm/rev) sangat kecil → memakan waktu lama.`);
+
+            // 4. Vc
+            const vcIdealMin = 15, vcIdealMax = 90;
+            const vcScore = (vc >= vcIdealMin && vc <= vcIdealMax) ? 1 : 0.7;
+            score += vcScore * 20; totalWeight += 20;
+
+            const finalScore = score / totalWeight;
+            const stars = Math.round(finalScore * 5);
+            const starsHtml = '★'.repeat(stars) + '<span class="empty">' + '★'.repeat(5 - stars) + '</span>';
+
+            let qualityTitle, qualityDesc;
+            if (finalScore >= 0.85) {
+                qualityTitle = 'Kualitas Sangat Baik';
+                qualityDesc = 'Parameter pemotongan dalam rentang optimal. Permukaan hasil halus dan presisi.';
+            } else if (finalScore >= 0.65) {
+                qualityTitle = 'Kualitas Baik';
+                qualityDesc = 'Parameter sudah cukup baik, namun masih ada ruang untuk peningkatan.';
+            } else if (finalScore >= 0.45) {
+                qualityTitle = 'Kualitas Cukup';
+                qualityDesc = 'Beberapa parameter perlu disesuaikan untuk hasil lebih baik.';
+            } else {
+                qualityTitle = 'Kualitas Kurang Optimal';
+                qualityDesc = 'Parameter perlu disesuaikan signifikan agar hasil lebih baik.';
+            }
+
+            if (notes.length === 0) {
+                notes.push('Semua parameter dalam kondisi optimal — hasil terbaik!');
+            }
+
+            // Update UI
+            const grid = document.getElementById('analysisGrid');
+            grid.innerHTML = `
+                <div class="analysis-item green">
+                    <div class="ai-label">Material</div>
+                    <div class="ai-value">${mat.name}</div>
+                </div>
+                <div class="analysis-item cyan">
+                    <div class="ai-label">Panjang Potong</div>
+                    <div class="ai-value">${totalLength}<small>mm</small></div>
+                </div>
+                <div class="analysis-item">
+                    <div class="ai-label">Diameter</div>
+                    <div class="ai-value">${diameterAwal.toFixed(1)} → ${diameterAkhir.toFixed(1)}<small>mm</small></div>
+                </div>
+                <div class="analysis-item orange">
+                    <div class="ai-label">Kedalaman Potong</div>
+                    <div class="ai-value">${depthOfCut.toFixed(1)}<small>mm</small></div>
+                </div>
+                <div class="analysis-item purple">
+                    <div class="ai-label">RPM</div>
+                    <div class="ai-value">${rpm}<small>rpm</small></div>
+                </div>
+                <div class="analysis-item">
+                    <div class="ai-label">Feed</div>
+                    <div class="ai-value">${toolFeed.toFixed(2)}<small>mm/rev</small></div>
+                </div>
+                <div class="analysis-item">
+                    <div class="ai-label">Kecepatan Potong</div>
+                    <div class="ai-value">${vc.toFixed(1)}<small>m/min</small></div>
+                </div>
+                <div class="analysis-item orange">
+                    <div class="ai-label">Waktu</div>
+                    <div class="ai-value">${simTime.toFixed(1)}<small>s</small></div>
+                </div>
+                <div class="analysis-item purple">
+                    <div class="ai-label">Segmen</div>
+                    <div class="ai-value">${segments.length}<small>buah</small></div>
+                </div>
+                <div class="analysis-item green">
+                    <div class="ai-label">Feed Rate</div>
+                    <div class="ai-value">${feedMmPerMin.toFixed(0)}<small>mm/min</small></div>
+                </div>
+            `;
+
+            document.getElementById('qualityStars').innerHTML = starsHtml;
+            document.getElementById('qualityTitle').textContent = qualityTitle + ' — ' + Math.round(finalScore * 100) + '%';
+            document.getElementById('qualityDesc').textContent = qualityDesc;
+
+            const notesBox = document.getElementById('analysisNotes');
+            const notesList = document.getElementById('notesList');
+            notesList.innerHTML = notes.map(n => `<li>${n}</li>`).join('');
+            notesBox.style.display = 'block';
+        }
+
+        // ============ RESULT SHOW ============
         function triggerResultShow() {
             showResultMode = true;
             resultAnimT = 0;
@@ -1143,6 +1339,7 @@
             labelChuck.visible = false;
             labelTail.visible = false;
             labelTool.visible = false;
+            buildAnalysis();
             setTimeout(() => resultOverlay.classList.add('active'), 400);
         }
 
@@ -1186,11 +1383,9 @@
 
             const scalePop = 1 + Math.sin(t * Math.PI) * 0.15;
             workpieceMesh.scale.setScalar(scalePop);
-
-            labelWork.position.set(workpieceMesh.position.x, workpieceMesh.position.y + 2.5, workpieceMesh.position.z);
         }
 
-        // ============ SIMULATION LOOP ============
+        // ============ SIM LOOP ============
         let lastTime = 0;
         let rotationAngle = 0;
         let frameCounter = 0;
@@ -1198,7 +1393,6 @@
         function simulate(deltaTime) {
             if (!workpieceMesh) return;
 
-            // Rotasi benda kerja selama fase aktif
             const activePhases = ['approaching', 'cutting', 'retracting'];
             if (activePhases.includes(phase)) {
                 const revPerSec = rpm / 60;
@@ -1213,7 +1407,7 @@
                 return;
             }
 
-            // === FASE 1: APPROACHING (transisi maju) ===
+            // APPROACHING
             if (phase === 'approaching') {
                 phaseT += deltaTime;
                 const t = Math.min(phaseT / APPROACH_DURATION, 1);
@@ -1231,7 +1425,7 @@
                 return;
             }
 
-            // === FASE 2: CUTTING (pemotongan) ===
+            // CUTTING
             if (phase === 'cutting') {
                 const revPerSec = rpm / 60;
                 const feedPerSecond = (toolFeed * revPerSec * 0.15) / SCALE_FACTOR;
@@ -1264,7 +1458,7 @@
                 return;
             }
 
-            // === FASE 3: RETRACTING (transisi mundur) ===
+            // RETRACTING
             if (phase === 'retracting') {
                 phaseT += deltaTime;
                 const t = Math.min(phaseT / RETRACT_DURATION, 1);
@@ -1290,9 +1484,7 @@
                 return;
             }
             if (showResultMode) hideResultShow();
-            if (phase === 'showing') {
-                resetSimulation();
-            }
+            if (phase === 'showing') resetSimulation();
             if (phase !== 'idle') return;
 
             phase = 'approaching';
@@ -1348,7 +1540,7 @@
         updateUI();
         animate(0);
 
-        console.log('✅ Simulasi siap! State machine: idle → approaching → cutting → retracting → showing');
+        console.log('✅ Simulasi siap! Pahat sudah dipindah ke atas benda kerja & analisis hasil ditambahkan.');
     </script>
 </body>
 </html>
