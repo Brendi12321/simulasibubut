@@ -949,7 +949,7 @@ textarea {
 
         <a href="evaluasi.html" class="nav-link">
             <i class="fa-solid fa-clipboard-check"></i>
-            Evaluasi
+            Kuis
         </a>
 
     </div>
@@ -993,7 +993,7 @@ textarea {
         </h1>
 
         <p>
-            Kelola materi, video pembelajaran, evaluasi,
+            Kelola materi, video pembelajaran, kuis,
             dan pantau aktivitas siswa dalam satu tempat.
         </p>
 
@@ -1066,7 +1066,7 @@ textarea {
                 </div>
 
                 <div class="stat-label">
-                    Soal Evaluasi
+                    Soal Kuis
                 </div>
 
             </div>
@@ -1109,7 +1109,7 @@ textarea {
             onclick="showTab('evaluasi', this)">
 
             <i class="fa-solid fa-clipboard-check"></i>
-            Evaluasi
+            Kuis
 
         </button>
 
@@ -1565,7 +1565,7 @@ textarea {
 
 
 <!-- =====================================================
-     EVALUASI
+     KUIS
 ===================================================== -->
 
 <section id="evaluasiSection" class="section">
@@ -1578,11 +1578,11 @@ textarea {
             <div>
 
                 <h2>
-                    Kelola Evaluasi
+                    Kelola Kuis
                 </h2>
 
                 <p>
-                    Kelola soal posttest pembelajaran mesin bubut.
+                    Kelola soal kuis pembelajaran mesin bubut.
                 </p>
 
             </div>
@@ -1608,7 +1608,7 @@ textarea {
             <div class="form-title">
 
                 <i class="fa-solid fa-file-circle-question"></i>
-                Form Soal Evaluasi
+                Form Soal Kuis
 
             </div>
 
@@ -1724,7 +1724,7 @@ textarea {
         <div class="card-header">
 
             <h2>
-                Daftar Soal Evaluasi
+                Daftar Soal Kuis
             </h2>
 
         </div>
@@ -1808,7 +1808,7 @@ textarea {
                 </div>
                 <div>
                     <div id="statTotalEvaluasi" class="stat-siswa-number">0</div>
-                    <div class="stat-siswa-label">Total Evaluasi</div>
+                    <div class="stat-siswa-label">Total Kuis</div>
                 </div>
             </div>
 
@@ -1860,7 +1860,7 @@ textarea {
 
 
 
-    <!-- DAFTAR HASIL EVALUASI -->
+    <!-- DAFTAR HASIL KUIS -->
     <div class="card">
 
         <div class="card-header">
@@ -1868,10 +1868,10 @@ textarea {
             <div>
                 <h2>
                     <i class="fa-solid fa-clipboard-list"></i>
-                    Hasil Evaluasi Siswa
+                    Hasil Kuis Siswa
                 </h2>
                 <p>
-                    Nilai posttest yang diperoleh siswa.
+                    Nilai kuis yang diperoleh siswa.
                 </p>
             </div>
 
@@ -2790,7 +2790,7 @@ async function deleteVideo(id) {
 
 
 /* =====================================================
-   EVALUASI
+   KUIS
 ===================================================== */
 
 function showQuestionForm() {
@@ -2881,7 +2881,7 @@ async function loadQuestions() {
         container.innerHTML = `
             <div class="empty">
                 <i class="fa-solid fa-clipboard-question"></i>
-                Belum ada soal evaluasi.
+                Belum ada soal kuis.
             </div>
         `;
 
@@ -3195,7 +3195,6 @@ async function loadSiswaData() {
 /* ---------- STATISTIK ---------- */
 async function loadStatistikSiswa() {
 
-    /* Total siswa unik + total login */
     const { data: loginData, error: errLogin } =
         await supabaseClient
             .from("siswa_login")
@@ -3220,13 +3219,12 @@ async function loadStatistikSiswa() {
         loginData ? loginData.length : 0;
 
 
-    /* Total evaluasi + rata-rata */
     const { data: evalData, error: errEval } =
         await supabaseClient
             .from("evaluasi_hasil")
             .select("persentase");
 
-    if (errEval) console.error("Statistik evaluasi error:", errEval);
+    if (errEval) console.error("Statistik kuis error:", errEval);
 
 
     if (evalData && evalData.length > 0) {
@@ -3300,7 +3298,6 @@ async function loadLoginSiswa() {
     }
 
 
-    /* Kelompokkan per siswa (nama + kelas) */
     const grouped = {};
 
     data.forEach(item => {
@@ -3378,7 +3375,7 @@ async function loadLoginSiswa() {
 }
 
 
-/* ---------- DAFTAR HASIL EVALUASI ---------- */
+/* ---------- DAFTAR HASIL KUIS ---------- */
 async function loadEvaluasiSiswa() {
 
     const container =
@@ -3399,7 +3396,7 @@ async function loadEvaluasiSiswa() {
         container.innerHTML = `
             <div class="empty">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Gagal memuat hasil evaluasi.
+                Gagal memuat hasil kuis.
                 <br>
                 Pastikan tabel <b>evaluasi_hasil</b> sudah dibuat.
             </div>
@@ -3415,7 +3412,7 @@ async function loadEvaluasiSiswa() {
         container.innerHTML = `
             <div class="empty">
                 <i class="fa-solid fa-clipboard-question"></i>
-                Belum ada siswa yang mengerjakan evaluasi.
+                Belum ada siswa yang mengerjakan kuis.
             </div>
         `;
 
@@ -3429,16 +3426,13 @@ async function loadEvaluasiSiswa() {
 
             let warna = "#dc2626";
             let label = "Kurang";
-            let kelasBadge = "badge-red";
 
             if (hasil.persentase >= 80) {
                 warna = "#16a34a";
                 label = "Sangat Baik";
-                kelasBadge = "badge-green";
             } else if (hasil.persentase >= 60) {
                 warna = "#ca8a04";
                 label = "Cukup";
-                kelasBadge = "badge-yellow";
             }
 
 
