@@ -291,6 +291,10 @@ body {
     margin-bottom: 25px;
 
     box-shadow: 0 5px 20px rgba(15,23,42,.05);
+
+    overflow-x: auto;
+
+    max-width: 100%;
 }
 
 .tab-btn {
@@ -311,6 +315,10 @@ body {
     cursor: pointer;
 
     transition: .2s;
+
+    white-space: nowrap;
+
+    font-size: 13px;
 }
 
 .tab-btn:hover {
@@ -365,6 +373,8 @@ body {
     gap: 15px;
 
     margin-bottom: 23px;
+
+    flex-wrap: wrap;
 }
 
 .card-header h2 {
@@ -407,6 +417,12 @@ body {
     transition: .2s;
 
     box-shadow: 0 5px 15px rgba(37,99,235,.2);
+
+    font-size: 13px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 }
 
 .btn-primary:hover {
@@ -570,6 +586,10 @@ textarea {
     justify-content: space-between;
 
     gap: 15px;
+
+    align-items: center;
+
+    flex-wrap: wrap;
 }
 
 .item-title {
@@ -654,6 +674,21 @@ textarea {
     font-weight: 600;
 
     margin-right: 5px;
+}
+
+.badge-green {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.badge-yellow {
+    background: #fefce8;
+    color: #ca8a04;
+}
+
+.badge-red {
+    background: #fef2f2;
+    color: #dc2626;
 }
 
 
@@ -742,6 +777,67 @@ textarea {
 
 
 /* =====================================================
+   STATISTIK SISWA
+===================================================== */
+
+.stats-siswa {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+@media (max-width: 900px) {
+    .stats-siswa {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .stats-siswa {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-siswa-card {
+    background: #f8fafc;
+    border: 1px solid #edf0f5;
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stat-siswa-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.stat-siswa-icon.blue { background: #eff6ff; color: #2563eb; }
+.stat-siswa-icon.green { background: #f0fdf4; color: #16a34a; }
+.stat-siswa-icon.orange { background: #fff7ed; color: #ea580c; }
+.stat-siswa-icon.purple { background: #f5f3ff; color: #7c3aed; }
+
+.stat-siswa-number {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.stat-siswa-label {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
@@ -790,12 +886,6 @@ textarea {
 
     .tabs {
         width: 100%;
-
-        overflow-x: auto;
-    }
-
-    .tab-btn {
-        white-space: nowrap;
     }
 
     .card {
@@ -804,6 +894,7 @@ textarea {
 
     .item-top {
         flex-direction: column;
+        align-items: flex-start;
     }
 
     .video-preview {
@@ -902,8 +993,8 @@ textarea {
         </h1>
 
         <p>
-            Kelola materi, video pembelajaran, dan evaluasi
-            siswa dalam satu tempat.
+            Kelola materi, video pembelajaran, evaluasi,
+            dan pantau aktivitas siswa dalam satu tempat.
         </p>
 
     </div>
@@ -1022,6 +1113,16 @@ textarea {
 
         </button>
 
+
+        <button
+            class="tab-btn"
+            onclick="showTab('siswa', this)">
+
+            <i class="fa-solid fa-users"></i>
+            Data Siswa
+
+        </button>
+
     </div>
 
 
@@ -1100,29 +1201,12 @@ textarea {
 
                     <select id="materiCategory">
 
-                        <option value="dasar">
-                            Dasar
-                        </option>
-
-                        <option value="komponen">
-                            Komponen Mesin
-                        </option>
-
-                        <option value="proses">
-                            Proses Pembubutan
-                        </option>
-
-                        <option value="alat">
-                            Alat Potong
-                        </option>
-
-                        <option value="k3">
-                            K3
-                        </option>
-
-                        <option value="perawatan">
-                            Perawatan
-                        </option>
+                        <option value="dasar">Dasar</option>
+                        <option value="komponen">Komponen Mesin</option>
+                        <option value="proses">Proses Pembubutan</option>
+                        <option value="alat">Alat Potong</option>
+                        <option value="k3">K3</option>
+                        <option value="perawatan">Perawatan</option>
 
                     </select>
 
@@ -1348,17 +1432,9 @@ textarea {
 
                     <select id="videoLevel">
 
-                        <option value="dasar">
-                            Dasar
-                        </option>
-
-                        <option value="menengah">
-                            Menengah
-                        </option>
-
-                        <option value="lanjutan">
-                            Lanjutan
-                        </option>
+                        <option value="dasar">Dasar</option>
+                        <option value="menengah">Menengah</option>
+                        <option value="lanjutan">Lanjutan</option>
 
                     </select>
 
@@ -1373,25 +1449,11 @@ textarea {
 
                     <select id="videoCategory">
 
-                        <option value="dasar">
-                            Dasar
-                        </option>
-
-                        <option value="menengah">
-                            Menengah
-                        </option>
-
-                        <option value="lanjutan">
-                            Lanjutan
-                        </option>
-
-                        <option value="k3">
-                            K3
-                        </option>
-
-                        <option value="cnc">
-                            CNC
-                        </option>
+                        <option value="dasar">Dasar</option>
+                        <option value="menengah">Menengah</option>
+                        <option value="lanjutan">Lanjutan</option>
+                        <option value="k3">K3</option>
+                        <option value="cnc">CNC</option>
 
                     </select>
 
@@ -1568,54 +1630,26 @@ textarea {
 
 
                 <div class="form-group">
-
-                    <label>
-                        Opsi A
-                    </label>
-
-                    <input
-                        id="optionA"
-                        type="text">
-
+                    <label>Opsi A</label>
+                    <input id="optionA" type="text">
                 </div>
 
 
                 <div class="form-group">
-
-                    <label>
-                        Opsi B
-                    </label>
-
-                    <input
-                        id="optionB"
-                        type="text">
-
+                    <label>Opsi B</label>
+                    <input id="optionB" type="text">
                 </div>
 
 
                 <div class="form-group">
-
-                    <label>
-                        Opsi C
-                    </label>
-
-                    <input
-                        id="optionC"
-                        type="text">
-
+                    <label>Opsi C</label>
+                    <input id="optionC" type="text">
                 </div>
 
 
                 <div class="form-group">
-
-                    <label>
-                        Opsi D
-                    </label>
-
-                    <input
-                        id="optionD"
-                        type="text">
-
+                    <label>Opsi D</label>
+                    <input id="optionD" type="text">
                 </div>
 
 
@@ -1627,21 +1661,10 @@ textarea {
 
                     <select id="correctAnswer">
 
-                        <option value="0">
-                            A
-                        </option>
-
-                        <option value="1">
-                            B
-                        </option>
-
-                        <option value="2">
-                            C
-                        </option>
-
-                        <option value="3">
-                            D
-                        </option>
+                        <option value="0">A</option>
+                        <option value="1">B</option>
+                        <option value="2">C</option>
+                        <option value="3">D</option>
 
                     </select>
 
@@ -1724,6 +1747,151 @@ textarea {
 </section>
 
 
+
+<!-- =====================================================
+     DATA SISWA
+===================================================== -->
+
+<section id="siswaSection" class="section">
+
+
+    <!-- STATISTIK SISWA -->
+    <div class="card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>
+                    <i class="fa-solid fa-chart-simple"></i>
+                    Statistik Aktivitas Siswa
+                </h2>
+                <p>
+                    Rekap aktivitas belajar siswa.
+                </p>
+            </div>
+
+            <button class="btn-primary" onclick="loadSiswaData()">
+                <i class="fa-solid fa-rotate"></i>
+                Refresh
+            </button>
+
+        </div>
+
+
+        <div class="stats-siswa">
+
+            <div class="stat-siswa-card">
+                <div class="stat-siswa-icon blue">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <div id="statTotalSiswa" class="stat-siswa-number">0</div>
+                    <div class="stat-siswa-label">Total Siswa</div>
+                </div>
+            </div>
+
+
+            <div class="stat-siswa-card">
+                <div class="stat-siswa-icon green">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </div>
+                <div>
+                    <div id="statTotalLogin" class="stat-siswa-number">0</div>
+                    <div class="stat-siswa-label">Total Login</div>
+                </div>
+            </div>
+
+
+            <div class="stat-siswa-card">
+                <div class="stat-siswa-icon orange">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <div>
+                    <div id="statTotalEvaluasi" class="stat-siswa-number">0</div>
+                    <div class="stat-siswa-label">Total Evaluasi</div>
+                </div>
+            </div>
+
+
+            <div class="stat-siswa-card">
+                <div class="stat-siswa-icon purple">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div>
+                    <div id="statRataRata" class="stat-siswa-number">0</div>
+                    <div class="stat-siswa-label">Rata-rata Nilai</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- DAFTAR LOGIN SISWA -->
+    <div class="card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>
+                    <i class="fa-solid fa-list"></i>
+                    Aktivitas Login Siswa
+                </h2>
+                <p>
+                    Daftar siswa yang pernah login beserta jumlah login.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div id="siswaLoginList">
+
+            <div class="empty">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Memuat data...
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- DAFTAR HASIL EVALUASI -->
+    <div class="card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    Hasil Evaluasi Siswa
+                </h2>
+                <p>
+                    Nilai posttest yang diperoleh siswa.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div id="siswaEvaluasiList">
+
+            <div class="empty">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Memuat data...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
 </main>
 
 
@@ -1769,8 +1937,7 @@ async function checkLogin() {
 
     if (!session) {
 
-        // Belum login → kembali ke beranda & hapus mode
-        localStorage.removeItem("userMode");
+        sessionStorage.removeItem("userMode");
 
         window.location.href = "index.html";
 
@@ -1786,6 +1953,7 @@ async function checkLogin() {
     loadMateri();
     loadVideos();
     loadQuestions();
+    loadSiswaData();
 
 }
 
@@ -1798,8 +1966,7 @@ async function logout() {
 
     await supabaseClient.auth.signOut();
 
-    // Hapus mode user → splash akan muncul lagi di index
-    localStorage.removeItem("userMode");
+    sessionStorage.removeItem("userMode");
 
     window.location.href = "index.html";
 
@@ -1837,6 +2004,12 @@ function showTab(tab, button) {
 
 
     button.classList.add("active");
+
+
+    /* Refresh data siswa saat tab dibuka */
+    if (tab === "siswa") {
+        loadSiswaData();
+    }
 
 }
 
@@ -2819,21 +2992,10 @@ async function saveQuestion() {
 
     const options = [
 
-        document
-            .getElementById("optionA")
-            .value.trim(),
-
-        document
-            .getElementById("optionB")
-            .value.trim(),
-
-        document
-            .getElementById("optionC")
-            .value.trim(),
-
-        document
-            .getElementById("optionD")
-            .value.trim()
+        document.getElementById("optionA").value.trim(),
+        document.getElementById("optionB").value.trim(),
+        document.getElementById("optionC").value.trim(),
+        document.getElementById("optionD").value.trim()
 
     ];
 
@@ -3020,6 +3182,333 @@ async function deleteQuestion(id) {
 
 
 /* =====================================================
+   DATA SISWA
+===================================================== */
+
+async function loadSiswaData() {
+    await loadStatistikSiswa();
+    await loadLoginSiswa();
+    await loadEvaluasiSiswa();
+}
+
+
+/* ---------- STATISTIK ---------- */
+async function loadStatistikSiswa() {
+
+    /* Total siswa unik + total login */
+    const { data: loginData, error: errLogin } =
+        await supabaseClient
+            .from("siswa_login")
+            .select("nama, kelas");
+
+    if (errLogin) console.error("Statistik login error:", errLogin);
+
+
+    const uniqueSiswa = new Set();
+
+    if (loginData) {
+        loginData.forEach(item => {
+            uniqueSiswa.add(`${item.nama}|${item.kelas}`);
+        });
+    }
+
+
+    document.getElementById("statTotalSiswa").textContent =
+        uniqueSiswa.size;
+
+    document.getElementById("statTotalLogin").textContent =
+        loginData ? loginData.length : 0;
+
+
+    /* Total evaluasi + rata-rata */
+    const { data: evalData, error: errEval } =
+        await supabaseClient
+            .from("evaluasi_hasil")
+            .select("persentase");
+
+    if (errEval) console.error("Statistik evaluasi error:", errEval);
+
+
+    if (evalData && evalData.length > 0) {
+
+        const rata =
+            Math.round(
+                evalData.reduce(
+                    (sum, item) => sum + (item.persentase || 0),
+                    0
+                ) / evalData.length
+            );
+
+        document.getElementById("statTotalEvaluasi").textContent =
+            evalData.length;
+
+        document.getElementById("statRataRata").textContent =
+            rata + "%";
+
+    } else {
+
+        document.getElementById("statTotalEvaluasi").textContent = 0;
+        document.getElementById("statRataRata").textContent = "0%";
+
+    }
+}
+
+
+/* ---------- DAFTAR LOGIN SISWA ---------- */
+async function loadLoginSiswa() {
+
+    const container =
+        document.getElementById("siswaLoginList");
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("siswa_login")
+            .select("*")
+            .order("login_at", { ascending: false });
+
+
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <div class="empty">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Gagal memuat data login.
+                <br>
+                Pastikan tabel <b>siswa_login</b> sudah dibuat.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                <i class="fa-solid fa-users-slash"></i>
+                Belum ada siswa yang login.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    /* Kelompokkan per siswa (nama + kelas) */
+    const grouped = {};
+
+    data.forEach(item => {
+
+        const key = `${item.nama}|${item.kelas}`;
+
+        if (!grouped[key]) {
+            grouped[key] = {
+                nama: item.nama,
+                kelas: item.kelas,
+                count: 0,
+                lastLogin: item.login_at
+            };
+        }
+
+        grouped[key].count++;
+
+        if (new Date(item.login_at) > new Date(grouped[key].lastLogin)) {
+            grouped[key].lastLogin = item.login_at;
+        }
+
+    });
+
+
+    const list =
+        Object.values(grouped)
+            .sort((a, b) => b.count - a.count);
+
+
+    container.innerHTML =
+        list.map((siswa, idx) => `
+
+            <div class="item">
+
+                <div class="item-top">
+
+                    <div>
+
+                        <div class="item-title">
+                            ${idx + 1}. ${escapeHtml(siswa.nama)}
+                        </div>
+
+                        <div class="item-info">
+
+                            <span class="badge badge-green">
+                                ${escapeHtml(siswa.kelas)}
+                            </span>
+
+                            Terakhir login:
+                            ${formatTanggal(siswa.lastLogin)}
+
+                        </div>
+
+                    </div>
+
+
+                    <div style="text-align:right; flex-shrink:0;">
+
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #2563eb; line-height:1;">
+                            ${siswa.count}×
+                        </div>
+
+                        <div style="font-size: 0.75rem; color: #64748b; margin-top:2px;">
+                            login
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* ---------- DAFTAR HASIL EVALUASI ---------- */
+async function loadEvaluasiSiswa() {
+
+    const container =
+        document.getElementById("siswaEvaluasiList");
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("evaluasi_hasil")
+            .select("*")
+            .order("tanggal", { ascending: false });
+
+
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <div class="empty">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Gagal memuat hasil evaluasi.
+                <br>
+                Pastikan tabel <b>evaluasi_hasil</b> sudah dibuat.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                <i class="fa-solid fa-clipboard-question"></i>
+                Belum ada siswa yang mengerjakan evaluasi.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        data.map((hasil, idx) => {
+
+            let warna = "#dc2626";
+            let label = "Kurang";
+            let kelasBadge = "badge-red";
+
+            if (hasil.persentase >= 80) {
+                warna = "#16a34a";
+                label = "Sangat Baik";
+                kelasBadge = "badge-green";
+            } else if (hasil.persentase >= 60) {
+                warna = "#ca8a04";
+                label = "Cukup";
+                kelasBadge = "badge-yellow";
+            }
+
+
+            return `
+
+                <div class="item">
+
+                    <div class="item-top">
+
+                        <div>
+
+                            <div class="item-title">
+                                ${idx + 1}. ${escapeHtml(hasil.nama)}
+                            </div>
+
+                            <div class="item-info">
+
+                                <span class="badge badge-green">
+                                    ${escapeHtml(hasil.kelas)}
+                                </span>
+
+                                ${formatTanggal(hasil.tanggal)}
+
+                            </div>
+
+                        </div>
+
+
+                        <div style="text-align:right; flex-shrink:0;">
+
+                            <div style="font-size: 1.8rem; font-weight: 800; color: ${warna}; line-height:1;">
+                                ${hasil.persentase}%
+                            </div>
+
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top:2px;">
+                                ${hasil.skor}/${hasil.total_soal} · ${label}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* ---------- FORMAT TANGGAL ---------- */
+function formatTanggal(iso) {
+
+    if (!iso) return "-";
+
+    const d = new Date(iso);
+
+    return d.toLocaleString("id-ID", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+}
+
+
+/* =====================================================
    SECURITY HTML
 ===================================================== */
 
@@ -3038,17 +3527,13 @@ function escapeHtml(text) {
     return String(text)
 
         .replace(/&/g, "&amp;")
-
         .replace(/</g, "&lt;")
-
         .replace(/>/g, "&gt;")
-
         .replace(/"/g, "&quot;")
-
         .replace(/'/g, "&#039;");
 
 }
-   
+
 
 /* =====================================================
    START
