@@ -11,15 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CEK PRETEST (WAJIB) -->
-    <script>
-        (function() {
-            if (localStorage.getItem('pretestDone') !== 'true') {
-                window.location.href = 'pretest.html';
-            }
-        })();
-    </script>
-
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -266,7 +257,6 @@
                 <a href="materi.html"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="kuis.html"><i class="fas fa-puzzle-piece"></i> Kuis</a>
                 <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
             </div>
@@ -285,7 +275,6 @@
                 <p class="delay-3 reveal">Selamat datang di portal pembelajaran berbasis web untuk meningkatkan kompetensi praktik dan teori mesin bubut.</p>
                 <div class="hero-buttons delay-4 reveal">
                     <a href="materi.html" class="btn-hero"><i class="fas fa-rocket"></i> Mulai Belajar</a>
-                    <a href="pretest.html" class="btn-hero secondary"><i class="fas fa-file-signature"></i> Pretest Masuk (Wajib)</a>
                 </div>
             </div>
 
@@ -335,16 +324,10 @@
                         <p>Interaksi langsung dengan model 3D dan kontrol parameter.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
-                    <div class="card-item reveal" data-feature="kuis" data-title="Kuis" data-desc="Uji pemahaman Anda dengan 10 soal pilihan ganda yang mencakup seluruh materi mesin bubut. Setelah menjawab, Anda akan mendapatkan skor dan feedback langsung berupa saran belajar yang dipersonalisasi berdasarkan tingkat pencapaian." data-link="kuis.html">
-                        <i class="fas fa-puzzle-piece"></i>
-                        <h3>Kuis</h3>
-                        <p>10 soal interaktif dengan penilaian dan saran langsung.</p>
-                        <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
-                    </div>
-                    <div class="card-item reveal" data-feature="evaluasi" data-title="Evaluasi" data-desc="Ikuti Tes Awal (sebelum belajar) dan Tes Akhir (setelah belajar) yang masing-masing terdiri dari 5 soal. Sistem akan membandingkan skor Anda untuk mengukur peningkatan kompetensi secara kuantitatif dan memberikan rekomendasi belajar lanjutan." data-link="evaluasi.html">
+                    <div class="card-item reveal" data-feature="evaluasi" data-title="Evaluasi" data-desc="Kerjakan Posttest yang terdiri dari 20 soal pilihan ganda untuk mengukur pemahaman Anda setelah mempelajari materi mesin bubut. Sistem akan memberikan skor dan rekomendasi belajar berdasarkan hasil Anda." data-link="evaluasi.html">
                         <i class="fas fa-clipboard-check"></i>
                         <h3>Evaluasi</h3>
-                        <p>Tes Awal & Akhir untuk mengukur peningkatan Anda.</p>
+                        <p>Posttest 20 soal untuk mengukur pemahaman Anda.</p>
                         <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik untuk detail</span>
                     </div>
                     <div class="card-item reveal" data-feature="profil" data-title="Profil" data-desc="Lihat profil pengembang, visi dan misi pembelajaran, petunjuk penggunaan setiap fitur, serta teknologi yang digunakan (HTML5, CSS3, JavaScript, Three.js, Font Awesome, YouTube Embed). Juga tersedia informasi kontak dan lisensi." data-link="profil.html">
@@ -362,7 +345,6 @@
                 <p class="section-sub">Definisi, fungsi, dan ilustrasi mesin bubut.</p>
                 <div class="detail-card">
                     <div class="img-placeholder">
-                        <!-- Gambar ilustrasi mesin bubut menggunakan ikon + latar -->
                         <i class="fas fa-industry" style="font-size:5rem; color:var(--nav-active);"></i>
                         <span style="margin-left:20px; font-size:1.2rem; font-weight:600; color:var(--text-color);">Mesin Bubut Konvensional</span>
                     </div>
@@ -384,7 +366,7 @@
                 </div>
             </div>
 
-            <!-- 5. KOMPONEN MESIN BUBUT (dengan gambar dan penjelasan rinci) -->
+            <!-- 5. KOMPONEN MESIN BUBUT -->
             <div class="reveal delay-4">
                 <h2 class="section-title"><i class="fas fa-microchip"></i> Komponen Utama Mesin Bubut</h2>
                 <p class="section-sub">Setiap bagian memiliki peran penting dalam proses pembubutan.</p>
@@ -455,7 +437,7 @@
                 </div>
             </div>
 
-            <!-- 6. K3 MESIN BUBUT (dengan gambar dan prosedur rinci) -->
+            <!-- 6. K3 MESIN BUBUT -->
             <div class="reveal delay-6">
                 <h2 class="section-title"><i class="fas fa-shield-alt"></i> K3 Mesin Bubut</h2>
                 <p class="section-sub">Keselamatan dan Kesehatan Kerja (K3) adalah prioritas utama dalam pengoperasian mesin bubut.</p>
@@ -488,66 +470,44 @@
                 <h2 class="section-title"><i class="fas fa-route"></i> Alur Pembelajaran</h2>
                 <p class="section-sub">Ikuti alur ini agar hasil belajar optimal.</p>
                 <div class="flow-container">
-                    <div class="flow-step"><i class="fas fa-file-signature"></i> PRETEST (Wajib)</div>
-                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step"><i class="fas fa-book"></i> MATERI</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step"><i class="fas fa-video"></i> VIDEO</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step"><i class="fas fa-cubes"></i> SIMULASI</div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="flow-step"><i class="fas fa-puzzle-piece"></i> KUIS</div>
-                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="flow-step"><i class="fas fa-clipboard-check"></i> TES AKHIR</div>
+                    <div class="flow-step"><i class="fas fa-clipboard-check"></i> POSTTEST</div>
                 </div>
             </div>
 
-            <!-- 8. TANTANGAN / KUIS -->
+            <!-- 8. EVALUASI PEMBELAJARAN -->
             <div class="reveal" style="margin-top: 40px;">
-                <h2 class="section-title"><i class="fas fa-gamepad"></i> Tantangan / Kuis</h2>
-                <p class="section-sub">Siap menguji kemampuan Anda?</p>
+                <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Evaluasi Pembelajaran</h2>
+                <p class="section-sub">Ukur pemahaman Anda setelah mempelajari seluruh materi.</p>
                 <div class="card-item reveal" style="cursor: default;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                         <div>
-                            <h3>Kuis Pemahaman Mesin Bubut</h3>
-                            <p style="margin-top: 8px;">10 soal pilihan ganda untuk menguji penguasaan materi Anda. Dapatkan skor dan saran belajar langsung.</p>
+                            <h3>Posttest Mesin Bubut</h3>
+                            <p style="margin-top: 8px;">20 soal pilihan ganda untuk mengukur pemahaman Anda setelah mempelajari seluruh materi mesin bubut.</p>
                         </div>
-                        <a href="kuis.html" class="btn-hero" style="text-decoration: none;"><i class="fas fa-puzzle-piece"></i> Kerjakan Kuis</a>
+                        <a href="evaluasi.html" class="btn-hero" style="text-decoration: none;"><i class="fas fa-clipboard-check"></i> Kerjakan Posttest</a>
                     </div>
                 </div>
             </div>
 
-            <!-- 9. EVALUASI PEMBELAJARAN -->
-            <div class="reveal" style="margin-top: 40px;">
-                <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Evaluasi Pembelajaran</h2>
-                <p class="section-sub">Ukur peningkatan kompetensi Anda sebelum dan sesudah belajar.</p>
-                <div class="card-grid">
-                    <div class="card-item reveal">
-                        <i class="fas fa-file-signature"></i>
-                        <h3>Tes Awal</h3>
-                        <p>5 soal untuk mengukur pengetahuan awal Anda. Kerjakan sebelum mempelajari materi.</p>
-                    </div>
-                    <div class="card-item reveal">
-                        <i class="fas fa-certificate"></i>
-                        <h3>Tes Akhir</h3>
-                        <p>5 soal setelah belajar untuk melihat peningkatan pemahaman Anda.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 10. STATISTIK MEDIA -->
+            <!-- 9. STATISTIK MEDIA -->
             <div class="reveal" style="margin-top: 40px;">
                 <h2 class="section-title"><i class="fas fa-chart-line"></i> Statistik Media</h2>
                 <p class="section-sub">Fakta menarik tentang media pembelajaran ini.</p>
                 <div class="stats-grid">
                     <div class="stat-card reveal"><div class="num">10</div><div class="label">Modul Pembelajaran</div></div>
                     <div class="stat-card reveal"><div class="num">3D</div><div class="label">Simulasi Realistis</div></div>
-                    <div class="stat-card reveal"><div class="num">20+</div><div class="label">Soal Latihan & Evaluasi</div></div>
-                    <div class="stat-card reveal"><div class="num">✔</div><div class="label">Tes Awal & Akhir</div></div>
+                    <div class="stat-card reveal"><div class="num">20</div><div class="label">Soal Evaluasi</div></div>
+                    <div class="stat-card reveal"><div class="num">✔</div><div class="label">Posttest</div></div>
                 </div>
             </div>
 
-            <!-- 11. TENTANG MEDIA -->
+            <!-- 10. TENTANG MEDIA -->
             <div class="reveal" style="margin-top: 40px; background: var(--box-bg); border-radius: 24px; padding: 32px; text-align: center; border: 1px solid var(--border-color);">
                 <i class="fas fa-users" style="font-size: 2.5rem; color: #2563eb; margin-bottom: 16px;"></i>
                 <h2 class="section-title" style="justify-content: center;">Tentang Media</h2>
@@ -671,16 +631,10 @@
                 desc: 'Eksplorasi model 3D mesin bubut secara interaktif. Anda dapat mengatur kecepatan putar (RPM) dari 100 hingga 3000, mengatur kedalaman potong (DOC) 0.1–2.0 mm, dan melihat efeknya secara real-time pada diameter benda kerja serta posisi pahat. Cocok untuk memahami hubungan parameter dengan hasil pemotongan.',
                 link: 'simulasi.html'
             },
-            kuis: {
-                icon: '<i class="fas fa-puzzle-piece"></i>',
-                title: 'Kuis',
-                desc: 'Uji pemahaman Anda dengan 10 soal pilihan ganda yang mencakup seluruh materi mesin bubut. Setelah menjawab, Anda akan mendapatkan skor dan feedback langsung berupa saran belajar yang dipersonalisasi berdasarkan tingkat pencapaian.',
-                link: 'kuis.html'
-            },
             evaluasi: {
                 icon: '<i class="fas fa-clipboard-check"></i>',
                 title: 'Evaluasi',
-                desc: 'Ikuti Tes Awal (sebelum belajar) dan Tes Akhir (setelah belajar) yang masing-masing terdiri dari 5 soal. Sistem akan membandingkan skor Anda untuk mengukur peningkatan kompetensi secara kuantitatif dan memberikan rekomendasi belajar lanjutan.',
+                desc: 'Kerjakan Posttest yang terdiri dari 20 soal pilihan ganda untuk mengukur pemahaman Anda setelah mempelajari materi mesin bubut. Sistem akan memberikan skor dan rekomendasi belajar berdasarkan hasil Anda.',
                 link: 'evaluasi.html'
             },
             profil: {
@@ -718,7 +672,7 @@
             if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
         });
 
-        console.log('✅ Beranda dengan konten rinci dan ilustrasi siap!');
+        console.log('✅ Beranda siap! Fitur Kuis & Pretest telah dihapus.');
     </script>
 
 </body>
