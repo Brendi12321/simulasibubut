@@ -311,7 +311,7 @@
         const groundMat = new THREE.MeshStandardMaterial({ color: 0x111520, roughness: 0.8, metalness: 0.2 });
         const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -2.5; // Turunkan karena base cabinet
+        ground.position.y = -2.5;
         ground.receiveShadow = true;
         scene.add(ground);
 
@@ -328,7 +328,7 @@
         const matTool = new THREE.MeshStandardMaterial({ color: 0xff6633, roughness: 0.3, metalness: 0.5, emissive: 0xff4400, emissiveIntensity: 0.05 });
         const matSafety = new THREE.MeshStandardMaterial({ color: 0xaaccff, transparent: true, opacity: 0.15, roughness: 0.1, metalness: 0.1, side: THREE.DoubleSide });
 
-        // ============ MESIN BUBUT (MODEL BARU) ============
+        // ============ MESIN BUBUT ============
         const machineGroup = new THREE.Group();
         scene.add(machineGroup);
 
@@ -336,21 +336,18 @@
         const baseGroup = new THREE.Group();
         machineGroup.add(baseGroup);
 
-        // Kabinet utama
         const cabinet = new THREE.Mesh(new THREE.BoxGeometry(16, 2.2, 3.2), matDarkBase);
         cabinet.position.set(0, -1.4, 0);
         cabinet.castShadow = true;
         cabinet.receiveShadow = true;
         baseGroup.add(cabinet);
 
-        // Chip tray (Baki serpihan)
         const chipTray = new THREE.Mesh(new THREE.BoxGeometry(14, 0.15, 3.4), matMachineBody);
         chipTray.position.set(0, -0.25, 0);
         chipTray.castShadow = true;
         chipTray.receiveShadow = true;
         baseGroup.add(chipTray);
 
-        // Kaki-kaki
         const legPositions = [[-7, -2.5, -1.2], [7, -2.5, -1.2], [-7, -2.5, 1.2], [7, -2.5, 1.2]];
         legPositions.forEach(pos => {
             const leg = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), matDarkBase);
@@ -367,7 +364,6 @@
         bed.receiveShadow = true;
         machineGroup.add(bed);
 
-        // Rel pemandu (V-slide)
         for (let x of [-3.2, 3.2]) {
             const rail = new THREE.Mesh(new THREE.BoxGeometry(10, 0.15, 0.3), matMetal);
             rail.position.set(0, 0.6, x);
@@ -384,14 +380,12 @@
         headBase.castShadow = true;
         headGroup.add(headBase);
 
-        // Control Panel (Bagian kiri)
         const panelMat = new THREE.MeshStandardMaterial({ color: 0x2a3a4a, roughness: 0.5, metalness: 0.3 });
         const controlPanel = new THREE.Mesh(new THREE.BoxGeometry(1.0, 2.2, 2.0), panelMat);
         controlPanel.position.set(-1.5, 1.2, 0);
         controlPanel.castShadow = true;
         headGroup.add(controlPanel);
 
-        // Dials (Tombol putar)
         const dialMat = new THREE.MeshStandardMaterial({ color: 0xd0d0d0, roughness: 0.2, metalness: 0.8 });
         for (let i = 0; i < 3; i++) {
             const dial = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16), dialMat);
@@ -400,13 +394,11 @@
             headGroup.add(dial);
         }
 
-        // Emergency Stop Button
         const estop = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16), new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0x880000, emissiveIntensity: 0.5 }));
         estop.rotation.z = Math.PI / 2;
         estop.position.set(-2.0, 0.6, 0.6);
         headGroup.add(estop);
 
-        // Spindle
         const spindle = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 1.0, 24), matMetal);
         spindle.rotation.z = Math.PI / 2;
         spindle.position.set(1.4, 1.25, 0);
@@ -424,7 +416,6 @@
         chuckBody.castShadow = true;
         chuckGroup.add(chuckBody);
 
-        // Chuck Jaws
         const jawMat = new THREE.MeshStandardMaterial({ color: 0x6a7a8a, roughness: 0.4, metalness: 0.8 });
         for (let i = 0; i < 3; i++) {
             const angle = (i / 3) * Math.PI * 2;
@@ -438,6 +429,7 @@
 
         // --- TAILSTOCK (Kepala Lepas) ---
         const tailGroup = new THREE.Group();
+        // Posisi X akan diupdate secara dinamis
         tailGroup.position.set(5.5, 0.6, 0);
         machineGroup.add(tailGroup);
 
@@ -446,14 +438,12 @@
         tailBase.castShadow = true;
         tailGroup.add(tailBase);
 
-        // Quill (Poros)
         const quill = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 1.5, 16), matMetal);
         quill.rotation.z = Math.PI / 2;
         quill.position.set(-1.2, 1.25, 0);
         quill.castShadow = true;
         tailGroup.add(quill);
 
-        // Handwheel
         const handwheel = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.08, 12, 24), matMetal);
         handwheel.rotation.y = Math.PI / 2;
         handwheel.position.set(1.2, 1.25, 0);
@@ -475,7 +465,6 @@
         carrBody.castShadow = true;
         carriageGroup.add(carrBody);
 
-        // Apron (Bagian depan dengan roda tangan)
         const apron = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 0.4), matMachineBody);
         apron.position.set(0, 0.4, 1.0);
         apron.castShadow = true;
@@ -486,7 +475,6 @@
         carriageWheel.position.set(0, 0.4, 1.2);
         carriageGroup.add(carriageWheel);
 
-        // Cross slide & Tool post
         const crossSlide = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.4, 1.5), matMachineAccent);
         crossSlide.position.set(0, 0.9, 0);
         crossSlide.castShadow = true;
@@ -506,10 +494,12 @@
         // ============ BENDA KERJA (WORKPIECE) ============
         let workpieceMesh = null;
         let wireframeMesh = null;
-        let initialWorkpieceDiameter = 40; // mm
-        let initialWorkpieceLength = 120; // mm
+        let initialWorkpieceDiameter = 40;
+        let initialWorkpieceLength = 120;
         let currentDiameter = initialWorkpieceDiameter;
         let currentLength = initialWorkpieceLength;
+        
+        const SCALE_FACTOR = 15; // 1 unit 3D = 15 mm
         
         const workMat = new THREE.MeshStandardMaterial({ 
             color: 0xaaccdd, 
@@ -523,18 +513,26 @@
             if (workpieceMesh) machineGroup.remove(workpieceMesh);
             if (wireframeMesh) machineGroup.remove(wireframeMesh);
 
-            const radius = diameter / 2;
-            const workGeo = new THREE.CylinderGeometry(radius, radius, length, 32);
+            const radius = (diameter / 2) / SCALE_FACTOR;
+            const lengthInScene = length / SCALE_FACTOR;
+            
+            const workGeo = new THREE.CylinderGeometry(radius, radius, lengthInScene, 32);
             workpieceMesh = new THREE.Mesh(workGeo, workMat);
             workpieceMesh.rotation.z = Math.PI / 2;
-            // Posisikan benda kerja agar ujung kiri berada di chuck
-            workpieceMesh.position.set(-5.5 + 1.4 + 0.6 + (length / 2), 0.6 + 1.25, 0);
+            
+            // Posisi X: Ujung kiri masuk ke dalam chuck
+            // Chuck jaws berada di sekitar X = -3.1
+            const leftEdgeX = -3.1;
+            const centerX = leftEdgeX + (lengthInScene / 2);
+            const centerY = 0.6 + 1.25; // Y = 1.85 (sejajar spindle & tailstock)
+            
+            workpieceMesh.position.set(centerX, centerY, 0);
             workpieceMesh.castShadow = true;
             workpieceMesh.receiveShadow = true;
             machineGroup.add(workpieceMesh);
 
-            // Wireframe untuk efek visual
-            const lineGeo = new THREE.CylinderGeometry(radius + 0.02, radius + 0.02, length + 0.02, 24, 1, true);
+            // Wireframe visual
+            const lineGeo = new THREE.CylinderGeometry(radius + 0.02, radius + 0.02, lengthInScene + 0.02, 24, 1, true);
             wireframeMesh = new THREE.LineSegments(
                 new THREE.WireframeGeometry(lineGeo),
                 new THREE.LineBasicMaterial({ color: 0x4488ff, transparent: true, opacity: 0.3 })
@@ -543,9 +541,15 @@
             wireframeMesh.position.copy(workpieceMesh.position);
             machineGroup.add(wireframeMesh);
 
+            // Update Tailstock Position
+            const tailX = leftEdgeX + lengthInScene + 1.5;
+            tailGroup.position.x = tailX;
+
             currentDiameter = diameter;
             currentLength = length;
-            maxTravel = length - 10; // Batas gerak pahat
+            initialWorkpieceDiameter = diameter;
+            initialWorkpieceLength = length;
+            maxTravel = lengthInScene - 0.5; // Batas gerak pahat
         }
 
         // ============ PAHAT (TOOLS) ============
@@ -555,36 +559,31 @@
             if (currentToolGroup) carriageGroup.remove(currentToolGroup);
             
             const toolGroup = new THREE.Group();
-            toolGroup.position.set(0, 1.6, 0); // Di atas tool post
+            // Y = 1.25 agar sejajar dengan center benda kerja (0.6 + 1.25 = 1.85)
+            toolGroup.position.set(0, 1.25, 0);
             
-            // Badan pahat (shank)
             const shankMat = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.4, metalness: 0.6 });
             const shank = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.2, 1.5), shankMat);
             shank.position.set(0, 0, 0.5);
             shank.castShadow = true;
             toolGroup.add(shank);
 
-            // Tip pahat berdasarkan jenis
             const tipMat = new THREE.MeshStandardMaterial({ color: 0xff8844, roughness: 0.2, metalness: 0.3, emissive: 0xff5500, emissiveIntensity: 0.1 });
             
             if (type === 'turning') {
-                // Pahat bubut standar (ujung runcing)
                 const tip = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.25, 4), tipMat);
                 tip.rotation.z = -Math.PI / 2;
                 tip.position.set(0, 0, -0.3);
                 toolGroup.add(tip);
             } else if (type === 'facing') {
-                // Pahat facing (ujung rata)
                 const tip = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.1, 0.3), tipMat);
                 tip.position.set(0, -0.05, -0.3);
                 toolGroup.add(tip);
             } else if (type === 'parting') {
-                // Pahat potong (tipis dan tinggi)
                 const tip = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.4, 0.3), tipMat);
                 tip.position.set(0, 0, -0.3);
                 toolGroup.add(tip);
             } else if (type === 'threading') {
-                // Pahat ulir (segitiga 60 derajat)
                 const tip = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.3, 3), tipMat);
                 tip.rotation.z = -Math.PI / 2;
                 tip.rotation.y = Math.PI / 6;
@@ -625,14 +624,15 @@
         // ============ PARAMETER SIMULASI ============
         let isRunning = false;
         let simTime = 0;
-        let toolPosZ = 0; // Untuk parting (radial)
-        let toolPosX = 0; // Untuk turning (axial)
+        let toolPosZ = 0;
+        let toolPosX = 0;
         let toolFeed = 0.15;
         let rpm = 800;
         let depthOfCut = 0.5;
         let maxTravel = 120;
         let totalReduction = 0;
-        let cutMode = 'axial'; // 'axial' atau 'radial'
+        let cutMode = 'axial';
+        let radiusInScene = 0;
 
         // Elemen UI
         const rpmSlider = document.getElementById('simRpm');
@@ -681,11 +681,7 @@
         toolSelect.addEventListener('change', () => {
             const type = toolSelect.value;
             createTool(type);
-            if (type === 'parting') {
-                cutMode = 'radial';
-            } else {
-                cutMode = 'axial';
-            }
+            cutMode = (type === 'parting') ? 'radial' : 'axial';
             resetSimulation();
         });
 
@@ -706,21 +702,28 @@
             isRunning = false;
             simTime = 0;
             toolPosX = 0;
-            toolPosZ = 0;
             totalReduction = 0;
             
-            // Reset posisi carriage ke awal (dekat chuck)
-            carriageGroup.position.x = -5.5 + 1.4 + 0.6; // Posisi awal di ujung benda kerja
-            if (currentToolGroup) currentToolGroup.position.set(0, 1.6, 0);
-            
-            // Reset ukuran benda kerja ke ukuran awal
             const dia = parseFloat(workDiaSlider.value);
             const len = parseFloat(workLenSlider.value);
+            radiusInScene = (dia / 2) / SCALE_FACTOR;
+            
+            // Posisi awal Carriage
+            carriageGroup.position.x = -3.1; // Di ujung kiri benda kerja
+            carriageGroup.position.z = radiusInScene + 0.3; // Di depan benda kerja
+            
+            if (cutMode === 'radial') {
+                toolPosZ = radiusInScene + 0.3;
+            } else {
+                toolPosZ = radiusInScene + 0.3;
+            }
+            
+            if (currentToolGroup) currentToolGroup.position.set(0, 1.25, 0);
+            
             createWorkpiece(dia, len);
             currentDiameter = dia;
-            maxTravel = len - 10;
+            maxTravel = (len / SCALE_FACTOR) - 0.5;
             
-            // Reset material
             workMat.color.setHex(0xaaccdd);
             workMat.emissive.setHex(0x112233);
             workMat.emissiveIntensity = 0.1;
@@ -739,14 +742,13 @@
             const anglePerSec = revPerSec * Math.PI * 2;
             rotationAngle += anglePerSec * deltaTime;
 
-            // Putar benda kerja dan chuck
             if (workpieceMesh) workpieceMesh.rotation.x = rotationAngle;
             if (wireframeMesh) wireframeMesh.rotation.x = rotationAngle;
             chuckGroup.rotation.x = rotationAngle;
 
             if (cutMode === 'axial') {
-                // --- PROSES TURNING (Memanjang) ---
-                const feedPerSecond = toolFeed * revPerSec;
+                // --- TURNING (Axial) ---
+                const feedPerSecond = (toolFeed * revPerSec) / SCALE_FACTOR;
                 toolPosX += feedPerSecond * deltaTime;
 
                 if (toolPosX > maxTravel) {
@@ -758,11 +760,11 @@
                     return;
                 }
 
-                // Update posisi carriage (bergerak sepanjang X)
-                carriageGroup.position.x = (-5.5 + 1.4 + 0.6) + toolPosX;
+                carriageGroup.position.x = -3.1 + toolPosX;
+                carriageGroup.position.z = radiusInScene + 0.3;
 
                 // Reduksi diameter
-                const reductionPerRev = depthOfCut * 2;
+                const reductionPerRev = depthOfCut * 2; // dalam mm
                 const reductionPerSecond = reductionPerRev * revPerSec;
                 totalReduction += reductionPerSecond * deltaTime;
                 currentDiameter = Math.max(initialWorkpieceDiameter - totalReduction, 5.0);
@@ -777,18 +779,17 @@
                     }
                 }
 
-                // Efek panas
                 const heatFactor = 1 - (currentDiameter / initialWorkpieceDiameter);
                 workMat.emissive.setHSL(0.08, 0.9, 0.1 + heatFactor * 0.4);
                 workMat.emissiveIntensity = 0.1 + heatFactor * 0.5;
 
             } else if (cutMode === 'radial') {
-                // --- PROSES PARTING (Memotong) ---
-                const feedPerSecond = toolFeed * revPerSec * 0.5; // Parting lebih lambat
-                toolPosZ -= feedPerSecond * deltaTime; // Gerak masuk ke benda kerja
+                // --- PARTING (Radial) ---
+                const feedPerSecond = (toolFeed * revPerSec * 0.5) / SCALE_FACTOR;
+                toolPosZ -= feedPerSecond * deltaTime;
 
-                if (Math.abs(toolPosZ) > (initialWorkpieceDiameter / 2) / 10) { // Konversi kasar
-                    toolPosZ = -(initialWorkpieceDiameter / 2) / 10;
+                if (toolPosZ <= 0) {
+                    toolPosZ = 0;
                     isRunning = false;
                     startBtn.textContent = '▶ Mulai';
                     workMat.emissive.setHex(0xff0000);
@@ -796,23 +797,9 @@
                     return;
                 }
 
-                // Update posisi pahat (bergerak di sumbu Z lokal)
-                if (currentToolGroup) {
-                    // Karena carriage di Z=0, kita gerakkan tool group
-                    // Dalam Three.js, sumbu Z lokal carriageGroup
-                    // Kita perlu mengkonversi gerakan radial ke posisi Z dunia
-                    // Karena carriageGroup tidak dirotasi, Z lokal = Z dunia
-                    const carriageZ = 0; // Posisi awal
-                    // toolPosZ dalam skala scene (cm)
-                    // Benda kerja memiliki radius ~ currentDiameter/2 (mm) -> dikonversi ke scene unit
-                    // 1 mm = 0.1 unit (asumsi)
-                    const radiusInScene = (initialWorkpieceDiameter / 2) / 10;
-                    const cutDepth = Math.abs(toolPosZ);
-                    
-                    // Pahat bergerak dari posisi luar (Z = radius + 1) ke dalam
-                    const startZ = radiusInScene + 1.5;
-                    carriageGroup.position.z = startZ - cutDepth;
-                }
+                // Posisi X tetap di tengah benda kerja
+                carriageGroup.position.x = -3.1 + (initialWorkpieceLength / SCALE_FACTOR / 2);
+                carriageGroup.position.z = toolPosZ;
             }
 
             simTime += deltaTime;
@@ -837,7 +824,6 @@
             workMat.emissive.setHex(0xff4400);
             workMat.emissiveIntensity = 0.15;
             
-            // Pastikan pahat sudah terpasang
             if (!currentToolGroup) {
                 createTool(toolSelect.value);
             }
@@ -875,9 +861,7 @@
         window.addEventListener('resize', resize);
 
         // ============ INISIALISASI ============
-        // Buat benda kerja awal
         createWorkpiece(parseFloat(workDiaSlider.value), parseFloat(workLenSlider.value));
-        // Buat pahat awal
         createTool('turning');
         resetSimulation();
         updateUI();
