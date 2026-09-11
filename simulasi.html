@@ -49,36 +49,78 @@
         .page-sub { color: var(--sub-text-color); margin-bottom: 28px; border-left: 4px solid #2563eb; padding-left: 16px; font-weight: 500; }
 
         #simulasi .sim-container { background: #0b0e14; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 40px var(--shadow-color); position: relative; }
-        #simulasi #sim3d-container { width: 100%; height: 650px; display: block; background: #0a0d14; }
-        #simulasi .sim-overlay-info { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 12px 20px; border-radius: 40px; color: #cbd5e1; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.06); pointer-events: none; }
+        #simulasi #sim3d-container { width: 100%; height: 600px; display: block; background: #0a0d14; }
+        #simulasi .sim-overlay-info { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 12px 20px; border-radius: 40px; color: #cbd5e1; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.06); pointer-events: none; z-index: 10; }
         #simulasi .sim-overlay-info i { color: #60a5fa; margin-right: 8px; }
 
-        #simulasi .sim-controls-bar { display: flex; flex-direction: column; gap: 16px; background: #1a2639; padding: 20px 24px; border-radius: 0 0 24px 24px; border-top: 1px solid #2a3a4e; }
-        #simulasi .controls-row { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; }
-        #simulasi .sim-controls-bar label { display: flex; align-items: center; gap: 8px; color: #b0c9e0; font-weight: 500; font-size: 0.8rem; }
-        #simulasi .sim-controls-bar input[type="range"] { width: 110px; accent-color: #2563eb; background: transparent; }
-        #simulasi .sim-controls-bar .val { color: #fff; font-weight: 700; min-width: 40px; font-size: 0.85rem; text-align: right; }
-        #simulasi .sim-controls-bar select { background: #0b1a2e; color: #fff; border: 1px solid #4a5a6a; padding: 6px 12px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.8rem; outline: none; cursor: pointer; }
-        #simulasi .sim-controls-bar select:focus { border-color: #2563eb; }
-        #simulasi .sim-controls-bar select option { background: #0b1a2e; color: #fff; }
+        /* ============ SEGMENT EDITOR ============ */
+        .segment-editor { background: #1a2639; padding: 20px 24px; border-top: 1px solid #2a3a4e; }
+        .segment-editor .editor-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #2a3a4e; }
+        .segment-editor .editor-title { color: #fff; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .segment-editor .editor-title i { color: #a855f7; }
+        .segment-editor .total-info { color: #94a3b8; font-size: 0.8rem; }
+        .segment-editor .total-info strong { color: #60a5fa; font-size: 0.95rem; }
 
-        #simulasi .btn-sim { background: #2563eb; border: none; color: #fff; padding: 8px 20px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; }
-        #simulasi .btn-sim:hover { background: #3b82f6; transform: scale(1.02); }
-        #simulasi .btn-sim.danger { background: #b91c1c; }
-        #simulasi .btn-sim.danger:hover { background: #dc2626; }
-        #simulasi .btn-sim.outline { background: transparent; border: 2px solid #4a5a6a; color: #b0c9e0; }
-        #simulasi .btn-sim.outline:hover { background: #2a3a4e; }
+        .segments-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; max-height: 260px; overflow-y: auto; padding-right: 4px; }
+        .segments-list::-webkit-scrollbar { width: 6px; }
+        .segments-list::-webkit-scrollbar-track { background: transparent; }
+        .segments-list::-webkit-scrollbar-thumb { background: #4a5a6a; border-radius: 10px; }
 
-        #simulasi .info-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-        #simulasi .info-group .info-item { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 4px 14px; border-radius: 30px; }
-        #simulasi .info-group .info-item i { color: #60a5fa; font-size: 0.7rem; }
-        #simulasi .info-group .info-item span { color: #cbd5e1; font-size: 0.75rem; }
-        #simulasi .info-group .info-item strong { color: #fff; }
+        .segment-row { display: grid; grid-template-columns: 36px 1fr 1fr 70px 36px; gap: 10px; align-items: center; background: #0f1722; padding: 10px 12px; border-radius: 10px; border-left: 4px solid #2563eb; }
+        .segment-row .seg-num { color: #fff; font-weight: 800; font-size: 0.85rem; text-align: center; background: rgba(37,99,235,0.2); border-radius: 6px; padding: 4px 0; }
+        .segment-row .seg-color-bar { display: none; }
+        .segment-row select, .segment-row input[type="range"] { background: #1a2639; color: #fff; border: 1px solid #334155; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 0.78rem; outline: none; cursor: pointer; }
+        .segment-row select:focus { border-color: #2563eb; }
+        .segment-row input[type="range"] { padding: 0; cursor: pointer; accent-color: #2563eb; width: 100%; }
+        .segment-row .seg-len-val { color: #fff; font-weight: 700; font-size: 0.8rem; text-align: center; background: rgba(96,165,250,0.15); padding: 4px 0; border-radius: 6px; }
+        .segment-row .remove-btn { background: #7f1d1d; border: none; color: #fff; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: 0.2s; }
+        .segment-row .remove-btn:hover { background: #dc2626; transform: scale(1.1); }
+
+        /* Warna segmen berbeda */
+        .segment-row[data-shape="silinder"] { border-left-color: #3b82f6; }
+        .segment-row[data-shape="taper_naik"] { border-left-color: #22c55e; }
+        .segment-row[data-shape="taper_turun"] { border-left-color: #eab308; }
+        .segment-row[data-shape="alur"] { border-left-color: #f97316; }
+        .segment-row[data-shape="ulir"] { border-left-color: #a855f7; }
+        .segment-row[data-shape="chamfer"] { border-left-color: #06b6d4; }
+        .segment-row[data-shape="bulat"] { border-left-color: #ec4899; }
+
+        .editor-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .btn-add-seg { background: #16a34a; border: none; color: #fff; padding: 8px 18px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-add-seg:hover { background: #22c55e; transform: scale(1.02); }
+        .btn-add-seg:disabled { background: #4a5a6a; cursor: not-allowed; transform: none; opacity: 0.5; }
+        .btn-preset { background: #334155; border: none; color: #cbd5e1; padding: 6px 14px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 0.72rem; transition: 0.2s; }
+        .btn-preset:hover { background: #475569; color: #fff; }
+
+        /* ============ SIMULATION CONTROLS ============ */
+        .sim-controls-bar { display: flex; flex-direction: column; gap: 16px; background: #1a2639; padding: 20px 24px; border-radius: 0 0 24px 24px; border-top: 1px solid #2a3a4e; }
+        .controls-row { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; }
+        .sim-controls-bar label { display: flex; align-items: center; gap: 8px; color: #b0c9e0; font-weight: 500; font-size: 0.8rem; }
+        .sim-controls-bar input[type="range"] { width: 110px; accent-color: #2563eb; background: transparent; }
+        .sim-controls-bar .val { color: #fff; font-weight: 700; min-width: 40px; font-size: 0.85rem; text-align: right; }
+        .sim-controls-bar select { background: #0b1a2e; color: #fff; border: 1px solid #4a5a6a; padding: 6px 12px; border-radius: 8px; font-family: inherit; font-size: 0.8rem; outline: none; cursor: pointer; }
+        .sim-controls-bar select:focus { border-color: #2563eb; }
+        .sim-controls-bar select option { background: #0b1a2e; color: #fff; }
+
+        .btn-sim { background: #2563eb; border: none; color: #fff; padding: 8px 20px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-sim:hover { background: #3b82f6; transform: scale(1.02); }
+        .btn-sim.danger { background: #b91c1c; }
+        .btn-sim.danger:hover { background: #dc2626; }
+        .btn-sim.outline { background: transparent; border: 2px solid #4a5a6a; color: #b0c9e0; }
+        .btn-sim.outline:hover { background: #2a3a4e; }
+
+        .info-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .info-group .info-item { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 4px 14px; border-radius: 30px; }
+        .info-group .info-item i { color: #60a5fa; font-size: 0.7rem; }
+        .info-group .info-item span { color: #cbd5e1; font-size: 0.75rem; }
+        .info-group .info-item strong { color: #fff; }
 
         @media (max-width: 900px) { 
-            #simulasi .controls-row { flex-direction: column; align-items: stretch; }
-            #simulasi .sim-controls-bar label { justify-content: space-between; }
+            .controls-row { flex-direction: column; align-items: stretch; }
+            .sim-controls-bar label { justify-content: space-between; }
             #simulasi #sim3d-container { height: 400px; }
+            .segment-row { grid-template-columns: 30px 1fr 60px 30px; }
+            .segment-row .seg-len-val { display: none; }
         }
 
         #myBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--nav-active); color: white; cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px; }
@@ -109,46 +151,39 @@
     <div class="main-content">
         <div id="simulasi">
             <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D Pro</h2>
-            <p class="page-sub reveal delay-1">Pilih <strong>bentuk target</strong> benda kerja, jenis pahat, atur ukuran & parameter, lalu lihat proses pembubutan secara real-time.</p>
+            <p class="page-sub reveal delay-1">Rancang benda kerja dengan <strong>beberapa segmen</strong>. Atur jumlah, bentuk, dan panjang setiap potongan sesuka Anda.</p>
 
             <div class="sim-container reveal delay-2">
                 <div id="sim3d-container"></div>
                 <div class="sim-overlay-info"><i class="fas fa-mouse-pointer"></i> Klik & drag rotasi | Scroll zoom</div>
 
-                <div class="sim-controls-bar" id="simControls">
-                    <!-- Baris 1: Benda Kerja + Bentuk + Pahat -->
-                    <div class="controls-row" style="border-bottom: 1px solid #2a3a4e; padding-bottom: 12px;">
-                        <div style="display:flex; flex-wrap:wrap; gap:12px 20px; align-items:center;">
-                            <label>Diameter Awal (mm) <input type="range" id="workDiameter" min="20" max="80" value="40" step="5"><span class="val" id="workDiameterVal">40</span></label>
-                            <label>Panjang (mm) <input type="range" id="workLength" min="50" max="200" value="120" step="10"><span class="val" id="workLengthVal">120</span></label>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <label style="color:#a855f7; font-weight:600;"><i class="fas fa-shapes"></i> Bentuk Target:</label>
-                            <select id="targetShape">
-                                <option value="cylinder">Silinder (rata)</option>
-                                <option value="taper">Tirus (kerucut)</option>
-                                <option value="step">Bertingkat (step)</option>
-                                <option value="groove">Beralur (grooving)</option>
-                                <option value="thread">Berulir (threading)</option>
-                            </select>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <label style="color:#f97316; font-weight:600;"><i class="fas fa-tools"></i> Pahat:</label>
-                            <select id="toolType">
-                                <option value="turning">Pahat Bubut (Turning)</option>
-                                <option value="facing">Pahat Facing</option>
-                                <option value="parting">Pahat Potong (Parting)</option>
-                                <option value="threading">Pahat Ulir (Threading)</option>
-                            </select>
-                        </div>
+                <!-- SEGMENT EDITOR -->
+                <div class="segment-editor">
+                    <div class="editor-header">
+                        <div class="editor-title"><i class="fas fa-shapes"></i> Editor Bentuk Benda Kerja</div>
+                        <div class="total-info">Total Panjang: <strong id="totalLengthDisplay">120</strong> mm • Jumlah Segmen: <strong id="segmentCountDisplay">3</strong></div>
                     </div>
 
-                    <!-- Baris 2: Parameter -->
+                    <div class="segments-list" id="segmentsList"></div>
+
+                    <div class="editor-actions">
+                        <button class="btn-add-seg" id="addSegmentBtn"><i class="fas fa-plus"></i> Tambah Segmen</button>
+                        <span style="color:#64748b; font-size:0.75rem; margin: 0 4px;">|</span>
+                        <button class="btn-preset" data-preset="poros">Poros Bertingkat</button>
+                        <button class="btn-preset" data-preset="ulir">Baut Berulir</button>
+                        <button class="btn-preset" data-preset="tirus">Poros Tirus</button>
+                        <button class="btn-preset" data-preset="alur">Poros Beralur</button>
+                    </div>
+                </div>
+
+                <!-- SIM CONTROLS -->
+                <div class="sim-controls-bar" id="simControls">
                     <div class="controls-row">
-                        <div style="display:flex; flex-wrap:wrap; gap:8px 20px;">
+                        <div style="display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center;">
+                            <label>Diameter Awal (mm) <input type="range" id="workDiameter" min="20" max="80" value="40" step="5"><span class="val" id="workDiameterVal">40</span></label>
                             <label>RPM <input type="range" id="simRpm" min="100" max="3000" value="800" step="50"><span class="val" id="simRpmVal">800</span></label>
-                            <label>Kedalaman <input type="range" id="simDepth" min="0.1" max="2.0" value="0.5" step="0.1"><span class="val" id="simDepthVal">0.5</span></label>
-                            <label>Feed <input type="range" id="simFeed" min="0.05" max="0.5" value="0.15" step="0.05"><span class="val" id="simFeedVal">0.15</span></label>
+                            <label>Kedalaman <input type="range" id="simDepth" min="0.1" max="2.0" value="0.8" step="0.1"><span class="val" id="simDepthVal">0.8</span></label>
+                            <label>Feed <input type="range" id="simFeed" min="0.05" max="0.5" value="0.2" step="0.05"><span class="val" id="simFeedVal">0.20</span></label>
                         </div>
                         <div style="display:flex; gap:6px; flex-wrap:wrap;">
                             <button class="btn-sim" id="simStart"><i class="fas fa-play"></i> Mulai</button>
@@ -157,14 +192,13 @@
                         </div>
                     </div>
 
-                    <!-- Baris 3: Info -->
                     <div class="controls-row" style="justify-content: flex-start;">
                         <div class="info-group">
-                            <div class="info-item"><i class="fas fa-circle"></i> <span>Diameter Skrg: <strong id="simDiameter">40.0</strong> mm</span></div>
+                            <div class="info-item"><i class="fas fa-circle"></i> <span>Diameter: <strong id="simDiameter">40.0</strong> mm</span></div>
                             <div class="info-item"><i class="fas fa-arrows-alt-h"></i> <span>Pahat X: <strong id="simToolPos" style="color:#f97316;">0.0</strong> mm</span></div>
                             <div class="info-item"><i class="fas fa-tachometer-alt"></i> <span>Vc: <strong id="simVc">0.0</strong> m/min</span></div>
                             <div class="info-item"><i class="fas fa-clock"></i> <span>Waktu: <strong id="simTime">0.0</strong> s</span></div>
-                            <div class="info-item" style="background: rgba(168,85,247,0.15);"><i class="fas fa-shapes" style="color:#a855f7;"></i> <span id="shapeLabel">Silinder</span></div>
+                            <div class="info-item" style="background: rgba(168,85,247,0.15);"><i class="fas fa-layer-group" style="color:#a855f7;"></i> <span>Segmen Aktif: <strong id="currentSegment">1 / 3</strong></span></div>
                         </div>
                     </div>
                 </div>
@@ -226,7 +260,7 @@
 
         const container = document.getElementById('sim3d-container');
         const width = container.clientWidth;
-        const height = container.clientHeight || 650;
+        const height = container.clientHeight || 600;
 
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0a0d14);
@@ -261,7 +295,7 @@
         controls.target.set(0, 1.5, 0);
         controls.update();
 
-        // ============ LIGHTS ============
+        // LIGHTS
         scene.add(new THREE.AmbientLight(0x404060, 0.6));
         const mainLight = new THREE.DirectionalLight(0xffeedd, 1.8);
         mainLight.position.set(10, 15, 8);
@@ -272,11 +306,8 @@
         const fillLight = new THREE.DirectionalLight(0x4488ff, 0.5);
         fillLight.position.set(-8, 5, -10);
         scene.add(fillLight);
-        const rimLight = new THREE.DirectionalLight(0x88bbff, 0.3);
-        rimLight.position.set(0, -5, -10);
-        scene.add(rimLight);
 
-        // ============ GROUND ============
+        // GROUND
         const ground = new THREE.Mesh(
             new THREE.PlaneGeometry(30, 30),
             new THREE.MeshStandardMaterial({ color: 0x111520, roughness: 0.8, metalness: 0.2 })
@@ -285,12 +316,11 @@
         ground.position.y = -2.5;
         ground.receiveShadow = true;
         scene.add(ground);
-
         const gridHelper = new THREE.GridHelper(20, 20, 0x334466, 0x1a2a44);
         gridHelper.position.y = -2.49;
         scene.add(gridHelper);
 
-        // ============ MATERIALS ============
+        // MATERIALS
         const matDarkBase = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6, metalness: 0.4 });
         const matMachineBody = new THREE.MeshStandardMaterial({ color: 0x8a9aae, roughness: 0.3, metalness: 0.6 });
         const matMachineAccent = new THREE.MeshStandardMaterial({ color: 0x3a5a7a, roughness: 0.3, metalness: 0.7 });
@@ -298,11 +328,10 @@
         const matChuck = new THREE.MeshStandardMaterial({ color: 0x4a5a6a, roughness: 0.4, metalness: 0.8 });
         const matSafety = new THREE.MeshStandardMaterial({ color: 0xaaccff, transparent: true, opacity: 0.15, roughness: 0.1, metalness: 0.1, side: THREE.DoubleSide });
 
-        // ============ MESIN BUBUT ============
+        // MESIN
         const machineGroup = new THREE.Group();
         scene.add(machineGroup);
 
-        // Base Cabinet
         const cabinet = new THREE.Mesh(new THREE.BoxGeometry(16, 2.2, 3.2), matDarkBase);
         cabinet.position.set(0, -1.4, 0);
         cabinet.castShadow = true; cabinet.receiveShadow = true;
@@ -310,20 +339,16 @@
 
         const chipTray = new THREE.Mesh(new THREE.BoxGeometry(14, 0.15, 3.4), matMachineBody);
         chipTray.position.set(0, -0.25, 0);
-        chipTray.castShadow = true;
         machineGroup.add(chipTray);
 
         [[-7,-2.1,-1.2],[7,-2.1,-1.2],[-7,-2.1,1.2],[7,-2.1,1.2]].forEach(p => {
             const leg = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), matDarkBase);
             leg.position.set(p[0], p[1], p[2]);
-            leg.castShadow = true;
             machineGroup.add(leg);
         });
 
-        // Bed
         const bed = new THREE.Mesh(new THREE.BoxGeometry(14, 0.8, 2.8), new THREE.MeshStandardMaterial({ color: 0x7a8a9e, roughness: 0.3, metalness: 0.7 }));
         bed.position.set(0, 0.2, 0);
-        bed.castShadow = true; bed.receiveShadow = true;
         machineGroup.add(bed);
 
         [-3.2, 3.2].forEach(x => {
@@ -342,7 +367,7 @@
         headGroup.add(headBase);
 
         const controlPanel = new THREE.Mesh(new THREE.BoxGeometry(1.0, 2.2, 2.0), new THREE.MeshStandardMaterial({ color: 0x2a3a4a, roughness: 0.5, metalness: 0.3 }));
-        controlPanel.position.set(-1.5, 1.2, 0); controlPanel.castShadow = true;
+        controlPanel.position.set(-1.5, 1.2, 0);
         headGroup.add(controlPanel);
 
         const dialMat = new THREE.MeshStandardMaterial({ color: 0xd0d0d0, roughness: 0.2, metalness: 0.8 });
@@ -352,7 +377,6 @@
             dial.position.set(-2.0, 1.8 - i * 0.6, 0);
             headGroup.add(dial);
         }
-
         const estop = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16), new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0x880000, emissiveIntensity: 0.5 }));
         estop.rotation.z = Math.PI / 2;
         estop.position.set(-2.0, 0.6, 0.6);
@@ -361,7 +385,6 @@
         const spindle = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 1.0, 24), matMetal);
         spindle.rotation.z = Math.PI / 2;
         spindle.position.set(1.4, 1.25, 0);
-        spindle.castShadow = true;
         headGroup.add(spindle);
 
         // Chuck
@@ -372,7 +395,6 @@
         const chuckBody = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 0.8, 12), matChuck);
         chuckBody.rotation.z = Math.PI / 2;
         chuckBody.position.set(0.6, 0, 0);
-        chuckBody.castShadow = true;
         chuckGroup.add(chuckBody);
 
         const jawMat = new THREE.MeshStandardMaterial({ color: 0x6a7a8a, roughness: 0.4, metalness: 0.8 });
@@ -382,7 +404,6 @@
             jaw.position.set(1.0, Math.sin(angle) * 0.6, Math.cos(angle) * 0.6);
             jaw.rotation.z = Math.PI / 2;
             jaw.rotation.y = -angle;
-            jaw.castShadow = true;
             chuckGroup.add(jaw);
         }
 
@@ -392,7 +413,7 @@
         machineGroup.add(tailGroup);
 
         const tailBase = new THREE.Mesh(new THREE.BoxGeometry(2.0, 2.0, 2.2), matMachineBody);
-        tailBase.position.y = 1.0; tailBase.castShadow = true;
+        tailBase.position.y = 1.0;
         tailGroup.add(tailBase);
 
         const quill = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 1.5, 16), matMetal);
@@ -411,7 +432,7 @@
         machineGroup.add(carriageGroup);
 
         const carrBody = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.8, 1.8), matMachineAccent);
-        carrBody.position.set(0, 0.4, 0); carrBody.castShadow = true;
+        carrBody.position.set(0, 0.4, 0);
         carriageGroup.add(carrBody);
 
         const apron = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 0.4), matMachineBody);
@@ -426,26 +447,227 @@
         toolPost.position.set(0, 1.3, 0);
         carriageGroup.add(toolPost);
 
-        // Safety Shield
         const shield = new THREE.Mesh(new THREE.BoxGeometry(10, 5, 0.1), matSafety);
         shield.position.set(0, 3.5, -2.5);
         machineGroup.add(shield);
 
-        // ============ BENDA KERJA (Custom Profile Geometry) ============
-        let workpieceMesh = null;
+        // ============ SEGMENT SYSTEM ============
         const SCALE_FACTOR = 15; // 1 unit 3D = 15 mm
 
-        const workMat = new THREE.MeshStandardMaterial({ 
-            color: 0xaaccdd, roughness: 0.4, metalness: 0.85,
-            emissive: 0x112233, emissiveIntensity: 0.1,
-            side: THREE.DoubleSide
-        });
+        // Presets
+        const PRESETS = {
+            poros: [
+                { shape: 'silinder', length: 30 },
+                { shape: 'taper_turun', length: 40 },
+                { shape: 'silinder', length: 30 },
+                { shape: 'chamfer', length: 20 }
+            ],
+            ulir: [
+                { shape: 'silinder', length: 20 },
+                { shape: 'ulir', length: 70 },
+                { shape: 'chamfer', length: 15 }
+            ],
+            tirus: [
+                { shape: 'taper_turun', length: 60 },
+                { shape: 'taper_naik', length: 60 }
+            ],
+            alur: [
+                { shape: 'silinder', length: 30 },
+                { shape: 'alur', length: 50 },
+                { shape: 'silinder', length: 40 }
+            ]
+        };
 
-        // Bangun geometri berdasarkan profileFn(t) -> radius (dalam scene units)
-        // t = 0 (kiri, di chuck) sampai 1 (kanan)
-        function buildWorkpieceGeometry(lengthInScene, profileFn) {
-            const segLength = 96;
-            const segAngle = 32;
+        // State
+        let segments = [
+            { shape: 'silinder', length: 30 },
+            { shape: 'taper_turun', length: 40 },
+            { shape: 'silinder', length: 30 },
+            { shape: 'chamfer', length: 20 }
+        ];
+
+        let totalLength = segments.reduce((a, s) => a + s.length, 0);
+        let originalRadiusScene = 1.33;
+        let lengthScene = 8;
+        let cutDepthScene = 0.04;
+        let toolProgress = 0;
+        let workpieceMesh = null;
+
+        const SHAPE_NAMES = {
+            silinder: 'Silinder (rata)',
+            taper_naik: 'Tirus Naik',
+            taper_turun: 'Tirus Turun',
+            alur: 'Beralur',
+            ulir: 'Berulir',
+            chamfer: 'Chamfer (sudut)',
+            bulat: 'Bulat (radius)'
+        };
+
+        // ============ RENDER SEGMENT EDITOR ============
+        function renderSegments() {
+            const list = document.getElementById('segmentsList');
+            list.innerHTML = '';
+
+            segments.forEach((seg, i) => {
+                const row = document.createElement('div');
+                row.className = 'segment-row';
+                row.dataset.shape = seg.shape;
+                row.dataset.idx = i;
+
+                const shapeOpts = Object.entries(SHAPE_NAMES).map(([k, v]) =>
+                    `<option value="${k}" ${seg.shape === k ? 'selected' : ''}>${v}</option>`
+                ).join('');
+
+                row.innerHTML = `
+                    <span class="seg-num">${i + 1}</span>
+                    <select data-key="shape">${shapeOpts}</select>
+                    <input type="range" data-key="length" min="10" max="100" value="${seg.length}" step="5">
+                    <span class="seg-len-val">${seg.length}mm</span>
+                    <button class="remove-btn" title="Hapus segmen">×</button>
+                `;
+
+                // Event: shape change
+                row.querySelector('select').addEventListener('change', (e) => {
+                    segments[i].shape = e.target.value;
+                    row.dataset.shape = e.target.value;
+                    resetSimulation();
+                });
+
+                // Event: length change
+                row.querySelector('input[type="range"]').addEventListener('input', (e) => {
+                    segments[i].length = parseInt(e.target.value);
+                    row.querySelector('.seg-len-val').textContent = segments[i].length + 'mm';
+                    updateTotalDisplay();
+                    onSegmentChange();
+                });
+
+                // Event: remove
+                row.querySelector('.remove-btn').addEventListener('click', () => {
+                    if (segments.length <= 1) {
+                        alert('Minimal harus ada 1 segmen!');
+                        return;
+                    }
+                    segments.splice(i, 1);
+                    renderSegments();
+                    onSegmentChange();
+                });
+
+                list.appendChild(row);
+            });
+
+            // Update add button state
+            const addBtn = document.getElementById('addSegmentBtn');
+            if (segments.length >= 8) {
+                addBtn.disabled = true;
+                addBtn.innerHTML = '<i class="fas fa-ban"></i> Maks. 8 Segmen';
+            } else {
+                addBtn.disabled = false;
+                addBtn.innerHTML = '<i class="fas fa-plus"></i> Tambah Segmen';
+            }
+        }
+
+        function updateTotalDisplay() {
+            totalLength = segments.reduce((a, s) => a + s.length, 0);
+            lengthScene = totalLength / SCALE_FACTOR;
+            document.getElementById('totalLengthDisplay').textContent = totalLength;
+            document.getElementById('segmentCountDisplay').textContent = segments.length;
+        }
+
+        function onSegmentChange() {
+            updateTotalDisplay();
+            // Update workpiece geometry & tailstock
+            if (workpieceMesh) {
+                machineGroup.remove(workpieceMesh);
+                workpieceMesh.geometry.dispose();
+            }
+            createWorkpiece(parseFloat(document.getElementById('workDiameter').value));
+            resetSimulation();
+        }
+
+        // ============ PROFILE FUNCTION (per segmen) ============
+        function applyShape(shape, localT, origR, depth) {
+            switch (shape) {
+                case 'silinder':
+                    return Math.max(origR - depth, 0.05);
+
+                case 'taper_naik': {
+                    // Kiri kecil → kanan besar (radius bertambah)
+                    const f = 0.2 + localT * 0.8;
+                    return Math.max(origR - depth * (2 - f * 1.5), 0.05);
+                }
+
+                case 'taper_turun': {
+                    // Kiri besar → kanan kecil
+                    const f = 1 - localT * 0.85;
+                    return Math.max(origR - depth * (0.5 + (1 - f) * 1.2), 0.05);
+                }
+
+                case 'alur': {
+                    // 3 alur dalam tiap segmen
+                    const base = Math.max(origR - depth * 0.4, 0.05);
+                    const phase = (localT * 3) % 1;
+                    if (phase > 0.35 && phase < 0.65) {
+                        return Math.max(origR - depth * 2.8, 0.05);
+                    }
+                    return base;
+                }
+
+                case 'ulir': {
+                    // Pola gigi
+                    const base = Math.max(origR - depth * 1.2, 0.05);
+                    const tooth = Math.sin(localT * Math.PI * 40);
+                    return Math.max(base + tooth * depth * 0.5, 0.05);
+                }
+
+                case 'chamfer': {
+                    // Sudut miring di awal
+                    if (localT < 0.3) {
+                        return Math.max(origR - depth * (1 - localT * 3), 0.05);
+                    }
+                    return Math.max(origR - depth * 2.5, 0.05);
+                }
+
+                case 'bulat': {
+                    // Cembung radius
+                    const curve = Math.sin(localT * Math.PI);
+                    return Math.max(origR - depth * (0.2 + curve * 1.5), 0.05);
+                }
+            }
+            return Math.max(origR - depth, 0.05);
+        }
+
+        // Hitung radius pada posisi t (0..1) sepanjang benda kerja
+        // Hanya dipotong jika t <= toolProgress
+        function getRadiusAt(t, origR, depth) {
+            // Cari segmen berdasarkan posisi t
+            let cum = 0;
+            const total = segments.reduce((a, s) => a + s.length, 0);
+            let activeSeg = segments[segments.length - 1];
+            let localT = 1;
+            let segStart = 0;
+            let segEnd = 1;
+
+            for (const seg of segments) {
+                const segFrac = seg.length / total;
+                if (t <= cum + segFrac + 0.0001) {
+                    localT = (t - cum) / segFrac;
+                    localT = Math.max(0, Math.min(1, localT));
+                    activeSeg = seg;
+                    segStart = cum;
+                    segEnd = cum + segFrac;
+                    break;
+                }
+                cum += segFrac;
+            }
+
+            if (t > toolProgress) return origR;
+            return applyShape(activeSeg.shape, localT, origR, depth);
+        }
+
+        // ============ BUILD CUSTOM GEOMETRY ============
+        function buildWorkpieceGeometry(lengthInScene, radiusFn) {
+            const segLength = 128;
+            const segAngle = 36;
             const positions = [];
             const normals = [];
             const indices = [];
@@ -454,14 +676,13 @@
             for (let i = 0; i <= segLength; i++) {
                 const t = i / segLength;
                 const x = t * lengthInScene;
-                const r = profileFn(t);
-                const rClamped = Math.max(r, 0.01);
+                const r = Math.max(radiusFn(t), 0.03);
 
                 for (let j = 0; j <= segAngle; j++) {
                     const theta = (j / segAngle) * Math.PI * 2;
                     const cy = Math.cos(theta);
                     const sy = Math.sin(theta);
-                    positions.push(x, rClamped * cy, rClamped * sy);
+                    positions.push(x, r * cy, r * sy);
                     normals.push(0, cy, sy);
                     uvs.push(t, j / segAngle);
                 }
@@ -487,73 +708,20 @@
             return geo;
         }
 
-        // ============ BENTUK TARGET / PROFILE ============
-        // Semua radius dalam scene units
-        let originalRadiusScene = 1.33; // 40mm / 2 / 15
-        let lengthScene = 8; // 120mm / 15
-        let cutDepthScene = 0.033; // 0.5mm / 15
+        const workMat = new THREE.MeshStandardMaterial({
+            color: 0xaaccdd, roughness: 0.4, metalness: 0.85,
+            emissive: 0x112233, emissiveIntensity: 0.1,
+            side: THREE.DoubleSide, flatShading: false
+        });
 
-        // toolProgress: 0..1 (posisi pahat relatif sepanjang benda kerja)
-        // cutDepthScene: kedalaman potong aktual dalam scene units
-        function getTargetRadius(t, shapeType, origR, depth) {
-            if (t > toolProgress) return origR; // belum dipotong
-
-            switch(shapeType) {
-                case 'cylinder':
-                    return Math.max(origR - depth, 0.05);
-
-                case 'taper': {
-                    // Tirus: dari kiri besar ke kanan kecil (linear)
-                    const reduction = depth * (0.5 + t * 4);
-                    return Math.max(origR - reduction, 0.05);
-                }
-
-                case 'step': {
-                    // Bertingkat 3 tahap
-                    if (t < 0.33) return Math.max(origR - depth * 3, 0.05);
-                    if (t < 0.66) return Math.max(origR - depth * 2, 0.05);
-                    return Math.max(origR - depth, 0.05);
-                }
-
-                case 'groove': {
-                    // Beralur: dasar tetap, ada 4 alur
-                    const base = Math.max(origR - depth * 0.8, 0.05);
-                    const groovePhase = (t * 4) % 1;
-                    // Alur di sekitar phase 0.3-0.6
-                    if (groovePhase > 0.3 && groovePhase < 0.6) {
-                        return Math.max(origR - depth * 3, 0.05);
-                    }
-                    return base;
-                }
-
-                case 'thread': {
-                    // Berulir: pola gigi halus
-                    const base = Math.max(origR - depth * 1.5, 0.05);
-                    const tooth = Math.sin(t * Math.PI * 60);
-                    return Math.max(origR - depth * (1.8 + tooth * 0.6), 0.05);
-                }
-
-                default:
-                    return Math.max(origR - depth, 0.05);
-            }
-        }
-
-        function createWorkpiece(diameter, length) {
-            if (workpieceMesh) {
-                machineGroup.remove(workpieceMesh);
-                workpieceMesh.geometry.dispose();
-            }
-
+        function createWorkpiece(diameter) {
             originalRadiusScene = (diameter / 2) / SCALE_FACTOR;
-            lengthScene = length / SCALE_FACTOR;
+            updateTotalDisplay();
 
-            // Profile awal: silinder rata (belum dipotong)
-            const profileFn = (t) => originalRadiusScene;
-            const geo = buildWorkpieceGeometry(lengthScene, profileFn);
+            const radiusFn = (t) => originalRadiusScene;
+            const geo = buildWorkpieceGeometry(lengthScene, radiusFn);
 
             workpieceMesh = new THREE.Mesh(geo, workMat);
-
-            // Posisi: ujung kiri masuk ke chuck di X = -3.1
             const leftEdgeX = -3.1;
             workpieceMesh.position.set(leftEdgeX, 0.6 + 1.25, 0);
             workpieceMesh.castShadow = true;
@@ -561,24 +729,24 @@
             machineGroup.add(workpieceMesh);
 
             // Update tailstock
-            tailGroup.position.x = leftEdgeX + lengthScene + 1.2;
+            tailGroup.position.x = leftEdgeX + lengthScene + 1.3;
         }
 
         function updateWorkpieceGeometry() {
             if (!workpieceMesh) return;
-            const shape = document.getElementById('targetShape').value;
             const depthScene = cutDepthScene;
-
-            const profileFn = (t) => getTargetRadius(t, shape, originalRadiusScene, depthScene);
-            const newGeo = buildWorkpieceGeometry(lengthScene, profileFn);
+            const radiusFn = (t) => getRadiusAt(t, originalRadiusScene, depthScene);
+            const newGeo = buildWorkpieceGeometry(lengthScene, radiusFn);
             workpieceMesh.geometry.dispose();
             workpieceMesh.geometry = newGeo;
         }
 
         // ============ PAHAT ============
         let currentToolGroup = null;
+        let toolType = 'turning';
 
         function createTool(type) {
+            toolType = type;
             if (currentToolGroup) carriageGroup.remove(currentToolGroup);
 
             const toolGroup = new THREE.Group();
@@ -635,21 +803,19 @@
             label.position.copy(pos);
             return label;
         }
-
         scene.add(createLabel('Headstock', '#60a5fa', new THREE.Vector3(-5.5, 3.5, 0)));
         scene.add(createLabel('Tailstock', '#60a5fa', new THREE.Vector3(5.5, 3.5, 0)));
         scene.add(createLabel('Chuck', '#22c55e', new THREE.Vector3(-3.5, 3.0, 1.2)));
         scene.add(createLabel('Pahat', '#f97316', new THREE.Vector3(0, 2.2, 2.0)));
         scene.add(createLabel('Benda Kerja', '#a855f7', new THREE.Vector3(0, 3.8, 0)));
 
-        // ============ PARAMETER SIMULASI ============
+        // ============ SIMULATION STATE ============
         let isRunning = false;
         let simTime = 0;
-        let toolPosX = 0;       // progress sepanjang benda kerja (scene units)
-        let toolProgress = 0;   // 0..1
-        let toolFeed = 0.15;
+        let toolPosX = 0;
+        let toolFeed = 0.2;
         let rpm = 800;
-        let depthOfCut = 0.5;   // mm
+        let depthOfCut = 0.8;
         let maxTravel = 8;
         let cutMode = 'axial';
 
@@ -657,34 +823,43 @@
         const depthSlider = document.getElementById('simDepth');
         const feedSlider = document.getElementById('simFeed');
         const workDiaSlider = document.getElementById('workDiameter');
-        const workLenSlider = document.getElementById('workLength');
         const toolSelect = document.getElementById('toolType');
-        const shapeSelect = document.getElementById('targetShape');
 
         const rpmVal = document.getElementById('simRpmVal');
         const depthVal = document.getElementById('simDepthVal');
         const feedVal = document.getElementById('simFeedVal');
         const workDiaVal = document.getElementById('workDiameterVal');
-        const workLenVal = document.getElementById('workLengthVal');
-        const shapeLabel = document.getElementById('shapeLabel');
 
         const diamDisplay = document.getElementById('simDiameter');
         const toolPosDisplay = document.getElementById('simToolPos');
         const vcDisplay = document.getElementById('simVc');
         const timeDisplay = document.getElementById('simTime');
+        const currentSegmentDisplay = document.getElementById('currentSegment');
 
         const startBtn = document.getElementById('simStart');
         const stopBtn = document.getElementById('simStop');
         const resetBtn = document.getElementById('simReset');
 
-        const shapeNames = {
-            cylinder: 'Silinder (rata)',
-            taper: 'Tirus (kerucut)',
-            step: 'Bertingkat (step)',
-            groove: 'Beralur (grooving)',
-            thread: 'Berulir (threading)'
-        };
+        // SEGMENT EDITOR EVENTS
+        document.getElementById('addSegmentBtn').addEventListener('click', () => {
+            if (segments.length >= 8) return;
+            segments.push({ shape: 'silinder', length: 30 });
+            renderSegments();
+            onSegmentChange();
+        });
 
+        document.querySelectorAll('.btn-preset').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const preset = btn.dataset.preset;
+                if (PRESETS[preset]) {
+                    segments = JSON.parse(JSON.stringify(PRESETS[preset]));
+                    renderSegments();
+                    onSegmentChange();
+                }
+            });
+        });
+
+        // SLIDER EVENTS
         rpmSlider.addEventListener('input', () => { rpm = parseFloat(rpmSlider.value); rpmVal.textContent = rpm; updateVc(); });
         depthSlider.addEventListener('input', () => {
             depthOfCut = parseFloat(depthSlider.value);
@@ -696,48 +871,39 @@
         workDiaSlider.addEventListener('input', () => {
             workDiaVal.textContent = workDiaSlider.value;
             if (!isRunning) {
-                createWorkpiece(parseFloat(workDiaSlider.value), parseFloat(workLenSlider.value));
-                resetSimulation();
-            }
-        });
-        workLenSlider.addEventListener('input', () => {
-            workLenVal.textContent = workLenSlider.value;
-            if (!isRunning) {
-                createWorkpiece(parseFloat(workDiaSlider.value), parseFloat(workLenSlider.value));
+                machineGroup.remove(workpieceMesh);
+                workpieceMesh.geometry.dispose();
+                createWorkpiece(parseFloat(workDiaSlider.value));
                 resetSimulation();
             }
         });
 
-        toolSelect.addEventListener('change', () => {
-            createTool(toolSelect.value);
-            cutMode = (toolSelect.value === 'parting') ? 'radial' : 'axial';
-            resetSimulation();
-        });
-
-        shapeSelect.addEventListener('change', () => {
-            shapeLabel.textContent = shapeNames[shapeSelect.value] || shapeSelect.value;
-            resetSimulation();
-        });
-
+        // ============ FUNCTIONS ============
         function updateVc() {
-            const d = (workpieceMesh ? (originalRadiusScene * 2 * SCALE_FACTOR) : 40);
+            const d = originalRadiusScene * 2 * SCALE_FACTOR;
             const vc = (Math.PI * d * rpm) / 1000;
             vcDisplay.textContent = vc.toFixed(1);
         }
 
-        function getCurrentDiameterAtTool() {
-            // Estimasi diameter di posisi pahat
-            if (!workpieceMesh) return 0;
-            const shape = shapeSelect.value;
-            const origR = originalRadiusScene;
-            const r = getTargetRadius(toolProgress, shape, origR, cutDepthScene);
-            return r * 2 * SCALE_FACTOR;
+        function getCurrentSegmentIndex() {
+            const total = segments.reduce((a, s) => a + s.length, 0);
+            let cum = 0;
+            for (let i = 0; i < segments.length; i++) {
+                cum += segments[i].length / total;
+                if (toolProgress <= cum) return i;
+            }
+            return segments.length - 1;
         }
 
         function updateUI() {
-            diamDisplay.textContent = getCurrentDiameterAtTool().toFixed(1);
+            // Hitung diameter di posisi pahat
+            const r = getRadiusAt(toolProgress, originalRadiusScene, cutDepthScene);
+            diamDisplay.textContent = (r * 2 * SCALE_FACTOR).toFixed(1);
             toolPosDisplay.textContent = (toolProgress * lengthScene * SCALE_FACTOR).toFixed(1);
             timeDisplay.textContent = simTime.toFixed(1);
+
+            const segIdx = getCurrentSegmentIndex();
+            currentSegmentDisplay.textContent = `${segIdx + 1} / ${segments.length}`;
             updateVc();
         }
 
@@ -748,7 +914,7 @@
             toolPosX = 0;
             toolProgress = 0;
             cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
-            maxTravel = lengthScene - 0.3;
+            maxTravel = lengthScene;
 
             carriageGroup.position.x = -3.1;
             carriageGroup.position.z = originalRadiusScene + 0.4;
@@ -761,13 +927,13 @@
             updateUI();
         }
 
-        // ============ SIMULASI ============
+        // ============ SIMULATION LOOP ============
         let lastTime = 0;
         let rotationAngle = 0;
         let frameCounter = 0;
 
         function simulate(deltaTime) {
-            if (!isRunning) return;
+            if (!isRunning || !workpieceMesh) return;
 
             const revPerSec = rpm / 60;
             const anglePerSec = revPerSec * Math.PI * 2;
@@ -775,75 +941,51 @@
             workpieceMesh.rotation.x = rotationAngle;
             chuckGroup.rotation.x = rotationAngle;
 
-            if (cutMode === 'axial') {
-                const feedPerSecond = (toolFeed * revPerSec) / SCALE_FACTOR;
-                toolPosX += feedPerSecond * deltaTime;
+            const feedPerSecond = (toolFeed * revPerSec * 0.15) / SCALE_FACTOR;
+            toolPosX += feedPerSecond * deltaTime;
 
-                if (toolPosX >= maxTravel) {
-                    toolPosX = maxTravel;
-                    toolProgress = 1;
-                    isRunning = false;
-                    startBtn.textContent = '▶ Mulai';
-                    workMat.emissive.setHex(0x22aa44);
-                    workMat.emissiveIntensity = 0.2;
-                    updateWorkpieceGeometry();
-                    return;
-                }
-
-                toolProgress = toolPosX / maxTravel;
-                carriageGroup.position.x = -3.1 + toolPosX;
-                carriageGroup.position.z = originalRadiusScene + 0.4;
-
-                // Update geometri setiap beberapa frame
-                frameCounter++;
-                if (frameCounter % 2 === 0) {
-                    updateWorkpieceGeometry();
-                }
-
-                // Efek panas
-                const heatFactor = toolProgress * 0.7;
-                workMat.emissive.setHSL(0.08, 0.9, 0.1 + heatFactor * 0.35);
-                workMat.emissiveIntensity = 0.1 + heatFactor * 0.4;
-
-            } else {
-                // Parting (radial)
-                const feedPerSecond = (toolFeed * revPerSec * 0.5) / SCALE_FACTOR;
-                toolPosX += feedPerSecond * deltaTime;
-                toolProgress = Math.min(toolPosX / maxTravel, 1);
-
-                // Posisi X tetap di tengah benda
-                const middleX = -3.1 + lengthScene / 2;
-                const startZ = originalRadiusScene + 0.4;
-                const cutZ = startZ - (originalRadiusScene * 2) * toolProgress;
-                carriageGroup.position.x = middleX;
-                carriageGroup.position.z = Math.max(cutZ, -originalRadiusScene);
-
-                if (toolProgress >= 1) {
-                    isRunning = false;
-                    startBtn.textContent = '▶ Mulai';
-                    workMat.emissive.setHex(0xff0000);
-                    workMat.emissiveIntensity = 0.5;
-                }
+            if (toolPosX >= maxTravel) {
+                toolPosX = maxTravel;
+                toolProgress = 1;
+                isRunning = false;
+                startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
+                workMat.emissive.setHex(0x22aa44);
+                workMat.emissiveIntensity = 0.2;
+                updateWorkpieceGeometry();
+                updateUI();
+                return;
             }
+
+            toolProgress = toolPosX / maxTravel;
+            carriageGroup.position.x = -3.1 + toolPosX;
+            carriageGroup.position.z = originalRadiusScene + 0.4;
+
+            frameCounter++;
+            if (frameCounter % 2 === 0) {
+                updateWorkpieceGeometry();
+            }
+
+            const heatFactor = toolProgress * 0.6;
+            workMat.emissive.setHSL(0.08, 0.9, 0.1 + heatFactor * 0.3);
+            workMat.emissiveIntensity = 0.1 + heatFactor * 0.4;
 
             simTime += deltaTime;
             updateUI();
         }
 
-        // ============ TOMBOL ============
+        // ============ BUTTONS ============
         startBtn.addEventListener('click', () => {
             if (isRunning) return;
             if (toolPosX >= maxTravel) resetSimulation();
             isRunning = true;
-            startBtn.textContent = '▶ Running...';
+            startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
             workMat.emissive.setHex(0xff4400);
             workMat.emissiveIntensity = 0.15;
-            if (!currentToolGroup) createTool(toolSelect.value);
         });
 
         stopBtn.addEventListener('click', () => {
             isRunning = false;
-            startBtn.textContent = '▶ Mulai';
+            startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
             updateWorkpieceGeometry();
         });
 
@@ -862,7 +1004,7 @@
 
         function resize() {
             const w = container.clientWidth;
-            const h = container.clientHeight || 650;
+            const h = container.clientHeight || 600;
             camera.aspect = w / h;
             camera.updateProjectionMatrix();
             renderer.setSize(w, h);
@@ -871,14 +1013,16 @@
         window.addEventListener('resize', resize);
 
         // ============ INIT ============
-        createWorkpiece(parseFloat(workDiaSlider.value), parseFloat(workLenSlider.value));
+        renderSegments();
+        updateTotalDisplay();
+        createWorkpiece(parseFloat(workDiaSlider.value));
         createTool('turning');
         cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
         resetSimulation();
         updateUI();
         animate(0);
 
-        console.log('✅ Simulasi siap! Pilih Bentuk Target untuk menentukan hasil akhir.');
+        console.log('✅ Simulasi siap! Rancang bentuk benda kerja lewat editor segmen.');
     </script>
 </body>
 </html>
