@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             --bg-color: #f0f4fb;
@@ -134,7 +137,7 @@
             padding: 0 28px;
         }
         .accordion-item.open .accordion-body {
-            max-height: 5000px;
+            max-height: 8000px;
             padding: 0 28px 28px;
         }
 
@@ -144,90 +147,57 @@
         .accordion-body ul li b, .accordion-body ol li b { color: var(--text-color); }
         .accordion-body .sub-heading { font-weight: 700; color: var(--accent); margin-top: 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
 
-        /* IMAGE PLACEHOLDER */
-        .img-placeholder {
-            width: 100%;
-            min-height: 180px;
-            border-radius: 14px;
-            margin: 18px 0;
-            background: linear-gradient(135deg, var(--box-bg), var(--border-color));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            color: var(--accent);
-            border: 2px dashed var(--border-color);
-            padding: 30px 20px;
-            text-align: center;
+        /* MATERI CONTENT FROM SUPABASE */
+        .materi-content {
+            color: var(--sub-text-color);
+            line-height: 1.85;
+            font-size: 0.96rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
-        .img-placeholder i { font-size: 3.5rem; }
-        .img-placeholder .img-label { font-size: 0.95rem; font-weight: 700; color: var(--text-color); }
-        .img-placeholder .img-desc { font-size: 0.8rem; color: var(--sub-text-color); max-width: 380px; }
-        .img-placeholder.tall { min-height: 240px; }
-        .img-placeholder.small { min-height: 120px; }
-        .img-placeholder.small i { font-size: 2.4rem; }
+        .materi-content p { margin-bottom: 10px; }
 
-        /* HIGHLIGHT BOX */
-        .highlight-box { background: var(--box-bg); border-radius: 12px; padding: 16px 20px; margin: 14px 0; border-left: 4px solid var(--accent); color: var(--sub-text-color); line-height: 1.75; font-size: 0.93rem; }
-        .highlight-box.warning { border-left-color: var(--warning); }
-        .highlight-box.success { border-left-color: var(--success); }
-        .highlight-box.danger { border-left-color: var(--danger); }
-        .highlight-box strong { color: var(--text-color); }
-        .highlight-box i { color: var(--accent); margin-right: 6px; }
-        .highlight-box.warning i { color: var(--warning); }
-        .highlight-box.success i { color: var(--success); }
-        .highlight-box.danger i { color: var(--danger); }
-
-        /* TWO COLUMN */
-        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
-        .two-col .col { background: var(--box-bg); padding: 16px 18px; border-radius: 12px; }
-        .two-col .col h4 { color: var(--text-color); font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-        .two-col .col h4 i { color: var(--accent); }
-        .two-col .col p, .two-col .col ul { font-size: 0.88rem; margin: 0; line-height: 1.7; }
-        @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
-
-        /* RUMUS */
-        .rumus { font-family: 'Courier New', monospace; background: var(--box-bg); padding: 10px 16px; border-radius: 8px; display: block; font-weight: 700; color: var(--text-color); margin: 8px 0; font-size: 0.9rem; text-align: center; border: 1px dashed var(--border-color); }
-
-        /* BADGE TAG */
-        .badge-tag { display: inline-block; background: var(--accent-light); color: var(--accent); padding: 3px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; margin-left: 6px; }
-
-        /* COMPONENT MINI GRID */
-        .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
-        .comp-mini {
-            background: var(--box-bg);
-            border-radius: 14px;
-            padding: 18px;
-            border-top: 3px solid var(--accent);
-            transition: 0.2s;
-        }
-        .comp-mini:hover { transform: translateY(-3px); box-shadow: 0 8px 20px var(--shadow-color); }
-        .comp-mini .comp-icon { font-size: 1.8rem; color: var(--accent); margin-bottom: 10px; }
-        .comp-mini h4 { font-size: 0.98rem; color: var(--text-color); margin-bottom: 6px; }
-        .comp-mini p { font-size: 0.85rem; color: var(--sub-text-color); line-height: 1.65; margin: 0; }
-
-        /* K3 ICONS GRID */
-        .k3-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin-top: 16px; }
-        .k3-item { display: flex; align-items: flex-start; gap: 14px; background: var(--box-bg); padding: 14px 16px; border-radius: 12px; border-left: 4px solid var(--accent); }
-        .k3-item i { font-size: 1.3rem; color: var(--accent); margin-top: 2px; flex-shrink: 0; }
-        .k3-item .k3-text { font-size: 0.88rem; color: var(--sub-text-color); line-height: 1.65; }
-        .k3-item .k3-text b { color: var(--text-color); display: block; margin-bottom: 2px; font-size: 0.92rem; }
-
-        /* TOPIC NUMBER */
-        .topic-num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 34px; height: 34px;
-            background: var(--accent);
-            color: #fff;
+        .materi-objectives {
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
             border-radius: 10px;
-            font-weight: 800;
+            margin: 14px 0;
             font-size: 0.9rem;
-            margin-right: 6px;
-            flex-shrink: 0;
+            color: var(--text-color);
+            line-height: 1.7;
         }
+        .materi-objectives strong { color: var(--accent); display: block; margin-bottom: 6px; }
+
+        .badge-category {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-left: 6px;
+            text-transform: capitalize;
+        }
+
+        /* LOADING & EMPTY */
+        .loading-box, .empty-box {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--sub-text-color);
+            background: var(--card-bg);
+            border-radius: 22px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+        }
+        .loading-box i, .empty-box i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .empty-box i { color: #cbd5e1; }
+        .loading-box p, .empty-box p { font-size: 0.95rem; }
 
         /* SCROLL TO TOP */
         #myBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--nav-active); color: white; cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px; box-shadow: 0 4px 10px var(--shadow-color); transition: transform 0.3s; }
@@ -275,433 +245,15 @@
     <div class="main-content">
         <div id="materi">
             <h2 class="page-title reveal"><i class="fas fa-book-open"></i> Materi Mesin Bubut</h2>
-            <p class="page-sub reveal delay-1">Klik pada setiap topik untuk melihat penjelasannya. Tersedia 10 topik lengkap tentang mesin bubut.</p>
+            <p class="page-sub reveal delay-1">Klik pada setiap topik untuk melihat penjelasannya. Materi diambil langsung dari database guru.</p>
 
-            <!-- ========== 1. DEFINISI ========== -->
-            <div class="accordion-item reveal" id="definisi">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">1</span> <i class="fas fa-cog"></i> Definisi dan Fungsi Mesin Bubut</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <div class="img-placeholder">
-                        <i class="fas fa-industry"></i>
-                        <div class="img-label">Mesin Bubut Konvensional</div>
-                        <div class="img-desc">Mesin perkakas yang memutar benda kerja pada sumbu spindle untuk proses pemotongan material.</div>
-                    </div>
-                    <p><strong>Mesin bubut (lathe machine)</strong> adalah salah satu mesin perkakas tertua dan paling fundamental dalam dunia manufaktur. Mesin ini bekerja dengan cara <strong>memutar benda kerja</strong> pada sumbu putar (spindle) sementara sebuah pahat pemotong bergerak secara translasi (lurus) untuk menyayat material. Proses ini menghasilkan berbagai bentuk geometri seperti silinder, kerucut, alur, ulir, dan permukaan datar (facing).</p>
-
-                    <div class="sub-heading"><i class="fas fa-check-circle"></i> Fungsi Utama Mesin Bubut</div>
-                    <ul>
-                        <li><b>Membubut (Turning)</b> – menghasilkan permukaan silinder luar.</li>
-                        <li><b>Facing</b> – meratakan permukaan ujung benda kerja.</li>
-                        <li><b>Membuat alur (Grooving)</b> – membuat ceruk atau alur pada benda.</li>
-                        <li><b>Membuat ulir (Threading)</b> – membuat ulir luar atau dalam.</li>
-                        <li><b>Memotong (Parting)</b> – memotong benda kerja menjadi dua bagian.</li>
-                        <li><b>Boring</b> – memperbesar atau menghaluskan lubang bagian dalam.</li>
-                        <li><b>Knurling</b> – membuat tekstur kasar pada permukaan untuk pegangan.</li>
-                    </ul>
-
-                    <p style="margin-top: 12px;"><strong>Keunggulan mesin bubut</strong> terletak pada kemampuannya memproduksi komponen dengan tingkat presisi tinggi (hingga 0,01 mm) dan fleksibilitas dalam mengerjakan berbagai material logam dan non-logam. Mesin ini menjadi tulang punggung industri otomotif, penerbangan, perkapalan, dan manufaktur umum.</p>
-
-                    <div class="highlight-box success">
-                        <strong><i class="fas fa-lightbulb"></i> Fakta:</strong> Mesin bubut pertama kali ditemukan oleh orang Mesir kuno sekitar 1300 SM, namun baru berkembang pesat pada abad ke-18 dengan ditemukannya mesin bubut otomatis.
-                    </div>
+            <!-- CONTAINER UNTUK MATERI DARI SUPABASE -->
+            <div id="materiContainer">
+                <div class="loading-box">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Memuat materi dari database...</p>
                 </div>
             </div>
-
-            <!-- ========== 2. JENIS ========== -->
-            <div class="accordion-item reveal delay-1" id="jenis">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">2</span> <i class="fas fa-th-list"></i> Jenis-jenis Mesin Bubut</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <div class="img-placeholder small">
-                        <i class="fas fa-th-list"></i>
-                        <div class="img-label">Klasifikasi Mesin Bubut</div>
-                    </div>
-
-                    <div class="sub-heading"><i class="fas fa-tools"></i> Berdasarkan Sistem Kontrol</div>
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-hand-paper"></i> Konvensional (Manual)</h4>
-                            <p>Dioperasikan langsung oleh operator menggunakan tuas dan roda tangan. Cocok untuk produksi satuan dan pembelajaran dasar.</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-microchip"></i> CNC (Computer Numerical Control)</h4>
-                            <p>Dikendalikan oleh program komputer (G-code). Presisi tinggi, konsisten, dan cocok untuk produksi massal.</p>
-                        </div>
-                    </div>
-
-                    <div class="sub-heading"><i class="fas fa-ruler-combined"></i> Berdasarkan Ukuran & Kapasitas</div>
-                    <ul>
-                        <li><b>Bench Lathe (Meja Kecil)</b> – untuk pekerjaan ringan dan hobi, dipasang di atas meja kerja.</li>
-                        <li><b>Engine Lathe (Meja Sedang)</b> – paling umum di bengkel sekolah dan industri, kapasitas sedang.</li>
-                        <li><b>Heavy-Duty Lathe (Meja Besar)</b> – untuk benda kerja berdiameter besar seperti poros kapal.</li>
-                        <li><b>Toolroom Lathe</b> – presisi sangat tinggi untuk membuat alat ukur dan cetakan.</li>
-                        <li><b>Turret Lathe</b> – memiliki banyak pahat sekaligus, cocok untuk produksi massal.</li>
-                    </ul>
-
-                    <div class="highlight-box">
-                        <strong><i class="fas fa-info-circle"></i> Perkembangan:</strong> Saat ini mesin bubut CNC semakin banyak digunakan karena efisiensi, konsistensi produk, dan kemampuan mengerjakan bentuk kompleks.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 3. KOMPONEN ========== -->
-            <div class="accordion-item reveal delay-2" id="komponen">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">3</span> <i class="fas fa-microchip"></i> Komponen Utama Mesin Bubut</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Setiap bagian mesin bubut memiliki peran penting. Berikut komponen utama yang wajib dikenali oleh setiap operator.</p>
-
-                    <div class="comp-grid">
-                        <div class="comp-mini">
-                            <div class="comp-icon"><i class="fas fa-arrows-spin"></i></div>
-                            <h4>Headstock (Kepala Tetap)</h4>
-                            <p>Berisi spindle, gearbox, dan motor penggerak. Mengatur kecepatan putar (RPM) melalui tuas pengatur.</p>
-                        </div>
-                        <div class="comp-mini">
-                            <div class="comp-icon"><i class="fas fa-arrows-alt-v"></i></div>
-                            <h4>Tailstock (Kepala Lepas)</h4>
-                            <p>Penyangga benda kerja panjang. Dapat digeser sepanjang bed dan dilengkapi pusat putar atau mata bor.</p>
-                        </div>
-                        <div class="comp-mini">
-                            <div class="comp-icon"><i class="fas fa-tools"></i></div>
-                            <h4>Carriage (Eretan)</h4>
-                            <p>Membawa pahat dan bergerak sepanjang bed. Terdiri dari apron, cross slide, compound rest, dan tool post.</p>
-                        </div>
-                        <div class="comp-mini">
-                            <div class="comp-icon"><i class="fas fa-grip-lines"></i></div>
-                            <h4>Bed (Alas)</h4>
-                            <p>Rangka dasar mesin dari besi cor. Menjadi landasan semua komponen dan memiliki rel pemandu (ways).</p>
-                        </div>
-                        <div class="comp-mini">
-                            <div class="comp-icon"><i class="fas fa-hand-grip"></i></div>
-                            <h4>Chuck</h4>
-                            <p>Penjepit benda kerja yang dipasang di spindle. Tersedia jenis 3-rahang, 4-rahang, dan collet.</p>
-                        </div>
-                        <div class="comp-mini">
-                            <div class="comp-icon"><i class="fas fa-arrows-spin"></i></div>
-                            <h4>Lead Screw & Feed Rod</h4>
-                            <p>Poros berulir untuk penggerak otomatis carriage, terutama saat membuat ulir presisi.</p>
-                        </div>
-                    </div>
-
-                    <div class="highlight-box warning">
-                        <strong><i class="fas fa-exclamation-circle"></i> Perhatikan:</strong> Setiap komponen harus dirawat dan dilumasi secara teratur agar mesin awet dan presisi.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 4. PRINSIP ========== -->
-            <div class="accordion-item reveal delay-3" id="prinsip">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">4</span> <i class="fas fa-arrows-spin"></i> Prinsip Kerja Mesin Bubut</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <div class="img-placeholder">
-                        <i class="fas fa-arrows-spin"></i>
-                        <div class="img-label">Prinsip Dasar Pembubutan</div>
-                        <div class="img-desc">Benda kerja diputar sementara pahat bergerak secara axial atau radial untuk menyayat material.</div>
-                    </div>
-
-                    <p>Benda kerja dicekam oleh chuck dan diputar oleh spindle dengan kecepatan tertentu (RPM). Pahat potong didekatkan ke permukaan benda dengan <strong>kedalaman potong (DOC)</strong> tertentu. Gerakan pahat secara <strong>axial (memanjang)</strong> menghasilkan bentuk silinder, sedangkan gerakan <strong>radial (melintang)</strong> menghasilkan pembentukan permukaan ujung (facing).</p>
-
-                    <div class="sub-heading"><i class="fas fa-arrows-alt-h"></i> Arah Gerakan Pahat</div>
-                    <ul>
-                        <li><b>Axial (memanjang)</b> – sejajar sumbu benda → menghasilkan diameter (turning).</li>
-                        <li><b>Radial (melintang)</b> – tegak lurus sumbu → mengurangi diameter atau facing.</li>
-                        <li><b>Kombinasi keduanya</b> – menghasilkan bentuk tirus, alur, dan ulir.</li>
-                    </ul>
-
-                    <div class="highlight-box success">
-                        <strong><i class="fas fa-lightbulb"></i> Kunci:</strong> Kombinasi gerakan axial dan radial memungkinkan pembuatan berbagai bentuk seperti tirus, alur, dan ulir.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 5. PARAMETER ========== -->
-            <div class="accordion-item reveal delay-4" id="parameter">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">5</span> <i class="fas fa-ruler"></i> Parameter Pemotongan</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Empat parameter utama yang harus dikuasai setiap operator mesin bubut untuk mendapatkan hasil optimal.</p>
-
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-tachometer-alt"></i> Kecepatan Putar (RPM)</h4>
-                            <p>Jumlah putaran spindle per menit. Mempengaruhi kekasaran permukaan dan umur pahat.</p>
-                            <div class="rumus">RPM = (Vc × 1000) / (π × D)</div>
-                            <p style="font-size:0.8rem;">Vc = kecepatan potong (m/min), D = diameter (mm)</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-arrow-right"></i> Kecepatan Pemakanan (Feed)</h4>
-                            <p>Jarak gerak pahat per putaran benda kerja. Mempengaruhi kekasaran dan waktu proses.</p>
-                            <div class="rumus">f = mm/putaran</div>
-                            <p style="font-size:0.8rem;">Semakin kecil feed, semakin halus permukaan.</p>
-                        </div>
-                    </div>
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-arrows-alt-v"></i> Kedalaman Potong (DOC)</h4>
-                            <p>Tebal sayatan pahat ke permukaan benda kerja (mm). Terlalu dalam menyebabkan pahat cepat aus.</p>
-                            <div class="rumus">DOC = (D₁ − D₂) / 2</div>
-                            <p style="font-size:0.8rem;">D₁ = diameter awal, D₂ = diameter akhir.</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-tachometer-alt"></i> Kecepatan Potong (Cutting Speed)</h4>
-                            <p>Kecepatan keliling benda kerja (m/min). Dipengaruhi oleh material benda dan pahat.</p>
-                            <div class="rumus">Vc = (π × D × RPM) / 1000</div>
-                            <p style="font-size:0.8rem;">Baja lunak: 25–30 m/min | Baja keras: 15–20 m/min.</p>
-                        </div>
-                    </div>
-
-                    <div class="highlight-box">
-                        <strong><i class="fas fa-table"></i> Panduan Praktis:</strong>
-                        <ul style="margin-top:6px;">
-                            <li><b>Aluminium</b>: Vc 60–90 m/min, feed 0.15–0.35 mm/rev</li>
-                            <li><b>Baja Lunak</b>: Vc 25–30 m/min, feed 0.10–0.25 mm/rev</li>
-                            <li><b>Baja Keras</b>: Vc 15–20 m/min, feed 0.08–0.15 mm/rev</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 6. PAHAT ========== -->
-            <div class="accordion-item reveal delay-5" id="pahat">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">6</span> <i class="fas fa-hammer"></i> Jenis Pahat Berdasarkan Bahan & Fungsi</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <div class="img-placeholder small">
-                        <i class="fas fa-hammer"></i>
-                        <div class="img-label">Jenis-jenis Pahat Bubut</div>
-                    </div>
-
-                    <div class="sub-heading"><i class="fas fa-flask"></i> Berdasarkan Bahan</div>
-                    <ul>
-                        <li><b>HSS (High Speed Steel)</b> – tahan panas hingga 600°C, cocok untuk kecepatan sedang. Ekonomis dan mudah diasah.</li>
-                        <li><b>Karbida (Carbide)</b> – sangat keras, tahan panas hingga 1000°C, cocok untuk kecepatan tinggi dan produksi massal.</li>
-                        <li><b>Keramik</b> – lebih keras dari karbida, untuk finishing permukaan pada kecepatan sangat tinggi.</li>
-                        <li><b>CBN (Cubic Boron Nitride)</b> – untuk material keras seperti besi cor dan superalloy.</li>
-                        <li><b>Diamond (PCD)</b> – paling keras, untuk material non-ferrous dan non-logam.</li>
-                    </ul>
-
-                    <div class="sub-heading"><i class="fas fa-tools"></i> Berdasarkan Fungsi</div>
-                    <ul>
-                        <li><b>Pahat Rata (Turning Tool)</b> – membubut permukaan luar silinder.</li>
-                        <li><b>Pahat Facing</b> – meratakan permukaan ujung benda kerja.</li>
-                        <li><b>Pahat Alur (Grooving Tool)</b> – membuat alur atau ceruk.</li>
-                        <li><b>Pahat Ulir (Threading Tool)</b> – membuat ulir luar atau dalam.</li>
-                        <li><b>Pahat Potong (Parting Tool)</b> – memotong benda kerja menjadi dua.</li>
-                        <li><b>Pahat Boring</b> – membubut lubang bagian dalam.</li>
-                        <li><b>Pahat Chamfer</b> – membuat sudut miring di ujung benda.</li>
-                    </ul>
-
-                    <div class="highlight-box warning">
-                        <strong><i class="fas fa-exclamation-triangle"></i> Penting:</strong> Pemilihan pahat yang tepat akan meningkatkan efisiensi, kualitas hasil, dan umur pahat.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 7. TEKNIK ========== -->
-            <div class="accordion-item reveal delay-6" id="teknik">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">7</span> <i class="fas fa-cut"></i> Teknik Pembubutan</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Enam teknik dasar yang wajib dikuasai dalam praktik mesin bubut.</p>
-
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-arrow-right"></i> Turning (Membubut)</h4>
-                            <p>Membubut permukaan luar silinder. Pahat bergerak axial sejajar sumbu benda kerja.</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-arrows-alt-h"></i> Facing</h4>
-                            <p>Meratakan permukaan ujung benda kerja. Pahat bergerak radial dari tepi ke pusat.</p>
-                        </div>
-                    </div>
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-minus"></i> Grooving (Alur)</h4>
-                            <p>Membuat alur atau ceruk pada benda kerja dengan pahat khusus.</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-draw-polygon"></i> Threading (Ulir)</h4>
-                            <p>Membuat ulir dengan pahat ulir dan pengaturan lead screw.</p>
-                        </div>
-                    </div>
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-scissors"></i> Parting (Potong)</h4>
-                            <p>Memotong benda kerja menjadi dua bagian menggunakan pahat potong.</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-circle"></i> Boring (Lubang)</h4>
-                            <p>Memperbesar atau menghaluskan lubang yang sudah ada dengan pahat boring.</p>
-                        </div>
-                    </div>
-
-                    <div class="highlight-box success">
-                        <strong><i class="fas fa-lightbulb"></i> Tips:</strong> Gunakan kecepatan putar dan feed yang sesuai, serta pastikan pahat terpasang kokoh untuk hasil terbaik.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 8. K3 ========== -->
-            <div class="accordion-item reveal delay-7" id="k3">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">8</span> <i class="fas fa-shield-alt"></i> K3 dan Standar Operasional Prosedur (SOP)</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Keselamatan dan Kesehatan Kerja (K3) adalah prioritas utama. Kecelakaan pada mesin bubut dapat berakibat fatal, sehingga setiap operator wajib mematuhi aturan berikut.</p>
-
-                    <div class="sub-heading"><i class="fas fa-hard-hat"></i> Aturan Keselamatan Kerja</div>
-                    <div class="k3-grid">
-                        <div class="k3-item">
-                            <i class="fas fa-glasses"></i>
-                            <div class="k3-text"><b>Kacamata Pelindung</b>Wajib digunakan untuk melindungi mata dari serpihan logam yang beterbangan.</div>
-                        </div>
-                        <div class="k3-item">
-                            <i class="fas fa-user-tie"></i>
-                            <div class="k3-text"><b>Pakaian Kerja</b>Rapi, tidak longgar. Rambut diikat, hindari perhiasan yang bisa tersangkut.</div>
-                        </div>
-                        <div class="k3-item">
-                            <i class="fas fa-hand-paper"></i>
-                            <div class="k3-text"><b>Jangan Sentuh</b>Dilarang menyentuh benda kerja/pahat saat mesin berputar. Tunggu sampai berhenti total.</div>
-                        </div>
-                        <div class="k3-item">
-                            <i class="fas fa-tools"></i>
-                            <div class="k3-text"><b>Pastikan Chuck Kencang</b>Periksa kekencangan chuck sebelum menghidupkan mesin.</div>
-                        </div>
-                        <div class="k3-item">
-                            <i class="fas fa-oil-can"></i>
-                            <div class="k3-text"><b>Gunakan Coolant</b>Mengurangi panas dan gesekan, memperpanjang umur pahat.</div>
-                        </div>
-                        <div class="k3-item">
-                            <i class="fas fa-broom"></i>
-                            <div class="k3-text"><b>Jaga Kebersihan</b>Bersihkan serpihan logam dan minyak untuk mencegah slip.</div>
-                        </div>
-                        <div class="k3-item">
-                            <i class="fas fa-power-off"></i>
-                            <div class="k3-text"><b>Matikan Mesin</b>Selalu matikan mesin saat mengganti pahat atau mengukur benda.</div>
-                        </div>
-                        <div class="k3-item">
-                            <i class="fas fa-first-aid"></i>
-                            <div class="k3-text"><b>Perlengkapan Darurat</b>Pastikan APAR dan kotak P3K tersedia di dekat area kerja.</div>
-                        </div>
-                    </div>
-
-                    <div class="sub-heading"><i class="fas fa-list-check"></i> SOP Dasar Pengoperasian</div>
-                    <ol>
-                        <li>Periksa kondisi mesin dan pastikan semua komponen aman.</li>
-                        <li>Pasang benda kerja pada chuck dan kencangkan dengan kunci chuck.</li>
-                        <li>Setel kecepatan RPM sesuai material benda kerja.</li>
-                        <li>Atur kedalaman potong (DOC) dan feed yang diinginkan.</li>
-                        <li>Nyalakan coolant (jika diperlukan).</li>
-                        <li>Mulai proses dengan gerakan pahat lambat, tingkatkan bertahap.</li>
-                        <li>Setelah selesai, matikan mesin, bersihkan area, dan lakukan perawatan.</li>
-                    </ol>
-
-                    <div class="highlight-box danger">
-                        <strong><i class="fas fa-bell"></i> Peringatan:</strong> Mengabaikan prosedur K3 dapat menyebabkan cedera serius seperti putusnya jari, luka terpotong, atau kerusakan mata. Keselamatan adalah tanggung jawab bersama.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 9. PERAWATAN ========== -->
-            <div class="accordion-item reveal delay-8" id="perawatan">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">9</span> <i class="fas fa-wrench"></i> Perawatan Mesin Bubut</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Mesin yang terawat baik akan menghasilkan produk presisi dan memiliki umur pakai lebih lama. Perawatan dibagi menjadi 4 aspek utama:</p>
-
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-oil-can"></i> Pelumasan</h4>
-                            <p>Lumasi spindle, carriage, lead screw, dan rel pemandu secara rutin dengan oli khusus mesin.</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-broom"></i> Pembersihan</h4>
-                            <p>Bersihkan serpihan logam (swarf) dan kotoran setelah setiap pemakaian untuk mencegah karat dan kerusakan.</p>
-                        </div>
-                    </div>
-                    <div class="two-col">
-                        <div class="col">
-                            <h4><i class="fas fa-check-circle"></i> Pengecekan</h4>
-                            <p>Periksa kekencangan baut, kondisi pahat, keausan bearing, dan kelurusan rel secara berkala.</p>
-                        </div>
-                        <div class="col">
-                            <h4><i class="fas fa-calendar-alt"></i> Jadwal Perawatan</h4>
-                            <p>Harian: bersihkan & lumasi. Mingguan: cek kekencangan. Bulanan: cek alignment. 6 bulan: overhaul.</p>
-                        </div>
-                    </div>
-
-                    <div class="highlight-box">
-                        <strong><i class="fas fa-lightbulb"></i> Tips:</strong> Catat setiap perawatan pada log book mesin agar riwayat perawatan terdokumentasi dengan baik.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 10. KESALAHAN ========== -->
-            <div class="accordion-item reveal delay-9" id="kesalahan">
-                <div class="accordion-header" data-toggle="accordion">
-                    <div class="accordion-header-left">
-                        <h3><span class="topic-num">10</span> <i class="fas fa-exclamation-triangle"></i> Kesalahan Umum dan Solusinya</h3>
-                    </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Sebagian besar masalah dapat dihindari dengan persiapan matang dan pengamatan cermat. Berikut masalah umum beserta solusinya:</p>
-
-                    <ul>
-                        <li><b>Permukaan kasar</b> — RPM terlalu rendah atau feed terlalu tinggi. <span class="badge-tag">Naikkan RPM, kurangi feed</span></li>
-                        <li><b>Pahat cepat aus</b> — DOC terlalu dalam atau material tidak cocok. <span class="badge-tag">Kurangi DOC, ganti karbida</span></li>
-                        <li><b>Benda kerja terlepas</b> — chuck tidak kencang atau tidak seimbang. <span class="badge-tag">Kencangkan chuck</span></li>
-                        <li><b>Getaran berlebihan</b> — benda kerja terlalu panjang atau pahat tidak kokoh. <span class="badge-tag">Pakai tailstock</span></li>
-                        <li><b>Ulir tidak rata</b> — pengaturan lead screw salah atau pahat tumpul. <span class="badge-tag">Cek pitch & asah pahat</span></li>
-                        <li><b>Diameter tidak presisi</b> — backlash pada cross slide atau alat ukur salah. <span class="badge-tag">Cek dial & kalibrasi</span></li>
-                        <li><b>Permukaan beralur (chatter)</b> — kecepatan atau feed tidak sesuai. <span class="badge-tag">Ubah parameter</span></li>
-                        <li><b>Chip tidak keluar (bending)</b> — geometri pahat kurang tepat. <span class="badge-tag">Asah ulang pahat</span></li>
-                    </ul>
-
-                    <div class="highlight-box warning">
-                        <strong><i class="fas fa-info-circle"></i> Ingat:</strong> Sebagian besar masalah dapat dihindari dengan persiapan yang matang dan pengamatan yang cermat.
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <footer>
@@ -712,20 +264,134 @@
     <button id="myBtn" title="Kembali ke atas">↑</button>
 
     <script>
-        // ========== ACCORDION ==========
-        document.querySelectorAll('[data-toggle="accordion"]').forEach(header => {
-            header.addEventListener('click', function() {
-                const item = this.closest('.accordion-item');
-                // Tutup semua item lain (opsional: hapus baris ini jika ingin bisa buka banyak sekaligus)
-                document.querySelectorAll('.accordion-item.open').forEach(openItem => {
-                    if (openItem !== item) openItem.classList.remove('open');
-                });
-                // Toggle item yang diklik
-                item.classList.toggle('open');
-            });
-        });
+        /* =====================================================
+           SUPABASE CONFIG
+        ===================================================== */
+        const SUPABASE_URL = "https://fxsshzwljalwxpxpbjgn.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NKOVw8rMBJ5SdPRmPihu8w_IKg9G_Tf";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-        // ========== TOMBOL KEMBALI KE ATAS ==========
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return "";
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        /* =====================================================
+           LOAD MATERI DARI SUPABASE
+        ===================================================== */
+        async function loadMateriFromSupabase() {
+            const container = document.getElementById("materiContainer");
+
+            const { data, error } = await supabaseClient
+                .from("materials")
+                .select("*")
+                .eq("active", true)
+                .order("sort_order", { ascending: true });
+
+            if (error) {
+                console.error("Error load materi:", error);
+                container.innerHTML = `
+                    <div class="empty-box">
+                        <i class="fas fa-triangle-exclamation" style="color:#dc2626;"></i>
+                        <p>Gagal memuat materi dari database.</p>
+                        <p style="font-size:0.8rem;margin-top:8px;color:#94a3b8;">
+                            ${escapeHtml(error.message)}
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-box">
+                        <i class="fas fa-book-open"></i>
+                        <p>Belum ada materi yang ditambahkan oleh guru.</p>
+                        <p style="font-size:0.8rem;margin-top:8px;color:#94a3b8;">
+                            Silakan tambahkan materi melalui Dashboard Guru.
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render accordion
+            container.innerHTML = data.map((materi, index) => `
+                <div class="accordion-item reveal" id="materi-${materi.id}">
+                    <div class="accordion-header" data-toggle="accordion">
+                        <div class="accordion-header-left">
+                            <h3>
+                                <span class="topic-num">${index + 1}</span>
+                                <i class="fas fa-bookmark"></i>
+                                ${escapeHtml(materi.title)}
+                                <span class="badge-category">${escapeHtml(materi.category || "umum")}</span>
+                            </h3>
+                        </div>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
+                    </div>
+                    <div class="accordion-body">
+                        ${materi.description ? `<p><strong>${escapeHtml(materi.description)}</strong></p>` : ""}
+                        ${materi.objectives ? `
+                            <div class="materi-objectives">
+                                <strong><i class="fas fa-bullseye"></i> Tujuan Pembelajaran:</strong>
+                                ${escapeHtml(materi.objectives)}
+                            </div>
+                        ` : ""}
+                        <div class="materi-content">${escapeHtml(materi.content || "Belum ada isi materi.")}</div>
+                    </div>
+                </div>
+            `).join("");
+
+            // Inisialisasi accordion
+            initAccordion();
+
+            // Inisialisasi animasi reveal
+            initReveal();
+        }
+
+        /* =====================================================
+           ACCORDION
+        ===================================================== */
+        function initAccordion() {
+            document.querySelectorAll('[data-toggle="accordion"]').forEach(header => {
+                header.addEventListener('click', function() {
+                    const item = this.closest('.accordion-item');
+                    document.querySelectorAll('.accordion-item.open').forEach(openItem => {
+                        if (openItem !== item) openItem.classList.remove('open');
+                    });
+                    item.classList.toggle('open');
+                });
+            });
+        }
+
+        /* =====================================================
+           REVEAL ANIMATION
+        ===================================================== */
+        function initReveal() {
+            const observerOptions = { threshold: 0.05, rootMargin: "0px 0px -50px 0px" };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+        }
+
+        /* =====================================================
+           TOMBOL KEMBALI KE ATAS
+        ===================================================== */
         const mybutton = document.getElementById("myBtn");
         window.onscroll = function() {
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -736,7 +402,9 @@
         };
         mybutton.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-        // ========== DARK MODE ==========
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
         if (localStorage.getItem('theme') === 'dark') {
@@ -758,20 +426,9 @@
             localStorage.setItem('theme', theme);
         });
 
-        // ========== ANIMASI SCROLL ==========
-        const observerOptions = { threshold: 0.05, rootMargin: "0px 0px -50px 0px" };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                } else {
-                    entry.target.classList.remove('is-visible');
-                }
-            });
-        }, observerOptions);
-        document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
-
-        // ========== MENANDAI MENU AKTIF ==========
+        /* =====================================================
+           MENANDAI MENU AKTIF
+        ===================================================== */
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname.split("/").pop() || "index.html";
             document.querySelectorAll(".nav-links a").forEach(link => {
@@ -781,7 +438,12 @@
             });
         });
 
-        console.log('✅ Materi accordion siap!');
+        /* =====================================================
+           START
+        ===================================================== */
+        loadMateriFromSupabase();
+
+        console.log('✅ Materi dinamis dari Supabase siap!');
     </script>
 
 </body>
