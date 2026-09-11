@@ -60,6 +60,9 @@
             transition: background-color 0.4s, color 0.4s;
         }
 
+        /* =====================================================
+           SPLASH SCREEN
+           ===================================================== */
         #splashScreen {
             position: fixed;
             inset: 0;
@@ -72,6 +75,7 @@
             transition: opacity 0.5s ease, visibility 0.5s ease;
             opacity: 1;
             visibility: visible;
+            overflow-y: auto;
         }
 
         #splashScreen.hidden {
@@ -86,6 +90,7 @@
             text-align: center;
             color: #fff;
             animation: fadeInUp 0.8s ease;
+            padding: 20px 0;
         }
 
         @keyframes fadeInUp {
@@ -161,6 +166,129 @@
 
         .splash-option p { font-size: 0.85rem; color: #94a3b8; line-height: 1.5; }
 
+        /* =====================================================
+           FORM LOGIN SISWA
+           ===================================================== */
+        .splash-form {
+            max-width: 440px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px 28px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+        }
+
+        .splash-form h2 {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .splash-form .form-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .splash-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .splash-form label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .splash-form input,
+        .splash-form select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .splash-form input:focus,
+        .splash-form select:focus {
+            border-color: #60a5fa;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+        }
+
+        .splash-form input::placeholder {
+            color: #64748b;
+        }
+
+        .splash-form select option {
+            background: #1a2639;
+            color: #fff;
+        }
+
+        .splash-form .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .splash-form .btn-submit {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .splash-form .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.5);
+        }
+
+        .splash-form .btn-back {
+            padding: 13px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            background: transparent;
+            color: #cbd5e1;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .splash-form .btn-back:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .hidden-form {
+            display: none;
+        }
+
+        /* =====================================================
+           NAVBAR
+           ===================================================== */
         .navbar {
             background: var(--navbar-bg);
             padding: 0 24px;
@@ -201,7 +329,7 @@
 
         .dark-toggle:hover { color: #fbbf24; }
 
-        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; align-items: center; }
 
         .nav-links a {
             background: transparent;
@@ -244,6 +372,30 @@
 
         .nav-links a.login-guru:hover { background: #2563eb; color: white; }
 
+        /* Badge identitas siswa */
+        .nav-user-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(22, 163, 74, 0.15);
+            border: 1px solid rgba(22, 163, 74, 0.3);
+            color: #4ade80;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .nav-user-info i { font-size: 0.85rem; }
+
+        @media (max-width: 900px) {
+            .nav-user-info {
+                font-size: 0.7rem;
+                padding: 5px 10px;
+            }
+        }
+
         @media (max-width: 780px) {
             .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; }
             .nav-links { justify-content: center; padding-bottom: 10px; }
@@ -255,6 +407,9 @@
             .nav-links a i { display: none; }
         }
 
+        /* =====================================================
+           MAIN
+           ===================================================== */
         .main-content {
             flex: 1;
             max-width: 1280px;
@@ -296,6 +451,7 @@
             font-size: 0.95rem;
         }
 
+        /* HERO */
         #beranda .hero {
             background: linear-gradient(135deg, var(--hero-bg1) 0%, var(--hero-bg2) 100%);
             border-radius: 28px;
@@ -381,6 +537,7 @@
             #beranda .hero p { font-size: 1rem; }
         }
 
+        /* FITUR CARD */
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -487,6 +644,7 @@
         .feature-card .fc-arrow i { transition: transform 0.2s ease; }
         .feature-card:hover .fc-arrow i { transform: translateX(4px); }
 
+        /* STATISTIK */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -522,6 +680,7 @@
             font-weight: 500;
         }
 
+        /* ALUR */
         .flow-container {
             display: flex;
             flex-wrap: wrap;
@@ -561,6 +720,7 @@
 
         @media (max-width: 600px) { .flow-arrow { transform: rotate(90deg); } }
 
+        /* CTA */
         .cta-card {
             background: linear-gradient(135deg, #0b1a2e, #1a3a5a);
             border-radius: 24px;
@@ -595,6 +755,7 @@
             .cta-card h3 { font-size: 1.2rem; }
         }
 
+        /* SCROLL TOP */
         #myBtn {
             display: none;
             position: fixed;
@@ -615,6 +776,7 @@
 
         #myBtn:hover { background-color: #1d4ed8; transform: translateY(-3px); }
 
+        /* REVEAL */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -636,33 +798,91 @@
 
 <body>
 
+    <!-- =====================================================
+         SPLASH SCREEN — PILIHAN MASUK
+         ===================================================== -->
     <div id="splashScreen">
         <div class="splash-box">
-            <div class="splash-logo">
-                <i class="fas fa-cogs"></i>
-            </div>
-            <h1>Media <span>Mesin Bubut</span></h1>
-            <p class="splash-sub">
-                Pilih cara masuk untuk memulai pembelajaran.<br>
-                Siswa dapat langsung masuk, guru perlu login terlebih dahulu.
-            </p>
 
-            <div class="splash-options">
-                <button class="splash-option siswa" onclick="masukSebagaiSiswa()">
-                    <div class="opt-icon"><i class="fas fa-user-graduate"></i></div>
-                    <h3>Masuk sebagai Siswa</h3>
-                    <p>Langsung mulai belajar tanpa login</p>
-                </button>
+            <!-- PILIHAN AWAL -->
+            <div id="splashChoice">
+                <div class="splash-logo">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h1>Media <span>Mesin Bubut</span></h1>
+                <p class="splash-sub">
+                    Pilih cara masuk untuk memulai pembelajaran.<br>
+                    Siswa dapat langsung masuk, guru perlu login terlebih dahulu.
+                </p>
 
-                <button class="splash-option guru" onclick="masukSebagaiGuru()">
-                    <div class="opt-icon"><i class="fas fa-user-tie"></i></div>
-                    <h3>Masuk sebagai Guru</h3>
-                    <p>Login dengan akun guru untuk mengelola materi</p>
-                </button>
+                <div class="splash-options">
+                    <button class="splash-option siswa" onclick="showFormSiswa()">
+                        <div class="opt-icon"><i class="fas fa-user-graduate"></i></div>
+                        <h3>Masuk sebagai Siswa</h3>
+                        <p>Isi nama & kelas untuk mulai belajar</p>
+                    </button>
+
+                    <button class="splash-option guru" onclick="masukSebagaiGuru()">
+                        <div class="opt-icon"><i class="fas fa-user-tie"></i></div>
+                        <h3>Masuk sebagai Guru</h3>
+                        <p>Login dengan akun guru untuk mengelola materi</p>
+                    </button>
+                </div>
             </div>
+
+            <!-- FORM LOGIN SISWA -->
+            <div id="splashFormSiswa" class="hidden-form">
+                <div class="splash-form">
+                    <h2><i class="fas fa-user-graduate" style="color:#60a5fa;"></i> Data Siswa</h2>
+                    <p class="form-desc">
+                        Isi nama lengkap dan kelas Anda.<br>
+                        Data ini akan digunakan untuk semua aktivitas simulasi & evaluasi.
+                    </p>
+
+                    <div class="form-group">
+                        <label for="siswaNama">Nama Lengkap</label>
+                        <input
+                            type="text"
+                            id="siswaNama"
+                            placeholder="Contoh: Ahmad Fauzi"
+                            maxlength="60"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siswaKelas">Kelas</label>
+                        <select id="siswaKelas">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="X TP 1">X TP 1</option>
+                            <option value="X TP 2">X TP 2</option>
+                            <option value="X TP 3">X TP 3</option>
+                            <option value="XI TP 1">XI TP 1</option>
+                            <option value="XI TP 2">XI TP 2</option>
+                            <option value="XI TP 3">XI TP 3</option>
+                            <option value="XII TP 1">XII TP 1</option>
+                            <option value="XII TP 2">XII TP 2</option>
+                            <option value="XII TP 3">XII TP 3</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-back" onclick="kembaliKePilihan()">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                        <button class="btn-submit" onclick="simpanDataSiswa()">
+                            <i class="fas fa-rocket"></i> Mulai Belajar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-cogs"></i>
@@ -690,6 +910,13 @@
                     <i class="fas fa-user-graduate"></i> Profil
                 </a>
 
+                <!-- IDENTITAS SISWA -->
+                <span id="navUserInfo" class="nav-user-info" style="display:none;">
+                    <i class="fas fa-user"></i>
+                    <span id="navUserText">-</span>
+                </span>
+
+                <!-- TOMBOL DINAMIS GURU -->
                 <a href="#" id="guruModeBtn" class="login-guru">
                     <i class="fas fa-user-tie"></i>
                     <span id="guruModeText">Login Guru</span>
@@ -702,9 +929,13 @@
         </div>
     </nav>
 
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
     <div class="main-content">
         <div id="beranda">
 
+            <!-- 1. HERO -->
             <div class="hero reveal">
                 <div class="badge">
                     <i class="fas fa-graduation-cap"></i>
@@ -730,6 +961,7 @@
                 </div>
             </div>
 
+            <!-- 2. TUJUAN -->
             <div class="reveal delay-1" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-bullseye"></i> Tujuan Pembelajaran
@@ -755,6 +987,7 @@
                 </div>
             </div>
 
+            <!-- 3. FITUR -->
             <div class="reveal delay-2" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-layer-group"></i> Fitur Pembelajaran
@@ -795,6 +1028,7 @@
                 </div>
             </div>
 
+            <!-- 4. ALUR -->
             <div class="reveal delay-3" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-route"></i> Alur Pembelajaran
@@ -812,6 +1046,7 @@
                 </div>
             </div>
 
+            <!-- 5. STATISTIK -->
             <div class="reveal" style="margin-bottom: 40px;">
                 <h2 class="section-title">
                     <i class="fas fa-chart-line"></i> Statistik Media
@@ -838,6 +1073,7 @@
                 </div>
             </div>
 
+            <!-- 6. CTA -->
             <div class="cta-card reveal">
                 <div class="cta-text">
                     <h3>Siap Menguji Kemampuan?</h3>
@@ -873,31 +1109,106 @@
         // 2. ELEMENT REF
         // =====================================================
         const splashScreen = document.getElementById("splashScreen");
+        const splashChoice = document.getElementById("splashChoice");
+        const splashFormSiswa = document.getElementById("splashFormSiswa");
         const guruModeBtn = document.getElementById("guruModeBtn");
         const guruModeText = document.getElementById("guruModeText");
+        const navUserInfo = document.getElementById("navUserInfo");
+        const navUserText = document.getElementById("navUserText");
 
         // =====================================================
         // 3. CEK MODE AWAL
         // =====================================================
-        // Menggunakan sessionStorage: splash muncul sekali per sesi browser.
-        // Saat user menutup tab/browser, sessionStorage otomatis terhapus
-        // → splash akan muncul lagi saat buka web berikutnya.
         async function cekModeAwal() {
             const userMode = sessionStorage.getItem("userMode");
 
             if (!userMode) {
                 // Belum pernah memilih di sesi ini → tampilkan splash
                 splashScreen.classList.remove("hidden");
+                splashChoice.classList.remove("hidden-form");
+                splashFormSiswa.classList.add("hidden-form");
                 guruModeBtn.style.display = "none";
+                navUserInfo.style.display = "none";
             } else {
                 // Sudah pernah memilih → sembunyikan splash
                 splashScreen.classList.add("hidden");
                 await updateTombolGuru(userMode);
+                updateIdentitasSiswa();
             }
         }
 
         // =====================================================
-        // 4. UPDATE TOMBOL GURU DI NAVBAR
+        // 4. TAMPILKAN FORM SISWA
+        // =====================================================
+        function showFormSiswa() {
+            splashChoice.classList.add("hidden-form");
+            splashFormSiswa.classList.remove("hidden-form");
+            document.getElementById("siswaNama").focus();
+        }
+
+        function kembaliKePilihan() {
+            splashFormSiswa.classList.add("hidden-form");
+            splashChoice.classList.remove("hidden-form");
+        }
+
+        // =====================================================
+        // 5. SIMPAN DATA SISWA
+        // =====================================================
+        function simpanDataSiswa() {
+            const nama = document.getElementById("siswaNama").value.trim();
+            const kelas = document.getElementById("siswaKelas").value;
+
+            if (!nama) {
+                alert("Nama lengkap wajib diisi.");
+                document.getElementById("siswaNama").focus();
+                return;
+            }
+
+            if (nama.length < 3) {
+                alert("Nama minimal 3 karakter.");
+                document.getElementById("siswaNama").focus();
+                return;
+            }
+
+            if (!kelas) {
+                alert("Silakan pilih kelas terlebih dahulu.");
+                document.getElementById("siswaKelas").focus();
+                return;
+            }
+
+            // Simpan data siswa ke sessionStorage
+            sessionStorage.setItem("userMode", "siswa");
+            sessionStorage.setItem("siswaNama", nama);
+            sessionStorage.setItem("siswaKelas", kelas);
+
+            // Sembunyikan splash
+            splashScreen.classList.add("hidden");
+
+            // Update UI
+            updateTombolGuru("siswa");
+            updateIdentitasSiswa();
+
+            console.log("✅ Data siswa tersimpan:", { nama, kelas });
+        }
+
+        // =====================================================
+        // 6. UPDATE IDENTITAS SISWA DI NAVBAR
+        // =====================================================
+        function updateIdentitasSiswa() {
+            const userMode = sessionStorage.getItem("userMode");
+            const nama = sessionStorage.getItem("siswaNama");
+            const kelas = sessionStorage.getItem("siswaKelas");
+
+            if (userMode === "siswa" && nama && kelas) {
+                navUserInfo.style.display = "inline-flex";
+                navUserText.textContent = `${nama} · ${kelas}`;
+            } else {
+                navUserInfo.style.display = "none";
+            }
+        }
+
+        // =====================================================
+        // 7. UPDATE TOMBOL GURU DI NAVBAR
         // =====================================================
         async function updateTombolGuru(mode) {
             guruModeBtn.style.display = "inline-flex";
@@ -926,35 +1237,25 @@
         }
 
         // =====================================================
-        // 5. AKSI TOMBOL SPLASH
+        // 8. MASUK SEBAGAI GURU
         // =====================================================
-        function masukSebagaiSiswa() {
-            sessionStorage.setItem("userMode", "siswa");
-            splashScreen.classList.add("hidden");
-            updateTombolGuru("siswa");
-        }
-
         async function masukSebagaiGuru() {
             sessionStorage.setItem("userMode", "guru");
 
-            // Sembunyikan splash dulu
             splashScreen.classList.add("hidden");
 
-            // Cek session
             const { data } = await supabaseClient.auth.getSession();
             const session = data.session;
 
             if (session) {
-                // Sudah login → langsung dashboard
                 window.location.href = "guru.html";
             } else {
-                // Belum login → halaman login
                 window.location.href = "login.html";
             }
         }
 
         // =====================================================
-        // 6. MONITOR PERUBAHAN LOGIN
+        // 9. MONITOR PERUBAHAN LOGIN
         // =====================================================
         supabaseClient.auth.onAuthStateChange(async function(event, session) {
             const userMode = sessionStorage.getItem("userMode");
@@ -964,7 +1265,7 @@
         });
 
         // =====================================================
-        // 7. TOMBOL KEMBALI KE ATAS
+        // 10. TOMBOL KEMBALI KE ATAS
         // =====================================================
         const mybutton = document.getElementById("myBtn");
 
@@ -981,7 +1282,7 @@
         };
 
         // =====================================================
-        // 8. DARK MODE
+        // 11. DARK MODE
         // =====================================================
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
@@ -1007,7 +1308,7 @@
         });
 
         // =====================================================
-        // 9. ANIMASI SCROLL
+        // 12. ANIMASI SCROLL
         // =====================================================
         const observerOptions = {
             threshold: 0.1,
@@ -1029,7 +1330,7 @@
         });
 
         // =====================================================
-        // 10. MENANDAI MENU AKTIF
+        // 13. MENANDAI MENU AKTIF
         // =====================================================
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname.split("/").pop() || "index.html";
@@ -1048,11 +1349,11 @@
         });
 
         // =====================================================
-        // 11. START
+        // 14. START
         // =====================================================
         cekModeAwal();
 
-        console.log("✅ Beranda + Splash siap!");
+        console.log("✅ Beranda + Form Siswa siap!");
     </script>
 
 </body>
