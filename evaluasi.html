@@ -43,6 +43,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.4s, color 0.4s; }
 
+        /* NAVBAR */
         .navbar { background: var(--navbar-bg); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); border-bottom: 2px solid #2a4b6e; transition: background-color 0.4s; }
         .navbar .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.1rem; padding: 12px 0; }
         .navbar .logo i { color: #60a5fa; font-size: 1.4rem; }
@@ -62,6 +63,7 @@
         @media (max-width: 780px) { .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; } .nav-links { justify-content: center; padding-bottom: 10px; } .nav-links a { font-size: 0.7rem; padding: 6px 12px; } .nav-user-info { font-size: 0.7rem; padding: 5px 10px; } }
         @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } }
 
+        /* MAIN */
         .main-content { flex: 1; max-width: 1000px; width: 100%; margin: 0 auto; padding: 30px 24px 40px; }
         .page-title { font-size: 1.8rem; font-weight: 800; color: var(--text-color); margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
         .page-title i { color: var(--nav-active); }
@@ -132,7 +134,7 @@
 
         #evaluasi .quiz-box { background: var(--box-bg); border-radius: 16px; padding: 18px 20px; margin-bottom: 18px; border-left: 4px solid #94a3b8; transition: 0.15s ease; }
         #evaluasi .quiz-box:hover { background: var(--card-bg); }
-        #evaluasi .quiz-box.answered { border-left-color: var(--nav-active); background: var(--accent-light, #f0f7ff); }
+        #evaluasi .quiz-box.answered { border-left-color: var(--nav-active); background: #f0f7ff; }
         #evaluasi .quiz-box.unanswered-highlight { border-left-color: #dc2626; background: #fef2f2; animation: shake 0.4s; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -144,19 +146,51 @@
         #evaluasi .quiz-box label { display: flex; align-items: center; gap: 10px; padding: 6px 10px; cursor: pointer; border-radius: 8px; transition: 0.1s; font-size: 0.9rem; color: var(--text-color); }
         #evaluasi .quiz-box label:hover { background: var(--box-bg); }
         #evaluasi .quiz-box input[type="radio"] { accent-color: #2563eb; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+        #evaluasi .quiz-box input[type="radio"]:disabled { cursor: not-allowed; }
+        #evaluasi .quiz-box.locked { opacity: 0.85; }
 
         #evaluasi .btn-submit { background: var(--navbar-bg); color: #fff; border: none; padding: 14px 32px; border-radius: 40px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; width: 100%; justify-content: center; }
         #evaluasi .btn-submit:hover { background: #1a334d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11, 26, 46, 0.15); }
         #evaluasi .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        #evaluasi .score-result { margin-top: 20px; padding: 18px 22px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; background: var(--box-bg); display: block; border: 2px solid transparent; transition: 0.2s; text-align: center; color: var(--text-color); }
+        #evaluasi .btn-ulang {
+            background: transparent;
+            color: var(--nav-active);
+            border: 2px solid var(--nav-active);
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            width: 100%;
+            justify-content: center;
+            font-family: inherit;
+        }
+        #evaluasi .btn-ulang:hover {
+            background: var(--nav-active);
+            color: #fff;
+        }
+
+        #evaluasi .score-result { margin-top: 20px; padding: 18px 22px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; background: var(--box-bg); display: none; border: 2px solid transparent; transition: 0.2s; text-align: center; color: var(--text-color); }
+        #evaluasi .score-result.show { display: block; }
         #evaluasi .score-result.green { border-color: #16a34a; color: #16a34a; background: #f0fdf4; }
         #evaluasi .score-result.yellow { border-color: #eab308; color: #eab308; background: #fefce8; }
         #evaluasi .score-result.red { border-color: #dc2626; color: #dc2626; background: #fef2f2; }
         #evaluasi .score-result.warning { border-color: #f59e0b; color: #b45309; background: #fffbeb; }
         #evaluasi .score-result .sub { font-weight: 400; font-size: 0.85rem; display: block; margin-top: 6px; color: var(--sub-text-color); }
 
-        @media (max-width: 600px) { .page-title { font-size: 1.4rem; } #evaluasi .eval-section { padding: 18px 14px 24px; } #evaluasi .quiz-box { padding: 14px 14px; } #evaluasi .quiz-box .q { font-size: 0.88rem; } #evaluasi .quiz-box label { font-size: 0.82rem; padding: 5px 8px; } }
+        @media (max-width: 600px) {
+            .page-title { font-size: 1.4rem; }
+            #evaluasi .eval-section { padding: 18px 14px 24px; }
+            #evaluasi .quiz-box { padding: 14px 14px; }
+            #evaluasi .quiz-box .q { font-size: 0.88rem; }
+            #evaluasi .quiz-box label { font-size: 0.82rem; padding: 5px 8px; }
+        }
     </style>
 </head>
 <body>
@@ -224,9 +258,15 @@
                 </div>
 
                 <div id="posttestContainer"></div>
+
                 <button class="btn-submit" id="posttestSubmit" disabled>
                     <i class="fas fa-paper-plane"></i> Kirim Jawaban Posttest
                 </button>
+
+                <button class="btn-ulang" id="btnUlang" onclick="kerjakanUlang()">
+                    <i class="fas fa-rotate-right"></i> Kerjakan Ulang
+                </button>
+
                 <div id="posttestResult" class="score-result"></div>
             </div>
 
@@ -263,7 +303,6 @@
         const siswaNama = sessionStorage.getItem("siswaNama");
         const siswaKelas = sessionStorage.getItem("siswaKelas");
 
-        // Tampilkan banner sapaan & navbar
         if (userMode === "siswa" && siswaNama && siswaKelas) {
             // Banner sapaan
             const greetingBanner = document.getElementById("greetingBanner");
@@ -330,6 +369,7 @@
 
         const prefix = 'posttest';
         const totalSoal = posttestData.length;
+        let sudahSubmit = false;
 
         // =====================================================
         // 4. RENDER SOAL
@@ -472,7 +512,7 @@
             }
 
             // Tampilkan hasil sementara
-            resultDiv.className = `score-result ${kelas}`;
+            resultDiv.className = `score-result show ${kelas}`;
             resultDiv.innerHTML = `
                 <span>${icon}</span>
                 <strong>${labelName}:</strong> ${benar} / ${total} (${persen}%)
@@ -494,4 +534,147 @@
             const saveStatus = document.getElementById("saveStatus");
 
             if (hasil.success) {
-                saveStatus.innerHTML = `✅ Hasil tersimpan — <strong>${sis
+                saveStatus.innerHTML = `✅ Hasil tersimpan — <strong>${siswaNama}</strong> (${siswaKelas})`;
+                saveStatus.style.color = "#16a34a";
+            } else {
+                saveStatus.innerHTML = `⚠️ Gagal menyimpan: ${hasil.error}`;
+                saveStatus.style.color = "#dc2626";
+            }
+
+            // Kunci jawaban (disable semua radio)
+            document.querySelectorAll(`input[name^="${pfx}_"]`).forEach(r => {
+                r.disabled = true;
+            });
+
+            // Tandai semua box sebagai locked
+            document.querySelectorAll(`#${resultId}`).forEach(() => {});
+
+            // Tampilkan tombol "Kerjakan Ulang"
+            document.getElementById("btnUlang").style.display = "inline-flex";
+
+            // Sembunyikan tombol submit
+            document.getElementById("posttestSubmit").style.display = "none";
+
+            sudahSubmit = true;
+        }
+
+        // =====================================================
+        // 8. TAMPILKAN PERINGATAN JIKA BELUM LENGKAP
+        // =====================================================
+        function showIncompleteWarning() {
+            const answered = countAnswered();
+            const belum = totalSoal - answered;
+
+            const resultDiv = document.getElementById('posttestResult');
+            resultDiv.className = 'score-result show warning';
+            resultDiv.innerHTML = `
+                <span>⚠️</span>
+                <strong>Belum bisa mengirim jawaban!</strong>
+                <span class="sub">Masih ada <strong>${belum} soal</strong> yang belum dijawab. Silakan lengkapi semua soal terlebih dahulu.</span>
+            `;
+
+            let firstUnanswered = null;
+            for (let i = 0; i < totalSoal; i++) {
+                const box = document.getElementById(`qbox-${prefix}-${i}`);
+                if (!box) continue;
+                const selected = document.querySelector(`input[name="${prefix}_${i}"]:checked`);
+                if (!selected) {
+                    box.classList.add('unanswered-highlight');
+                    if (!firstUnanswered) firstUnanswered = box;
+                }
+            }
+
+            if (firstUnanswered) {
+                firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                    document.querySelectorAll('.unanswered-highlight').forEach(el => {
+                        el.classList.remove('unanswered-highlight');
+                    });
+                }, 2500);
+            }
+        }
+
+        // =====================================================
+        // 9. KERJAKAN ULANG
+        // =====================================================
+        function kerjakanUlang() {
+            if (!confirm("Kerjakan ulang posttest?\n\nJawaban sebelumnya akan dihapus, tetapi hasil yang sudah tersimpan di server tetap ada.")) {
+                return;
+            }
+
+            // Reset semua radio
+            document.querySelectorAll(`input[name^="${prefix}_"]`).forEach(r => {
+                r.checked = false;
+                r.disabled = false;
+            });
+
+            // Sembunyikan hasil
+            const resultDiv = document.getElementById('posttestResult');
+            resultDiv.className = 'score-result';
+            resultDiv.innerHTML = '';
+
+            // Sembunyikan tombol ulang
+            document.getElementById("btnUlang").style.display = "none";
+
+            // Tampilkan kembali tombol submit
+            const submitBtn = document.getElementById("posttestSubmit");
+            submitBtn.style.display = "inline-flex";
+            submitBtn.disabled = true;
+
+            // Reset progress
+            updateProgress();
+
+            sudahSubmit = false;
+
+            // Scroll ke atas
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // =====================================================
+        // 10. RENDER + EVENT
+        // =====================================================
+        renderEval('posttestContainer', posttestData, prefix);
+        updateProgress();
+
+        document.getElementById('posttestSubmit').addEventListener('click', function() {
+            const answered = countAnswered();
+
+            if (answered < totalSoal) {
+                showIncompleteWarning();
+                return;
+            }
+
+            hitungSkorDanSimpan(posttestData, prefix, 'posttestResult', 'Posttest');
+        });
+
+        // =====================================================
+        // 11. DARK MODE
+        // =====================================================
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeIcon = darkModeToggle.querySelector('i');
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            let theme = 'light';
+            if (document.body.classList.contains('dark-mode')) {
+                theme = 'dark';
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            } else {
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            }
+            localStorage.setItem('theme', theme);
+        });
+
+        console.log('✅ Evaluasi (Posttest 20 soal) siap! Hasil akan tersimpan di Supabase.');
+    </script>
+
+</body>
+</html>
