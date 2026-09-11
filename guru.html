@@ -1,1713 +1,660 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Dashboard Guru - Mesin Bubut</title>
-
-
-    <!-- ================= FONT ================= -->
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
-
-
-    <!-- ================= FONT AWESOME ================= -->
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
-    <!-- ================= SUPABASE ================= -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-
-        body {
-
-            font-family: 'Inter', sans-serif;
-
-            background: #f0f4fb;
-
-            color: #1a2639;
-
-            min-height: 100vh;
-
-        }
-
-
-        /* ================= NAVBAR ================= */
-
-        .navbar {
-
-            background: #0b1a2e;
-
-            min-height: 70px;
-
-            padding: 0 30px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            color: white;
-
-            border-bottom: 2px solid #2a4b6e;
-
-            box-shadow:
-                0 4px 20px rgba(0,0,0,0.15);
-
-        }
-
-
-        .logo {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            font-size: 1rem;
-
-            font-weight: 800;
-
-        }
-
-
-        .logo i {
-
-            color: #60a5fa;
-
-            font-size: 1.4rem;
-
-        }
-
-
-        .logo span {
-
-            color: #94b8d9;
-
-            font-weight: 400;
-
-        }
-
-
-        /* ================= USER ================= */
-
-        .user-area {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 14px;
-
-        }
-
-
-        .user-info {
-
-            text-align: right;
-
-        }
-
-
-        .user-name {
-
-            font-size: 0.85rem;
-
-            font-weight: 700;
-
-        }
-
-
-        .user-email {
-
-            font-size: 0.7rem;
-
-            color: #94a3b8;
-
-        }
-
-
-        .logout-btn {
-
-            border: none;
-
-            background: #dc2626;
-
-            color: white;
-
-            padding: 9px 15px;
-
-            border-radius: 10px;
-
-            cursor: pointer;
-
-            font-family: 'Inter', sans-serif;
-
-            font-weight: 700;
-
-            transition: 0.25s;
-
-        }
-
-
-        .logout-btn:hover {
-
-            background: #b91c1c;
-
-            transform: translateY(-1px);
-
-        }
-
-
-        /* ================= MAIN ================= */
-
-        .container {
-
-            max-width: 1250px;
-
-            width: 100%;
-
-            margin: auto;
-
-            padding: 35px 24px 50px;
-
-        }
-
-
-        /* ================= HEADER ================= */
-
-        .page-header {
-
-            margin-bottom: 28px;
-
-        }
-
-
-        .page-header h1 {
-
-            font-size: 2rem;
-
-            font-weight: 800;
-
-            color: #0b1a2e;
-
-            margin-bottom: 7px;
-
-        }
-
-
-        .page-header p {
-
-            color: #64748b;
-
-            font-size: 0.95rem;
-
-        }
-
-
-        /* ================= STAT ================= */
-
-        .stats {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(200px, 1fr));
-
-            gap: 18px;
-
-            margin-bottom: 30px;
-
-        }
-
-
-        .stat-card {
-
-            background: white;
-
-            border-radius: 18px;
-
-            padding: 22px;
-
-            border: 1px solid #e2e8f0;
-
-            box-shadow:
-                0 5px 18px rgba(0,0,0,0.05);
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 15px;
-
-        }
-
-
-        .stat-icon {
-
-            width: 50px;
-
-            height: 50px;
-
-            border-radius: 14px;
-
-            background: #eff6ff;
-
-            color: #2563eb;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 1.3rem;
-
-        }
-
-
-        .stat-number {
-
-            font-size: 1.6rem;
-
-            font-weight: 800;
-
-        }
-
-
-        .stat-label {
-
-            color: #64748b;
-
-            font-size: 0.78rem;
-
-        }
-
-
-        /* ================= SECTION ================= */
-
-        .section {
-
-            background: white;
-
-            border-radius: 20px;
-
-            border: 1px solid #e2e8f0;
-
-            box-shadow:
-                0 5px 18px rgba(0,0,0,0.05);
-
-            margin-bottom: 25px;
-
-            overflow: hidden;
-
-        }
-
-
-        .section-header {
-
-            padding: 22px 24px;
-
-            border-bottom: 1px solid #e2e8f0;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-        }
-
-
-        .section-header h2 {
-
-            font-size: 1.15rem;
-
-            font-weight: 800;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-        }
-
-
-        .section-header h2 i {
-
-            color: #2563eb;
-
-        }
-
-
-        /* ================= BUTTON ================= */
-
-        .btn-add {
-
-            border: none;
-
-            background: #2563eb;
-
-            color: white;
-
-            padding: 10px 17px;
-
-            border-radius: 10px;
-
-            font-family: 'Inter', sans-serif;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            transition: 0.25s;
-
-        }
-
-
-        .btn-add:hover {
-
-            background: #1d4ed8;
-
-            transform: translateY(-1px);
-
-        }
-
-
-        /* ================= TABLE ================= */
-
-        .table-wrapper {
-
-            overflow-x: auto;
-
-        }
-
-
-        table {
-
-            width: 100%;
-
-            border-collapse: collapse;
-
-        }
-
-
-        th {
-
-            text-align: left;
-
-            padding: 15px 20px;
-
-            font-size: 0.78rem;
-
-            color: #64748b;
-
-            background: #f8fafc;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.3px;
-
-        }
-
-
-        td {
-
-            padding: 17px 20px;
-
-            border-top: 1px solid #edf2f7;
-
-            font-size: 0.85rem;
-
-        }
-
-
-        .materi-title {
-
-            font-weight: 700;
-
-        }
-
-
-        .materi-desc {
-
-            color: #64748b;
-
-            font-size: 0.75rem;
-
-            margin-top: 4px;
-
-            line-height: 1.5;
-
-            max-width: 500px;
-
-        }
-
-
-        /* ================= STATUS ================= */
-
-        .status {
-
-            display: inline-block;
-
-            padding: 5px 10px;
-
-            border-radius: 20px;
-
-            font-size: 0.7rem;
-
-            font-weight: 700;
-
-        }
-
-
-        .status-aktif {
-
-            background: #dcfce7;
-
-            color: #15803d;
-
-        }
-
-
-        .status-draft {
-
-            background: #fef3c7;
-
-            color: #a16207;
-
-        }
-
-
-        /* ================= ACTION ================= */
-
-        .action-buttons {
-
-            display: flex;
-
-            gap: 7px;
-
-        }
-
-
-        .btn-edit,
-        .btn-delete {
-
-            border: none;
-
-            width: 36px;
-
-            height: 36px;
-
-            border-radius: 9px;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-
-        }
-
-
-        .btn-edit {
-
-            background: #eff6ff;
-
-            color: #2563eb;
-
-        }
-
-
-        .btn-delete {
-
-            background: #fef2f2;
-
-            color: #dc2626;
-
-        }
-
-
-        .btn-edit:hover,
-        .btn-delete:hover {
-
-            transform: translateY(-2px);
-
-        }
-
-
-        /* ================= QUICK MENU ================= */
-
-        .quick-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(200px, 1fr));
-
-            gap: 15px;
-
-            padding: 24px;
-
-        }
-
-
-        .quick-card {
-
-            border: 1px solid #e2e8f0;
-
-            border-radius: 15px;
-
-            padding: 20px;
-
-            text-decoration: none;
-
-            color: #1a2639;
-
-            transition: 0.25s;
-
-        }
-
-
-        .quick-card:hover {
-
-            border-color: #2563eb;
-
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.06);
-
-        }
-
-
-        .quick-card i {
-
-            font-size: 1.4rem;
-
-            color: #2563eb;
-
-            margin-bottom: 12px;
-
-        }
-
-
-        .quick-card h3 {
-
-            font-size: 0.95rem;
-
-            margin-bottom: 5px;
-
-        }
-
-
-        .quick-card p {
-
-            color: #64748b;
-
-            font-size: 0.75rem;
-
-            line-height: 1.5;
-
-        }
-
-
-        /* ================= MODAL ================= */
-
-        .modal {
-
-            position: fixed;
-
-            inset: 0;
-
-            background: rgba(15, 23, 42, 0.65);
-
-            display: none;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-
-            z-index: 10000;
-
-        }
-
-
-        .modal.active {
-
-            display: flex;
-
-        }
-
-
-        .modal-box {
-
-            width: 100%;
-
-            max-width: 700px;
-
-            max-height: 90vh;
-
-            overflow-y: auto;
-
-            background: white;
-
-            border-radius: 20px;
-
-            padding: 25px;
-
-            box-shadow:
-                0 20px 60px rgba(0,0,0,0.25);
-
-        }
-
-
-        .modal-header {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 22px;
-
-        }
-
-
-        .modal-header h2 {
-
-            font-size: 1.25rem;
-
-        }
-
-
-        .close-btn {
-
-            border: none;
-
-            background: #f1f5f9;
-
-            width: 38px;
-
-            height: 38px;
-
-            border-radius: 10px;
-
-            cursor: pointer;
-
-            font-size: 1rem;
-
-        }
-
-
-        .form-group {
-
-            margin-bottom: 17px;
-
-        }
-
-
-        .form-group label {
-
-            display: block;
-
-            margin-bottom: 7px;
-
-            font-size: 0.8rem;
-
-            font-weight: 700;
-
-        }
-
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-
-            width: 100%;
-
-            border: 1px solid #cbd5e1;
-
-            border-radius: 10px;
-
-            padding: 11px 13px;
-
-            font-family: 'Inter', sans-serif;
-
-            font-size: 0.85rem;
-
-            outline: none;
-
-            transition: 0.2s;
-
-        }
-
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-
-            border-color: #2563eb;
-
-            box-shadow:
-                0 0 0 3px rgba(37,99,235,0.1);
-
-        }
-
-
-        .form-group textarea {
-
-            min-height: 180px;
-
-            resize: vertical;
-
-            line-height: 1.6;
-
-        }
-
-
-        .form-row {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 15px;
-
-        }
-
-
-        .modal-actions {
-
-            display: flex;
-
-            justify-content: flex-end;
-
-            gap: 10px;
-
-            margin-top: 22px;
-
-        }
-
-
-        .btn-cancel,
-        .btn-save {
-
-            border: none;
-
-            padding: 11px 18px;
-
-            border-radius: 10px;
-
-            cursor: pointer;
-
-            font-family: 'Inter', sans-serif;
-
-            font-weight: 700;
-
-        }
-
-
-        .btn-cancel {
-
-            background: #e2e8f0;
-
-            color: #334155;
-
-        }
-
-
-        .btn-save {
-
-            background: #2563eb;
-
-            color: white;
-
-        }
-
-
-        .btn-save:hover {
-
-            background: #1d4ed8;
-
-        }
-
-
-        /* ================= EMPTY ================= */
-
-        .empty {
-
-            text-align: center;
-
-            padding: 45px 20px;
-
-            color: #94a3b8;
-
-        }
-
-
-        .empty i {
-
-            font-size: 2rem;
-
-            margin-bottom: 12px;
-
-        }
-
-
-        /* ================= TOAST ================= */
-
-        .toast {
-
-            position: fixed;
-
-            right: 25px;
-
-            bottom: 25px;
-
-            background: #0f172a;
-
-            color: white;
-
-            padding: 14px 18px;
-
-            border-radius: 12px;
-
-            font-size: 0.8rem;
-
-            font-weight: 600;
-
-            opacity: 0;
-
-            transform: translateY(20px);
-
-            pointer-events: none;
-
-            transition: 0.3s;
-
-            z-index: 20000;
-
-        }
-
-
-        .toast.show {
-
-            opacity: 1;
-
-            transform: translateY(0);
-
-        }
-
-
-        .toast.success {
-
-            background: #15803d;
-
-        }
-
-
-        .toast.error {
-
-            background: #dc2626;
-
-        }
-
-
-        /* ================= LOADING ================= */
-
-        #loading {
-
-            position: fixed;
-
-            inset: 0;
-
-            background: #f0f4fb;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            z-index: 9999;
-
-        }
-
-
-        .loading-box {
-
-            text-align: center;
-
-        }
-
-
-        .spinner {
-
-            width: 42px;
-
-            height: 42px;
-
-            border: 4px solid #dbeafe;
-
-            border-top-color: #2563eb;
-
-            border-radius: 50%;
-
-            animation: spin 0.8s linear infinite;
-
-            margin: auto auto 15px;
-
-        }
-
-
-        @keyframes spin {
-
-            to {
-
-                transform: rotate(360deg);
-
-            }
-
-        }
-
-
-        /* ================= FOOTER ================= */
-
-        footer {
-
-            text-align: center;
-
-            color: #94a3b8;
-
-            font-size: 0.75rem;
-
-            padding: 20px;
-
-        }
-
-
-        /* ================= RESPONSIVE ================= */
-
-        @media (max-width: 600px) {
-
-            .navbar {
-
-                padding: 12px 16px;
-
-                flex-direction: column;
-
-                gap: 12px;
-
-            }
-
-
-            .user-area {
-
-                width: 100%;
-
-                justify-content: space-between;
-
-            }
-
-
-            .user-info {
-
-                text-align: left;
-
-            }
-
-
-            .container {
-
-                padding: 25px 15px;
-
-            }
-
-
-            .page-header h1 {
-
-                font-size: 1.6rem;
-
-            }
-
-
-            .section-header {
-
-                align-items: flex-start;
-
-                flex-direction: column;
-
-            }
-
-
-            .form-row {
-
-                grid-template-columns: 1fr;
-
-            }
-
-
-            .modal-box {
-
-                padding: 20px;
-
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Guru - Media Pembelajaran Mesin Bubut</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
+}
+
+.navbar {
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-logout {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #64748b;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 12px 20px;
+    border: none;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #64748b;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.tab-btn.active {
+    background: #2563eb;
+    color: white;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.06);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.card-header h2 {
+    font-size: 21px;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #dbe1e8;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #2563eb;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-save {
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-cancel {
+    background: #64748b;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.item {
+    border: 1px solid #e5e7eb;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.item-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.item-info {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 20px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.question-number {
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 10px;
+}
+
+.options-box {
+    display: grid;
+    gap: 10px;
+}
+
+@media(max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .container {
+        width: 94%;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
-
-<!-- ================================================= -->
-<!-- LOADING -->
-<!-- ================================================= -->
-
-<div id="loading">
-
-    <div class="loading-box">
-
-        <div class="spinner"></div>
-
-        <p>Memeriksa login...</p>
-
-    </div>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- NAVBAR -->
-<!-- ================================================= -->
-
 <nav class="navbar">
+    <div class="logo">⚙️ Media Mesin Bubut</div>
 
-    <div class="logo">
+    <div class="nav-right">
+        <span id="guruEmail">Guru</span>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+</nav>
 
-        <i class="fas fa-cogs"></i>
+<div class="container">
 
-        <span>SMK N 5 Medan</span> · Bubut
-
+    <div class="header">
+        <h1>Dashboard Guru</h1>
+        <p>Kelola video pembelajaran dan soal evaluasi siswa.</p>
     </div>
 
+    <div class="tabs">
 
-    <div class="user-area">
+        <button class="tab-btn active" onclick="showTab('video', this)">
+            🎥 Video Pembelajaran
+        </button>
 
-        <div class="user-info">
-
-            <div class="user-name">
-                Guru
-            </div>
-
-            <div class="user-email"
-                 id="userEmail">
-                Memuat...
-            </div>
-
-        </div>
-
-
-        <button class="logout-btn"
-                id="logoutBtn">
-
-            <i class="fas fa-right-from-bracket"></i>
-
-            Keluar
-
+        <button class="tab-btn" onclick="showTab('evaluasi', this)">
+            📝 Evaluasi
         </button>
 
     </div>
 
-</nav>
 
+    <!-- =========================
+         VIDEO
+    ========================== -->
 
+    <section id="videoSection" class="section active">
 
-<!-- ================================================= -->
-<!-- MAIN -->
-<!-- ================================================= -->
+        <div class="card">
 
-<main class="container">
+            <div class="card-header">
 
+                <h2>Kelola Video Pembelajaran</h2>
 
-    <!-- HEADER -->
-
-    <div class="page-header">
-
-        <h1>
-            Dashboard Guru
-        </h1>
-
-        <p>
-            Kelola media pembelajaran mesin bubut
-            untuk siswa kelas X Teknik Pemesinan.
-        </p>
-
-    </div>
-
-
-
-    <!-- ================================================= -->
-    <!-- STATISTIK -->
-    <!-- ================================================= -->
-
-    <div class="stats">
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-
-                <i class="fas fa-book"></i>
-
-            </div>
-
-            <div>
-
-                <div class="stat-number"
-                     id="materiCount">
-
-                    0
-
-                </div>
-
-                <div class="stat-label">
-
-                    Materi
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-
-                <i class="fas fa-video"></i>
-
-            </div>
-
-            <div>
-
-                <div class="stat-number">
-
-                    9
-
-                </div>
-
-                <div class="stat-label">
-
-                    Video
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-
-                <i class="fas fa-clipboard-check"></i>
-
-            </div>
-
-            <div>
-
-                <div class="stat-number">
-
-                    20
-
-                </div>
-
-                <div class="stat-label">
-
-                    Soal Evaluasi
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-
-                <i class="fas fa-user-graduate"></i>
-
-            </div>
-
-            <div>
-
-                <div class="stat-number">
-
-                    -
-
-                </div>
-
-                <div class="stat-label">
-
-                    Siswa
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- ================================================= -->
-    <!-- KELOLA MATERI -->
-    <!-- ================================================= -->
-
-    <section class="section">
-
-
-        <div class="section-header">
-
-            <h2>
-
-                <i class="fas fa-book-open"></i>
-
-                Kelola Materi
-
-            </h2>
-
-
-            <button class="btn-add"
-                    id="addMateriBtn">
-
-                <i class="fas fa-plus"></i>
-
-                Tambah Materi
-
-            </button>
-
-        </div>
-
-
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Materi
-                        </th>
-
-                        <th>
-                            Urutan
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            Aksi
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="materiTable">
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================================================= -->
-    <!-- MENU CEPAT -->
-    <!-- ================================================= -->
-
-    <section class="section">
-
-
-        <div class="section-header">
-
-            <h2>
-
-                <i class="fas fa-layer-group"></i>
-
-                Menu Pengelolaan
-
-            </h2>
-
-        </div>
-
-
-        <div class="quick-grid">
-
-
-            <a href="index.html"
-               class="quick-card">
-
-                <i class="fas fa-home"></i>
-
-                <h3>
-                    Lihat Website
-                </h3>
-
-                <p>
-                    Membuka halaman utama
-                    media pembelajaran.
-                </p>
-
-            </a>
-
-
-
-            <a href="materi.html"
-               class="quick-card">
-
-                <i class="fas fa-book"></i>
-
-                <h3>
-                    Halaman Materi
-                </h3>
-
-                <p>
-                    Melihat materi yang tersedia
-                    untuk siswa.
-                </p>
-
-            </a>
-
-
-
-            <a href="video.html"
-               class="quick-card">
-
-                <i class="fas fa-play-circle"></i>
-
-                <h3>
-                    Video Pembelajaran
-                </h3>
-
-                <p>
-                    Mengelola video pembelajaran.
-                </p>
-
-            </a>
-
-
-
-            <a href="evaluasi.html"
-               class="quick-card">
-
-                <i class="fas fa-clipboard-check"></i>
-
-                <h3>
-                    Evaluasi
-                </h3>
-
-                <p>
-                    Mengelola soal evaluasi
-                    dan hasil belajar.
-                </p>
-
-            </a>
-
-
-        </div>
-
-    </section>
-
-
-</main>
-
-
-
-<!-- ================================================= -->
-<!-- FOOTER -->
-<!-- ================================================= -->
-
-<footer>
-
-    © 2026 SMK Negeri 5 Medan –
-    Dashboard Guru Media Pembelajaran Mesin Bubut
-
-</footer>
-
-
-
-<!-- ================================================= -->
-<!-- MODAL TAMBAH / EDIT -->
-<!-- ================================================= -->
-
-<div class="modal"
-     id="materiModal">
-
-
-    <div class="modal-box">
-
-
-        <div class="modal-header">
-
-            <h2 id="modalTitle">
-
-                Tambah Materi
-
-            </h2>
-
-
-            <button class="close-btn"
-                    id="closeModal">
-
-                <i class="fas fa-xmark"></i>
-
-            </button>
-
-        </div>
-
-
-
-        <form id="materiForm">
-
-
-            <input type="hidden"
-                   id="materiId">
-
-
-
-            <!-- JUDUL -->
-
-            <div class="form-group">
-
-                <label for="judul">
-
-                    Judul Materi
-
-                </label>
-
-                <input type="text"
-                       id="judul"
-                       placeholder="Contoh: Pengenalan Mesin Bubut"
-                       required>
-
-            </div>
-
-
-
-            <!-- DESKRIPSI -->
-
-            <div class="form-group">
-
-                <label for="deskripsi">
-
-                    Deskripsi Singkat
-
-                </label>
-
-                <input type="text"
-                       id="deskripsi"
-                       placeholder="Masukkan deskripsi materi">
-
-            </div>
-
-
-
-            <!-- ISI -->
-
-            <div class="form-group">
-
-                <label for="isi">
-
-                    Isi Materi
-
-                </label>
-
-                <textarea id="isi"
-                          placeholder="Tuliskan isi materi pembelajaran di sini..."
-                          required></textarea>
-
-            </div>
-
-
-
-            <!-- URUTAN + STATUS -->
-
-            <div class="form-row">
-
-
-                <div class="form-group">
-
-                    <label for="urutan">
-
-                        Urutan Materi
-
-                    </label>
-
-                    <input type="number"
-                           id="urutan"
-                           min="1"
-                           value="1"
-                           required>
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label for="status">
-
-                        Status
-
-                    </label>
-
-                    <select id="status">
-
-                        <option value="aktif">
-                            Aktif
-                        </option>
-
-                        <option value="draft">
-                            Draft
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- ACTION -->
-
-            <div class="modal-actions">
-
-                <button type="button"
-                        class="btn-cancel"
-                        id="cancelBtn">
-
-                    Batal
-
+                <button class="btn-primary" onclick="showVideoForm()">
+                    + Tambah Video
                 </button>
 
+            </div>
 
-                <button type="submit"
+            <div id="videoForm" class="hidden">
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label>Judul Video</label>
+                        <input id="videoTitle" type="text"
+                        placeholder="Contoh: Cara Kerja Mesin Bubut Konvensional">
+                    </div>
+
+                    <div class="form-group">
+                        <label>YouTube ID</label>
+                        <input id="videoEmbed" type="text"
+                        placeholder="Contoh: gWUQwpr50qU">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Durasi</label>
+                        <input id="videoDuration" type="text"
+                        placeholder="Contoh: 12:34">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Level</label>
+
+                        <select id="videoLevel">
+
+                            <option value="dasar">
+                                Dasar
+                            </option>
+
+                            <option value="menengah">
+                                Menengah
+                            </option>
+
+                            <option value="lanjutan">
+                                Lanjutan
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kategori</label>
+
+                        <select id="videoCategory">
+
+                            <option value="dasar">
+                                Dasar
+                            </option>
+
+                            <option value="menengah">
+                                Menengah
+                            </option>
+
+                            <option value="lanjutan">
+                                Lanjutan
+                            </option>
+
+                            <option value="k3">
+                                K3
+                            </option>
+
+                            <option value="cnc">
+                                CNC
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>Deskripsi</label>
+
+                        <textarea
+                            id="videoDescription"
+                            placeholder="Deskripsi video..."></textarea>
+
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>Tag</label>
+
+                        <input
+                            id="videoTags"
+                            type="text"
+                            placeholder="Contoh: Komponen, Dasar">
+
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
                         class="btn-save"
-                        id="saveBtn">
+                        onclick="saveVideo()">
+                        Simpan Video
+                    </button>
 
-                    <i class="fas fa-save"></i>
+                    <button
+                        class="btn-cancel"
+                        onclick="cancelVideoForm()">
+                        Batal
+                    </button>
 
-                    Simpan Materi
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h2>Daftar Video</h2>
+
+            </div>
+
+            <div id="videoList">
+
+                <div class="empty">
+                    Memuat video...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         EVALUASI
+    ========================== -->
+
+    <section id="evaluasiSection" class="section">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h2>Kelola Soal Evaluasi</h2>
+
+                <button
+                    class="btn-primary"
+                    onclick="showQuestionForm()">
+
+                    + Tambah Soal
 
                 </button>
 
             </div>
 
 
-        </form>
+            <div id="questionForm" class="hidden">
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+
+                        <label>Pertanyaan</label>
+
+                        <textarea
+                            id="questionText"
+                            placeholder="Masukkan pertanyaan..."></textarea>
+
+                    </div>
 
 
-    </div>
+                    <div class="form-group">
+
+                        <label>Opsi A</label>
+
+                        <input
+                            id="optionA"
+                            type="text">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Opsi B</label>
+
+                        <input
+                            id="optionB"
+                            type="text">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Opsi C</label>
+
+                        <input
+                            id="optionC"
+                            type="text">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Opsi D</label>
+
+                        <input
+                            id="optionD"
+                            type="text">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Jawaban Benar</label>
+
+                        <select id="correctAnswer">
+
+                            <option value="0">
+                                A
+                            </option>
+
+                            <option value="1">
+                                B
+                            </option>
+
+                            <option value="2">
+                                C
+                            </option>
+
+                            <option value="3">
+                                D
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="btn-save"
+                        onclick="saveQuestion()">
+
+                        Simpan Soal
+
+                    </button>
+
+                    <button
+                        class="btn-cancel"
+                        onclick="cancelQuestionForm()">
+
+                        Batal
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h2>Daftar Soal Posttest</h2>
+
+            </div>
+
+            <div id="questionList">
+
+                <div class="empty">
+                    Memuat soal...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 
-
-
-<!-- ================================================= -->
-<!-- TOAST -->
-<!-- ================================================= -->
-
-<div class="toast"
-     id="toast">
-
-    Berhasil
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- JAVASCRIPT -->
-<!-- ================================================= -->
 
 <script>
 
-
-/* =====================================================
-   SUPABASE CONFIGURATION
-===================================================== */
+/* ======================================
+   SUPABASE
+====================================== */
 
 const SUPABASE_URL =
     "https://fxsshzwljalwxpxpbjgn.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_NKOVw8rMBJ5SdPRmPihu8w_IKg9G_Tf";
-
+    "PASTE_PUBLISHABLE_KEY_KAMU_DI_SINI";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1716,624 +663,317 @@ const supabaseClient =
     );
 
 
+/* ======================================
+   VARIABLE
+====================================== */
 
-/* =====================================================
-   ELEMENT
-===================================================== */
-
-const loading =
-    document.getElementById("loading");
-
-const materiTable =
-    document.getElementById("materiTable");
-
-const materiCount =
-    document.getElementById("materiCount");
-
-const modal =
-    document.getElementById("materiModal");
-
-const materiForm =
-    document.getElementById("materiForm");
-
-const modalTitle =
-    document.getElementById("modalTitle");
-
-const materiId =
-    document.getElementById("materiId");
-
-const judul =
-    document.getElementById("judul");
-
-const deskripsi =
-    document.getElementById("deskripsi");
-
-const isi =
-    document.getElementById("isi");
-
-const urutan =
-    document.getElementById("urutan");
-
-const status =
-    document.getElementById("status");
+let editingVideoId = null;
+let editingQuestionId = null;
 
 
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function showToast(message, type = "success") {
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent = message;
-
-    toast.className =
-        "toast show " + type;
-
-    setTimeout(() => {
-
-        toast.className =
-            "toast";
-
-    }, 3000);
-
-}
-
-
-
-/* =====================================================
+/* ======================================
    CEK LOGIN
-===================================================== */
+====================================== */
 
 async function checkLogin() {
 
-    try {
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.auth.getSession();
+    if (!session) {
 
+        window.location.href = "login.html";
 
-        if (error) {
-
-            console.error(error);
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-
-        const session =
-            data.session;
-
-
-        if (!session) {
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-
-        document.getElementById(
-            "userEmail"
-        ).textContent =
-            session.user.email;
-
-
-        loading.style.display =
-            "none";
-
-
-        loadMateri();
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        window.location.href =
-            "login.html";
+        return;
 
     }
+
+    document.getElementById("guruEmail").textContent =
+        session.user.email;
+
+    loadVideos();
+
+    loadQuestions();
+}
+
+
+/* ======================================
+   LOGOUT
+====================================== */
+
+async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href = "login.html";
 
 }
 
 
+/* ======================================
+   TAB
+====================================== */
 
-/* =====================================================
-   LOAD MATERI
-===================================================== */
+function showTab(tab, button) {
 
-async function loadMateri() {
+    document
+        .querySelectorAll(".section")
+        .forEach(section => {
 
-    materiTable.innerHTML = `
+            section.classList.remove("active");
 
-        <tr>
-
-            <td colspan="4">
-
-                <div class="empty">
-
-                    <i class="fas fa-spinner fa-spin"></i>
-
-                    <br><br>
-
-                    Memuat data materi...
-
-                </div>
-
-            </td>
-
-        </tr>
-
-    `;
-
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-
-        .from("materi")
-
-        .select("*")
-
-        .order("urutan", {
-            ascending: true
         });
 
 
-    if (error) {
+    document
+        .querySelectorAll(".tab-btn")
+        .forEach(btn => {
 
-        console.error(error);
+            btn.classList.remove("active");
 
-        materiTable.innerHTML = `
+        });
 
-            <tr>
 
-                <td colspan="4">
+    if (tab === "video") {
 
-                    <div class="empty">
-
-                        <i class="fas fa-triangle-exclamation"></i>
-
-                        <br><br>
-
-                        Gagal memuat materi.
-
-                        <br>
-
-                        ${escapeHTML(error.message)}
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
+        document
+            .getElementById("videoSection")
+            .classList.add("active");
 
     }
 
 
-    materiCount.textContent =
-        data.length;
+    if (tab === "evaluasi") {
 
-
-    if (data.length === 0) {
-
-        materiTable.innerHTML = `
-
-            <tr>
-
-                <td colspan="4">
-
-                    <div class="empty">
-
-                        <i class="fas fa-book-open"></i>
-
-                        <br><br>
-
-                        Belum ada materi.
-
-                        <br>
-
-                        Klik "Tambah Materi"
-                        untuk membuat materi pertama.
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
+        document
+            .getElementById("evaluasiSection")
+            .classList.add("active");
 
     }
 
 
-    materiTable.innerHTML =
-        data.map(item => `
-
-            <tr>
-
-                <td>
-
-                    <div class="materi-title">
-
-                        ${escapeHTML(item.judul)}
-
-                    </div>
-
-                    <div class="materi-desc">
-
-                        ${escapeHTML(
-                            item.deskripsi || "Tidak ada deskripsi"
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    ${item.urutan}
-
-                </td>
-
-
-                <td>
-
-                    <span class="status
-                        ${
-                            item.status === "aktif"
-                            ? "status-aktif"
-                            : "status-draft"
-                        }">
-
-                        ${
-                            item.status === "aktif"
-                            ? "Aktif"
-                            : "Draft"
-                        }
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    <div class="action-buttons">
-
-                        <button
-                            class="btn-edit"
-                            title="Edit"
-                            onclick="editMateri(${item.id})">
-
-                            <i class="fas fa-pen"></i>
-
-                        </button>
-
-
-                        <button
-                            class="btn-delete"
-                            title="Hapus"
-                            onclick="deleteMateri(${item.id})">
-
-                            <i class="fas fa-trash"></i>
-
-                        </button>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        `).join("");
+    button.classList.add("active");
 
 }
 
 
+/* ======================================
+   VIDEO
+====================================== */
 
-/* =====================================================
-   TAMBAH MATERI
-===================================================== */
+function showVideoForm() {
 
-document
-    .getElementById("addMateriBtn")
-    .addEventListener(
-        "click",
-        function () {
-
-            materiForm.reset();
-
-            materiId.value = "";
-
-            urutan.value = 1;
-
-            status.value = "aktif";
-
-            modalTitle.textContent =
-                "Tambah Materi";
-
-            modal.classList.add("active");
-
-            judul.focus();
-
-        }
-    );
-
-
-
-/* =====================================================
-   EDIT MATERI
-===================================================== */
-
-async function editMateri(id) {
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-
-        .from("materi")
-
-        .select("*")
-
-        .eq("id", id)
-
-        .single();
-
-
-    if (error) {
-
-        showToast(
-            "Gagal mengambil data materi.",
-            "error"
-        );
-
-        console.error(error);
-
-        return;
-
-    }
-
-
-    materiId.value =
-        data.id;
-
-    judul.value =
-        data.judul;
-
-    deskripsi.value =
-        data.deskripsi || "";
-
-    isi.value =
-        data.isi;
-
-    urutan.value =
-        data.urutan || 1;
-
-    status.value =
-        data.status;
-
-
-    modalTitle.textContent =
-        "Edit Materi";
-
-
-    modal.classList.add("active");
+    document
+        .getElementById("videoForm")
+        .classList.remove("hidden");
 
 }
 
 
+function cancelVideoForm() {
 
-/* =====================================================
-   SIMPAN MATERI
-===================================================== */
+    editingVideoId = null;
 
-materiForm.addEventListener(
-    "submit",
-    async function (event) {
+    document
+        .getElementById("videoForm")
+        .classList.add("hidden");
 
-        event.preventDefault();
+    clearVideoForm();
 
+}
 
-        const id =
-            materiId.value;
 
+function clearVideoForm() {
 
-        const dataMateri = {
+    document.getElementById("videoTitle").value = "";
+    document.getElementById("videoEmbed").value = "";
+    document.getElementById("videoDuration").value = "";
+    document.getElementById("videoLevel").value = "dasar";
+    document.getElementById("videoCategory").value = "dasar";
+    document.getElementById("videoDescription").value = "";
+    document.getElementById("videoTags").value = "";
 
-            judul:
-                judul.value.trim(),
+}
 
-            deskripsi:
-                deskripsi.value.trim(),
 
-            isi:
-                isi.value.trim(),
+/* LOAD VIDEO */
 
-            urutan:
-                parseInt(urutan.value),
+async function loadVideos() {
 
-            status:
-                status.value
+    const container =
+        document.getElementById("videoList");
 
-        };
+    container.innerHTML =
+        '<div class="empty">Memuat video...</div>';
 
 
-        if (!dataMateri.judul) {
-
-            showToast(
-                "Judul materi wajib diisi.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        if (!dataMateri.isi) {
-
-            showToast(
-                "Isi materi wajib diisi.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        const saveBtn =
-            document.getElementById("saveBtn");
-
-
-        saveBtn.disabled = true;
-
-        saveBtn.innerHTML = `
-
-            <i class="fas fa-spinner fa-spin"></i>
-
-            Menyimpan...
-
-        `;
-
-
-        let result;
-
-
-        if (id) {
-
-            /* ================= EDIT ================= */
-
-            result =
-                await supabaseClient
-
-                    .from("materi")
-
-                    .update(dataMateri)
-
-                    .eq("id", id);
-
-        } else {
-
-            /* ================= TAMBAH ================= */
-
-            result =
-                await supabaseClient
-
-                    .from("materi")
-
-                    .insert([dataMateri]);
-
-        }
-
-
-        saveBtn.disabled = false;
-
-        saveBtn.innerHTML = `
-
-            <i class="fas fa-save"></i>
-
-            Simpan Materi
-
-        `;
-
-
-        if (result.error) {
-
-            console.error(result.error);
-
-            showToast(
-                "Gagal menyimpan: " +
-                result.error.message,
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        closeModal();
-
-
-        showToast(
-            id
-            ? "Materi berhasil diperbarui."
-            : "Materi berhasil ditambahkan."
-        );
-
-
-        loadMateri();
-
-    }
-);
-
-
-
-/* =====================================================
-   HAPUS MATERI
-===================================================== */
-
-async function deleteMateri(id) {
-
-    const konfirmasi =
-        confirm(
-            "Apakah kamu yakin ingin menghapus materi ini?"
-        );
-
-
-    if (!konfirmasi) {
-
-        return;
-
-    }
-
-
-    const {
-        error
-    } =
-    await supabaseClient
-
-        .from("materi")
-
-        .delete()
-
-        .eq("id", id);
+    const { data, error } =
+        await supabaseClient
+            .from("videos")
+            .select("*")
+            .eq("active", true)
+            .order("sort_order", {
+                ascending: true
+            });
 
 
     if (error) {
 
         console.error(error);
 
-        showToast(
-            "Gagal menghapus materi: " +
-            error.message,
-            "error"
+        container.innerHTML =
+            '<div class="empty">Gagal memuat video.</div>';
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML =
+            '<div class="empty">Belum ada video.</div>';
+
+        return;
+
+    }
+
+
+    container.innerHTML = data.map(video => `
+
+        <div class="item">
+
+            <div class="item-title">
+                ${escapeHtml(video.title)}
+            </div>
+
+            <div class="item-info">
+
+                <span class="badge">
+                    ${escapeHtml(video.level)}
+                </span>
+
+                <span class="badge">
+                    ${escapeHtml(video.category)}
+                </span>
+
+                Durasi: ${escapeHtml(video.duration || "-")}
+
+            </div>
+
+            <div class="item-actions">
+
+                <button
+                    class="btn-edit"
+                    onclick='editVideo(${JSON.stringify(video)})'>
+
+                    Edit
+
+                </button>
+
+                <button
+                    class="btn-delete"
+                    onclick="deleteVideo('${video.id}')">
+
+                    Hapus
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+/* SAVE VIDEO */
+
+async function saveVideo() {
+
+    const title =
+        document.getElementById("videoTitle").value.trim();
+
+    const embed =
+        document.getElementById("videoEmbed").value.trim();
+
+    const duration =
+        document.getElementById("videoDuration").value.trim();
+
+    const level =
+        document.getElementById("videoLevel").value;
+
+    const category =
+        document.getElementById("videoCategory").value;
+
+    const description =
+        document.getElementById("videoDescription").value.trim();
+
+    const tagsText =
+        document.getElementById("videoTags").value.trim();
+
+
+    if (!title || !embed) {
+
+        alert("Judul dan YouTube ID wajib diisi.");
+
+        return;
+
+    }
+
+
+    const tags =
+        tagsText
+            ? tagsText
+                .split(",")
+                .map(tag => tag.trim())
+                .filter(Boolean)
+            : [];
+
+
+    const videoData = {
+
+        title,
+        embed,
+        duration,
+        level,
+        category,
+        description,
+        tags
+
+    };
+
+
+    let result;
+
+
+    if (editingVideoId) {
+
+        result =
+            await supabaseClient
+                .from("videos")
+                .update(videoData)
+                .eq("id", editingVideoId);
+
+    } else {
+
+        result =
+            await supabaseClient
+                .from("videos")
+                .insert([videoData]);
+
+    }
+
+
+    if (result.error) {
+
+        console.error(result.error);
+
+        alert(
+            "Gagal menyimpan video:\n" +
+            result.error.message
         );
 
         return;
@@ -2341,179 +981,463 @@ async function deleteMateri(id) {
     }
 
 
-    showToast(
-        "Materi berhasil dihapus."
-    );
+    alert("Video berhasil disimpan.");
 
+    editingVideoId = null;
 
-    loadMateri();
+    clearVideoForm();
 
-}
+    document
+        .getElementById("videoForm")
+        .classList.add("hidden");
 
-
-
-/* =====================================================
-   CLOSE MODAL
-===================================================== */
-
-function closeModal() {
-
-    modal.classList.remove("active");
-
-    materiForm.reset();
-
-    materiId.value = "";
+    loadVideos();
 
 }
 
 
+/* EDIT VIDEO */
 
-/* =====================================================
-   BUTTON CLOSE
-===================================================== */
+function editVideo(video) {
 
-document
-    .getElementById("closeModal")
-    .addEventListener(
-        "click",
-        closeModal
-    );
+    editingVideoId = video.id;
 
 
-document
-    .getElementById("cancelBtn")
-    .addEventListener(
-        "click",
-        closeModal
-    );
+    document.getElementById("videoTitle").value =
+        video.title || "";
+
+    document.getElementById("videoEmbed").value =
+        video.embed || "";
+
+    document.getElementById("videoDuration").value =
+        video.duration || "";
+
+    document.getElementById("videoLevel").value =
+        video.level || "dasar";
+
+    document.getElementById("videoCategory").value =
+        video.category || "dasar";
+
+    document.getElementById("videoDescription").value =
+        video.description || "";
+
+    document.getElementById("videoTags").value =
+        Array.isArray(video.tags)
+            ? video.tags.join(", ")
+            : "";
 
 
-
-/* =====================================================
-   KLIK LUAR MODAL
-===================================================== */
-
-modal.addEventListener(
-    "click",
-    function (event) {
-
-        if (event.target === modal) {
-
-            closeModal();
-
-        }
-
-    }
-);
+    document
+        .getElementById("videoForm")
+        .classList.remove("hidden");
 
 
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
-/* =====================================================
-   ESCAPE UNTUK TUTUP MODAL
-===================================================== */
+}
 
-document.addEventListener(
-    "keydown",
-    function (event) {
 
-        if (
-            event.key === "Escape" &&
-            modal.classList.contains("active")
-        ) {
+/* DELETE VIDEO */
 
-            closeModal();
+async function deleteVideo(id) {
 
-        }
+    if (!confirm("Yakin ingin menghapus video ini?")) {
+
+        return;
 
     }
-);
 
 
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-document
-    .getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        async function () {
+    const { error } =
+        await supabaseClient
+            .from("videos")
+            .update({
+                active: false
+            })
+            .eq("id", id);
 
 
-            const konfirmasi =
-                confirm(
-                    "Apakah kamu yakin ingin keluar?"
-                );
+    if (error) {
+
+        alert(
+            "Gagal menghapus video:\n" +
+            error.message
+        );
+
+        return;
+
+    }
 
 
-            if (!konfirmasi) {
+    alert("Video berhasil dihapus.");
 
-                return;
+    loadVideos();
 
-            }
-
-
-            const {
-                error
-            } =
-            await supabaseClient.auth.signOut();
+}
 
 
-            if (error) {
+/* ======================================
+   EVALUASI
+====================================== */
 
-                showToast(
-                    "Gagal keluar: " +
-                    error.message,
-                    "error"
-                );
+function showQuestionForm() {
 
-                return;
+    document
+        .getElementById("questionForm")
+        .classList.remove("hidden");
 
-            }
-
-
-            window.location.href =
-                "login.html";
-
-        }
-    );
+}
 
 
+function cancelQuestionForm() {
 
-/* =====================================================
-   ESCAPE HTML
-   Mencegah teks materi menjadi HTML
-===================================================== */
+    editingQuestionId = null;
 
-function escapeHTML(value) {
+    document
+        .getElementById("questionForm")
+        .classList.add("hidden");
 
-    return String(value)
+    clearQuestionForm();
 
+}
+
+
+function clearQuestionForm() {
+
+    document.getElementById("questionText").value = "";
+
+    document.getElementById("optionA").value = "";
+
+    document.getElementById("optionB").value = "";
+
+    document.getElementById("optionC").value = "";
+
+    document.getElementById("optionD").value = "";
+
+    document.getElementById("correctAnswer").value = "0";
+
+}
+
+
+/* LOAD QUESTIONS */
+
+async function loadQuestions() {
+
+    const container =
+        document.getElementById("questionList");
+
+    container.innerHTML =
+        '<div class="empty">Memuat soal...</div>';
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("posttest_questions")
+            .select("*")
+            .eq("active", true)
+            .order("sort_order", {
+                ascending: true
+            });
+
+
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML =
+            '<div class="empty">Gagal memuat soal.</div>';
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML =
+            '<div class="empty">Belum ada soal.</div>';
+
+        return;
+
+    }
+
+
+    container.innerHTML = data.map((question, index) => `
+
+        <div class="item">
+
+            <div class="question-number">
+                Soal ${index + 1}
+            </div>
+
+            <div class="item-title">
+                ${escapeHtml(question.question)}
+            </div>
+
+            <div class="item-info">
+
+                A. ${escapeHtml(question.options?.[0] || "")}<br>
+                B. ${escapeHtml(question.options?.[1] || "")}<br>
+                C. ${escapeHtml(question.options?.[2] || "")}<br>
+                D. ${escapeHtml(question.options?.[3] || "")}
+
+                <br><br>
+
+                <strong>
+                    Jawaban benar:
+                    ${["A", "B", "C", "D"][question.correct_answer]}
+                </strong>
+
+            </div>
+
+            <div class="item-actions">
+
+                <button
+                    class="btn-edit"
+                    onclick='editQuestion(${JSON.stringify(question)})'>
+
+                    Edit
+
+                </button>
+
+                <button
+                    class="btn-delete"
+                    onclick="deleteQuestion('${question.id}')">
+
+                    Hapus
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+/* SAVE QUESTION */
+
+async function saveQuestion() {
+
+    const question =
+        document.getElementById("questionText")
+            .value.trim();
+
+
+    const options = [
+
+        document.getElementById("optionA")
+            .value.trim(),
+
+        document.getElementById("optionB")
+            .value.trim(),
+
+        document.getElementById("optionC")
+            .value.trim(),
+
+        document.getElementById("optionD")
+            .value.trim()
+
+    ];
+
+
+    const correctAnswer =
+        parseInt(
+            document.getElementById("correctAnswer").value
+        );
+
+
+    if (!question ||
+        options.some(option => !option)) {
+
+        alert(
+            "Pertanyaan dan semua pilihan jawaban wajib diisi."
+        );
+
+        return;
+
+    }
+
+
+    const questionData = {
+
+        question,
+
+        options,
+
+        correct_answer: correctAnswer
+
+    };
+
+
+    let result;
+
+
+    if (editingQuestionId) {
+
+        result =
+            await supabaseClient
+                .from("posttest_questions")
+                .update(questionData)
+                .eq("id", editingQuestionId);
+
+    } else {
+
+        result =
+            await supabaseClient
+                .from("posttest_questions")
+                .insert([questionData]);
+
+    }
+
+
+    if (result.error) {
+
+        console.error(result.error);
+
+        alert(
+            "Gagal menyimpan soal:\n" +
+            result.error.message
+        );
+
+        return;
+
+    }
+
+
+    alert("Soal berhasil disimpan.");
+
+    editingQuestionId = null;
+
+    clearQuestionForm();
+
+    document
+        .getElementById("questionForm")
+        .classList.add("hidden");
+
+    loadQuestions();
+
+}
+
+
+/* EDIT QUESTION */
+
+function editQuestion(question) {
+
+    editingQuestionId = question.id;
+
+
+    document.getElementById("questionText").value =
+        question.question || "";
+
+
+    const options =
+        question.options || [];
+
+
+    document.getElementById("optionA").value =
+        options[0] || "";
+
+    document.getElementById("optionB").value =
+        options[1] || "";
+
+    document.getElementById("optionC").value =
+        options[2] || "";
+
+    document.getElementById("optionD").value =
+        options[3] || "";
+
+
+    document.getElementById("correctAnswer").value =
+        question.correct_answer ?? 0;
+
+
+    document
+        .getElementById("questionForm")
+        .classList.remove("hidden");
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* DELETE QUESTION */
+
+async function deleteQuestion(id) {
+
+    if (!confirm("Yakin ingin menghapus soal ini?")) {
+
+        return;
+
+    }
+
+
+    const { error } =
+        await supabaseClient
+            .from("posttest_questions")
+            .update({
+                active: false
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        alert(
+            "Gagal menghapus soal:\n" +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    alert("Soal berhasil dihapus.");
+
+    loadQuestions();
+
+}
+
+
+/* ======================================
+   SECURITY
+====================================== */
+
+function escapeHtml(text) {
+
+    if (text === null || text === undefined) {
+
+        return "";
+
+    }
+
+    return String(text)
         .replace(/&/g, "&amp;")
-
         .replace(/</g, "&lt;")
-
         .replace(/>/g, "&gt;")
-
         .replace(/"/g, "&quot;")
-
         .replace(/'/g, "&#039;");
 
 }
 
 
-
-/* =====================================================
-   JALANKAN
-===================================================== */
+/* ======================================
+   START
+====================================== */
 
 checkLogin();
 
-
 </script>
 
-
 </body>
-
 </html>
