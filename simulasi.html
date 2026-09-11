@@ -51,7 +51,6 @@
         #simulasi .sim-overlay-info { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 12px 20px; border-radius: 40px; color: #cbd5e1; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.06); pointer-events: none; z-index: 10; }
         #simulasi .sim-overlay-info i { color: #60a5fa; margin-right: 8px; }
 
-        /* PHASE INDICATOR */
         .phase-indicator { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 40px; color: #fff; font-size: 0.78rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.1); z-index: 15; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
         .phase-indicator .dot { width: 10px; height: 10px; border-radius: 50%; background: #94a3b8; transition: 0.3s; }
         .phase-indicator.phase-idle .dot { background: #94a3b8; }
@@ -61,7 +60,7 @@
         .phase-indicator.phase-done .dot { background: #22c55e; }
         @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
 
-        /* ============ MATERIAL MODAL ============ */
+        /* MATERIAL MODAL */
         .material-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.4s, visibility 0.4s; }
         .material-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .material-modal-content { background: linear-gradient(135deg, #1a2639, #0b1a2e); border-radius: 24px; max-width: 720px; width: 100%; padding: 32px 36px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); border: 1px solid #2a4b6e; animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); max-height: 90vh; overflow-y: auto; }
@@ -87,149 +86,72 @@
         .btn-pick:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
         .btn-pick:disabled { background: #4a5a6a; cursor: not-allowed; opacity: 0.6; }
 
-        /* ============ ANALYSIS RESULT OVERLAY ============ */
+        /* RESULT OVERLAY */
         .result-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 20; }
         .result-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .analysis-panel {
-            background: linear-gradient(150deg, #0f1722, #1a2639);
-            border-radius: 24px;
-            width: 100%; max-width: 780px;
-            max-height: 90%;
-            overflow-y: auto;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.7);
-            border: 1px solid #2a4b6e;
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
+        .analysis-panel { background: linear-gradient(150deg, #0f1722, #1a2639); border-radius: 24px; width: 100%; max-width: 780px; max-height: 90%; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.7); border: 1px solid #2a4b6e; transform: scale(0.9) translateY(20px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; }
         .result-overlay.active .analysis-panel { transform: scale(1) translateY(0); }
 
-        .analysis-header {
-            background: linear-gradient(135deg, #16a34a, #22c55e);
-            padding: 20px 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            border-radius: 24px 24px 0 0;
-        }
-        .analysis-header .icon-circle {
-            width: 52px; height: 52px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; color: #fff;
-            flex-shrink: 0;
-        }
+        .analysis-header { background: linear-gradient(135deg, #16a34a, #22c55e); padding: 20px 28px; display: flex; align-items: center; gap: 16px; border-radius: 24px 24px 0 0; }
+        .analysis-header .icon-circle { width: 52px; height: 52px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; flex-shrink: 0; }
         .analysis-header .header-text h3 { color: #fff; font-size: 1.3rem; font-weight: 800; margin-bottom: 2px; }
         .analysis-header .header-text p { color: rgba(255,255,255,0.85); font-size: 0.85rem; }
 
         .analysis-body { padding: 22px 28px; }
 
-        .analysis-section-title {
-            display: flex; align-items: center; gap: 10px;
-            color: #fff; font-size: 0.95rem; font-weight: 700;
-            margin-bottom: 12px; padding-bottom: 8px;
-            border-bottom: 1px solid #2a3a4e;
+        .result-image-box {
+            background: linear-gradient(135deg, #0a0d14, #1a2639);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #2a4b6e;
+            text-align: center;
         }
+        .result-image-box .ri-label {
+            color: #94a3b8; font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .result-image-box .ri-label i { color: #22c55e; }
+        .result-image-box svg { max-width: 100%; height: auto; max-height: 180px; }
+        .result-image-box .ri-caption { color: #cbd5e1; font-size: 0.82rem; margin-top: 12px; line-height: 1.5; }
+
+        .analysis-section-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #2a3a4e; }
         .analysis-section-title i { color: #60a5fa; }
 
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px; margin-bottom: 20px;
-        }
-        .analysis-item {
-            background: rgba(255,255,255,0.04);
-            border-radius: 12px;
-            padding: 12px 14px;
-            border-left: 3px solid #2563eb;
-        }
-        .analysis-item .ai-label {
-            color: #94a3b8; font-size: 0.7rem;
-            font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.5px; margin-bottom: 4px;
-        }
-        .analysis-item .ai-value {
-            color: #fff; font-size: 1.05rem; font-weight: 800;
-        }
+        .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .analysis-item { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px; border-left: 3px solid #2563eb; }
+        .analysis-item .ai-label { color: #94a3b8; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .analysis-item .ai-value { color: #fff; font-size: 1.05rem; font-weight: 800; }
         .analysis-item .ai-value small { font-size: 0.72rem; font-weight: 500; color: #94a3b8; margin-left: 2px; }
         .analysis-item.green { border-left-color: #22c55e; }
         .analysis-item.orange { border-left-color: #f59e0b; }
         .analysis-item.purple { border-left-color: #a855f7; }
         .analysis-item.cyan { border-left-color: #06b6d4; }
 
-        .quality-card {
-            background: rgba(255,255,255,0.04);
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #2563eb;
-            display: flex; align-items: center; gap: 16px;
-            flex-wrap: wrap;
-        }
-        .quality-card .quality-stars {
-            font-size: 1.6rem; letter-spacing: 2px;
-            color: #fbbf24; white-space: nowrap;
-        }
+        .quality-card { background: rgba(255,255,255,0.04); border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; border-left: 4px solid #2563eb; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .quality-card .quality-stars { font-size: 1.6rem; letter-spacing: 2px; color: #fbbf24; white-space: nowrap; }
         .quality-card .quality-stars .empty { color: #475569; }
         .quality-card .quality-info { flex: 1; min-width: 200px; }
-        .quality-card .quality-info .q-title {
-            color: #fff; font-weight: 800; font-size: 1rem;
-            margin-bottom: 4px;
-        }
-        .quality-card .quality-info .q-desc {
-            color: #94a3b8; font-size: 0.82rem; line-height: 1.5;
-        }
+        .quality-card .quality-info .q-title { color: #fff; font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+        .quality-card .quality-info .q-desc { color: #94a3b8; font-size: 0.82rem; line-height: 1.5; }
 
-        .analysis-notes {
-            background: rgba(37,99,235,0.1);
-            border-radius: 12px;
-            padding: 14px 18px;
-            margin-bottom: 20px;
-            border-left: 3px solid #2563eb;
-        }
-        .analysis-notes h5 {
-            color: #60a5fa; font-size: 0.82rem;
-            font-weight: 700; margin-bottom: 8px;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .analysis-notes ul {
-            list-style: none; padding: 0;
-            color: #cbd5e1; font-size: 0.82rem; line-height: 1.7;
-        }
+        .analysis-notes { background: rgba(37,99,235,0.1); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; border-left: 3px solid #2563eb; }
+        .analysis-notes h5 { color: #60a5fa; font-size: 0.82rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .analysis-notes ul { list-style: none; padding: 0; color: #cbd5e1; font-size: 0.82rem; line-height: 1.7; }
         .analysis-notes ul li { padding-left: 18px; position: relative; }
-        .analysis-notes ul li::before {
-            content: '▸'; position: absolute; left: 0;
-            color: #60a5fa; font-weight: 700;
-        }
+        .analysis-notes ul li::before { content: '▸'; position: absolute; left: 0; color: #60a5fa; font-weight: 700; }
 
-        .analysis-actions {
-            display: flex; gap: 10px; flex-wrap: wrap;
-            padding-top: 16px; border-top: 1px solid #2a3a4e;
-        }
-        .btn-analysis {
-            flex: 1; min-width: 140px;
-            padding: 12px 20px; border-radius: 30px;
-            font-weight: 700; font-size: 0.85rem;
-            cursor: pointer; font-family: inherit;
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            transition: 0.2s; border: none;
-        }
-        .btn-analysis.primary {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            box-shadow: 0 6px 16px rgba(37,99,235,0.3);
-        }
+        .analysis-actions { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid #2a3a4e; }
+        .btn-analysis { flex: 1; min-width: 140px; padding: 12px 20px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; border: none; }
+        .btn-analysis.primary { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; box-shadow: 0 6px 16px rgba(37,99,235,0.3); }
         .btn-analysis.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,99,235,0.4); }
-        .btn-analysis.secondary {
-            background: rgba(255,255,255,0.06);
-            color: #cbd5e1;
-            border: 2px solid #334155;
-        }
+        .btn-analysis.secondary { background: rgba(255,255,255,0.06); color: #cbd5e1; border: 2px solid #334155; }
         .btn-analysis.secondary:hover { background: rgba(255,255,255,0.12); color: #fff; }
 
-        /* ============ SEGMENT EDITOR ============ */
+        /* SEGMENT EDITOR */
         .segment-editor { background: #1a2639; padding: 20px 24px; border-top: 1px solid #2a3a4e; }
         .segment-editor .editor-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #2a3a4e; }
         .segment-editor .editor-title { color: #fff; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
@@ -268,6 +190,45 @@
         .btn-preset:hover { background: #475569; color: #fff; }
         .btn-preset.highlight { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; }
 
+        /* TOOL SELECTOR */
+        .tool-selector-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid #2a3a4e;
+        }
+        .tool-selector-wrap .ts-label {
+            color: #f97316;
+            font-weight: 700;
+            font-size: 0.82rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 4px;
+        }
+        .tool-chip {
+            background: #0f1722;
+            border: 2px solid #334155;
+            color: #cbd5e1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .tool-chip:hover { background: #1a2639; border-color: #60a5fa; color: #fff; transform: translateY(-1px); }
+        .tool-chip.active { background: linear-gradient(135deg, #f97316, #ea580c); border-color: #f97316; color: #fff; box-shadow: 0 4px 12px rgba(249,115,22,0.35); }
+
         /* SIM CONTROLS */
         .sim-controls-bar { display: flex; flex-direction: column; gap: 16px; background: #1a2639; padding: 20px 24px; border-radius: 0 0 24px 24px; border-top: 1px solid #2a3a4e; }
         .controls-row { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; }
@@ -302,13 +263,8 @@
         @media (max-width: 600px) {
             .analysis-panel { max-height: 94%; }
             .analysis-header { padding: 16px 20px; }
-            .analysis-header .icon-circle { width: 42px; height: 42px; font-size: 1.2rem; }
-            .analysis-header .header-text h3 { font-size: 1.05rem; }
             .analysis-body { padding: 16px 18px; }
             .analysis-grid { grid-template-columns: repeat(2, 1fr); }
-            .quality-card { padding: 12px 14px; }
-            .quality-card .quality-stars { font-size: 1.2rem; }
-            .btn-analysis { min-width: 100%; }
         }
 
         #myBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--nav-active); color: white; cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px; }
@@ -354,7 +310,7 @@
     <div class="main-content">
         <div id="simulasi">
             <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D Pro</h2>
-            <p class="page-sub reveal delay-1">Pilih material → pilih preset bentuk → atur parameter → mulai bubut. Setelah selesai, akan muncul analisis lengkap.</p>
+            <p class="page-sub reveal delay-1">Pilih material, jenis pahat, preset bentuk, atur parameter → mulai. Setelah selesai, hasil pembubutan akan ditampilkan.</p>
 
             <div class="sim-container reveal delay-2">
                 <div id="sim3d-container"></div>
@@ -364,7 +320,7 @@
                     <span id="phaseText">Siap — Pahat di posisi mundur</span>
                 </div>
 
-                <!-- ANALYSIS RESULT OVERLAY -->
+                <!-- RESULT OVERLAY -->
                 <div class="result-overlay" id="resultOverlay">
                     <div class="analysis-panel">
                         <div class="analysis-header">
@@ -375,6 +331,14 @@
                             </div>
                         </div>
                         <div class="analysis-body">
+
+                            <!-- HASIL GAMBAR BENDA KERJA -->
+                            <div class="result-image-box">
+                                <div class="ri-label"><i class="fas fa-image"></i> Hasil Pembubutan</div>
+                                <div id="resultSvgContainer"></div>
+                                <div class="ri-caption" id="resultCaption">Silinder Ø25 → Ø24 mm • Panjang 120 mm</div>
+                            </div>
+
                             <div class="analysis-section-title">
                                 <i class="fas fa-chart-bar"></i> Analisis Parameter Pemotongan
                             </div>
@@ -428,6 +392,17 @@
                 </div>
 
                 <div class="sim-controls-bar" id="simControls">
+                    <!-- TOOL SELECTOR -->
+                    <div class="tool-selector-wrap">
+                        <span class="ts-label"><i class="fas fa-tools"></i> Jenis Pahat:</span>
+                        <button class="tool-chip active" data-tool="turning"><i class="fas fa-grip-lines"></i> Bubut Luar</button>
+                        <button class="tool-chip" data-tool="facing"><i class="fas fa-square"></i> Facing</button>
+                        <button class="tool-chip" data-tool="threading"><i class="fas fa-bolt"></i> Ulir</button>
+                        <button class="tool-chip" data-tool="grooving"><i class="fas fa-minus"></i> Alur</button>
+                        <button class="tool-chip" data-tool="parting"><i class="fas fa-cut"></i> Potong</button>
+                        <button class="tool-chip" data-tool="boring"><i class="fas fa-circle-notch"></i> Boring</button>
+                    </div>
+
                     <div class="controls-row">
                         <div style="display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center;">
                             <label>Diameter (mm) <input type="range" id="workDiameter" min="15" max="50" value="25" step="5"><span class="val" id="workDiameterVal">25</span></label>
@@ -451,6 +426,7 @@
                             <div class="info-item"><i class="fas fa-clock"></i> <span>Waktu: <strong id="simTime">0.0</strong> s</span></div>
                             <div class="info-item" style="background: rgba(168,85,247,0.15);"><i class="fas fa-layer-group" style="color:#a855f7;"></i> <span>Segmen: <strong id="currentSegment">1 / 5</strong></span></div>
                             <div class="info-item" style="background: rgba(34,197,94,0.15);"><i class="fas fa-cube" style="color:#22c55e;"></i> <span>Material: <strong id="materialDisplay">Baja</strong></span></div>
+                            <div class="info-item" style="background: rgba(249,115,22,0.15);"><i class="fas fa-tools" style="color:#f97316;"></i> <span>Pahat: <strong id="toolDisplay">Bubut Luar</strong></span></div>
                         </div>
                     </div>
                 </div>
@@ -506,8 +482,19 @@
             stainless: { name: 'Stainless Steel', color: 0xd0d8e0, emissive: 0x223344, rpm: 500,  desc: 'Tahan karat, keras' }
         };
 
+        // ============ TOOLS ============
+        const TOOL_TYPES = {
+            turning:   { name: 'Bubut Luar', color: 0xff6633, shape: 'turning' },
+            facing:    { name: 'Facing',     color: 0x60a5fa, shape: 'facing' },
+            threading: { name: 'Ulir',       color: 0xa855f7, shape: 'threading' },
+            grooving:  { name: 'Alur',       color: 0xf59e0b, shape: 'grooving' },
+            parting:   { name: 'Potong',     color: 0xef4444, shape: 'parting' },
+            boring:    { name: 'Boring',     color: 0x06b6d4, shape: 'boring' }
+        };
+
         let selectedMaterial = null;
         let selectedMaterialKey = null;
+        let selectedToolType = 'turning';
 
         function buildMaterialGrid() {
             const grid = document.getElementById('materialGrid');
@@ -644,7 +631,7 @@
             machineGroup.add(rail);
         });
 
-        // Headstock
+        // HEADSTOCK
         const headGroup = new THREE.Group();
         headGroup.position.set(-5.5, 0.6, 0);
         machineGroup.add(headGroup);
@@ -670,7 +657,7 @@
         spindle.position.set(1.4, 1.25, 0);
         headGroup.add(spindle);
 
-        // Chuck
+        // CHUCK
         const chuckGroup = new THREE.Group();
         chuckGroup.position.set(1.4, 1.25, 0);
         headGroup.add(chuckGroup);
@@ -688,7 +675,7 @@
             chuckGroup.add(jaw);
         }
 
-        // Tailstock
+        // TAILSTOCK
         const tailGroup = new THREE.Group();
         tailGroup.position.set(5.5, 0.6, 0);
         machineGroup.add(tailGroup);
@@ -704,7 +691,7 @@
         handwheel.position.set(1.2, 1.25, 0);
         tailGroup.add(handwheel);
 
-        // Carriage
+        // CARRIAGE
         const carriageGroup = new THREE.Group();
         carriageGroup.position.set(0, 0.6, 0);
         machineGroup.add(carriageGroup);
@@ -717,20 +704,152 @@
         const crossSlide = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.4, 1.5), matMachineAccent);
         crossSlide.position.set(0, 0.9, 0);
         carriageGroup.add(crossSlide);
-        const toolPost = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.6, 0.8), matMachineBody);
-        toolPost.position.set(0, 1.3, 0);
-        carriageGroup.add(toolPost);
         const shield = new THREE.Mesh(new THREE.BoxGeometry(10, 5, 0.1), matSafety);
         shield.position.set(0, 3.5, -2.5);
         machineGroup.add(shield);
 
+        // ============ TOOL POST (DETAIL - SEPERTI GAMBAR) ============
+        const toolPostGroup = new THREE.Group();
+        toolPostGroup.position.set(0, 1.15, 0);
+        carriageGroup.add(toolPostGroup);
+
+        // Base plate (piringan dasar)
+        const basePlateMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.5, metalness: 0.7 });
+        const basePlate = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.12, 0.9), basePlateMat);
+        basePlate.position.set(0, 0, 0);
+        basePlate.castShadow = true;
+        toolPostGroup.add(basePlate);
+
+        // 4 baut di sudut base plate
+        const boltMat = new THREE.MeshStandardMaterial({ color: 0x8a8a8a, roughness: 0.3, metalness: 0.9 });
+        const boltHeadMat = new THREE.MeshStandardMaterial({ color: 0xa8a8a8, roughness: 0.25, metalness: 0.95 });
+        const boltPositions = [
+            [-0.35, 0.10, -0.30],
+            [ 0.35, 0.10, -0.30],
+            [-0.35, 0.10,  0.30],
+            [ 0.35, 0.10,  0.30]
+        ];
+        boltPositions.forEach(pos => {
+            // Badan baut
+            const boltBody = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.16, 12), boltMat);
+            boltBody.position.set(pos[0], pos[1], pos[2]);
+            toolPostGroup.add(boltBody);
+            // Kepala baut (hexagonal - pakai cylinder 6 sisi)
+            const boltHead = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.06, 6), boltHeadMat);
+            boltHead.position.set(pos[0], pos[1] + 0.11, pos[2]);
+            toolPostGroup.add(boltHead);
+        });
+
+        // Blok penjepit (clamp block)
+        const clampMat = new THREE.MeshStandardMaterial({ color: 0x4a4a4a, roughness: 0.4, metalness: 0.75 });
+        const clampBlock = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.35, 0.55), clampMat);
+        clampBlock.position.set(0, 0.20, 0);
+        clampBlock.castShadow = true;
+        toolPostGroup.add(clampBlock);
+
+        // Baut penjepit di bagian atas clamp block
+        const topBoltMat = new THREE.MeshStandardMaterial({ color: 0x909090, roughness: 0.3, metalness: 0.9 });
+        const topBolt = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.15, 12), topBoltMat);
+        topBolt.position.set(0, 0.42, 0);
+        toolPostGroup.add(topBolt);
+        const topBoltHead = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.06, 6), topBoltMat);
+        topBoltHead.position.set(0, 0.51, 0);
+        toolPostGroup.add(topBoltHead);
+
+        // Holder tool bit (batang pahat)
+        const toolBitHolderMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.35, metalness: 0.85 });
+        const toolBitHolder = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.13, 0.13), toolBitHolderMat);
+        toolBitHolder.position.set(0.55, 0.28, 0.30);
+        toolBitHolder.castShadow = true;
+        toolPostGroup.add(toolBitHolder);
+
+        // Tool bit group (tip akan di-replace berdasarkan jenis pahat)
+        let currentToolTipGroup = null;
+        let currentToolTipBody = null;
+
+        function createToolTip(type) {
+            // Hapus tip lama
+            if (currentToolTipGroup) {
+                toolPostGroup.remove(currentToolTipGroup);
+            }
+            const tipGroup = new THREE.Group();
+            tipGroup.position.set(0.55, 0.28, 0.30); // posisi sama dengan holder
+
+            const toolInfo = TOOL_TYPES[type] || TOOL_TYPES.turning;
+            const tipMat = new THREE.MeshStandardMaterial({ 
+                color: toolInfo.color, 
+                roughness: 0.25, 
+                metalness: 0.7,
+                emissive: toolInfo.color,
+                emissiveIntensity: 0.15
+            });
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.3, metalness: 0.9 });
+
+            // Bagian batang pahat yang menjulur keluar (mengarah ke -X untuk masuk ke benda kerja)
+            const body = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.11, 0.11), bodyMat);
+            body.position.set(-0.20, 0, 0);
+            tipGroup.add(body);
+
+            // Ujung pahat spesifik per jenis
+            if (type === 'turning') {
+                // Bubut luar: insert diamond/kotak
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.10, 0.12), tipMat);
+                insert.position.set(-0.42, 0, 0);
+                insert.rotation.y = Math.PI / 4;
+                tipGroup.add(insert);
+            } else if (type === 'facing') {
+                // Facing: insert dengan ujung rata
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.09, 0.14), tipMat);
+                insert.position.set(-0.42, 0, 0);
+                tipGroup.add(insert);
+                // Sudut lancip untuk facing
+                const nose = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.10, 4), tipMat);
+                nose.rotation.z = Math.PI / 2;
+                nose.position.set(-0.50, 0, 0);
+                tipGroup.add(nose);
+            } else if (type === 'threading') {
+                // Ulir: ujung 60 derajat (triangular)
+                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.18, 3), tipMat);
+                insert.rotation.z = Math.PI / 2;
+                insert.position.set(-0.42, 0, 0);
+                tipGroup.add(insert);
+            } else if (type === 'grooving') {
+                // Alur: ujung lurus sempit
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.05, 0.10), tipMat);
+                insert.position.set(-0.42, 0, 0);
+                tipGroup.add(insert);
+                const nose = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.08, 0.06), tipMat);
+                nose.position.set(-0.49, 0, 0);
+                tipGroup.add(nose);
+            } else if (type === 'parting') {
+                // Potong: sangat tipis dan tinggi
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.13, 0.06), tipMat);
+                insert.position.set(-0.42, 0, 0);
+                tipGroup.add(insert);
+                const nose = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.14, 0.03), tipMat);
+                nose.position.set(-0.47, 0, 0);
+                tipGroup.add(nose);
+            } else if (type === 'boring') {
+                // Boring: batang panjang masuk ke lubang
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.09, 0.09), bodyMat);
+                insert.position.set(-0.42, 0, 0);
+                tipGroup.add(insert);
+                const nose = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.12, 4), tipMat);
+                nose.rotation.z = Math.PI / 2;
+                nose.position.set(-0.60, 0, 0);
+                tipGroup.add(nose);
+            }
+
+            currentToolTipGroup = tipGroup;
+            toolPostGroup.add(tipGroup);
+        }
+
         // ============ SEGMENT SYSTEM ============
         const SCALE_FACTOR = 40;
 
-        // Posisi penting (REVISI: pahat sekarang di atas benda kerja, bukan di ujung chuck)
         const WORKPIECE_LEFT_EDGE = -3.3;
-        const CHUCK_FRONT_EDGE = -3.1;              // depan chuck
-        const CUT_START_X = CHUCK_FRONT_EDGE + 0.5; // + 0.5 → pahat sedikit ke kanan, di tengah area workpiece
+        const CHUCK_FRONT_EDGE = -3.1;
+        const CUT_START_X = CHUCK_FRONT_EDGE + 0.5;
         const APPROACH_GAP = 2.5;
 
         const SHAPE_NAMES = {
@@ -949,10 +1068,12 @@
             return applyShape(activeSeg.shape, localT, origR, depth);
         }
 
-        // ============ GEOMETRY ============
+        // ============ GEOMETRY (dengan end caps) ============
         function buildWorkpieceGeometry(lengthInScene, radiusFn) {
             const segLength = 160, segAngle = 48;
             const positions = [], normals = [], indices = [], uvs = [];
+
+            // SIDE SURFACE
             for (let i = 0; i <= segLength; i++) {
                 const t = i / segLength;
                 const x = t * lengthInScene;
@@ -972,6 +1093,50 @@
                     indices.push(a, c, b, b, c, d);
                 }
             }
+
+            // END CAPS (kiri & kanan)
+            const capCenterIdx = positions.length / 3;
+            const r0 = Math.max(radiusFn(0), 0.015);
+            positions.push(0, 0, 0);
+            normals.push(-1, 0, 0);
+            uvs.push(0.5, 0.5);
+
+            const capLeftRingStart = capCenterIdx + 1;
+            for (let j = 0; j <= segAngle; j++) {
+                const theta = (j / segAngle) * Math.PI * 2;
+                const cy = Math.cos(theta), sy = Math.sin(theta);
+                positions.push(0, r0 * cy, r0 * sy);
+                normals.push(-1, 0, 0);
+                uvs.push(0.5 + cy * 0.5, 0.5 + sy * 0.5);
+            }
+            for (let j = 0; j < segAngle; j++) {
+                const a = capCenterIdx;
+                const b = capLeftRingStart + j;
+                const c = capLeftRingStart + j + 1;
+                indices.push(a, b, c);
+            }
+
+            const capRightCenterIdx = positions.length / 3;
+            const r1 = Math.max(radiusFn(1), 0.015);
+            positions.push(lengthInScene, 0, 0);
+            normals.push(1, 0, 0);
+            uvs.push(0.5, 0.5);
+
+            const capRightRingStart = capRightCenterIdx + 1;
+            for (let j = 0; j <= segAngle; j++) {
+                const theta = (j / segAngle) * Math.PI * 2;
+                const cy = Math.cos(theta), sy = Math.sin(theta);
+                positions.push(lengthInScene, r1 * cy, r1 * sy);
+                normals.push(1, 0, 0);
+                uvs.push(0.5 + cy * 0.5, 0.5 + sy * 0.5);
+            }
+            for (let j = 0; j < segAngle; j++) {
+                const a = capRightCenterIdx;
+                const b = capRightRingStart + j + 1;
+                const c = capRightRingStart + j;
+                indices.push(a, b, c);
+            }
+
             const geo = new THREE.BufferGeometry();
             geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
             geo.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
@@ -1001,73 +1166,53 @@
             updateVc();
         }
 
-        function createWorkpiece(diameter) {
-            originalRadiusScene = (diameter / 2) / SCALE_FACTOR;
-            updateTotalDisplay();
-            const radiusFn = () => originalRadiusScene;
-            const geo = buildWorkpieceGeometry(lengthScene, radiusFn);
-            workpieceMesh = new THREE.Mesh(geo, workMat);
-            workpieceMesh.position.set(WORKPIECE_LEFT_EDGE, 0.6 + 1.25, 0);
-            workpieceMesh.castShadow = true;
-            workpieceMesh.receiveShadow = true;
-            machineGroup.add(workpieceMesh);
-            tailGroup.position.x = WORKPIECE_LEFT_EDGE + lengthScene + 1.5;
-        }
-
-        function updateWorkpieceGeometry() {
-            if (!workpieceMesh) return;
-            const depthScene = cutDepthScene;
-            const radiusFn = (t) => getRadiusAt(t, originalRadiusScene, depthScene);
-            const newGeo = buildWorkpieceGeometry(lengthScene, radiusFn);
-            workpieceMesh.geometry.dispose();
-            workpieceMesh.geometry = newGeo;
-        }
-
-        // ============ PAHAT ============
-        let currentToolGroup = null;
-
-        function createTool(type) {
-            if (currentToolGroup) carriageGroup.remove(currentToolGroup);
-            const toolGroup = new THREE.Group();
-            toolGroup.position.set(0, 1.25, 0.3);
-            const shankMat = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.4, metalness: 0.6 });
-            const shank = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.15, 0.9), shankMat);
-            shank.position.set(0, 0, 0.45);
-            shank.castShadow = true;
-            toolGroup.add(shank);
-            const tipMat = new THREE.MeshStandardMaterial({ color: 0xff8844, roughness: 0.2, metalness: 0.3, emissive: 0xff5500, emissiveIntensity: 0.15 });
-            const tip = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.2, 4), tipMat);
-            tip.rotation.z = -Math.PI / 2;
-            tip.position.set(0, 0, -0.08);
-            toolGroup.add(tip);
-            currentToolGroup = toolGroup;
-            carriageGroup.add(toolGroup);
-        }
-
-        // ============ LABELS ============
-        function createLabel(text, color, pos) {
+        // ============ LABELS (SEBAGAI CHILD DARI KOMPONEN, MENGIKUTI GERAKAN) ============
+        function createLabel(text, color) {
             const div = document.createElement('div');
             div.textContent = text;
             div.style.color = color;
             div.style.fontSize = '12px';
-            div.style.fontWeight = '600';
-            div.style.textShadow = '0 0 10px rgba(0,0,0,0.8)';
-            div.style.background = 'rgba(0,0,0,0.6)';
-            div.style.padding = '2px 10px';
+            div.style.fontWeight = '700';
+            div.style.textShadow = '0 0 10px rgba(0,0,0,0.9)';
+            div.style.background = 'rgba(0,0,0,0.75)';
+            div.style.padding = '3px 12px';
             div.style.borderRadius = '12px';
-            div.style.border = '1px solid rgba(255,255,255,0.1)';
+            div.style.border = '1px solid ' + color;
             div.style.backdropFilter = 'blur(4px)';
             div.style.fontFamily = 'Inter, sans-serif';
-            const label = new CSS2DObject(div);
-            label.position.copy(pos);
-            return label;
+            div.style.whiteSpace = 'nowrap';
+            return new CSS2DObject(div);
         }
-        const labelHead = createLabel('Headstock', '#60a5fa', new THREE.Vector3(-5.5, 3.5, 0));
-        const labelTail = createLabel('Tailstock', '#60a5fa', new THREE.Vector3(5.5, 3.5, 0));
-        const labelChuck = createLabel('Chuck', '#22c55e', new THREE.Vector3(-3.5, 3.0, 1.2));
-        const labelTool = createLabel('Pahat', '#f97316', new THREE.Vector3(0, 2.2, 2.0));
-        const labelWork = createLabel('Benda Kerja', '#a855f7', new THREE.Vector3(0, 3.8, 0));
-        scene.add(labelHead); scene.add(labelTail); scene.add(labelChuck); scene.add(labelTool); scene.add(labelWork);
+
+        // HEADSTOCK label — fixed di atas headGroup
+        const headLabelObj = createLabel('Headstock', '#60a5fa');
+        headLabelObj.position.set(0, 3.2, 0);
+        headGroup.add(headLabelObj);
+
+        // CHUCK label — child dari chuckGroup (ikut berputar bersama chuck, tapi label tetap tegak karena CSS2D selalu menghadap kamera)
+        const chuckLabelObj = createLabel('Chuck', '#22c55e');
+        chuckLabelObj.position.set(-0.3, 1.4, 1.0);
+        chuckGroup.add(chuckLabelObj);
+
+        // TAILSTOCK label — child dari tailGroup (ikut bergerak saat tailstock digeser)
+        const tailLabelObj = createLabel('Tailstock', '#60a5fa');
+        tailLabelObj.position.set(0, 3.0, 0);
+        tailGroup.add(tailLabelObj);
+
+        // CARRIAGE label — child dari carriageGroup (ikut bergerak saat carriage bergeser)
+        const carriageLabelObj = createLabel('Carriage', '#fbbf24');
+        carriageLabelObj.position.set(-0.9, 1.0, 0.9);
+        carriageGroup.add(carriageLabelObj);
+
+        // TOOL POST label — child dari toolPostGroup (ikut bergerak saat toolpost bergerak)
+        const toolLabelObj = createLabel('Pahat', '#f97316');
+        toolLabelObj.position.set(0.8, 1.2, 0.6);
+        toolPostGroup.add(toolLabelObj);
+
+        // WORKPIECE label — akan di-update posisinya karena workpieceMesh dibuat ulang
+        let workLabelObj = createLabel('Benda Kerja', '#a855f7');
+        workLabelObj.position.set(0, 2.3, 0);
+        scene.add(workLabelObj);
 
         // ============ SIM STATE ============
         let simTime = 0;
@@ -1098,6 +1243,7 @@
         const resultOverlay = document.getElementById('resultOverlay');
         const phaseIndicator = document.getElementById('phaseIndicator');
         const phaseText = document.getElementById('phaseText');
+        const toolDisplay = document.getElementById('toolDisplay');
 
         function updatePhaseIndicator() {
             phaseIndicator.className = 'phase-indicator phase-' + phase;
@@ -1110,6 +1256,18 @@
             };
             phaseText.textContent = labels[phase] || 'Ready';
         }
+
+        // TOOL SELECTOR EVENTS
+        document.querySelectorAll('.tool-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                if (phase !== 'idle') return;
+                document.querySelectorAll('.tool-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                selectedToolType = chip.dataset.tool;
+                toolDisplay.textContent = TOOL_TYPES[selectedToolType].name;
+                createToolTip(selectedToolType);
+            });
+        });
 
         document.getElementById('addSegmentBtn').addEventListener('click', () => {
             if (segments.length >= 8) return;
@@ -1178,6 +1336,34 @@
             updateVc();
         }
 
+        function createWorkpiece(diameter) {
+            originalRadiusScene = (diameter / 2) / SCALE_FACTOR;
+            updateTotalDisplay();
+            const radiusFn = () => originalRadiusScene;
+            const geo = buildWorkpieceGeometry(lengthScene, radiusFn);
+            workpieceMesh = new THREE.Mesh(geo, workMat);
+            workpieceMesh.position.set(WORKPIECE_LEFT_EDGE, 0.6 + 1.25, 0);
+            workpieceMesh.castShadow = true;
+            workpieceMesh.receiveShadow = true;
+            machineGroup.add(workpieceMesh);
+
+            // Tailstock diletakkan TEPAT di ujung kanan benda kerja (nyambung ke quill)
+            const rightEdgeX = WORKPIECE_LEFT_EDGE + lengthScene;
+            tailGroup.position.x = rightEdgeX + 1.35; // 1.35 = offset quill (1.2) + sedikit overlap
+
+            // Update label posisi
+            workLabelObj.position.set(WORKPIECE_LEFT_EDGE + lengthScene / 2, 0.6 + 1.25 + 2.3, 0);
+        }
+
+        function updateWorkpieceGeometry() {
+            if (!workpieceMesh) return;
+            const depthScene = cutDepthScene;
+            const radiusFn = (t) => getRadiusAt(t, originalRadiusScene, depthScene);
+            const newGeo = buildWorkpieceGeometry(lengthScene, radiusFn);
+            workpieceMesh.geometry.dispose();
+            workpieceMesh.geometry = newGeo;
+        }
+
         function resetSimulation() {
             phase = 'idle';
             phaseT = 0;
@@ -1198,12 +1384,15 @@
                 workpieceMesh.rotation.set(0, 0, 0);
                 workpieceMesh.scale.set(1, 1, 1);
             }
-            tailGroup.position.x = WORKPIECE_LEFT_EDGE + lengthScene + 1.5;
-            labelWork.visible = true;
-            labelChuck.visible = true;
-            labelTail.visible = true;
-            labelTool.visible = true;
+            const rightEdgeX = WORKPIECE_LEFT_EDGE + lengthScene;
+            tailGroup.position.x = rightEdgeX + 1.35;
             startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
+            workLabelObj.visible = true;
+            chuckLabelObj.visible = true;
+            tailLabelObj.visible = true;
+            toolLabelObj.visible = true;
+            carriageLabelObj.visible = true;
+            headLabelObj.visible = true;
 
             workMat.emissiveIntensity = 0.08;
             updateWorkpieceGeometry();
@@ -1211,7 +1400,69 @@
             updatePhaseIndicator();
         }
 
-        // ============ BUILD ANALYSIS RESULT ============
+        // ============ BUILD RESULT SVG ============
+        function buildResultSvg() {
+            // Buat SVG dari profil aktual
+            const width = 700;
+            const height = 160;
+            const padding = 40;
+            const drawWidth = width - padding * 2;
+            const centerY = height / 2;
+            const maxRadius = originalRadiusScene; // scene units
+            const scaleY = 55 / maxRadius; // pixel per unit radius
+
+            // Sample profile
+            const N = 200;
+            const topPoints = [];
+            const botPoints = [];
+            for (let i = 0; i <= N; i++) {
+                const t = i / N;
+                const r = getRadiusAt(t, originalRadiusScene, cutDepthScene);
+                const x = padding + t * drawWidth;
+                topPoints.push(`${x.toFixed(2)},${(centerY - r * scaleY).toFixed(2)}`);
+                botPoints.push(`${x.toFixed(2)},${(centerY + r * scaleY).toFixed(2)}`);
+            }
+            // Balik botPoints supaya polygon tertutup
+            botPoints.reverse();
+            const polygonPoints = topPoints.concat(botPoints).join(' ');
+
+            // Buat path untuk pattern garis
+            const mat = selectedMaterial || MATERIALS.baja;
+            const colorHex = '#' + mat.color.toString(16).padStart(6, '0');
+
+            const svg = `
+                <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradMetal" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#cbd5e1"/>
+                            <stop offset="40%" stop-color="${colorHex}"/>
+                            <stop offset="60%" stop-color="${colorHex}"/>
+                            <stop offset="100%" stop-color="#475569"/>
+                        </linearGradient>
+                        <pattern id="shaftLines" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+                            <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+                        </pattern>
+                        <pattern id="shaftLines2" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+                            <line x1="3" y1="0" x2="3" y2="6" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <polygon points="${polygonPoints}" fill="url(#gradMetal)" stroke="#1e293b" stroke-width="1.5"/>
+                    <polygon points="${polygonPoints}" fill="url(#shaftLines)"/>
+                    <polygon points="${polygonPoints}" fill="url(#shaftLines2)"/>
+                    <line x1="${padding}" y1="${centerY}" x2="${padding + drawWidth}" y2="${centerY}" stroke="rgba(0,0,0,0.15)" stroke-width="0.5" stroke-dasharray="4 4"/>
+                </svg>
+            `;
+            document.getElementById('resultSvgContainer').innerHTML = svg;
+
+            // Caption
+            const rAkhir = getRadiusAt(1, originalRadiusScene, cutDepthScene);
+            const diaAwal = originalRadiusScene * 2 * SCALE_FACTOR;
+            const diaAkhir = rAkhir * 2 * SCALE_FACTOR;
+            document.getElementById('resultCaption').textContent =
+                `${mat.name} • Ø${diaAwal.toFixed(1)} → Ø${diaAkhir.toFixed(1)} mm • Panjang ${totalLength} mm`;
+        }
+
+        // ============ BUILD ANALYSIS ============
         function buildAnalysis() {
             const mat = selectedMaterial || MATERIALS.baja;
             const diameterAwal = originalRadiusScene * 2 * SCALE_FACTOR;
@@ -1219,15 +1470,12 @@
             const diameterAkhir = rAkhir * 2 * SCALE_FACTOR;
             const vc = (Math.PI * diameterAwal * rpm) / 1000;
 
-            // Hitung estimasi chip removal rate
-            const feedMmPerMin = toolFeed * rpm; // mm/menit
-            const mrr = vc * 1000 * toolFeed * depthOfCut; // mm³/min (approx)
+            const feedMmPerMin = toolFeed * rpm;
+            const mrr = vc * 1000 * toolFeed * depthOfCut;
 
-            // Nilai kualitas
             let score = 0, totalWeight = 0;
             const notes = [];
 
-            // 1. RPM terhadap material
             const rpmDeviation = Math.abs(rpm - mat.rpm) / mat.rpm;
             const rpmScore = Math.max(0, 1 - rpmDeviation * 1.5);
             score += rpmScore * 30; totalWeight += 30;
@@ -1235,19 +1483,16 @@
                 notes.push(`RPM (${rpm}) terlalu ${rpm > mat.rpm ? 'tinggi' : 'rendah'} untuk ${mat.name}. Rekomendasi: ${mat.rpm} RPM.`);
             }
 
-            // 2. DOC dalam rentang optimal
             const docScore = (depthOfCut >= 0.3 && depthOfCut <= 1.5) ? 1 : (depthOfCut < 0.3 ? 0.6 : 0.7);
             score += docScore * 25; totalWeight += 25;
             if (depthOfCut > 1.5) notes.push(`Kedalaman potong (${depthOfCut} mm) terlalu dalam → pahat cepat aus.`);
             if (depthOfCut < 0.3) notes.push(`Kedalaman potong (${depthOfCut} mm) terlalu tipis → proses jadi lama.`);
 
-            // 3. Feed dalam rentang optimal
             const feedScore = (toolFeed >= 0.1 && toolFeed <= 0.3) ? 1 : (toolFeed < 0.1 ? 0.7 : 0.6);
             score += feedScore * 25; totalWeight += 25;
             if (toolFeed > 0.3) notes.push(`Feed (${toolFeed} mm/rev) terlalu besar → permukaan kasar.`);
             if (toolFeed < 0.1) notes.push(`Feed (${toolFeed} mm/rev) sangat kecil → memakan waktu lama.`);
 
-            // 4. Vc
             const vcIdealMin = 15, vcIdealMax = 90;
             const vcScore = (vc >= vcIdealMin && vc <= vcIdealMax) ? 1 : 0.7;
             score += vcScore * 20; totalWeight += 20;
@@ -1271,11 +1516,8 @@
                 qualityDesc = 'Parameter perlu disesuaikan signifikan agar hasil lebih baik.';
             }
 
-            if (notes.length === 0) {
-                notes.push('Semua parameter dalam kondisi optimal — hasil terbaik!');
-            }
+            if (notes.length === 0) notes.push('Semua parameter dalam kondisi optimal — hasil terbaik!');
 
-            // Update UI
             const grid = document.getElementById('analysisGrid');
             grid.innerHTML = `
                 <div class="analysis-item green">
@@ -1328,6 +1570,8 @@
             const notesList = document.getElementById('notesList');
             notesList.innerHTML = notes.map(n => `<li>${n}</li>`).join('');
             notesBox.style.display = 'block';
+
+            buildResultSvg();
         }
 
         // ============ RESULT SHOW ============
@@ -1336,9 +1580,11 @@
             resultAnimT = 0;
             phase = 'showing';
             updatePhaseIndicator();
-            labelChuck.visible = false;
-            labelTail.visible = false;
-            labelTool.visible = false;
+            chuckLabelObj.visible = false;
+            tailLabelObj.visible = false;
+            toolLabelObj.visible = false;
+            carriageLabelObj.visible = false;
+            headLabelObj.visible = false;
             buildAnalysis();
             setTimeout(() => resultOverlay.classList.add('active'), 400);
         }
@@ -1354,9 +1600,12 @@
                 workpieceMesh.rotation.set(0, 0, 0);
                 workpieceMesh.scale.set(1, 1, 1);
             }
-            labelChuck.visible = true;
-            labelTail.visible = true;
-            labelTool.visible = true;
+            workLabelObj.position.set(WORKPIECE_LEFT_EDGE + lengthScene / 2, 0.6 + 1.25 + 2.3, 0);
+            chuckLabelObj.visible = true;
+            tailLabelObj.visible = true;
+            toolLabelObj.visible = true;
+            carriageLabelObj.visible = true;
+            headLabelObj.visible = true;
         }
 
         function updateResultAnimation(deltaTime) {
@@ -1383,6 +1632,8 @@
 
             const scalePop = 1 + Math.sin(t * Math.PI) * 0.15;
             workpieceMesh.scale.setScalar(scalePop);
+
+            workLabelObj.position.set(workpieceMesh.position.x, workpieceMesh.position.y + 2.3, workpieceMesh.position.z);
         }
 
         // ============ SIM LOOP ============
@@ -1407,7 +1658,6 @@
                 return;
             }
 
-            // APPROACHING
             if (phase === 'approaching') {
                 phaseT += deltaTime;
                 const t = Math.min(phaseT / APPROACH_DURATION, 1);
@@ -1425,7 +1675,6 @@
                 return;
             }
 
-            // CUTTING
             if (phase === 'cutting') {
                 const revPerSec = rpm / 60;
                 const feedPerSecond = (toolFeed * revPerSec * 0.15) / SCALE_FACTOR;
@@ -1458,7 +1707,6 @@
                 return;
             }
 
-            // RETRACTING
             if (phase === 'retracting') {
                 phaseT += deltaTime;
                 const t = Math.min(phaseT / RETRACT_DURATION, 1);
@@ -1491,7 +1739,6 @@
             phaseT = 0;
             startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
             workMat.emissiveIntensity = 0.15;
-            if (!currentToolGroup) createTool('turning');
             updatePhaseIndicator();
         });
 
@@ -1534,13 +1781,13 @@
         renderSegments();
         updateTotalDisplay();
         createWorkpiece(parseFloat(workDiaSlider.value));
-        createTool('turning');
+        createToolTip('turning');
         cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
         resetSimulation();
         updateUI();
         animate(0);
 
-        console.log('✅ Simulasi siap! Pahat sudah dipindah ke atas benda kerja & analisis hasil ditambahkan.');
+        console.log('✅ Simulasi siap! Tool post baru, label mengikuti gerakan, hasil showcase dengan SVG.');
     </script>
 </body>
 </html>
