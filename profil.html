@@ -11,15 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CEK PRETEST (WAJIB) -->
-    <script>
-        (function() {
-            if (localStorage.getItem('pretestDone') !== 'true') {
-                window.location.href = 'pretest.html';
-            }
-        })();
-    </script>
-
     <style>
         /* ========== VARIABEL WARNA (LIGHT MODE) ========== */
         :root {
@@ -139,7 +130,6 @@
                 <a href="materi.html"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="kuis.html"><i class="fas fa-puzzle-piece"></i> Kuis</a>
                 <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
                 <a href="profil.html" class="active"><i class="fas fa-user-graduate"></i> Profil</a>
             </div>
@@ -190,13 +180,12 @@
                     </div>
 
                     <ul class="petunjuk-list">
-                        <li><span class="icon">📌</span><div><strong>Navigasi</strong> — Gunakan menu di atas untuk berpindah antar modul (Beranda, Materi, Video, Simulasi, Kuis, Evaluasi, Profil).</div></li>
-                        <li><span class="icon">📚</span><div><strong>Materi</strong> — Pelajari 10 topik utama tentang mesin bubut sebelum mengerjakan kuis.</div></li>
+                        <li><span class="icon">📌</span><div><strong>Navigasi</strong> — Gunakan menu di atas untuk berpindah antar modul (Beranda, Materi, Video, Simulasi, Evaluasi, Profil).</div></li>
+                        <li><span class="icon">📚</span><div><strong>Materi</strong> — Pelajari 10 topik utama tentang mesin bubut sebelum mengerjakan evaluasi.</div></li>
                         <li><span class="icon">🎬</span><div><strong>Video</strong> — Tonton video pembelajaran untuk memahami proses pembubutan secara visual.</div></li>
                         <li><span class="icon">🔄</span><div><strong>Simulasi 3D</strong> — Eksplorasi model mesin bubut 3D. Atur RPM dan kedalaman potong, lalu tekan Mulai.</div></li>
-                        <li><span class="icon">🧠</span><div><strong>Kuis</strong> — Uji pemahaman Anda dengan 10 soal pilihan ganda. Tekan "Periksa Jawaban" untuk melihat skor.</div></li>
-                        <li><span class="icon">📝</span><div><strong>Evaluasi</strong> — Ikuti <strong>Tes Awal</strong> (sebelum belajar) dan <strong>Tes Akhir</strong> (setelah belajar) untuk mengukur peningkatan kompetensi.</div></li>
-                        <li><span class="icon">💡</span><div><strong>Tips</strong> — Pelajari materi, tonton video, lalu uji dengan kuis. Ulangi jika perlu!</div></li>
+                        <li><span class="icon">📝</span><div><strong>Evaluasi</strong> — Kerjakan <strong>Posttest</strong> yang terdiri dari 20 soal untuk mengukur pemahaman Anda setelah mempelajari seluruh materi.</div></li>
+                        <li><span class="icon">💡</span><div><strong>Tips</strong> — Pelajari materi, tonton video, lalu kerjakan posttest. Ulangi jika perlu!</div></li>
                     </ul>
                 </div>
 
