@@ -1840,7 +1840,7 @@ textarea {
                     Aktivitas Login Siswa
                 </h2>
                 <p>
-                    Daftar siswa yang pernah login beserta jumlah login.
+                    Daftar siswa yang pernah login, dikelompokkan per kelas.
                 </p>
             </div>
 
@@ -3203,11 +3203,16 @@ async function loadStatistikSiswa() {
     if (errLogin) console.error("Statistik login error:", errLogin);
 
 
+    /* Kelompokkan siswa unik (normalisasi nama & kelas) */
     const uniqueSiswa = new Set();
 
     if (loginData) {
         loginData.forEach(item => {
-            uniqueSiswa.add(`${item.nama}|${item.kelas}`);
+            const nama = (item.nama || "").trim().replace(/\s+/g, " ").toLowerCase();
+            const kelas = (item.kelas || "").trim().replace(/\s+/g, " ").toLowerCase();
+            if (nama && kelas) {
+                uniqueSiswa.add(`${nama}|${kelas}`);
+            }
         });
     }
 
@@ -3252,7 +3257,7 @@ async function loadStatistikSiswa() {
 }
 
 
-/* ---------- DAFTAR LOGIN SISWA ---------- */
+/* ---------- DAFTAR LOGIN SISWA (dikelompokkan per kelas) ---------- */
 async function loadLoginSiswa() {
 
     const container =
@@ -3298,16 +3303,25 @@ async function loadLoginSiswa() {
     }
 
 
+    /* =====================================================
+       KELOMPOKKAN PER SISWA (nama + kelas)
+       - Normalisasi nama & kelas (trim + rapikan spasi + lowercase)
+       ===================================================== */
     const grouped = {};
 
     data.forEach(item => {
 
-        const key = `${item.nama}|${item.kelas}`;
+        const namaRaw = (item.nama || "").trim().replace(/\s+/g, " ");
+        const kelasRaw = (item.kelas || "").trim().replace(/\s+/g, " ");
+
+        if (!namaRaw || !kelasRaw) return;
+
+        const key = `${namaRaw.toLowerCase()}|${kelasRaw.toLowerCase()}`;
 
         if (!grouped[key]) {
             grouped[key] = {
-                nama: item.nama,
-                kelas: item.kelas,
+                nama: namaRaw,
+                kelas: kelasRaw,
                 count: 0,
                 lastLogin: item.login_at
             };
@@ -3322,55 +3336,90 @@ async function loadLoginSiswa() {
     });
 
 
-    const list =
-        Object.values(grouped)
-            .sort((a, b) => b.count - a.count);
+    /* =====================================================
+       KELOMPOKKAN PER KELAS
+       ===================================================== */
+    const perKelas = {};
+
+    Object.values(grouped).forEach(siswa => {
+        if (!perKelas[siswa.kelas]) {
+            perKelas[siswa.kelas] = [];
+        }
+        perKelas[siswa.kelas].push(siswa);
+    });
 
 
-    container.innerHTML =
-        list.map((siswa, idx) => `
+    /* =====================================================
+       URUTKAN KELAS (X Teknik Mesin 1, 2, 3, dst)
+       ===================================================== */
+    const kelasUrut = Object.keys(perKelas).sort((a, b) =>
+        a.localeCompare(b, "id", { numeric: true })
+    );
 
-            <div class="item">
 
-                <div class="item-top">
+    /* =====================================================
+       RENDER
+       ===================================================== */
+    let html = "";
 
-                    <div>
+    kelasUrut.forEach(kelas => {
 
-                        <div class="item-title">
-                            ${idx + 1}. ${escapeHtml(siswa.nama)}
-                        </div>
+        const siswaList = perKelas[kelas].sort((a, b) => b.count - a.count);
 
-                        <div class="item-info">
+        const totalSiswa = siswaList.length;
+        const totalLoginKelas = siswaList.reduce((sum, s) => sum + s.count, 0);
 
-                            <span class="badge badge-green">
-                                ${escapeHtml(siswa.kelas)}
-                            </span>
+        html += `
+            <div style="margin-bottom: 22px;">
 
-                            Terakhir login:
-                            ${formatTanggal(siswa.lastLogin)}
-
-                        </div>
-
+                <div style="
+                    display:flex; align-items:center; gap:10px;
+                    padding: 10px 14px;
+                    background: linear-gradient(135deg, #2563eb, #4f46e5);
+                    border-radius: 12px;
+                    color:#fff;
+                    margin-bottom: 12px;
+                    flex-wrap: wrap;
+                ">
+                    <i class="fa-solid fa-school" style="font-size:18px;"></i>
+                    <div style="font-weight:800; font-size:15px; flex:1; min-width:180px;">
+                        ${escapeHtml(kelas)}
                     </div>
-
-
-                    <div style="text-align:right; flex-shrink:0;">
-
-                        <div style="font-size: 1.8rem; font-weight: 800; color: #2563eb; line-height:1;">
-                            ${siswa.count}×
-                        </div>
-
-                        <div style="font-size: 0.75rem; color: #64748b; margin-top:2px;">
-                            login
-                        </div>
-
+                    <div style="font-size:12px; opacity:0.9;">
+                        ${totalSiswa} siswa · ${totalLoginKelas}× login
                     </div>
-
                 </div>
 
-            </div>
+                ${siswaList.map((siswa, idx) => `
+                    <div class="item" style="margin-bottom:8px;">
+                        <div class="item-top">
+                            <div>
+                                <div class="item-title">
+                                    ${idx + 1}. ${escapeHtml(siswa.nama)}
+                                </div>
+                                <div class="item-info">
+                                    Terakhir login:
+                                    ${formatTanggal(siswa.lastLogin)}
+                                </div>
+                            </div>
+                            <div style="text-align:right; flex-shrink:0;">
+                                <div style="font-size: 1.6rem; font-weight: 800; color: #2563eb; line-height:1;">
+                                    ${siswa.count}×
+                                </div>
+                                <div style="font-size: 0.7rem; color: #64748b; margin-top:2px;">
+                                    login
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join("")}
 
-        `).join("");
+            </div>
+        `;
+
+    });
+
+    container.innerHTML = html;
 
 }
 
