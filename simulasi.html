@@ -89,7 +89,6 @@
         /* RESULT OVERLAY */
         .result-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 20; }
         .result-overlay.active { opacity: 1; pointer-events: auto; }
-
         .analysis-panel { background: linear-gradient(150deg, #0f1722, #1a2639); border-radius: 24px; width: 100%; max-width: 780px; max-height: 90%; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.7); border: 1px solid #2a4b6e; transform: scale(0.9) translateY(20px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; }
         .result-overlay.active .analysis-panel { transform: scale(1) translateY(0); }
 
@@ -100,20 +99,8 @@
 
         .analysis-body { padding: 22px 28px; }
 
-        .result-image-box {
-            background: linear-gradient(135deg, #0a0d14, #1a2639);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #2a4b6e;
-            text-align: center;
-        }
-        .result-image-box .ri-label {
-            color: #94a3b8; font-size: 0.7rem; font-weight: 700;
-            letter-spacing: 1px; text-transform: uppercase;
-            margin-bottom: 12px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        .result-image-box { background: linear-gradient(135deg, #0a0d14, #1a2639); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid #2a4b6e; text-align: center; }
+        .result-image-box .ri-label { color: #94a3b8; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .result-image-box .ri-label i { color: #22c55e; }
         .result-image-box svg { max-width: 100%; height: auto; max-height: 180px; }
         .result-image-box .ri-caption { color: #cbd5e1; font-size: 0.82rem; margin-top: 12px; line-height: 1.5; }
@@ -190,13 +177,13 @@
         .btn-preset:hover { background: #475569; color: #fff; }
         .btn-preset.highlight { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; }
 
-        /* TOOL SELECTOR */
+        /* TOOL/CHUCK SELECTOR */
         .tool-selector-wrap {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             padding: 12px 16px;
             background: rgba(255,255,255,0.03);
             border-radius: 12px;
@@ -211,6 +198,7 @@
             gap: 6px;
             margin-right: 4px;
         }
+        .tool-selector-wrap .ts-label.chuck-label { color: #22c55e; }
         .tool-chip {
             background: #0f1722;
             border: 2px solid #334155;
@@ -228,6 +216,7 @@
         }
         .tool-chip:hover { background: #1a2639; border-color: #60a5fa; color: #fff; transform: translateY(-1px); }
         .tool-chip.active { background: linear-gradient(135deg, #f97316, #ea580c); border-color: #f97316; color: #fff; box-shadow: 0 4px 12px rgba(249,115,22,0.35); }
+        .tool-chip.chuck-chip.active { background: linear-gradient(135deg, #22c55e, #16a34a); border-color: #22c55e; box-shadow: 0 4px 12px rgba(34,197,94,0.35); }
 
         /* SIM CONTROLS */
         .sim-controls-bar { display: flex; flex-direction: column; gap: 16px; background: #1a2639; padding: 20px 24px; border-radius: 0 0 24px 24px; border-top: 1px solid #2a3a4e; }
@@ -277,7 +266,6 @@
 </head>
 <body>
 
-    <!-- MATERIAL MODAL -->
     <div class="material-modal" id="materialModal">
         <div class="material-modal-content">
             <div class="modal-icon">🔩</div>
@@ -310,7 +298,7 @@
     <div class="main-content">
         <div id="simulasi">
             <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D Pro</h2>
-            <p class="page-sub reveal delay-1">Pilih material, jenis pahat, preset bentuk, atur parameter → mulai. Setelah selesai, hasil pembubutan akan ditampilkan.</p>
+            <p class="page-sub reveal delay-1">Pilih material, chuck, jenis pahat, preset → atur parameter → mulai. Carriage realistis + analisis lengkap setelah selesai.</p>
 
             <div class="sim-container reveal delay-2">
                 <div id="sim3d-container"></div>
@@ -320,7 +308,6 @@
                     <span id="phaseText">Siap — Pahat di posisi mundur</span>
                 </div>
 
-                <!-- RESULT OVERLAY -->
                 <div class="result-overlay" id="resultOverlay">
                     <div class="analysis-panel">
                         <div class="analysis-header">
@@ -331,19 +318,15 @@
                             </div>
                         </div>
                         <div class="analysis-body">
-
-                            <!-- HASIL GAMBAR BENDA KERJA -->
                             <div class="result-image-box">
                                 <div class="ri-label"><i class="fas fa-image"></i> Hasil Pembubutan</div>
                                 <div id="resultSvgContainer"></div>
-                                <div class="ri-caption" id="resultCaption">Silinder Ø25 → Ø24 mm • Panjang 120 mm</div>
+                                <div class="ri-caption" id="resultCaption"></div>
                             </div>
-
                             <div class="analysis-section-title">
                                 <i class="fas fa-chart-bar"></i> Analisis Parameter Pemotongan
                             </div>
                             <div class="analysis-grid" id="analysisGrid"></div>
-
                             <div class="quality-card">
                                 <div class="quality-stars" id="qualityStars"></div>
                                 <div class="quality-info">
@@ -351,12 +334,10 @@
                                     <div class="q-desc" id="qualityDesc"></div>
                                 </div>
                             </div>
-
                             <div class="analysis-notes" id="analysisNotes" style="display: none;">
                                 <h5><i class="fas fa-lightbulb"></i> Catatan & Saran</h5>
                                 <ul id="notesList"></ul>
                             </div>
-
                             <div class="analysis-actions">
                                 <button class="btn-analysis primary" id="btnBackToMachine">
                                     <i class="fas fa-undo"></i> Kembali ke Mesin
@@ -392,9 +373,12 @@
                 </div>
 
                 <div class="sim-controls-bar" id="simControls">
-                    <!-- TOOL SELECTOR -->
                     <div class="tool-selector-wrap">
-                        <span class="ts-label"><i class="fas fa-tools"></i> Jenis Pahat:</span>
+                        <span class="ts-label chuck-label"><i class="fas fa-circle-notch"></i> Chuck:</span>
+                        <button class="tool-chip chuck-chip active" data-chuck="3"><i class="fas fa-circle"></i> 3 Rahang</button>
+                        <button class="tool-chip chuck-chip" data-chuck="4"><i class="fas fa-circle-notch"></i> 4 Rahang</button>
+                        <span style="width: 1px; height: 20px; background: #334155; margin: 0 4px;"></span>
+                        <span class="ts-label"><i class="fas fa-tools"></i> Pahat:</span>
                         <button class="tool-chip active" data-tool="turning"><i class="fas fa-grip-lines"></i> Bubut Luar</button>
                         <button class="tool-chip" data-tool="facing"><i class="fas fa-square"></i> Facing</button>
                         <button class="tool-chip" data-tool="threading"><i class="fas fa-bolt"></i> Ulir</button>
@@ -472,7 +456,7 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // ============ MATERIALS ============
+        // ============ DATA ============
         const MATERIALS = {
             baja:      { name: 'Baja Karbon',     color: 0x8a9bb0, emissive: 0x112233, rpm: 800,  desc: 'Material umum, kuat' },
             aluminium: { name: 'Aluminium',       color: 0xc8ccd2, emissive: 0x223344, rpm: 1200, desc: 'Ringan & soft' },
@@ -482,19 +466,19 @@
             stainless: { name: 'Stainless Steel', color: 0xd0d8e0, emissive: 0x223344, rpm: 500,  desc: 'Tahan karat, keras' }
         };
 
-        // ============ TOOLS ============
         const TOOL_TYPES = {
-            turning:   { name: 'Bubut Luar', color: 0xff6633, shape: 'turning' },
-            facing:    { name: 'Facing',     color: 0x60a5fa, shape: 'facing' },
-            threading: { name: 'Ulir',       color: 0xa855f7, shape: 'threading' },
-            grooving:  { name: 'Alur',       color: 0xf59e0b, shape: 'grooving' },
-            parting:   { name: 'Potong',     color: 0xef4444, shape: 'parting' },
-            boring:    { name: 'Boring',     color: 0x06b6d4, shape: 'boring' }
+            turning:   { name: 'Bubut Luar', color: 0xff6633 },
+            facing:    { name: 'Facing',     color: 0x60a5fa },
+            threading: { name: 'Ulir',       color: 0xa855f7 },
+            grooving:  { name: 'Alur',       color: 0xf59e0b },
+            parting:   { name: 'Potong',     color: 0xef4444 },
+            boring:    { name: 'Boring',     color: 0x06b6d4 }
         };
 
         let selectedMaterial = null;
         let selectedMaterialKey = null;
         let selectedToolType = 'turning';
+        let selectedChuckJaws = 3;
 
         function buildMaterialGrid() {
             const grid = document.getElementById('materialGrid');
@@ -606,7 +590,7 @@
         const matChuck = new THREE.MeshStandardMaterial({ color: 0x4a5a6a, roughness: 0.4, metalness: 0.8 });
         const matSafety = new THREE.MeshStandardMaterial({ color: 0xaaccff, transparent: true, opacity: 0.15, roughness: 0.1, metalness: 0.1, side: THREE.DoubleSide });
 
-        // MESIN
+        // ============ MESIN ============
         const machineGroup = new THREE.Group();
         scene.add(machineGroup);
 
@@ -657,23 +641,42 @@
         spindle.position.set(1.4, 1.25, 0);
         headGroup.add(spindle);
 
-        // CHUCK
+        // ============ CHUCK (3/4 JAW, REBUILDABLE) ============
         const chuckGroup = new THREE.Group();
         chuckGroup.position.set(1.4, 1.25, 0);
         headGroup.add(chuckGroup);
-        const chuckBody = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 0.8, 12), matChuck);
-        chuckBody.rotation.z = Math.PI / 2;
-        chuckBody.position.set(0.6, 0, 0);
-        chuckGroup.add(chuckBody);
-        const jawMat = new THREE.MeshStandardMaterial({ color: 0x6a7a8a, roughness: 0.4, metalness: 0.8 });
-        for (let i = 0; i < 3; i++) {
-            const angle = (i / 3) * Math.PI * 2;
-            const jaw = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.5, 0.4), jawMat);
-            jaw.position.set(1.0, Math.sin(angle) * 0.6, Math.cos(angle) * 0.6);
-            jaw.rotation.z = Math.PI / 2;
-            jaw.rotation.y = -angle;
-            chuckGroup.add(jaw);
+
+        let currentChuckBody = null;
+        let currentJaws = [];
+
+        function buildChuck(jawCount) {
+            // Hapus chuck lama
+            if (currentChuckBody) chuckGroup.remove(currentChuckBody);
+            currentJaws.forEach(j => chuckGroup.remove(j));
+            currentJaws = [];
+
+            // Body chuck
+            const bodyGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.8, jawCount === 3 ? 12 : 16);
+            currentChuckBody = new THREE.Mesh(bodyGeo, matChuck);
+            currentChuckBody.rotation.z = Math.PI / 2;
+            currentChuckBody.position.set(0.6, 0, 0);
+            currentChuckBody.castShadow = true;
+            chuckGroup.add(currentChuckBody);
+
+            // Jaws
+            const jawMat = new THREE.MeshStandardMaterial({ color: 0x6a7a8a, roughness: 0.4, metalness: 0.8 });
+            for (let i = 0; i < jawCount; i++) {
+                const angle = (i / jawCount) * Math.PI * 2;
+                const jaw = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.5, 0.4), jawMat);
+                jaw.position.set(1.0, Math.sin(angle) * 0.6, Math.cos(angle) * 0.6);
+                jaw.rotation.z = Math.PI / 2;
+                jaw.rotation.y = -angle;
+                jaw.castShadow = true;
+                chuckGroup.add(jaw);
+                currentJaws.push(jaw);
+            }
         }
+        buildChuck(3);
 
         // TAILSTOCK
         const tailGroup = new THREE.Group();
@@ -691,162 +694,175 @@
         handwheel.position.set(1.2, 1.25, 0);
         tailGroup.add(handwheel);
 
-        // CARRIAGE
+        // ============ CARRIAGE REALISTIS (SESUAI GAMBAR) ============
         const carriageGroup = new THREE.Group();
         carriageGroup.position.set(0, 0.6, 0);
         machineGroup.add(carriageGroup);
-        const carrBody = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.8, 1.8), matMachineAccent);
-        carrBody.position.set(0, 0.4, 0);
-        carriageGroup.add(carrBody);
-        const apron = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 0.4), matMachineBody);
-        apron.position.set(0, 0.4, 1.0);
-        carriageGroup.add(apron);
-        const crossSlide = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.4, 1.5), matMachineAccent);
-        crossSlide.position.set(0, 0.9, 0);
+
+        // 1. SADDLE (base carriage) — duduk di atas bed
+        const saddleMat = new THREE.MeshStandardMaterial({ color: 0x4a6a4a, roughness: 0.4, metalness: 0.6 });
+        const saddle = new THREE.Mesh(new THREE.BoxGeometry(3.0, 0.55, 2.0), saddleMat);
+        saddle.position.set(0, 0.27, 0);
+        saddle.castShadow = true;
+        saddle.receiveShadow = true;
+        carriageGroup.add(saddle);
+
+        // 2. CROSS SLIDE (bisa bergerak radial)
+        const crossSlideMat = new THREE.MeshStandardMaterial({ color: 0x5a7a5a, roughness: 0.35, metalness: 0.65 });
+        const crossSlide = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.35, 1.4), crossSlideMat);
+        crossSlide.position.set(0, 0.72, 0);
+        crossSlide.castShadow = true;
         carriageGroup.add(crossSlide);
-        const shield = new THREE.Mesh(new THREE.BoxGeometry(10, 5, 0.1), matSafety);
-        shield.position.set(0, 3.5, -2.5);
-        machineGroup.add(shield);
 
-        // ============ TOOL POST (DETAIL - SEPERTI GAMBAR) ============
-        const toolPostGroup = new THREE.Group();
-        toolPostGroup.position.set(0, 1.15, 0);
-        carriageGroup.add(toolPostGroup);
+        // 3. COMPOUND REST (bisa berputar untuk tirus)
+        const compoundMat = new THREE.MeshStandardMaterial({ color: 0x6a8a6a, roughness: 0.35, metalness: 0.65 });
+        const compoundBase = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.8, 0.25, 16), compoundMat);
+        compoundBase.position.set(0.2, 1.0, 0);
+        compoundBase.castShadow = true;
+        carriageGroup.add(compoundBase);
 
-        // Base plate (piringan dasar)
-        const basePlateMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.5, metalness: 0.7 });
-        const basePlate = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.12, 0.9), basePlateMat);
-        basePlate.position.set(0, 0, 0);
-        basePlate.castShadow = true;
-        toolPostGroup.add(basePlate);
+        const compoundRest = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.35, 0.8), compoundMat);
+        compoundRest.position.set(0.2, 1.3, 0);
+        compoundRest.castShadow = true;
+        carriageGroup.add(compoundRest);
 
-        // 4 baut di sudut base plate
-        const boltMat = new THREE.MeshStandardMaterial({ color: 0x8a8a8a, roughness: 0.3, metalness: 0.9 });
+        // 4. TOOL POST (4-way tool post dengan baut penjepit)
+        const toolPostMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.35, metalness: 0.85 });
+        const toolPostBase = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.25, 8), toolPostMat);
+        toolPostBase.position.set(0.2, 1.6, 0);
+        toolPostBase.castShadow = true;
+        carriageGroup.add(toolPostBase);
+
+        const toolPostTop = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.2, 8), toolPostMat);
+        toolPostTop.position.set(0.2, 1.82, 0);
+        toolPostTop.castShadow = true;
+        carriageGroup.add(toolPostTop);
+
+        // Baut-baut penjepit di tool post (4 buah)
         const boltHeadMat = new THREE.MeshStandardMaterial({ color: 0xa8a8a8, roughness: 0.25, metalness: 0.95 });
-        const boltPositions = [
-            [-0.35, 0.10, -0.30],
-            [ 0.35, 0.10, -0.30],
-            [-0.35, 0.10,  0.30],
-            [ 0.35, 0.10,  0.30]
-        ];
-        boltPositions.forEach(pos => {
-            // Badan baut
-            const boltBody = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.16, 12), boltMat);
-            boltBody.position.set(pos[0], pos[1], pos[2]);
-            toolPostGroup.add(boltBody);
-            // Kepala baut (hexagonal - pakai cylinder 6 sisi)
-            const boltHead = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.06, 6), boltHeadMat);
-            boltHead.position.set(pos[0], pos[1] + 0.11, pos[2]);
-            toolPostGroup.add(boltHead);
-        });
+        for (let i = 0; i < 4; i++) {
+            const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
+            const boltX = 0.2 + Math.cos(angle) * 0.32;
+            const boltZ = Math.sin(angle) * 0.32;
+            const boltHead = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.1, 6), boltHeadMat);
+            boltHead.position.set(boltX, 1.95, boltZ);
+            carriageGroup.add(boltHead);
+        }
 
-        // Blok penjepit (clamp block)
-        const clampMat = new THREE.MeshStandardMaterial({ color: 0x4a4a4a, roughness: 0.4, metalness: 0.75 });
-        const clampBlock = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.35, 0.55), clampMat);
-        clampBlock.position.set(0, 0.20, 0);
-        clampBlock.castShadow = true;
-        toolPostGroup.add(clampBlock);
+        // 5. APRON (bagian depan carriage) + HANDWHEEL
+        const apronMat = new THREE.MeshStandardMaterial({ color: 0x4a6a4a, roughness: 0.4, metalness: 0.6 });
+        const apron = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.1, 0.4), apronMat);
+        apron.position.set(0, 0.4, 1.1);
+        apron.castShadow = true;
+        carriageGroup.add(apron);
 
-        // Baut penjepit di bagian atas clamp block
-        const topBoltMat = new THREE.MeshStandardMaterial({ color: 0x909090, roughness: 0.3, metalness: 0.9 });
-        const topBolt = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.15, 12), topBoltMat);
-        topBolt.position.set(0, 0.42, 0);
-        toolPostGroup.add(topBolt);
-        const topBoltHead = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.06, 6), topBoltMat);
-        topBoltHead.position.set(0, 0.51, 0);
-        toolPostGroup.add(topBoltHead);
+        // Handwheel apron (besar)
+        const wheelMat = new THREE.MeshStandardMaterial({ color: 0xb0b0b0, roughness: 0.3, metalness: 0.85 });
+        const apronWheel = new THREE.Mesh(new THREE.TorusGeometry(0.35, 0.06, 10, 24), wheelMat);
+        apronWheel.position.set(0, 0.4, 1.35);
+        apronWheel.rotation.x = Math.PI / 2;
+        carriageGroup.add(apronWheel);
+        // Spoke dalam roda
+        for (let i = 0; i < 3; i++) {
+            const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), wheelMat);
+            spoke.position.set(0, 0.4, 1.35);
+            spoke.rotation.z = (i / 3) * Math.PI;
+            carriageGroup.add(spoke);
+        }
+        // Handle roda
+        const handleWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.2, 8), wheelMat);
+        handleWheel.position.set(0.25, 0.4, 1.5);
+        carriageGroup.add(handleWheel);
 
-        // Holder tool bit (batang pahat)
-        const toolBitHolderMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.35, metalness: 0.85 });
-        const toolBitHolder = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.13, 0.13), toolBitHolderMat);
-        toolBitHolder.position.set(0.55, 0.28, 0.30);
-        toolBitHolder.castShadow = true;
-        toolPostGroup.add(toolBitHolder);
+        // Cross slide handwheel (kecil, untuk gerak radial)
+        const crossWheel = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.05, 8, 20), wheelMat);
+        crossWheel.position.set(0, 0.72, 1.1);
+        crossWheel.rotation.x = Math.PI / 2;
+        carriageGroup.add(crossWheel);
 
-        // Tool bit group (tip akan di-replace berdasarkan jenis pahat)
-        let currentToolTipGroup = null;
-        let currentToolTipBody = null;
+        // ============ TOOL BIT GROUP (di atas tool post) ============
+        const toolBitGroup = new THREE.Group();
+        toolBitGroup.position.set(0.2, 1.9, 0);
+        carriageGroup.add(toolBitGroup);
+
+        // Batang pahat (shank) — menjulur ke arah -X (ke kiri menuju benda kerja)
+        const shankMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.35, metalness: 0.85 });
+        const shank = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.16, 0.16), shankMat);
+        shank.position.set(-0.5, 0, 0);
+        shank.castShadow = true;
+        toolBitGroup.add(shank);
+
+        // Tool tip (diubah-ubah berdasarkan jenis pahat)
+        let currentToolTip = null;
+        let currentChipMesh = null;
 
         function createToolTip(type) {
-            // Hapus tip lama
-            if (currentToolTipGroup) {
-                toolPostGroup.remove(currentToolTipGroup);
-            }
+            if (currentToolTip) toolBitGroup.remove(currentToolTip);
             const tipGroup = new THREE.Group();
-            tipGroup.position.set(0.55, 0.28, 0.30); // posisi sama dengan holder
-
             const toolInfo = TOOL_TYPES[type] || TOOL_TYPES.turning;
-            const tipMat = new THREE.MeshStandardMaterial({ 
-                color: toolInfo.color, 
-                roughness: 0.25, 
-                metalness: 0.7,
+            const tipMat = new THREE.MeshStandardMaterial({
+                color: toolInfo.color,
+                roughness: 0.25, metalness: 0.7,
                 emissive: toolInfo.color,
-                emissiveIntensity: 0.15
+                emissiveIntensity: 0.2
             });
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.3, metalness: 0.9 });
 
-            // Bagian batang pahat yang menjulur keluar (mengarah ke -X untuk masuk ke benda kerja)
-            const body = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.11, 0.11), bodyMat);
-            body.position.set(-0.20, 0, 0);
-            tipGroup.add(body);
-
-            // Ujung pahat spesifik per jenis
+            const tipLength = 0.22;
             if (type === 'turning') {
-                // Bubut luar: insert diamond/kotak
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.10, 0.12), tipMat);
-                insert.position.set(-0.42, 0, 0);
-                insert.rotation.y = Math.PI / 4;
+                // Insert diamond
+                const insert = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.14, 4), tipMat);
+                insert.rotation.x = Math.PI / 2;
+                insert.rotation.z = Math.PI / 4;
+                insert.position.set(-1.35, 0, 0);
                 tipGroup.add(insert);
             } else if (type === 'facing') {
-                // Facing: insert dengan ujung rata
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.09, 0.14), tipMat);
-                insert.position.set(-0.42, 0, 0);
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.14, 0.14), tipMat);
+                insert.position.set(-1.35, 0, 0);
                 tipGroup.add(insert);
-                // Sudut lancip untuk facing
-                const nose = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.10, 4), tipMat);
-                nose.rotation.z = Math.PI / 2;
-                nose.position.set(-0.50, 0, 0);
-                tipGroup.add(nose);
             } else if (type === 'threading') {
-                // Ulir: ujung 60 derajat (triangular)
-                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.18, 3), tipMat);
+                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.2, 3), tipMat);
                 insert.rotation.z = Math.PI / 2;
-                insert.position.set(-0.42, 0, 0);
+                insert.position.set(-1.35, 0, 0);
                 tipGroup.add(insert);
             } else if (type === 'grooving') {
-                // Alur: ujung lurus sempit
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.05, 0.10), tipMat);
-                insert.position.set(-0.42, 0, 0);
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.06, 0.1), tipMat);
+                insert.position.set(-1.35, 0, 0);
                 tipGroup.add(insert);
-                const nose = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.08, 0.06), tipMat);
-                nose.position.set(-0.49, 0, 0);
-                tipGroup.add(nose);
             } else if (type === 'parting') {
-                // Potong: sangat tipis dan tinggi
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.13, 0.06), tipMat);
-                insert.position.set(-0.42, 0, 0);
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.22, 0.06), tipMat);
+                insert.position.set(-1.35, 0, 0);
                 tipGroup.add(insert);
-                const nose = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.14, 0.03), tipMat);
-                nose.position.set(-0.47, 0, 0);
-                tipGroup.add(nose);
             } else if (type === 'boring') {
-                // Boring: batang panjang masuk ke lubang
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.09, 0.09), bodyMat);
-                insert.position.set(-0.42, 0, 0);
+                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.15, 4), tipMat);
+                insert.rotation.z = Math.PI / 2;
+                insert.position.set(-1.35, 0, 0);
                 tipGroup.add(insert);
-                const nose = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.12, 4), tipMat);
-                nose.rotation.z = Math.PI / 2;
-                nose.position.set(-0.60, 0, 0);
-                tipGroup.add(nose);
             }
+            currentToolTip = tipGroup;
+            toolBitGroup.add(tipGroup);
+        }
+        createToolTip('turning');
 
-            currentToolTipGroup = tipGroup;
-            toolPostGroup.add(tipGroup);
+        // ============ CHIP (serpihan logam saat memotong) ============
+        function createChip() {
+            const chipGroup = new THREE.Group();
+            const chipMat = new THREE.MeshStandardMaterial({
+                color: 0xd0d0d0, roughness: 0.3, metalness: 1.0,
+                emissive: 0xff6600, emissiveIntensity: 0.4
+            });
+            for (let i = 0; i < 3; i++) {
+                const chip = new THREE.Mesh(new THREE.TorusGeometry(0.06 + i * 0.02, 0.01, 6, 12, Math.PI * 1.5), chipMat);
+                chip.rotation.x = Math.random() * Math.PI;
+                chip.rotation.y = Math.random() * Math.PI;
+                chip.rotation.z = Math.random() * Math.PI;
+                chip.position.set(-1.5 - i * 0.05, 0.05 + i * 0.03, 0.1);
+                chipGroup.add(chip);
+            }
+            return chipGroup;
         }
 
         // ============ SEGMENT SYSTEM ============
         const SCALE_FACTOR = 40;
-
         const WORKPIECE_LEFT_EDGE = -3.3;
         const CHUCK_FRONT_EDGE = -3.1;
         const CUT_START_X = CHUCK_FRONT_EDGE + 0.5;
@@ -1068,7 +1084,7 @@
             return applyShape(activeSeg.shape, localT, origR, depth);
         }
 
-        // ============ GEOMETRY (dengan end caps) ============
+        // ============ GEOMETRY (tanpa end cap yang bikin tabung) ============
         function buildWorkpieceGeometry(lengthInScene, radiusFn) {
             const segLength = 160, segAngle = 48;
             const positions = [], normals = [], indices = [], uvs = [];
@@ -1094,14 +1110,15 @@
                 }
             }
 
-            // END CAPS (kiri & kanan)
-            const capCenterIdx = positions.length / 3;
+            // ========== END CAPS (flat disc, bukan tabung) ==========
+            // Cap KIRI
             const r0 = Math.max(radiusFn(0), 0.015);
+            const leftCenterIdx = positions.length / 3;
             positions.push(0, 0, 0);
             normals.push(-1, 0, 0);
             uvs.push(0.5, 0.5);
 
-            const capLeftRingStart = capCenterIdx + 1;
+            const leftRingStart = positions.length / 3;
             for (let j = 0; j <= segAngle; j++) {
                 const theta = (j / segAngle) * Math.PI * 2;
                 const cy = Math.cos(theta), sy = Math.sin(theta);
@@ -1110,19 +1127,17 @@
                 uvs.push(0.5 + cy * 0.5, 0.5 + sy * 0.5);
             }
             for (let j = 0; j < segAngle; j++) {
-                const a = capCenterIdx;
-                const b = capLeftRingStart + j;
-                const c = capLeftRingStart + j + 1;
-                indices.push(a, b, c);
+                indices.push(leftCenterIdx, leftRingStart + j, leftRingStart + j + 1);
             }
 
-            const capRightCenterIdx = positions.length / 3;
+            // Cap KANAN
             const r1 = Math.max(radiusFn(1), 0.015);
+            const rightCenterIdx = positions.length / 3;
             positions.push(lengthInScene, 0, 0);
             normals.push(1, 0, 0);
             uvs.push(0.5, 0.5);
 
-            const capRightRingStart = capRightCenterIdx + 1;
+            const rightRingStart = positions.length / 3;
             for (let j = 0; j <= segAngle; j++) {
                 const theta = (j / segAngle) * Math.PI * 2;
                 const cy = Math.cos(theta), sy = Math.sin(theta);
@@ -1131,10 +1146,7 @@
                 uvs.push(0.5 + cy * 0.5, 0.5 + sy * 0.5);
             }
             for (let j = 0; j < segAngle; j++) {
-                const a = capRightCenterIdx;
-                const b = capRightRingStart + j + 1;
-                const c = capRightRingStart + j;
-                indices.push(a, b, c);
+                indices.push(rightCenterIdx, rightRingStart + j + 1, rightRingStart + j);
             }
 
             const geo = new THREE.BufferGeometry();
@@ -1166,7 +1178,7 @@
             updateVc();
         }
 
-        // ============ LABELS (SEBAGAI CHILD DARI KOMPONEN, MENGIKUTI GERAKAN) ============
+        // ============ LABELS ============
         function createLabel(text, color) {
             const div = document.createElement('div');
             div.textContent = text;
@@ -1184,34 +1196,34 @@
             return new CSS2DObject(div);
         }
 
-        // HEADSTOCK label — fixed di atas headGroup
+        // Label HEADSTOCK — child headGroup
         const headLabelObj = createLabel('Headstock', '#60a5fa');
         headLabelObj.position.set(0, 3.2, 0);
         headGroup.add(headLabelObj);
 
-        // CHUCK label — child dari chuckGroup (ikut berputar bersama chuck, tapi label tetap tegak karena CSS2D selalu menghadap kamera)
+        // Label CHUCK — child headGroup (BUKAN chuckGroup, supaya tidak ikut mutar)
         const chuckLabelObj = createLabel('Chuck', '#22c55e');
-        chuckLabelObj.position.set(-0.3, 1.4, 1.0);
-        chuckGroup.add(chuckLabelObj);
+        chuckLabelObj.position.set(1.6, 2.6, 0);
+        headGroup.add(chuckLabelObj);
 
-        // TAILSTOCK label — child dari tailGroup (ikut bergerak saat tailstock digeser)
+        // Label TAILSTOCK — child tailGroup
         const tailLabelObj = createLabel('Tailstock', '#60a5fa');
         tailLabelObj.position.set(0, 3.0, 0);
         tailGroup.add(tailLabelObj);
 
-        // CARRIAGE label — child dari carriageGroup (ikut bergerak saat carriage bergeser)
+        // Label CARRIAGE — child carriageGroup
         const carriageLabelObj = createLabel('Carriage', '#fbbf24');
-        carriageLabelObj.position.set(-0.9, 1.0, 0.9);
+        carriageLabelObj.position.set(-0.9, 1.6, 1.5);
         carriageGroup.add(carriageLabelObj);
 
-        // TOOL POST label — child dari toolPostGroup (ikut bergerak saat toolpost bergerak)
+        // Label PAHAT — child toolBitGroup
         const toolLabelObj = createLabel('Pahat', '#f97316');
-        toolLabelObj.position.set(0.8, 1.2, 0.6);
-        toolPostGroup.add(toolLabelObj);
+        toolLabelObj.position.set(0.4, 0.7, 0.3);
+        toolBitGroup.add(toolLabelObj);
 
-        // WORKPIECE label — akan di-update posisinya karena workpieceMesh dibuat ulang
-        let workLabelObj = createLabel('Benda Kerja', '#a855f7');
-        workLabelObj.position.set(0, 2.3, 0);
+        // Label BENDA KERJA — di scene, akan di-update manual
+        const workLabelObj = createLabel('Benda Kerja', '#a855f7');
+        workLabelObj.position.set(0, 3.8, 0);
         scene.add(workLabelObj);
 
         // ============ SIM STATE ============
@@ -1257,15 +1269,24 @@
             phaseText.textContent = labels[phase] || 'Ready';
         }
 
-        // TOOL SELECTOR EVENTS
-        document.querySelectorAll('.tool-chip').forEach(chip => {
+        // TOOL & CHUCK SELECTORS
+        document.querySelectorAll('.tool-chip[data-tool]').forEach(chip => {
             chip.addEventListener('click', () => {
                 if (phase !== 'idle') return;
-                document.querySelectorAll('.tool-chip').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.tool-chip[data-tool]').forEach(c => c.classList.remove('active'));
                 chip.classList.add('active');
                 selectedToolType = chip.dataset.tool;
                 toolDisplay.textContent = TOOL_TYPES[selectedToolType].name;
                 createToolTip(selectedToolType);
+            });
+        });
+        document.querySelectorAll('.tool-chip[data-chuck]').forEach(chip => {
+            chip.addEventListener('click', () => {
+                if (phase !== 'idle') return;
+                document.querySelectorAll('.tool-chip[data-chuck]').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                selectedChuckJaws = parseInt(chip.dataset.chuck);
+                buildChuck(selectedChuckJaws);
             });
         });
 
@@ -1347,11 +1368,10 @@
             workpieceMesh.receiveShadow = true;
             machineGroup.add(workpieceMesh);
 
-            // Tailstock diletakkan TEPAT di ujung kanan benda kerja (nyambung ke quill)
+            // Tailstock tepat di ujung kanan benda kerja (TANPA overlap)
             const rightEdgeX = WORKPIECE_LEFT_EDGE + lengthScene;
-            tailGroup.position.x = rightEdgeX + 1.35; // 1.35 = offset quill (1.2) + sedikit overlap
+            tailGroup.position.x = rightEdgeX + 1.25;
 
-            // Update label posisi
             workLabelObj.position.set(WORKPIECE_LEFT_EDGE + lengthScene / 2, 0.6 + 1.25 + 2.3, 0);
         }
 
@@ -1376,6 +1396,12 @@
             cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
             maxTravel = lengthScene;
 
+            // Sembunyikan chip jika ada
+            if (currentChipMesh) {
+                toolBitGroup.remove(currentChipMesh);
+                currentChipMesh = null;
+            }
+
             const approachX = getApproachX();
             carriageGroup.position.set(approachX, 0.6, originalRadiusScene + 0.4);
 
@@ -1385,7 +1411,7 @@
                 workpieceMesh.scale.set(1, 1, 1);
             }
             const rightEdgeX = WORKPIECE_LEFT_EDGE + lengthScene;
-            tailGroup.position.x = rightEdgeX + 1.35;
+            tailGroup.position.x = rightEdgeX + 1.25;
             startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
             workLabelObj.visible = true;
             chuckLabelObj.visible = true;
@@ -1402,36 +1428,29 @@
 
         // ============ BUILD RESULT SVG ============
         function buildResultSvg() {
-            // Buat SVG dari profil aktual
-            const width = 700;
-            const height = 160;
-            const padding = 40;
-            const drawWidth = width - padding * 2;
-            const centerY = height / 2;
-            const maxRadius = originalRadiusScene; // scene units
-            const scaleY = 55 / maxRadius; // pixel per unit radius
+            const w = 700, h = 160, pad = 40;
+            const drawW = w - pad * 2;
+            const centerY = h / 2;
+            const maxR = originalRadiusScene;
+            const scaleY = 55 / maxR;
 
-            // Sample profile
             const N = 200;
-            const topPoints = [];
-            const botPoints = [];
+            const topPts = [], botPts = [];
             for (let i = 0; i <= N; i++) {
                 const t = i / N;
                 const r = getRadiusAt(t, originalRadiusScene, cutDepthScene);
-                const x = padding + t * drawWidth;
-                topPoints.push(`${x.toFixed(2)},${(centerY - r * scaleY).toFixed(2)}`);
-                botPoints.push(`${x.toFixed(2)},${(centerY + r * scaleY).toFixed(2)}`);
+                const x = pad + t * drawW;
+                topPts.push(`${x.toFixed(2)},${(centerY - r * scaleY).toFixed(2)}`);
+                botPts.push(`${x.toFixed(2)},${(centerY + r * scaleY).toFixed(2)}`);
             }
-            // Balik botPoints supaya polygon tertutup
-            botPoints.reverse();
-            const polygonPoints = topPoints.concat(botPoints).join(' ');
+            botPts.reverse();
+            const polygonPts = topPts.concat(botPts).join(' ');
 
-            // Buat path untuk pattern garis
             const mat = selectedMaterial || MATERIALS.baja;
             const colorHex = '#' + mat.color.toString(16).padStart(6, '0');
 
-            const svg = `
-                <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+            document.getElementById('resultSvgContainer').innerHTML = `
+                <svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="gradMetal" x1="0%" y1="0%" x2="0%" y2="100%">
                             <stop offset="0%" stop-color="#cbd5e1"/>
@@ -1446,20 +1465,18 @@
                             <line x1="3" y1="0" x2="3" y2="6" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
                         </pattern>
                     </defs>
-                    <polygon points="${polygonPoints}" fill="url(#gradMetal)" stroke="#1e293b" stroke-width="1.5"/>
-                    <polygon points="${polygonPoints}" fill="url(#shaftLines)"/>
-                    <polygon points="${polygonPoints}" fill="url(#shaftLines2)"/>
-                    <line x1="${padding}" y1="${centerY}" x2="${padding + drawWidth}" y2="${centerY}" stroke="rgba(0,0,0,0.15)" stroke-width="0.5" stroke-dasharray="4 4"/>
+                    <polygon points="${polygonPts}" fill="url(#gradMetal)" stroke="#1e293b" stroke-width="1.5"/>
+                    <polygon points="${polygonPts}" fill="url(#shaftLines)"/>
+                    <polygon points="${polygonPts}" fill="url(#shaftLines2)"/>
+                    <line x1="${pad}" y1="${centerY}" x2="${pad + drawW}" y2="${centerY}" stroke="rgba(0,0,0,0.15)" stroke-width="0.5" stroke-dasharray="4 4"/>
                 </svg>
             `;
-            document.getElementById('resultSvgContainer').innerHTML = svg;
 
-            // Caption
             const rAkhir = getRadiusAt(1, originalRadiusScene, cutDepthScene);
             const diaAwal = originalRadiusScene * 2 * SCALE_FACTOR;
             const diaAkhir = rAkhir * 2 * SCALE_FACTOR;
             document.getElementById('resultCaption').textContent =
-                `${mat.name} • Ø${diaAwal.toFixed(1)} → Ø${diaAkhir.toFixed(1)} mm • Panjang ${totalLength} mm`;
+                `${mat.name} • Ø${diaAwal.toFixed(1)} → Ø${diaAkhir.toFixed(1)} mm • Panjang ${totalLength} mm • Chuck ${selectedChuckJaws} Rahang`;
         }
 
         // ============ BUILD ANALYSIS ============
@@ -1469,9 +1486,7 @@
             const rAkhir = getRadiusAt(1, originalRadiusScene, cutDepthScene);
             const diameterAkhir = rAkhir * 2 * SCALE_FACTOR;
             const vc = (Math.PI * diameterAwal * rpm) / 1000;
-
             const feedMmPerMin = toolFeed * rpm;
-            const mrr = vc * 1000 * toolFeed * depthOfCut;
 
             let score = 0, totalWeight = 0;
             const notes = [];
@@ -1493,8 +1508,7 @@
             if (toolFeed > 0.3) notes.push(`Feed (${toolFeed} mm/rev) terlalu besar → permukaan kasar.`);
             if (toolFeed < 0.1) notes.push(`Feed (${toolFeed} mm/rev) sangat kecil → memakan waktu lama.`);
 
-            const vcIdealMin = 15, vcIdealMax = 90;
-            const vcScore = (vc >= vcIdealMin && vc <= vcIdealMax) ? 1 : 0.7;
+            const vcScore = (vc >= 15 && vc <= 90) ? 1 : 0.7;
             score += vcScore * 20; totalWeight += 20;
 
             const finalScore = score / totalWeight;
@@ -1502,74 +1516,32 @@
             const starsHtml = '★'.repeat(stars) + '<span class="empty">' + '★'.repeat(5 - stars) + '</span>';
 
             let qualityTitle, qualityDesc;
-            if (finalScore >= 0.85) {
-                qualityTitle = 'Kualitas Sangat Baik';
-                qualityDesc = 'Parameter pemotongan dalam rentang optimal. Permukaan hasil halus dan presisi.';
-            } else if (finalScore >= 0.65) {
-                qualityTitle = 'Kualitas Baik';
-                qualityDesc = 'Parameter sudah cukup baik, namun masih ada ruang untuk peningkatan.';
-            } else if (finalScore >= 0.45) {
-                qualityTitle = 'Kualitas Cukup';
-                qualityDesc = 'Beberapa parameter perlu disesuaikan untuk hasil lebih baik.';
-            } else {
-                qualityTitle = 'Kualitas Kurang Optimal';
-                qualityDesc = 'Parameter perlu disesuaikan signifikan agar hasil lebih baik.';
-            }
+            if (finalScore >= 0.85) { qualityTitle = 'Kualitas Sangat Baik'; qualityDesc = 'Parameter pemotongan dalam rentang optimal. Permukaan hasil halus dan presisi.'; }
+            else if (finalScore >= 0.65) { qualityTitle = 'Kualitas Baik'; qualityDesc = 'Parameter sudah cukup baik, namun masih ada ruang untuk peningkatan.'; }
+            else if (finalScore >= 0.45) { qualityTitle = 'Kualitas Cukup'; qualityDesc = 'Beberapa parameter perlu disesuaikan untuk hasil lebih baik.'; }
+            else { qualityTitle = 'Kualitas Kurang Optimal'; qualityDesc = 'Parameter perlu disesuaikan signifikan agar hasil lebih baik.'; }
 
             if (notes.length === 0) notes.push('Semua parameter dalam kondisi optimal — hasil terbaik!');
 
-            const grid = document.getElementById('analysisGrid');
-            grid.innerHTML = `
-                <div class="analysis-item green">
-                    <div class="ai-label">Material</div>
-                    <div class="ai-value">${mat.name}</div>
-                </div>
-                <div class="analysis-item cyan">
-                    <div class="ai-label">Panjang Potong</div>
-                    <div class="ai-value">${totalLength}<small>mm</small></div>
-                </div>
-                <div class="analysis-item">
-                    <div class="ai-label">Diameter</div>
-                    <div class="ai-value">${diameterAwal.toFixed(1)} → ${diameterAkhir.toFixed(1)}<small>mm</small></div>
-                </div>
-                <div class="analysis-item orange">
-                    <div class="ai-label">Kedalaman Potong</div>
-                    <div class="ai-value">${depthOfCut.toFixed(1)}<small>mm</small></div>
-                </div>
-                <div class="analysis-item purple">
-                    <div class="ai-label">RPM</div>
-                    <div class="ai-value">${rpm}<small>rpm</small></div>
-                </div>
-                <div class="analysis-item">
-                    <div class="ai-label">Feed</div>
-                    <div class="ai-value">${toolFeed.toFixed(2)}<small>mm/rev</small></div>
-                </div>
-                <div class="analysis-item">
-                    <div class="ai-label">Kecepatan Potong</div>
-                    <div class="ai-value">${vc.toFixed(1)}<small>m/min</small></div>
-                </div>
-                <div class="analysis-item orange">
-                    <div class="ai-label">Waktu</div>
-                    <div class="ai-value">${simTime.toFixed(1)}<small>s</small></div>
-                </div>
-                <div class="analysis-item purple">
-                    <div class="ai-label">Segmen</div>
-                    <div class="ai-value">${segments.length}<small>buah</small></div>
-                </div>
-                <div class="analysis-item green">
-                    <div class="ai-label">Feed Rate</div>
-                    <div class="ai-value">${feedMmPerMin.toFixed(0)}<small>mm/min</small></div>
-                </div>
+            document.getElementById('analysisGrid').innerHTML = `
+                <div class="analysis-item green"><div class="ai-label">Material</div><div class="ai-value">${mat.name}</div></div>
+                <div class="analysis-item cyan"><div class="ai-label">Chuck</div><div class="ai-value">${selectedChuckJaws} Rahang</div></div>
+                <div class="analysis-item"><div class="ai-label">Panjang Potong</div><div class="ai-value">${totalLength}<small>mm</small></div></div>
+                <div class="analysis-item"><div class="ai-label">Diameter</div><div class="ai-value">${diameterAwal.toFixed(1)} → ${diameterAkhir.toFixed(1)}<small>mm</small></div></div>
+                <div class="analysis-item orange"><div class="ai-label">Kedalaman Potong</div><div class="ai-value">${depthOfCut.toFixed(1)}<small>mm</small></div></div>
+                <div class="analysis-item purple"><div class="ai-label">RPM</div><div class="ai-value">${rpm}<small>rpm</small></div></div>
+                <div class="analysis-item"><div class="ai-label">Feed</div><div class="ai-value">${toolFeed.toFixed(2)}<small>mm/rev</small></div></div>
+                <div class="analysis-item"><div class="ai-label">Kecepatan Potong</div><div class="ai-value">${vc.toFixed(1)}<small>m/min</small></div></div>
+                <div class="analysis-item orange"><div class="ai-label">Waktu</div><div class="ai-value">${simTime.toFixed(1)}<small>s</small></div></div>
+                <div class="analysis-item green"><div class="ai-label">Feed Rate</div><div class="ai-value">${feedMmPerMin.toFixed(0)}<small>mm/min</small></div></div>
             `;
 
             document.getElementById('qualityStars').innerHTML = starsHtml;
             document.getElementById('qualityTitle').textContent = qualityTitle + ' — ' + Math.round(finalScore * 100) + '%';
             document.getElementById('qualityDesc').textContent = qualityDesc;
 
-            const notesBox = document.getElementById('analysisNotes');
-            const notesList = document.getElementById('notesList');
-            notesList.innerHTML = notes.map(n => `<li>${n}</li>`).join('');
-            notesBox.style.display = 'block';
+            document.getElementById('notesList').innerHTML = notes.map(n => `<li>${n}</li>`).join('');
+            document.getElementById('analysisNotes').style.display = 'block';
 
             buildResultSvg();
         }
@@ -1625,8 +1597,7 @@
             workpieceMesh.position.y = startY + (targetY - startY) * e;
             workpieceMesh.position.z = startZ + (targetZ - startZ) * e;
 
-            const targetRotZ = -Math.PI / 2;
-            workpieceMesh.rotation.z = targetRotZ * e;
+            workpieceMesh.rotation.z = -Math.PI / 2 * e;
             workpieceMesh.rotation.x = 0;
             workpieceMesh.rotation.y += deltaTime * 0.8;
 
@@ -1650,7 +1621,12 @@
                 const anglePerSec = revPerSec * Math.PI * 2;
                 rotationAngle += anglePerSec * deltaTime;
                 workpieceMesh.rotation.x = rotationAngle;
-                chuckGroup.rotation.x = rotationAngle;
+                chuckGroup.children.forEach(child => {
+                    // Hanya body & jaws yang diputar (child dari chuckGroup), bukan label
+                    if (child !== chuckLabelObj) {
+                        child.rotation.x = rotationAngle;
+                    }
+                });
             }
 
             if (showResultMode) {
@@ -1671,6 +1647,10 @@
                     phaseT = 0;
                     simTime = 0;
                     updatePhaseIndicator();
+                    // Buat chip saat mulai memotong
+                    if (currentChipMesh) toolBitGroup.remove(currentChipMesh);
+                    currentChipMesh = createChip();
+                    toolBitGroup.add(currentChipMesh);
                 }
                 return;
             }
@@ -1680,12 +1660,23 @@
                 const feedPerSecond = (toolFeed * revPerSec * 0.15) / SCALE_FACTOR;
                 toolPosX += feedPerSecond * deltaTime;
 
+                // Animasi chip (berputar & bergetar)
+                if (currentChipMesh) {
+                    currentChipMesh.rotation.z += deltaTime * 15;
+                    currentChipMesh.rotation.x += deltaTime * 8;
+                }
+
                 if (toolPosX >= maxTravel) {
                     toolPosX = maxTravel;
                     toolProgress = 1;
                     phase = 'retracting';
                     phaseT = 0;
                     workMat.emissiveIntensity = 0.2;
+                    // Hapus chip saat selesai memotong
+                    if (currentChipMesh) {
+                        toolBitGroup.remove(currentChipMesh);
+                        currentChipMesh = null;
+                    }
                     updateWorkpieceGeometry();
                     updateUI();
                     updatePhaseIndicator();
@@ -1747,6 +1738,10 @@
             phase = 'idle';
             phaseT = 0;
             startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
+            if (currentChipMesh) {
+                toolBitGroup.remove(currentChipMesh);
+                currentChipMesh = null;
+            }
             const approachX = getApproachX();
             carriageGroup.position.x = approachX;
             carriageGroup.position.z = originalRadiusScene + 0.4;
@@ -1781,13 +1776,12 @@
         renderSegments();
         updateTotalDisplay();
         createWorkpiece(parseFloat(workDiaSlider.value));
-        createToolTip('turning');
         cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
         resetSimulation();
         updateUI();
         animate(0);
 
-        console.log('✅ Simulasi siap! Tool post baru, label mengikuti gerakan, hasil showcase dengan SVG.');
+        console.log('✅ Simulasi siap! Carriage realistis + chuck 3/4 rahang + chip animasi.');
     </script>
 </body>
 </html>
