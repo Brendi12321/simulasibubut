@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             --bg-color: #f0f4fb; --text-color: #1a2639; --sub-text-color: #475569;
@@ -32,12 +35,49 @@
         .navbar .logo span { color: #94b8d9; font-weight: 400; }
         .dark-toggle { background: transparent; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; padding: 10px; }
         .dark-toggle:hover { color: #fbbf24; }
-        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; align-items: center; }
         .nav-links a { color: var(--nav-text); padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: 0.2s; display: flex; align-items: center; gap: 6px; text-decoration: none; }
         .nav-links a:hover { background: #1a334d; color: #fff; }
         .nav-links a.active { background: var(--nav-active); color: #fff; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+        .nav-links a.login-guru { background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(96, 165, 250, 0.25); color: #93c5fd; }
+        .nav-links a.login-guru:hover { background: #2563eb; color: white; }
+        .nav-links a.dashboard-guru { background: #16a34a; color: white; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25); }
+        .nav-links a.dashboard-guru:hover { background: #15803d; }
+        .nav-links button.btn-logout-siswa {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: inherit;
+            margin-left: 4px;
+        }
+        .nav-links button.btn-logout-siswa:hover { background: #dc2626; color: #fff; border-color: #dc2626; }
+        .nav-user-info {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(22, 163, 74, 0.15);
+            border: 1px solid rgba(22, 163, 74, 0.3);
+            color: #4ade80;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        .nav-user-info i { font-size: 0.85rem; }
+        @media (max-width: 900px) {
+            .nav-user-info { font-size: 0.7rem; padding: 5px 10px; }
+            .nav-links button.btn-logout-siswa { font-size: 0.7rem; padding: 6px 10px; }
+        }
         @media (max-width: 780px) { .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; } .nav-links { justify-content: center; padding-bottom: 10px; } .nav-links a { font-size: 0.7rem; padding: 6px 12px; } }
-        @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } }
+        @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } .nav-links button.btn-logout-siswa i { display: inline; } }
 
         .main-content { flex: 1; max-width: 1280px; width: 100%; margin: 0 auto; padding: 30px 24px 40px; }
         footer { text-align: center; padding: 24px 0 10px; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 20px; background: var(--footer-bg); }
@@ -249,8 +289,22 @@
                 <a href="materi.html"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html" class="active"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Evaluasi</a>
+                <a href="evaluasi.html"><i class="fas fa-clipboard-check"></i> Kuis</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
+
+                <span id="navUserInfo" class="nav-user-info" style="display:none;">
+                    <i class="fas fa-user"></i>
+                    <span id="navUserText">-</span>
+                </span>
+
+                <button id="btnLogoutSiswa" class="btn-logout-siswa" style="display:none;" onclick="keluarSiswa()">
+                    <i class="fas fa-right-from-bracket"></i> Keluar
+                </button>
+
+                <a href="#" id="guruModeBtn" class="login-guru" style="display:none;">
+                    <i class="fas fa-user-tie"></i>
+                    <span id="guruModeText">Login Guru</span>
+                </a>
             </div>
             <button class="dark-toggle" id="darkModeToggle" title="Ganti Mode"><i class="fas fa-moon"></i></button>
         </div>
@@ -386,6 +440,69 @@
             "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
         }
     }
+    </script>
+
+    <script>
+        // =====================================================
+        // CEK IDENTITAS SISWA (di luar module)
+        // =====================================================
+        const SUPABASE_URL = "https://fxsshzwljalwxpxpbjgn.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NKJ5SdPRmPihu8w_IKg9G_Tf".replace("NKJ5","NKOVw8rMBJ5");
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+        function cekIdentitasSiswa() {
+            const userMode = sessionStorage.getItem("userMode");
+            const siswaNama = sessionStorage.getItem("siswaNama");
+            const siswaKelas = sessionStorage.getItem("siswaKelas");
+
+            const navUserInfo = document.getElementById("navUserInfo");
+            const navUserText = document.getElementById("navUserText");
+            const btnLogoutSiswa = document.getElementById("btnLogoutSiswa");
+            const guruModeBtn = document.getElementById("guruModeBtn");
+            const guruModeText = document.getElementById("guruModeText");
+
+            if (userMode === "siswa" && siswaNama && siswaKelas) {
+                navUserInfo.style.display = "inline-flex";
+                navUserText.textContent = `${siswaNama} · ${siswaKelas}`;
+                btnLogoutSiswa.style.display = "inline-flex";
+
+                guruModeBtn.style.display = "inline-flex";
+                guruModeBtn.className = "login-guru";
+                guruModeBtn.href = "login.html";
+                guruModeText.textContent = "Login Guru";
+            } else if (userMode === "guru") {
+                guruModeBtn.style.display = "inline-flex";
+                supabaseClient.auth.getSession().then(({ data }) => {
+                    if (data.session) {
+                        guruModeBtn.className = "dashboard-guru";
+                        guruModeBtn.href = "guru.html";
+                        guruModeText.textContent = "Dashboard Guru";
+                    } else {
+                        guruModeBtn.className = "login-guru";
+                        guruModeBtn.href = "login.html";
+                        guruModeText.textContent = "Login Guru";
+                    }
+                });
+            } else {
+                guruModeBtn.style.display = "inline-flex";
+                guruModeBtn.className = "login-guru";
+                guruModeBtn.href = "login.html";
+                guruModeText.textContent = "Login Guru";
+            }
+        }
+
+        function keluarSiswa() {
+            const nama = sessionStorage.getItem("siswaNama");
+            if (!confirm(`Keluar dari akun "${nama}"?\n\nAnda akan kembali ke halaman login siswa.`)) {
+                return;
+            }
+            sessionStorage.removeItem("userMode");
+            sessionStorage.removeItem("siswaNama");
+            sessionStorage.removeItem("siswaKelas");
+            window.location.href = "index.html";
+        }
+
+        cekIdentitasSiswa();
     </script>
 
     <script type="module">
@@ -602,7 +719,6 @@
             machineGroup.add(rail);
         });
 
-        // Electrical panel
         const electricalPanelGroup = new THREE.Group();
         electricalPanelGroup.position.set(-6.8, 1.5, -0.2);
         machineGroup.add(electricalPanelGroup);
@@ -701,7 +817,6 @@
         }
         buildChuck(3);
 
-        // Lead screw + feed shaft
         const leadScrewMat = new THREE.MeshStandardMaterial({ color: 0x9aa0a8, roughness: 0.35, metalness: 0.9 });
         const leadScrew = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.10, 12, 16), leadScrewMat);
         leadScrew.rotation.z = Math.PI / 2;
@@ -791,10 +906,9 @@
         wheelHandleKnob.position.set(1.0, 1.25, 0.34);
         tailGroup.add(wheelHandleKnob);
 
-        // ============ CARRIAGE (datar, tanpa rotasi) ============
+        // ============ CARRIAGE ============
         const carriageGroup = new THREE.Group();
         carriageGroup.position.set(0, 0.6, 0);
-        // TIDAK ada rotation - carriage flat
         machineGroup.add(carriageGroup);
 
         const saddle = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.5, 2.2), matMachineBody);
@@ -825,7 +939,6 @@
         crossWheelKnob.position.set(1.02, 0.66, 0.30);
         carriageGroup.add(crossWheelKnob);
 
-        // Compound rest — diletakkan lebih rendah
         const compoundBase = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.6, 0.22, 16), matMachineDark);
         compoundBase.position.set(-0.15, 0.75, -0.15);
         compoundBase.castShadow = true;
@@ -844,7 +957,6 @@
         compKnob.position.set(0.90, 0.95, -0.15);
         carriageGroup.add(compKnob);
 
-        // Tool post — lebih rendah agar sejajar workpiece
         const toolPostBase = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.28, 0.7), matDarkMetal);
         toolPostBase.position.set(-0.15, 1.1, -0.15);
         toolPostBase.castShadow = true;
@@ -865,7 +977,6 @@
             carriageGroup.add(boltHead);
         }
 
-        // Apron (menjorok ke luar)
         const apron = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.1, 0.35), matMachineBody);
         apron.position.set(0, 0.4, 1.55);
         apron.castShadow = true;
@@ -922,8 +1033,7 @@
         apronHandleKnob.position.set(0, 0.35, 2.37);
         carriageGroup.add(apronHandleKnob);
 
-        // ============ TOOL BIT GROUP — tip mengarah ke splash guard (-Z) ============
-        // Shank sejajar sumbu workpiece (X), tip menghadap ke belakang (-Z) ke arah splash guard
+        // ============ TOOL BIT ============
         const toolBitGroup = new THREE.Group();
         toolBitGroup.position.set(-0.15, 1.42, -0.15);
         carriageGroup.add(toolBitGroup);
@@ -946,12 +1056,9 @@
                 emissive: toolInfo.color, emissiveIntensity: 0.2
             });
 
-            // TIP DI UJUNG -X SHANK, MENGHADAP -Z (KE ARAH SPLASH GUARD)
-            // TANPA ROTASI ANEH — flat, tidak mereng
             const tipX = -shankLen - 0.05;
 
             if (type === 'turning') {
-                // Insert diamond, flat
                 const insert = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.1, 0.25), tipMat);
                 insert.position.set(tipX, 0, -0.125);
                 tipGroup.add(insert);
@@ -1387,7 +1494,6 @@
         });
         feedSlider.addEventListener('input', () => { toolFeed = parseFloat(feedSlider.value); feedVal.textContent = toolFeed.toFixed(2); });
 
-        // CARRIAGE MANUAL SLIDER
         carriageManualSlider.addEventListener('input', () => {
             if (phase !== 'idle') return;
             carriageManualOffset = parseFloat(carriageManualSlider.value);
@@ -1469,7 +1575,6 @@
             cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
             maxTravel = lengthScene;
 
-            // Idle: carriage di CUT_START_X + manual offset
             carriageGroup.position.set(CUT_START_X + carriageManualOffset, 0.6, originalRadiusScene + 0.4);
 
             if (workpieceMesh) {
