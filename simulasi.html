@@ -51,6 +51,78 @@
         #simulasi .sim-overlay-info { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 12px 20px; border-radius: 40px; color: #cbd5e1; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.06); pointer-events: none; z-index: 10; }
         #simulasi .sim-overlay-info i { color: #60a5fa; margin-right: 8px; }
 
+        /* ============ MATERIAL MODAL ============ */
+        .material-modal {
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 5000;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+        .material-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .material-modal-content {
+            background: linear-gradient(135deg, #1a2639, #0b1a2e);
+            border-radius: 24px;
+            max-width: 720px; width: 100%;
+            padding: 32px 36px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+            border: 1px solid #2a4b6e;
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes modalPop { from { transform: scale(0.9) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        .material-modal-content .modal-icon { font-size: 3rem; text-align: center; margin-bottom: 8px; }
+        .material-modal-content h2 { color: #fff; font-size: 1.5rem; text-align: center; margin-bottom: 6px; font-weight: 800; }
+        .material-modal-content .sub { color: #94a3b8; text-align: center; font-size: 0.9rem; margin-bottom: 24px; }
+
+        .material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        @media (max-width: 600px) { .material-grid { grid-template-columns: repeat(2, 1fr); } .material-modal-content { padding: 24px 20px; } }
+
+        .material-card {
+            background: rgba(255,255,255,0.04);
+            border: 2px solid transparent;
+            border-radius: 14px;
+            padding: 14px 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+            position: relative;
+        }
+        .material-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+        .material-card.selected { border-color: #60a5fa; background: rgba(96,165,250,0.15); box-shadow: 0 0 0 3px rgba(96,165,250,0.2); }
+        .material-card.selected::after {
+            content: '✓';
+            position: absolute; top: 6px; right: 8px;
+            color: #60a5fa; font-weight: 900; font-size: 0.9rem;
+        }
+        .material-card .mat-swatch {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset -4px -4px 8px rgba(0,0,0,0.2);
+        }
+        .material-card .mat-name { color: #fff; font-weight: 700; font-size: 0.8rem; margin-bottom: 2px; }
+        .material-card .mat-desc { color: #94a3b8; font-size: 0.65rem; line-height: 1.3; }
+        .material-card .mat-rpm { color: #60a5fa; font-size: 0.65rem; font-weight: 700; margin-top: 4px; }
+
+        .modal-actions { display: flex; justify-content: center; gap: 10px; }
+        .btn-pick {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border: none; color: #fff;
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-weight: 700; font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .btn-pick:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
+        .btn-pick:disabled { background: #4a5a6a; cursor: not-allowed; opacity: 0.6; }
+
         /* ============ RESULT OVERLAY ============ */
         .result-overlay {
             position: absolute; inset: 0;
@@ -65,12 +137,10 @@
         .result-overlay.active { opacity: 1; pointer-events: auto; }
         .result-card {
             background: linear-gradient(135deg, #16a34a, #22c55e);
-            color: #fff;
-            border-radius: 20px;
+            color: #fff; border-radius: 20px;
             padding: 20px 32px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            display: flex; align-items: center; gap: 20px;
-            flex-wrap: wrap;
+            display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
             transform: translateY(30px);
             transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             max-width: 90%;
@@ -100,7 +170,7 @@
         .segment-editor .total-info { color: #94a3b8; font-size: 0.8rem; }
         .segment-editor .total-info strong { color: #60a5fa; font-size: 0.95rem; }
 
-        .segments-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; max-height: 240px; overflow-y: auto; padding-right: 4px; }
+        .segments-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; max-height: 220px; overflow-y: auto; padding-right: 4px; }
         .segments-list::-webkit-scrollbar { width: 6px; }
         .segments-list::-webkit-scrollbar-thumb { background: #4a5a6a; border-radius: 10px; }
 
@@ -130,13 +200,12 @@
         .btn-preset { background: #334155; border: none; color: #cbd5e1; padding: 6px 14px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 0.72rem; transition: 0.2s; }
         .btn-preset:hover { background: #475569; color: #fff; }
         .btn-preset.highlight { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; }
-        .btn-preset.highlight:hover { background: linear-gradient(135deg, #3b82f6, #a855f7); }
 
         /* SIM CONTROLS */
         .sim-controls-bar { display: flex; flex-direction: column; gap: 16px; background: #1a2639; padding: 20px 24px; border-radius: 0 0 24px 24px; border-top: 1px solid #2a3a4e; }
         .controls-row { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; }
         .sim-controls-bar label { display: flex; align-items: center; gap: 8px; color: #b0c9e0; font-weight: 500; font-size: 0.8rem; }
-        .sim-controls-bar input[type="range"] { width: 110px; accent-color: #2563eb; background: transparent; }
+        .sim-controls-bar input[type="range"] { width: 100px; accent-color: #2563eb; background: transparent; }
         .sim-controls-bar .val { color: #fff; font-weight: 700; min-width: 40px; font-size: 0.85rem; text-align: right; }
 
         .btn-sim { background: #2563eb; border: none; color: #fff; padding: 8px 20px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; }
@@ -145,6 +214,8 @@
         .btn-sim.danger:hover { background: #dc2626; }
         .btn-sim.outline { background: transparent; border: 2px solid #4a5a6a; color: #b0c9e0; }
         .btn-sim.outline:hover { background: #2a3a4e; }
+        .btn-sim.material-btn { background: #7c3aed; }
+        .btn-sim.material-btn:hover { background: #a855f7; }
 
         .info-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
         .info-group .info-item { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 4px 14px; border-radius: 30px; }
@@ -170,6 +241,21 @@
 </head>
 <body>
 
+    <!-- MATERIAL MODAL -->
+    <div class="material-modal" id="materialModal">
+        <div class="material-modal-content">
+            <div class="modal-icon">🔩</div>
+            <h2>Pilih Material Benda Kerja</h2>
+            <p class="sub">Tentukan jenis bahan sebelum memasukkan benda kerja ke chuck</p>
+            <div class="material-grid" id="materialGrid"></div>
+            <div class="modal-actions">
+                <button class="btn-pick" id="materialPickBtn" disabled>
+                    <i class="fas fa-check"></i> Pasang & Siapkan
+                </button>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="logo"><i class="fas fa-cogs"></i><span>SMK N 5 Medan</span> · Bubut</div>
         <div style="display: flex; align-items: center;">
@@ -188,13 +274,12 @@
     <div class="main-content">
         <div id="simulasi">
             <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D Pro</h2>
-            <p class="page-sub reveal delay-1">Pilih dari <strong>preset benda kerja</strong> (baut, mur, pipa, poros, dll) atau rancang sendiri dengan editor segmen.</p>
+            <p class="page-sub reveal delay-1">Pilih material → pilih preset bentuk → atur parameter → mulai bubut. Benda kerja akan terlihat berputar seperti aslinya.</p>
 
             <div class="sim-container reveal delay-2">
                 <div id="sim3d-container"></div>
                 <div class="sim-overlay-info"><i class="fas fa-mouse-pointer"></i> Klik & drag rotasi | Scroll zoom</div>
 
-                <!-- RESULT OVERLAY -->
                 <div class="result-overlay" id="resultOverlay">
                     <div class="result-card">
                         <div class="result-icon"><i class="fas fa-check-circle"></i></div>
@@ -209,15 +294,12 @@
                     </div>
                 </div>
 
-                <!-- SEGMENT EDITOR -->
                 <div class="segment-editor">
                     <div class="editor-header">
                         <div class="editor-title"><i class="fas fa-shapes"></i> Editor Bentuk Benda Kerja</div>
-                        <div class="total-info">Total: <strong id="totalLengthDisplay">120</strong> mm • Segmen: <strong id="segmentCountDisplay">4</strong></div>
+                        <div class="total-info">Total: <strong id="totalLengthDisplay">120</strong> mm • Segmen: <strong id="segmentCountDisplay">5</strong></div>
                     </div>
-
                     <div class="segments-list" id="segmentsList"></div>
-
                     <div class="editor-actions">
                         <button class="btn-add-seg" id="addSegmentBtn"><i class="fas fa-plus"></i> Tambah Segmen</button>
                         <span style="color:#64748b; font-size:0.75rem; margin: 0 4px;">|</span>
@@ -234,16 +316,16 @@
                     </div>
                 </div>
 
-                <!-- SIM CONTROLS -->
                 <div class="sim-controls-bar" id="simControls">
                     <div class="controls-row">
                         <div style="display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center;">
-                            <label>Diameter (mm) <input type="range" id="workDiameter" min="20" max="80" value="40" step="5"><span class="val" id="workDiameterVal">40</span></label>
+                            <label>Diameter (mm) <input type="range" id="workDiameter" min="15" max="50" value="25" step="5"><span class="val" id="workDiameterVal">25</span></label>
                             <label>RPM <input type="range" id="simRpm" min="100" max="3000" value="800" step="50"><span class="val" id="simRpmVal">800</span></label>
                             <label>Kedalaman <input type="range" id="simDepth" min="0.1" max="2.0" value="0.8" step="0.1"><span class="val" id="simDepthVal">0.8</span></label>
                             <label>Feed <input type="range" id="simFeed" min="0.05" max="0.5" value="0.2" step="0.05"><span class="val" id="simFeedVal">0.20</span></label>
                         </div>
                         <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <button class="btn-sim material-btn" id="simChangeMaterial"><i class="fas fa-cube"></i> Ganti Material</button>
                             <button class="btn-sim" id="simStart"><i class="fas fa-play"></i> Mulai</button>
                             <button class="btn-sim danger" id="simStop"><i class="fas fa-stop"></i> Stop</button>
                             <button class="btn-sim outline" id="simReset"><i class="fas fa-undo-alt"></i> Reset</button>
@@ -252,11 +334,12 @@
 
                     <div class="controls-row" style="justify-content: flex-start;">
                         <div class="info-group">
-                            <div class="info-item"><i class="fas fa-circle"></i> <span>Diameter: <strong id="simDiameter">40.0</strong> mm</span></div>
+                            <div class="info-item"><i class="fas fa-circle"></i> <span>Diameter: <strong id="simDiameter">25.0</strong> mm</span></div>
                             <div class="info-item"><i class="fas fa-arrows-alt-h"></i> <span>Pahat X: <strong id="simToolPos" style="color:#f97316;">0.0</strong> mm</span></div>
                             <div class="info-item"><i class="fas fa-tachometer-alt"></i> <span>Vc: <strong id="simVc">0.0</strong> m/min</span></div>
                             <div class="info-item"><i class="fas fa-clock"></i> <span>Waktu: <strong id="simTime">0.0</strong> s</span></div>
-                            <div class="info-item" style="background: rgba(168,85,247,0.15);"><i class="fas fa-layer-group" style="color:#a855f7;"></i> <span>Segmen: <strong id="currentSegment">1 / 4</strong></span></div>
+                            <div class="info-item" style="background: rgba(168,85,247,0.15);"><i class="fas fa-layer-group" style="color:#a855f7;"></i> <span>Segmen: <strong id="currentSegment">1 / 5</strong></span></div>
+                            <div class="info-item" style="background: rgba(34,197,94,0.15);"><i class="fas fa-cube" style="color:#22c55e;"></i> <span>Material: <strong id="materialDisplay">Baja</strong></span></div>
                         </div>
                     </div>
                 </div>
@@ -277,7 +360,7 @@
     </script>
 
     <script type="module">
-        // ============ UI UTILS ============
+        // ============ UI ============
         const mybutton = document.getElementById("myBtn");
         window.onscroll = () => {
             mybutton.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "block" : "none";
@@ -302,6 +385,53 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+        // ============ MATERIALS ============
+        const MATERIALS = {
+            baja:      { name: 'Baja Karbon',     color: 0x8a9bb0, emissive: 0x112233, rpm: 800,  icon: '🔩', desc: 'Material umum, kuat' },
+            aluminium: { name: 'Aluminium',       color: 0xc8ccd2, emissive: 0x223344, rpm: 1200, icon: '⚪', desc: 'Ringan & soft' },
+            kuningan:  { name: 'Kuningan',        color: 0xc9a961, emissive: 0x332211, rpm: 1000, icon: '🟡', desc: 'Permukaan halus' },
+            tembaga:   { name: 'Tembaga',         color: 0xb87333, emissive: 0x331100, rpm: 900,  icon: '🟠', desc: 'Konduktor, mengkilap' },
+            besi_cor:  { name: 'Besi Cor',        color: 0x4a4a4a, emissive: 0x111111, rpm: 600,  icon: '⚫', desc: 'Keras, getas' },
+            stainless: { name: 'Stainless Steel', color: 0xd0d8e0, emissive: 0x223344, rpm: 500,  icon: '🔘', desc: 'Tahan karat, keras' }
+        };
+
+        let selectedMaterial = null;
+
+        // Build material cards
+        function buildMaterialGrid() {
+            const grid = document.getElementById('materialGrid');
+            grid.innerHTML = '';
+            Object.entries(MATERIALS).forEach(([key, mat]) => {
+                const card = document.createElement('div');
+                card.className = 'material-card';
+                card.dataset.key = key;
+                const colorHex = '#' + mat.color.toString(16).padStart(6, '0');
+                card.innerHTML = `
+                    <div class="mat-swatch" style="background: linear-gradient(135deg, ${colorHex}, #${mat.emissive.toString(16).padStart(6, '0')});"></div>
+                    <div class="mat-name">${mat.name}</div>
+                    <div class="mat-desc">${mat.desc}</div>
+                    <div class="mat-rpm">${mat.rpm} RPM</div>
+                `;
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedMaterial = key;
+                    document.getElementById('materialPickBtn').disabled = false;
+                });
+                grid.appendChild(card);
+            });
+        }
+        buildMaterialGrid();
+
+        document.getElementById('materialPickBtn').addEventListener('click', () => {
+            if (!selectedMaterial) return;
+            applyMaterial(selectedMaterial);
+            document.getElementById('materialModal').classList.add('hidden');
+        });
+        document.getElementById('simChangeMaterial').addEventListener('click', () => {
+            document.getElementById('materialModal').classList.remove('hidden');
+        });
+
         // ============ THREE.JS ============
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -316,7 +446,7 @@
         scene.fog = new THREE.Fog(0x0a0d14, 22, 65);
 
         const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
-        camera.position.set(14, 10, 16);
+        camera.position.set(12, 9, 14);
         camera.lookAt(0, 1.5, 0);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -339,13 +469,13 @@
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.08;
-        controls.minDistance = 8;
-        controls.maxDistance = 40;
+        controls.minDistance = 6;
+        controls.maxDistance = 35;
         controls.target.set(0, 1.5, 0);
         controls.update();
 
         // LIGHTS
-        scene.add(new THREE.AmbientLight(0x404060, 0.6));
+        scene.add(new THREE.AmbientLight(0x404060, 0.7));
         const mainLight = new THREE.DirectionalLight(0xffeedd, 1.8);
         mainLight.position.set(10, 15, 8);
         mainLight.castShadow = true;
@@ -483,7 +613,7 @@
         machineGroup.add(shield);
 
         // ============ SEGMENT SYSTEM ============
-        const SCALE_FACTOR = 15;
+        const SCALE_FACTOR = 40; // 1 unit 3D = 40 mm (workpiece much smaller!)
 
         const SHAPE_NAMES = {
             silinder: 'Silinder (rata)',
@@ -491,133 +621,171 @@
             taper_turun: 'Tirus Turun',
             alur: 'Beralur',
             ulir: 'Berulir',
-            chamfer: 'Chamfer (sudut)',
+            chamfer: 'Chamfer',
             bulat: 'Bulat (radius)',
             kepala_baut: 'Kepala Baut',
             pulley_alur: 'Pulley (alur V)',
-            pasak: 'Pasak (kecil)',
+            pasak: 'Pasak',
             mur_segi: 'Mur Segi'
         };
 
-        // ============ PRESETS ============
         const PRESETS = {
-            // 🔩 BAUT: kepala + shank + ulir + chamfer
             baut: [
-                { shape: 'kepala_baut', length: 15 },
-                { shape: 'silinder', length: 45 },
-                { shape: 'ulir', length: 45 },
-                { shape: 'chamfer', length: 15 }
+                { shape: 'kepala_baut', length: 12 },
+                { shape: 'silinder', length: 40 },
+                { shape: 'ulir', length: 40 },
+                { shape: 'chamfer', length: 12 }
             ],
-            // 🔘 MUR: segi tebal + chamfer
             mur: [
                 { shape: 'mur_segi', length: 25 },
                 { shape: 'chamfer', length: 15 }
             ],
-            // 🚰 PIPA: silinder panjang + ujung miring
             pipa: [
                 { shape: 'chamfer', length: 15 },
-                { shape: 'silinder', length: 80 },
+                { shape: 'silinder', length: 70 },
                 { shape: 'chamfer', length: 15 }
             ],
-            // Poros bertingkat (3 tingkat)
             poros: [
                 { shape: 'silinder', length: 25 },
                 { shape: 'taper_turun', length: 15 },
-                { shape: 'silinder', length: 35 },
+                { shape: 'silinder', length: 30 },
                 { shape: 'taper_turun', length: 15 },
-                { shape: 'silinder', length: 30 }
+                { shape: 'silinder', length: 25 }
             ],
-            // Baut berulir panjang
             ulir: [
                 { shape: 'silinder', length: 20 },
-                { shape: 'ulir', length: 70 },
+                { shape: 'ulir', length: 60 },
                 { shape: 'chamfer', length: 15 }
             ],
-            // Poros tirus dua arah
             tirus: [
-                { shape: 'taper_turun', length: 60 },
-                { shape: 'taper_naik', length: 60 }
+                { shape: 'taper_turun', length: 55 },
+                { shape: 'taper_naik', length: 55 }
             ],
-            // Poros beralur
             alur: [
                 { shape: 'silinder', length: 30 },
-                { shape: 'alur', length: 50 },
-                { shape: 'silinder', length: 40 }
+                { shape: 'alur', length: 40 },
+                { shape: 'silinder', length: 35 }
             ],
-            // Pasak (pin) kecil dengan kepala
             pasak: [
-                { shape: 'kepala_baut', length: 12 },
-                { shape: 'pasak', length: 80 },
-                { shape: 'chamfer', length: 12 }
+                { shape: 'kepala_baut', length: 10 },
+                { shape: 'pasak', length: 70 },
+                { shape: 'chamfer', length: 10 }
             ],
-            // Pulley dengan 2 alur V
             pulley: [
                 { shape: 'silinder', length: 15 },
-                { shape: 'pulley_alur', length: 30 },
+                { shape: 'pulley_alur', length: 25 },
                 { shape: 'silinder', length: 10 },
-                { shape: 'pulley_alur', length: 30 },
+                { shape: 'pulley_alur', length: 25 },
                 { shape: 'silinder', length: 15 }
             ]
         };
 
-        // State
-        let segments = JSON.parse(JSON.stringify(PRESETS.poros));
+        let segments = JSON.parse(JSON.stringify(PRESETS.baut));
         let totalLength = segments.reduce((a, s) => a + s.length, 0);
-        let originalRadiusScene = 1.33;
-        let lengthScene = 8;
-        let cutDepthScene = 0.04;
+        let originalRadiusScene = 0.33;
+        let lengthScene = 3;
+        let cutDepthScene = 0.01;
         let toolProgress = 0;
         let workpieceMesh = null;
+        let workpieceTexture = null;
+
+        // ============ ROTATION-VISIBLE TEXTURE ============
+        function createRotationTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+
+            // Base gray (will be tinted by material.color)
+            ctx.fillStyle = '#d8d8d8';
+            ctx.fillRect(0, 0, 1024, 256);
+
+            // U = along length (0..1), V = around circumference (0..1)
+            // Vertical lines in texture (constant U, varying V) → ring bands on workpiece
+            // These rotate visibly when workpiece spins
+            for (let i = 0; i < 32; i++) {
+                const x = i * 32;
+                // Alternate light and dark bands
+                ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                ctx.fillRect(x, 0, 6, 256);
+                ctx.fillStyle = 'rgba(0,0,0,0.20)';
+                ctx.fillRect(x + 16, 0, 6, 256);
+            }
+
+            // Add fine longitudinal lines (constant V, varying U) 
+            // → appears as lines along the length
+            for (let j = 0; j < 16; j++) {
+                const y = j * 16;
+                ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(1024, y);
+                ctx.stroke();
+            }
+
+            // Subtle diagonal hatch for metal feel
+            ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+            ctx.lineWidth = 1;
+            for (let k = 0; k < 128; k++) {
+                ctx.beginPath();
+                ctx.moveTo(k * 8, 0);
+                ctx.lineTo(k * 8 + 32, 256);
+                ctx.stroke();
+            }
+
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.wrapT = THREE.RepeatWrapping;
+            tex.anisotropy = 8;
+            tex.minFilter = THREE.LinearMipMapLinearFilter;
+            tex.magFilter = THREE.LinearFilter;
+            return tex;
+        }
+
+        workpieceTexture = createRotationTexture();
 
         // ============ RENDER SEGMENT EDITOR ============
         function renderSegments() {
             const list = document.getElementById('segmentsList');
             list.innerHTML = '';
-
             segments.forEach((seg, i) => {
                 const row = document.createElement('div');
                 row.className = 'segment-row';
                 row.dataset.shape = seg.shape;
-
                 const shapeOpts = Object.entries(SHAPE_NAMES).map(([k, v]) =>
                     `<option value="${k}" ${seg.shape === k ? 'selected' : ''}>${v}</option>`
                 ).join('');
-
                 row.innerHTML = `
                     <span class="seg-num">${i + 1}</span>
                     <select data-key="shape">${shapeOpts}</select>
                     <input type="range" data-key="length" min="10" max="100" value="${seg.length}" step="5">
                     <span class="seg-len-val">${seg.length}mm</span>
-                    <button class="remove-btn" title="Hapus segmen">×</button>
+                    <button class="remove-btn" title="Hapus">×</button>
                 `;
-
                 row.querySelector('select').addEventListener('change', (e) => {
                     segments[i].shape = e.target.value;
                     row.dataset.shape = e.target.value;
                     resetSimulation();
                 });
-
                 row.querySelector('input[type="range"]').addEventListener('input', (e) => {
                     segments[i].length = parseInt(e.target.value);
                     row.querySelector('.seg-len-val').textContent = segments[i].length + 'mm';
                     updateTotalDisplay();
                     onSegmentChange();
                 });
-
                 row.querySelector('.remove-btn').addEventListener('click', () => {
                     if (segments.length <= 1) { alert('Minimal 1 segmen!'); return; }
                     segments.splice(i, 1);
                     renderSegments();
                     onSegmentChange();
                 });
-
                 list.appendChild(row);
             });
-
             const addBtn = document.getElementById('addSegmentBtn');
             if (segments.length >= 8) {
                 addBtn.disabled = true;
-                addBtn.innerHTML = '<i class="fas fa-ban"></i> Maks. 8 Segmen';
+                addBtn.innerHTML = '<i class="fas fa-ban"></i> Maks. 8';
             } else {
                 addBtn.disabled = false;
                 addBtn.innerHTML = '<i class="fas fa-plus"></i> Tambah Segmen';
@@ -644,70 +812,51 @@
         // ============ SHAPE PROFILE ============
         function applyShape(shape, localT, origR, depth) {
             switch (shape) {
-                case 'silinder':
-                    return Math.max(origR - depth, 0.05);
-
+                case 'silinder': return Math.max(origR - depth, 0.02);
                 case 'taper_naik': {
                     const f = 0.2 + localT * 0.8;
-                    return Math.max(origR - depth * (2 - f * 1.5), 0.05);
+                    return Math.max(origR - depth * (2 - f * 1.5), 0.02);
                 }
-
                 case 'taper_turun': {
                     const f = 1 - localT * 0.85;
-                    return Math.max(origR - depth * (0.5 + (1 - f) * 1.2), 0.05);
+                    return Math.max(origR - depth * (0.5 + (1 - f) * 1.2), 0.02);
                 }
-
                 case 'alur': {
-                    const base = Math.max(origR - depth * 0.4, 0.05);
+                    const base = Math.max(origR - depth * 0.4, 0.02);
                     const phase = (localT * 3) % 1;
-                    if (phase > 0.35 && phase < 0.65) return Math.max(origR - depth * 2.8, 0.05);
+                    if (phase > 0.35 && phase < 0.65) return Math.max(origR - depth * 2.8, 0.02);
                     return base;
                 }
-
                 case 'ulir': {
-                    const base = Math.max(origR - depth * 1.2, 0.05);
+                    const base = Math.max(origR - depth * 1.2, 0.02);
                     const tooth = Math.sin(localT * Math.PI * 40);
-                    return Math.max(base + tooth * depth * 0.5, 0.05);
+                    return Math.max(base + tooth * depth * 0.5, 0.02);
                 }
-
                 case 'chamfer': {
-                    if (localT < 0.3) return Math.max(origR - depth * (1 - localT * 3), 0.05);
-                    return Math.max(origR - depth * 2.5, 0.05);
+                    if (localT < 0.3) return Math.max(origR - depth * (1 - localT * 3), 0.02);
+                    return Math.max(origR - depth * 2.5, 0.02);
                 }
-
                 case 'bulat': {
                     const curve = Math.sin(localT * Math.PI);
-                    return Math.max(origR - depth * (0.2 + curve * 1.5), 0.05);
+                    return Math.max(origR - depth * (0.2 + curve * 1.5), 0.02);
                 }
-
                 case 'kepala_baut': {
-                    // Kepala baut - mempertahankan diameter besar dengan chamfer di tepi
                     const edge = Math.min(localT, 1 - localT);
-                    if (edge < 0.08) {
-                        return Math.max(origR - depth * (1 - edge * 12), 0.05);
-                    }
+                    if (edge < 0.08) return Math.max(origR - depth * (1 - edge * 12), 0.02);
                     return origR;
                 }
-
                 case 'pulley_alur': {
-                    // Pulley dengan alur V
-                    const base = Math.max(origR - depth * 0.3, 0.05);
+                    const base = Math.max(origR - depth * 0.3, 0.02);
                     const groove = Math.sin(localT * Math.PI);
-                    return Math.max(base - Math.abs(groove) * depth * 2, 0.05);
+                    return Math.max(base - Math.abs(groove) * depth * 2, 0.02);
                 }
-
-                case 'pasak': {
-                    // Pasak - diameter lebih kecil
-                    return Math.max(origR - depth * 2, 0.05);
-                }
-
+                case 'pasak': return Math.max(origR - depth * 2, 0.02);
                 case 'mur_segi': {
-                    // Mur - flat dengan sedikit variasi untuk kesan segi
                     const wobble = Math.sin(localT * Math.PI * 6) * 0.05;
-                    return Math.max(origR - depth * (0.4 + Math.abs(wobble)), 0.05);
+                    return Math.max(origR - depth * (0.4 + Math.abs(wobble)), 0.02);
                 }
             }
-            return Math.max(origR - depth, 0.05);
+            return Math.max(origR - depth, 0.02);
         }
 
         function getRadiusAt(t, origR, depth) {
@@ -715,7 +864,6 @@
             const total = segments.reduce((a, s) => a + s.length, 0);
             let activeSeg = segments[segments.length - 1];
             let localT = 1;
-
             for (const seg of segments) {
                 const segFrac = seg.length / total;
                 if (t <= cum + segFrac + 0.0001) {
@@ -726,7 +874,6 @@
                 }
                 cum += segFrac;
             }
-
             if (t > toolProgress) return origR;
             return applyShape(activeSeg.shape, localT, origR, depth);
         }
@@ -734,23 +881,22 @@
         // ============ BUILD GEOMETRY ============
         function buildWorkpieceGeometry(lengthInScene, radiusFn) {
             const segLength = 160;
-            const segAngle = 40;
+            const segAngle = 48;
             const positions = [];
             const normals = [];
             const indices = [];
             const uvs = [];
-
             for (let i = 0; i <= segLength; i++) {
                 const t = i / segLength;
                 const x = t * lengthInScene;
-                const r = Math.max(radiusFn(t), 0.03);
+                const r = Math.max(radiusFn(t), 0.015);
                 for (let j = 0; j <= segAngle; j++) {
                     const theta = (j / segAngle) * Math.PI * 2;
                     const cy = Math.cos(theta);
                     const sy = Math.sin(theta);
                     positions.push(x, r * cy, r * sy);
                     normals.push(0, cy, sy);
-                    uvs.push(t, j / segAngle);
+                    uvs.push(t * 2, j / segAngle);
                 }
             }
             for (let i = 0; i < segLength; i++) {
@@ -773,10 +919,29 @@
         }
 
         const workMat = new THREE.MeshStandardMaterial({
-            color: 0xaaccdd, roughness: 0.4, metalness: 0.85,
-            emissive: 0x112233, emissiveIntensity: 0.1,
+            color: 0x8a9bb0,
+            map: workpieceTexture,
+            roughness: 0.45,
+            metalness: 0.75,
+            emissive: 0x112233,
+            emissiveIntensity: 0.1,
             side: THREE.DoubleSide
         });
+
+        // ============ APPLY MATERIAL ============
+        function applyMaterial(key) {
+            const mat = MATERIALS[key];
+            if (!mat) return;
+            workMat.color.setHex(mat.color);
+            workMat.emissive.setHex(mat.emissive);
+            workMat.emissiveIntensity = 0.08;
+            document.getElementById('materialDisplay').textContent = mat.name;
+            // Auto-set RPM suggestion
+            document.getElementById('simRpm').value = mat.rpm;
+            document.getElementById('simRpmVal').textContent = mat.rpm;
+            rpm = mat.rpm;
+            updateVc();
+        }
 
         function createWorkpiece(diameter) {
             originalRadiusScene = (diameter / 2) / SCALE_FACTOR;
@@ -784,13 +949,14 @@
             const radiusFn = () => originalRadiusScene;
             const geo = buildWorkpieceGeometry(lengthScene, radiusFn);
             workpieceMesh = new THREE.Mesh(geo, workMat);
-            const leftEdgeX = -3.1;
+            // Chuck front edge is at approximately X = -3.1
+            // Move workpiece so its left edge is slightly INSIDE the chuck (at X = -3.3)
+            const leftEdgeX = -3.3;
             workpieceMesh.position.set(leftEdgeX, 0.6 + 1.25, 0);
-            workpieceMesh.rotation.set(0, 0, 0);
             workpieceMesh.castShadow = true;
             workpieceMesh.receiveShadow = true;
             machineGroup.add(workpieceMesh);
-            tailGroup.position.x = leftEdgeX + lengthScene + 1.3;
+            tailGroup.position.x = leftEdgeX + lengthScene + 1.5;
         }
 
         function updateWorkpieceGeometry() {
@@ -808,17 +974,21 @@
         function createTool(type) {
             if (currentToolGroup) carriageGroup.remove(currentToolGroup);
             const toolGroup = new THREE.Group();
-            toolGroup.position.set(0, 1.25, 0);
+            // Move tool group further out in Z so it doesn't clip workpiece
+            toolGroup.position.set(0, 1.25, 0.3);
+
             const shankMat = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.4, metalness: 0.6 });
-            const shank = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.2, 1.5), shankMat);
-            shank.position.set(0, 0, 0.5);
+            const shank = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.15, 0.9), shankMat);
+            shank.position.set(0, 0, 0.45);
             shank.castShadow = true;
             toolGroup.add(shank);
-            const tipMat = new THREE.MeshStandardMaterial({ color: 0xff8844, roughness: 0.2, metalness: 0.3, emissive: 0xff5500, emissiveIntensity: 0.1 });
-            const tip = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.25, 4), tipMat);
+
+            const tipMat = new THREE.MeshStandardMaterial({ color: 0xff8844, roughness: 0.2, metalness: 0.3, emissive: 0xff5500, emissiveIntensity: 0.15 });
+            const tip = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.2, 4), tipMat);
             tip.rotation.z = -Math.PI / 2;
-            tip.position.set(0, 0, -0.3);
+            tip.position.set(0, 0, -0.08);
             toolGroup.add(tip);
+
             currentToolGroup = toolGroup;
             carriageGroup.add(toolGroup);
         }
@@ -855,7 +1025,7 @@
         let toolFeed = 0.2;
         let rpm = 800;
         let depthOfCut = 0.8;
-        let maxTravel = 8;
+        let maxTravel = 3;
         let showResultMode = false;
         let resultAnimT = 0;
 
@@ -877,7 +1047,6 @@
         const resetBtn = document.getElementById('simReset');
         const resultOverlay = document.getElementById('resultOverlay');
 
-        // ============ EVENT LISTENERS ============
         document.getElementById('addSegmentBtn').addEventListener('click', () => {
             if (segments.length >= 8) return;
             segments.push({ shape: 'silinder', length: 30 });
@@ -905,7 +1074,7 @@
         feedSlider.addEventListener('input', () => { toolFeed = parseFloat(feedSlider.value); feedVal.textContent = toolFeed.toFixed(2); });
         workDiaSlider.addEventListener('input', () => {
             workDiaVal.textContent = workDiaSlider.value;
-            if (!isRunning) {
+            if (!isRunning && workpieceMesh) {
                 machineGroup.remove(workpieceMesh);
                 workpieceMesh.geometry.dispose();
                 createWorkpiece(parseFloat(workDiaSlider.value));
@@ -945,7 +1114,6 @@
             updateVc();
         }
 
-        // ============ RESET ============
         function resetSimulation() {
             isRunning = false;
             showResultMode = false;
@@ -957,26 +1125,19 @@
             cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
             maxTravel = lengthScene;
 
-            // Reset workpiece
             if (workpieceMesh) {
-                workpieceMesh.position.set(-3.1, 0.6 + 1.25, 0);
+                workpieceMesh.position.set(-3.3, 0.6 + 1.25, 0);
                 workpieceMesh.rotation.set(0, 0, 0);
                 workpieceMesh.scale.set(1, 1, 1);
             }
-            // Reset tailstock
-            tailGroup.position.x = -3.1 + lengthScene + 1.3;
-            // Reset carriage
-            carriageGroup.position.set(-3.1, 0.6, originalRadiusScene + 0.4);
-            // Reset label visible
+            tailGroup.position.x = -3.3 + lengthScene + 1.5;
+            carriageGroup.position.set(-3.3, 0.6, originalRadiusScene + 0.4);
             labelWork.visible = true;
             labelChuck.visible = true;
             labelTail.visible = true;
+            labelTool.visible = true;
 
-            workMat.color.setHex(0xaaccdd);
-            workMat.emissive.setHex(0x112233);
-            workMat.emissiveIntensity = 0.1;
-            workMat.opacity = 1;
-            workMat.transparent = false;
+            workMat.emissiveIntensity = 0.08;
 
             updateWorkpieceGeometry();
             updateUI();
@@ -986,7 +1147,6 @@
         function triggerResultShow() {
             showResultMode = true;
             resultAnimT = 0;
-            // Hide labels that don't make sense during showcase
             labelChuck.visible = false;
             labelTail.visible = false;
             labelTool.visible = false;
@@ -997,10 +1157,10 @@
             showResultMode = false;
             resultAnimT = 0;
             resultOverlay.classList.remove('active');
-            // Reset workpiece back to machine
             if (workpieceMesh) {
-                workpieceMesh.position.set(-3.1, 0.6 + 1.25, 0);
+                workpieceMesh.position.set(-3.3, 0.6 + 1.25, 0);
                 workpieceMesh.rotation.set(0, 0, 0);
+                workpieceMesh.scale.set(1, 1, 1);
             }
             labelChuck.visible = true;
             labelTail.visible = true;
@@ -1010,37 +1170,29 @@
         function updateResultAnimation(deltaTime) {
             if (!showResultMode || !workpieceMesh) return;
             resultAnimT += deltaTime;
-
-            // ease-out cubic, 1.8s duration
             const t = Math.min(resultAnimT / 1.8, 1);
             const e = 1 - Math.pow(1 - t, 3);
 
-            // Start position (in machine): leftEdgeX = -3.1, so center is -3.1 + lengthScene/2
-            const startX = -3.1;
+            const startX = -3.3;
             const startY = 0.6 + 1.25;
             const startZ = 0;
-
-            // Showcase target: center at (0, 4, 2) → mesh.pos.x = -lengthScene/2
             const targetX = -lengthScene / 2;
             const targetY = 4;
-            const targetZ = 2;
+            const targetZ = 2.5;
 
             workpieceMesh.position.x = startX + (targetX - startX) * e;
             workpieceMesh.position.y = startY + (targetY - startY) * e;
             workpieceMesh.position.z = startZ + (targetZ - startZ) * e;
 
-            // Rotate to vertical then spin slowly around Y
             const targetRotZ = -Math.PI / 2;
             workpieceMesh.rotation.z = targetRotZ * e;
             workpieceMesh.rotation.x = 0;
             workpieceMesh.rotation.y += deltaTime * 0.8;
 
-            // Scale pop
-            const scalePop = 1 + Math.sin(t * Math.PI) * 0.12;
+            const scalePop = 1 + Math.sin(t * Math.PI) * 0.15;
             workpieceMesh.scale.setScalar(scalePop);
 
-            // Label follows workpiece
-            labelWork.position.set(workpieceMesh.position.x, workpieceMesh.position.y + 2.2, workpieceMesh.position.z);
+            labelWork.position.set(workpieceMesh.position.x, workpieceMesh.position.y + 2.5, workpieceMesh.position.z);
         }
 
         // ============ SIMULATION LOOP ============
@@ -1049,10 +1201,7 @@
         let frameCounter = 0;
 
         function simulate(deltaTime) {
-            if (showResultMode) {
-                updateResultAnimation(deltaTime);
-                return;
-            }
+            if (showResultMode) { updateResultAnimation(deltaTime); return; }
             if (!isRunning || !workpieceMesh) return;
 
             const revPerSec = rpm / 60;
@@ -1069,27 +1218,23 @@
                 toolProgress = 1;
                 isRunning = false;
                 startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
-                workMat.emissive.setHex(0x22aa44);
                 workMat.emissiveIntensity = 0.2;
                 updateWorkpieceGeometry();
                 updateUI();
-                // Trigger result show after a short delay
                 setTimeout(triggerResultShow, 500);
                 return;
             }
 
             toolProgress = toolPosX / maxTravel;
-            carriageGroup.position.x = -3.1 + toolPosX;
+            carriageGroup.position.x = -3.3 + toolPosX;
             carriageGroup.position.z = originalRadiusScene + 0.4;
 
             frameCounter++;
-            if (frameCounter % 2 === 0) {
-                updateWorkpieceGeometry();
-            }
+            if (frameCounter % 2 === 0) updateWorkpieceGeometry();
 
-            const heatFactor = toolProgress * 0.6;
-            workMat.emissive.setHSL(0.08, 0.9, 0.1 + heatFactor * 0.3);
-            workMat.emissiveIntensity = 0.1 + heatFactor * 0.4;
+            // Heat effect (subtle)
+            const heatFactor = toolProgress * 0.5;
+            workMat.emissiveIntensity = 0.08 + heatFactor * 0.3;
 
             simTime += deltaTime;
             updateUI();
@@ -1097,13 +1242,16 @@
 
         // ============ BUTTONS ============
         startBtn.addEventListener('click', () => {
+            if (!selectedMaterial) {
+                document.getElementById('materialModal').classList.remove('hidden');
+                return;
+            }
             if (showResultMode) hideResultShow();
             if (isRunning) return;
             if (toolPosX >= maxTravel) resetSimulation();
             isRunning = true;
             startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
-            workMat.emissive.setHex(0xff4400);
-            workMat.emissiveIntensity = 0.15;
+            workMat.emissiveIntensity = 0.2;
             if (!currentToolGroup) createTool('turning');
         });
 
@@ -1115,7 +1263,6 @@
 
         resetBtn.addEventListener('click', resetSimulation);
 
-        // ============ ANIMATE LOOP ============
         function animate(time) {
             const delta = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0.016;
             lastTime = time;
@@ -1146,7 +1293,7 @@
         updateUI();
         animate(0);
 
-        console.log('✅ Simulasi siap! Benda kerja akan keluar dari mesin setelah selesai.');
+        console.log('✅ Simulasi siap! Pilih material dulu sebelum memulai.');
     </script>
 </body>
 </html>
