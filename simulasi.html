@@ -257,7 +257,7 @@
     <div class="main-content">
         <div id="simulasi">
             <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D Pro</h2>
-            <p class="page-sub reveal delay-1">Model disesuaikan dengan gambar referensi: panel listrik, lead screw, feed shaft, carriage tengah, tailstock compact.</p>
+            <p class="page-sub reveal delay-1">Arah pahat kini tepat menyentuh permukaan benda kerja, tidak menembus ke chuck.</p>
 
             <div class="sim-container reveal delay-2">
                 <div id="sim3d-container"></div>
@@ -537,80 +537,83 @@
         gridHelper.position.y = -2.49;
         scene.add(gridHelper);
 
-        // ============ MATERIALS (Abu-abu industrial sesuai gambar) ============
+        // ============ MATERIALS ============
         const matDarkBase = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6, metalness: 0.4 });
-        // Abu-abu utama body mesin (sesuai ilustrasi)
         const matMachineBody = new THREE.MeshStandardMaterial({ color: 0xa8aeb5, roughness: 0.45, metalness: 0.55 });
         const matMachineDark = new THREE.MeshStandardMaterial({ color: 0x7a8088, roughness: 0.5, metalness: 0.5 });
         const matMachineLight = new THREE.MeshStandardMaterial({ color: 0xc8ccd0, roughness: 0.4, metalness: 0.6 });
         const matMetal = new THREE.MeshStandardMaterial({ color: 0x9abada, roughness: 0.2, metalness: 0.9 });
         const matChuck = new THREE.MeshStandardMaterial({ color: 0x6a7a8a, roughness: 0.35, metalness: 0.85 });
-        const matSafety = new THREE.MeshStandardMaterial({ color: 0xaaccff, transparent: true, opacity: 0.15, roughness: 0.1, metalness: 0.1, side: THREE.DoubleSide });
         const matSilver = new THREE.MeshStandardMaterial({ color: 0xd0d4d8, roughness: 0.25, metalness: 0.95 });
         const matDarkMetal = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.4, metalness: 0.85 });
         const matBlackRubber = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.85, metalness: 0.1 });
         const matPanelDark = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.7, metalness: 0.3 });
+        const matSplashBlack = new THREE.MeshStandardMaterial({ color: 0x15181c, roughness: 0.85, metalness: 0.25 });
 
         // ============ MESIN ============
         const machineGroup = new THREE.Group();
         scene.add(machineGroup);
 
-        // Base bawah: cabinet dengan 2 kaki
-        const cabinet = new THREE.Mesh(new THREE.BoxGeometry(15, 2.2, 3.0), matMachineDark);
-        cabinet.position.set(0, -1.4, 0);
+        // Back splash guard
+        const backSplash = new THREE.Mesh(new THREE.BoxGeometry(13.5, 3.8, 0.15), matSplashBlack);
+        backSplash.position.set(0, 1.6, -1.55);
+        backSplash.castShadow = true;
+        backSplash.receiveShadow = true;
+        machineGroup.add(backSplash);
+
+        const leftSplash = new THREE.Mesh(new THREE.BoxGeometry(0.15, 3.8, 2.6), matSplashBlack);
+        leftSplash.position.set(-6.75, 1.6, -0.25);
+        leftSplash.castShadow = true;
+        machineGroup.add(leftSplash);
+
+        const rightSplash = new THREE.Mesh(new THREE.BoxGeometry(0.15, 3.8, 2.6), matSplashBlack);
+        rightSplash.position.set(6.75, 1.6, -0.25);
+        rightSplash.castShadow = true;
+        machineGroup.add(rightSplash);
+
+        const cabinet = new THREE.Mesh(new THREE.BoxGeometry(15, 2.2, 2.2), matMachineDark);
+        cabinet.position.set(0, -1.4, -0.5);
         cabinet.castShadow = true; cabinet.receiveShadow = true;
         machineGroup.add(cabinet);
 
-        // Panel pintu kaki (dark)
         const panelFootMat = new THREE.MeshStandardMaterial({ color: 0x5a5f66, roughness: 0.7, metalness: 0.3 });
         const panelLeft = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.2, 0.05), panelFootMat);
-        panelLeft.position.set(-6.5, -1.5, 1.52);
+        panelLeft.position.set(-6.5, -1.5, 0.62);
         machineGroup.add(panelLeft);
         const panelRight = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.2, 0.05), panelFootMat);
-        panelRight.position.set(6.5, -1.5, 1.52);
+        panelRight.position.set(6.5, -1.5, 0.62);
         machineGroup.add(panelRight);
 
-        // Chip tray
-        const chipTray = new THREE.Mesh(new THREE.BoxGeometry(13, 0.15, 3.2), matMachineBody);
-        chipTray.position.set(0, -0.25, 0);
-        machineGroup.add(chipTray);
-
-        // Kaki bawah
-        [[-6.5,-2.1,-1.2],[6.5,-2.1,-1.2],[-6.5,-2.1,1.2],[6.5,-2.1,1.2]].forEach(p => {
+        [[-6.5,-2.1,-1.0],[6.5,-2.1,-1.0],[-6.5,-2.1,0.4],[6.5,-2.1,0.4]].forEach(p => {
             const leg = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), matMachineDark);
             leg.position.set(p[0], p[1], p[2]);
             machineGroup.add(leg);
         });
 
-        // ============ BED (alas mesin) ============
-        const bed = new THREE.Mesh(new THREE.BoxGeometry(13, 0.8, 2.6), matMachineBody);
-        bed.position.set(0, 0.2, 0);
+        const bed = new THREE.Mesh(new THREE.BoxGeometry(13, 0.8, 2.4), matMachineBody);
+        bed.position.set(0, 0.2, -0.3);
         bed.castShadow = true; bed.receiveShadow = true;
         machineGroup.add(bed);
 
-        // Rel pemandu (ways) - silver metal
-        [-3.0, 3.0].forEach(x => {
-            const rail = new THREE.Mesh(new THREE.BoxGeometry(9.5, 0.15, 0.3), matSilver);
-            rail.position.set(0, 0.6, x);
+        [-0.85, 0.25].forEach(z => {
+            const rail = new THREE.Mesh(new THREE.BoxGeometry(9.5, 0.15, 0.25), matSilver);
+            rail.position.set(0, 0.6, z);
             machineGroup.add(rail);
         });
 
-        // ============ PANEL LISTRIK (di sisi kiri headstock) ============
+        // Electrical panel
         const electricalPanelGroup = new THREE.Group();
-        electricalPanelGroup.position.set(-6.8, 1.5, 0);
+        electricalPanelGroup.position.set(-6.8, 1.5, -0.2);
         machineGroup.add(electricalPanelGroup);
 
-        // Kotak panel listrik
         const panelBox = new THREE.Mesh(new THREE.BoxGeometry(0.15, 2.2, 2.2), matMachineLight);
         panelBox.castShadow = true;
         electricalPanelGroup.add(panelBox);
 
-        // Bodi panel gelap (untuk tombol-tombol)
         const panelFace = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.5, 1.5), matPanelDark);
         panelFace.position.set(-0.1, 0.1, 0);
         electricalPanelGroup.add(panelFace);
 
-        // Tombol merah & hijau
         const btnRedMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, emissive: 0x660000, emissiveIntensity: 0.4, roughness: 0.4 });
         const btnGreenMat = new THREE.MeshStandardMaterial({ color: 0x16a34a, emissive: 0x004400, emissiveIntensity: 0.4, roughness: 0.4 });
         const btnRed = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.06, 16), btnRedMat);
@@ -622,14 +625,12 @@
         btnGreen.position.set(-0.15, 0.5, 0.35);
         electricalPanelGroup.add(btnGreen);
 
-        // Knob-putar
         const knobMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.5, metalness: 0.4 });
         for (let i = 0; i < 2; i++) {
             const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.08, 16), knobMat);
             knob.rotation.z = Math.PI / 2;
             knob.position.set(-0.15, -0.1 - i * 0.5, 0.25);
             electricalPanelGroup.add(knob);
-            // Indikator putih
             const indicator = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.08, 0.02), matSilver);
             indicator.position.set(-0.20, -0.1 - i * 0.5, 0.25);
             electricalPanelGroup.add(indicator);
@@ -637,39 +638,34 @@
 
         // ============ HEADSTOCK ============
         const headGroup = new THREE.Group();
-        headGroup.position.set(-5.0, 0.6, 0);
+        headGroup.position.set(-5.0, 0.6, -0.3);
         machineGroup.add(headGroup);
 
-        // Body headstock (kotak besar)
-        const headBase = new THREE.Mesh(new THREE.BoxGeometry(2.8, 2.5, 2.4), matMachineBody);
+        const headBase = new THREE.Mesh(new THREE.BoxGeometry(2.8, 2.5, 2.2), matMachineBody);
         headBase.position.y = 1.25;
         headBase.castShadow = true;
         headGroup.add(headBase);
 
-        // Bagian atas headstock (lebih kecil)
-        const headUpper = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.4, 2.0), matMachineLight);
+        const headUpper = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.4, 1.9), matMachineLight);
         headUpper.position.set(0.1, 2.6, 0);
         headUpper.castShadow = true;
         headGroup.add(headUpper);
 
-        // Line dekoratif horizontal
         const decorLine = new THREE.Mesh(new THREE.BoxGeometry(2.7, 0.05, 0.05), matMachineDark);
-        decorLine.position.set(0, 1.8, 1.21);
+        decorLine.position.set(0, 1.8, 1.11);
         headGroup.add(decorLine);
 
-        // Plat nama kuningan
         const nameplate = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.5, 0.02), new THREE.MeshStandardMaterial({ color: 0xc9a961, roughness: 0.3, metalness: 0.85 }));
-        nameplate.position.set(-0.6, 2.1, 1.22);
+        nameplate.position.set(-0.6, 2.1, 1.12);
         headGroup.add(nameplate);
 
-        // Spindle (poros utama) - silver panjang
         const spindle = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 1.2, 24), matSilver);
         spindle.rotation.z = Math.PI / 2;
         spindle.position.set(1.6, 1.25, 0);
         spindle.castShadow = true;
         headGroup.add(spindle);
 
-        // ============ CHUCK (3/4 JAW) ============
+        // ============ CHUCK ============
         const chuckGroup = new THREE.Group();
         chuckGroup.position.set(1.6, 1.25, 0);
         headGroup.add(chuckGroup);
@@ -683,7 +679,6 @@
             currentJaws.forEach(j => chuckGroup.remove(j));
             currentJaws = [];
 
-            // Body chuck
             const bodyGeo = new THREE.CylinderGeometry(1.1, 1.1, 0.7, jawCount === 3 ? 12 : 16);
             currentChuckBody = new THREE.Mesh(bodyGeo, matChuck);
             currentChuckBody.rotation.z = Math.PI / 2;
@@ -691,7 +686,6 @@
             currentChuckBody.castShadow = true;
             chuckGroup.add(currentChuckBody);
 
-            // Jaws
             const jawMat = new THREE.MeshStandardMaterial({ color: 0x8a9aa8, roughness: 0.4, metalness: 0.85 });
             for (let i = 0; i < jawCount; i++) {
                 const angle = (i / jawCount) * Math.PI * 2;
@@ -706,69 +700,58 @@
         }
         buildChuck(3);
 
-        // ============ LEAD SCREW & FEED SHAFT (sesuai gambar) ============
-        // Dua poros panjang berjalan sejajar sepanjang bed, di bawah area carriage
-
-        // LEAD SCREW (poros berulir)
+        // Lead screw + feed shaft
         const leadScrewMat = new THREE.MeshStandardMaterial({ color: 0x9aa0a8, roughness: 0.35, metalness: 0.9 });
         const leadScrew = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.10, 12, 16), leadScrewMat);
         leadScrew.rotation.z = Math.PI / 2;
-        leadScrew.position.set(0, 0.55, 1.55); // Di depan, atas sedikit
+        leadScrew.position.set(0, 0.55, 0.6);
         leadScrew.castShadow = true;
         machineGroup.add(leadScrew);
-        // Texture berulir (ring kecil)
         for (let i = -5.5; i <= 5.5; i += 0.15) {
             const ring = new THREE.Mesh(new THREE.TorusGeometry(0.10, 0.015, 4, 8), matMachineDark);
             ring.rotation.y = Math.PI / 2;
-            ring.position.set(i, 0.55, 1.55);
+            ring.position.set(i, 0.55, 0.6);
             machineGroup.add(ring);
         }
 
-        // FEED SHAFT (poros polos)
         const feedShaft = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 12, 16), matSilver);
         feedShaft.rotation.z = Math.PI / 2;
-        feedShaft.position.set(0, 0.55, 1.85); // Lebih depan
+        feedShaft.position.set(0, 0.55, 0.85);
         feedShaft.castShadow = true;
         machineGroup.add(feedShaft);
 
-        // Support bracket lead screw di kiri & kanan
-        [[-6.2, 0.55, 1.55], [6.2, 0.55, 1.55], [-6.2, 0.55, 1.85], [6.2, 0.55, 1.85]].forEach(pos => {
+        [[-6.2, 0.55, 0.6], [6.2, 0.55, 0.6], [-6.2, 0.55, 0.85], [6.2, 0.55, 0.85]].forEach(pos => {
             const bracket = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.5, 0.2), matMachineDark);
             bracket.position.set(pos[0], pos[1] - 0.15, pos[2]);
             machineGroup.add(bracket);
         });
 
-        // ============ TAILSTOCK COMPACT (sesuai gambar) ============
+        // ============ TAILSTOCK ============
         const tailGroup = new THREE.Group();
-        tailGroup.position.set(5.5, 0.6, 0);
+        tailGroup.position.set(5.5, 0.6, -0.3);
         machineGroup.add(tailGroup);
 
-        // Base tailstock (duduk di bed)
         const tailBase = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.3, 1.8), matMachineDark);
         tailBase.position.set(0, 0.15, 0);
         tailBase.castShadow = true;
         tailGroup.add(tailBase);
 
-        // Body tailstock utama
         const tailBody = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.3, 1.6), matMachineBody);
         tailBody.position.set(-0.1, 0.95, 0);
         tailBody.castShadow = true;
         tailGroup.add(tailBody);
 
-        // Bagian atas (head tailstock)
         const tailTop = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.35, 1.4), matMachineLight);
         tailTop.position.set(-0.1, 1.77, 0);
         tailTop.castShadow = true;
         tailGroup.add(tailTop);
 
-        // Quill (poros maju ke benda kerja)
         const quill = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 1.3, 16), matSilver);
         quill.rotation.z = Math.PI / 2;
         quill.position.set(-1.05, 0.95, 0);
         quill.castShadow = true;
         tailGroup.add(quill);
 
-        // Lock lever di atas tailstock (handle batang)
         const lockLeverStem = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.12, 12), matDarkMetal);
         lockLeverStem.position.set(-0.1, 2.05, 0);
         tailGroup.add(lockLeverStem);
@@ -780,7 +763,6 @@
         lockLeverKnob.position.set(-0.1, 2.4, 0.45);
         tailGroup.add(lockLeverKnob);
 
-        // Handwheel besar di ujung kanan (belakang)
         const wheelMat = new THREE.MeshStandardMaterial({ color: 0xb8b8b8, roughness: 0.35, metalness: 0.9 });
         const tailWheel = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.055, 10, 28), wheelMat);
         tailWheel.rotation.y = Math.PI / 2;
@@ -788,7 +770,6 @@
         tailWheel.castShadow = true;
         tailGroup.add(tailWheel);
 
-        // Spokes dalam handwheel (3 buah)
         for (let i = 0; i < 3; i++) {
             const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.72, 0.035), wheelMat);
             spoke.position.set(1.0, 0.95, 0);
@@ -796,13 +777,11 @@
             tailGroup.add(spoke);
         }
 
-        // Hub handwheel
         const wheelHub = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.18, 12), wheelMat);
         wheelHub.rotation.z = Math.PI / 2;
         wheelHub.position.set(1.0, 0.95, 0);
         tailGroup.add(wheelHub);
 
-        // Handle di handwheel (batang dengan knob)
         const wheelHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.32, 10), wheelMat);
         wheelHandle.rotation.x = Math.PI / 2;
         wheelHandle.position.set(1.0, 1.25, 0.18);
@@ -811,25 +790,22 @@
         wheelHandleKnob.position.set(1.0, 1.25, 0.34);
         tailGroup.add(wheelHandleKnob);
 
-        // ============ CARRIAGE (sesuai gambar) ============
+        // ============ CARRIAGE ============
         const carriageGroup = new THREE.Group();
         carriageGroup.position.set(0, 0.6, 0);
         machineGroup.add(carriageGroup);
 
-        // 1. SADDLE (base carriage) - duduk di bed
-        const saddle = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.5, 1.8), matMachineBody);
-        saddle.position.set(0, 0.25, 0);
+        const saddle = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.5, 2.2), matMachineBody);
+        saddle.position.set(0, 0.25, 0.4);
         saddle.castShadow = true;
         saddle.receiveShadow = true;
         carriageGroup.add(saddle);
 
-        // 2. CROSS SLIDE - di atas saddle
         const crossSlide = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.32, 1.3), matMachineLight);
         crossSlide.position.set(0, 0.66, -0.05);
         crossSlide.castShadow = true;
         carriageGroup.add(crossSlide);
 
-        // Cross slide handwheel (kecil, di sisi kanan)
         const wheelMat2 = new THREE.MeshStandardMaterial({ color: 0xb0b0b0, roughness: 0.35, metalness: 0.9 });
         const crossWheel = new THREE.Mesh(new THREE.TorusGeometry(0.20, 0.045, 8, 20), wheelMat2);
         crossWheel.rotation.y = Math.PI / 2;
@@ -847,7 +823,6 @@
         crossWheelKnob.position.set(1.02, 0.66, 0.30);
         carriageGroup.add(crossWheelKnob);
 
-        // 3. COMPOUND REST (bisa berputar untuk tirus)
         const compoundBase = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.6, 0.22, 16), matMachineDark);
         compoundBase.position.set(-0.15, 0.93, -0.15);
         compoundBase.castShadow = true;
@@ -858,7 +833,6 @@
         compoundRest.castShadow = true;
         carriageGroup.add(compoundRest);
 
-        // Handle compound rest (batang dengan knob)
         const compHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.35, 10), wheelMat2);
         compHandle.rotation.z = Math.PI / 2;
         compHandle.position.set(0.72, 1.19, -0.15);
@@ -867,7 +841,6 @@
         compKnob.position.set(0.90, 1.19, -0.15);
         carriageGroup.add(compKnob);
 
-        // 4. TOOL POST (square 4-way dengan baut)
         const toolPostBase = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.28, 0.7), matDarkMetal);
         toolPostBase.position.set(-0.15, 1.48, -0.15);
         toolPostBase.castShadow = true;
@@ -878,7 +851,6 @@
         toolPostTop.castShadow = true;
         carriageGroup.add(toolPostTop);
 
-        // 4 baut pengunci
         const boltMat = new THREE.MeshStandardMaterial({ color: 0xc8c8c8, roughness: 0.25, metalness: 0.95 });
         for (let i = 0; i < 4; i++) {
             const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
@@ -889,85 +861,75 @@
             carriageGroup.add(boltHead);
         }
 
-        // 5. APRON (bagian depan carriage) - dengan handwheel dan tuas
         const apron = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.1, 0.35), matMachineBody);
-        apron.position.set(0, 0.4, 1.0);
+        apron.position.set(0, 0.4, 1.55);
         apron.castShadow = true;
         carriageGroup.add(apron);
 
-        // Panel apron (bagian gelap)
         const apronPanel = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.5, 0.05), matMachineDark);
-        apronPanel.position.set(0, 0.55, 1.19);
+        apronPanel.position.set(0, 0.55, 1.74);
         carriageGroup.add(apronPanel);
 
-        // Tuas-tuas di apron (3 buah, berbeda bentuk)
-        // Tuas 1 - panjang ke bawah
         const lever1 = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.35, 10), matDarkMetal);
-        lever1.position.set(-0.3, 0.35, 1.22);
+        lever1.position.set(-0.3, 0.35, 1.78);
         lever1.rotation.z = Math.PI / 2;
         carriageGroup.add(lever1);
         const lever1Knob = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), matBlackRubber);
-        lever1Knob.position.set(-0.5, 0.35, 1.22);
+        lever1Knob.position.set(-0.5, 0.35, 1.78);
         carriageGroup.add(lever1Knob);
 
-        // Tuas 2 - pendek
         const lever2 = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.28, 10), matDarkMetal);
-        lever2.position.set(0.15, 0.5, 1.22);
+        lever2.position.set(0.15, 0.5, 1.78);
         lever2.rotation.x = Math.PI / 2;
         carriageGroup.add(lever2);
         const lever2Knob = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), matBlackRubber);
-        lever2Knob.position.set(0.15, 0.5, 1.4);
+        lever2Knob.position.set(0.15, 0.5, 1.96);
         carriageGroup.add(lever2Knob);
 
-        // Tuas 3 - tombol di apron
         const lever3 = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.06, 12), boltMat);
         lever3.rotation.x = Math.PI / 2;
-        lever3.position.set(0.35, 0.55, 1.22);
+        lever3.position.set(0.35, 0.55, 1.78);
         carriageGroup.add(lever3);
 
-        // 6. APRON HANDWHEEL (besar) - di depan apron, mengarah ke depan
         const apronWheel = new THREE.Mesh(new THREE.TorusGeometry(0.40, 0.055, 10, 28), wheelMat2);
-        apronWheel.position.set(0, 0.35, 1.35);
+        apronWheel.position.set(0, 0.35, 2.0);
         apronWheel.rotation.y = Math.PI / 2;
         apronWheel.castShadow = true;
         carriageGroup.add(apronWheel);
 
-        // Spokes handwheel apron (3 buah)
         for (let i = 0; i < 3; i++) {
             const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.68, 0.035), wheelMat2);
-            spoke.position.set(0, 0.35, 1.35);
+            spoke.position.set(0, 0.35, 2.0);
             spoke.rotation.x = (i / 3) * Math.PI;
             carriageGroup.add(spoke);
         }
 
-        // Hub handwheel apron
         const apronHub = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.15, 12), wheelMat2);
         apronHub.rotation.z = Math.PI / 2;
-        apronHub.position.set(0, 0.35, 1.35);
+        apronHub.position.set(0, 0.35, 2.0);
         carriageGroup.add(apronHub);
 
-        // Handle putar apron wheel
         const apronHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.28, 10), wheelMat2);
         apronHandle.rotation.x = Math.PI / 2;
-        apronHandle.position.set(0, 0.35, 1.55);
+        apronHandle.position.set(0, 0.35, 2.2);
         carriageGroup.add(apronHandle);
         const apronHandleKnob = new THREE.Mesh(new THREE.SphereGeometry(0.07, 12, 12), matBlackRubber);
-        apronHandleKnob.position.set(0, 0.35, 1.72);
+        apronHandleKnob.position.set(0, 0.35, 2.37);
         carriageGroup.add(apronHandleKnob);
 
-        // 7. TOOL BIT GROUP (di atas tool post)
+        // ============ TOOL BIT GROUP (arah ke workpiece) ============
         const toolBitGroup = new THREE.Group();
         toolBitGroup.position.set(-0.15, 1.85, -0.15);
         carriageGroup.add(toolBitGroup);
 
         const shankMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.35, metalness: 0.85 });
-        const shank = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.14, 0.14), shankMat);
-        shank.position.set(-0.5, 0, 0);
+        // Shank pendek: 0.5 unit, tip di ujung -X (menuju benda kerja, tidak menembus)
+        const shank = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.12, 0.12), shankMat);
+        shank.position.set(-0.25, 0, 0);
         shank.castShadow = true;
         toolBitGroup.add(shank);
 
         let currentToolTip = null;
-        let currentChipMesh = null;
 
         function createToolTip(type) {
             if (currentToolTip) toolBitGroup.remove(currentToolTip);
@@ -978,32 +940,34 @@
                 emissive: toolInfo.color, emissiveIntensity: 0.2
             });
 
+            // Tip diletakkan di ujung -X shank (di X = -0.55 relatif ke toolBitGroup)
+            // Dengan shank lebih pendek, tip tidak akan menembus ke chuck
             if (type === 'turning') {
-                const insert = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.14, 4), tipMat);
+                const insert = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.1, 4), tipMat);
                 insert.rotation.x = Math.PI / 2; insert.rotation.z = Math.PI / 4;
-                insert.position.set(-1.35, 0, 0);
+                insert.position.set(-0.55, 0, 0);
                 tipGroup.add(insert);
             } else if (type === 'facing') {
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.14, 0.14), tipMat);
-                insert.position.set(-1.35, 0, 0);
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 0.1), tipMat);
+                insert.position.set(-0.55, 0, 0);
                 tipGroup.add(insert);
             } else if (type === 'threading') {
-                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.2, 3), tipMat);
+                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.055, 0.14, 3), tipMat);
                 insert.rotation.z = Math.PI / 2;
-                insert.position.set(-1.35, 0, 0);
+                insert.position.set(-0.55, 0, 0);
                 tipGroup.add(insert);
             } else if (type === 'grooving') {
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.06, 0.1), tipMat);
-                insert.position.set(-1.35, 0, 0);
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.05, 0.07), tipMat);
+                insert.position.set(-0.55, 0, 0);
                 tipGroup.add(insert);
             } else if (type === 'parting') {
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.22, 0.06), tipMat);
-                insert.position.set(-1.35, 0, 0);
+                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.16, 0.05), tipMat);
+                insert.position.set(-0.55, 0, 0);
                 tipGroup.add(insert);
             } else if (type === 'boring') {
-                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.15, 4), tipMat);
+                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.11, 4), tipMat);
                 insert.rotation.z = Math.PI / 2;
-                insert.position.set(-1.35, 0, 0);
+                insert.position.set(-0.55, 0, 0);
                 tipGroup.add(insert);
             }
             currentToolTip = tipGroup;
@@ -1011,26 +975,9 @@
         }
         createToolTip('turning');
 
-        function createChip() {
-            const chipGroup = new THREE.Group();
-            const chipMat = new THREE.MeshStandardMaterial({
-                color: 0xd0d0d0, roughness: 0.3, metalness: 1.0,
-                emissive: 0xff6600, emissiveIntensity: 0.4
-            });
-            for (let i = 0; i < 3; i++) {
-                const chip = new THREE.Mesh(new THREE.TorusGeometry(0.06 + i * 0.02, 0.01, 6, 12, Math.PI * 1.5), chipMat);
-                chip.rotation.x = Math.random() * Math.PI;
-                chip.rotation.y = Math.random() * Math.PI;
-                chip.rotation.z = Math.random() * Math.PI;
-                chip.position.set(-1.5 - i * 0.05, 0.05 + i * 0.03, 0.1);
-                chipGroup.add(chip);
-            }
-            return chipGroup;
-        }
-
         // ============ SEGMENT SYSTEM ============
         const SCALE_FACTOR = 40;
-        const WORKPIECE_LEFT_EDGE = -2.8; // disesuaikan dengan chuck baru
+        const WORKPIECE_LEFT_EDGE = -2.8;
         const CHUCK_FRONT_EDGE = -2.6;
         const CUT_START_X = CHUCK_FRONT_EDGE + 0.5;
         const APPROACH_GAP = 2.5;
@@ -1331,11 +1278,11 @@
         tailGroup.add(tailLabelObj);
 
         const carriageLabelObj = createLabel('Carriage', '#fbbf24');
-        carriageLabelObj.position.set(-0.9, 1.5, 1.6);
+        carriageLabelObj.position.set(-0.9, 1.5, 1.9);
         carriageGroup.add(carriageLabelObj);
 
         const toolLabelObj = createLabel('Pahat', '#f97316');
-        toolLabelObj.position.set(0.4, 0.7, 0.3);
+        toolLabelObj.position.set(0.3, 0.7, 0.3);
         toolBitGroup.add(toolLabelObj);
 
         const workLabelObj = createLabel('Benda Kerja', '#a855f7');
@@ -1503,8 +1450,6 @@
             cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
             maxTravel = lengthScene;
 
-            if (currentChipMesh) { toolBitGroup.remove(currentChipMesh); currentChipMesh = null; }
-
             const approachX = getApproachX();
             carriageGroup.position.set(approachX, 0.6, originalRadiusScene + 0.4);
 
@@ -1563,7 +1508,6 @@
                         </linearGradient>
                     </defs>
                     <polygon points="${polygonPts}" fill="url(#gradMetal)" stroke="#1e293b" stroke-width="1.5"/>
-                    <line x1="${pad}" y1="${centerY}" x2="${pad + drawW}" y2="${centerY}" stroke="rgba(0,0,0,0.15)" stroke-width="0.5" stroke-dasharray="4 4"/>
                 </svg>
             `;
 
@@ -1729,9 +1673,6 @@
                     phase = 'cutting';
                     phaseT = 0; simTime = 0;
                     updatePhaseIndicator();
-                    if (currentChipMesh) toolBitGroup.remove(currentChipMesh);
-                    currentChipMesh = createChip();
-                    toolBitGroup.add(currentChipMesh);
                 }
                 return;
             }
@@ -1741,16 +1682,10 @@
                 const feedPerSecond = (toolFeed * revPerSec * 0.15) / SCALE_FACTOR;
                 toolPosX += feedPerSecond * deltaTime;
 
-                if (currentChipMesh) {
-                    currentChipMesh.rotation.z += deltaTime * 15;
-                    currentChipMesh.rotation.x += deltaTime * 8;
-                }
-
                 if (toolPosX >= maxTravel) {
                     toolPosX = maxTravel; toolProgress = 1;
                     phase = 'retracting'; phaseT = 0;
                     workMat.emissiveIntensity = 0.2;
-                    if (currentChipMesh) { toolBitGroup.remove(currentChipMesh); currentChipMesh = null; }
                     updateWorkpieceGeometry(); updateUI(); updatePhaseIndicator();
                     return;
                 }
@@ -1804,7 +1739,6 @@
             if (phase === 'idle' || phase === 'showing') return;
             phase = 'idle'; phaseT = 0;
             startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
-            if (currentChipMesh) { toolBitGroup.remove(currentChipMesh); currentChipMesh = null; }
             const approachX = getApproachX();
             carriageGroup.position.x = approachX;
             carriageGroup.position.z = originalRadiusScene + 0.4;
@@ -1835,13 +1769,13 @@
 
         renderSegments();
         updateTotalDisplay();
-        createWorkpiece(parseFloat(workDiaSlider.value));
+        createWorkpiece(parseFloat(workDiaVal.textContent));
         cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
         resetSimulation();
         updateUI();
         animate(0);
 
-        console.log('✅ Simulasi siap! Model disesuaikan dengan gambar referensi.');
+        console.log('✅ Simulasi siap! Arah pahat sudah benar, chip animation dihilangkan.');
     </script>
 </body>
 </html>
