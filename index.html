@@ -366,6 +366,30 @@
 
         .nav-links a.login-guru:hover { background: #2563eb; color: white; }
 
+        /* Tombol Keluar Siswa */
+        .nav-links button.btn-logout-siswa {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Inter', sans-serif;
+            margin-left: 4px;
+        }
+
+        .nav-links button.btn-logout-siswa:hover {
+            background: #dc2626;
+            color: #fff;
+            border-color: #dc2626;
+        }
+
         .nav-user-info {
             display: inline-flex;
             align-items: center;
@@ -387,6 +411,10 @@
                 font-size: 0.7rem;
                 padding: 5px 10px;
             }
+            .nav-links button.btn-logout-siswa {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+            }
         }
 
         @media (max-width: 780px) {
@@ -398,6 +426,7 @@
         @media (max-width: 500px) {
             .nav-links a { font-size: 0.6rem; padding: 4px 8px; }
             .nav-links a i { display: none; }
+            .nav-links button.btn-logout-siswa i { display: inline; }
         }
 
         /* BANNER SAPAAN */
@@ -988,6 +1017,10 @@
                     <span id="navUserText">-</span>
                 </span>
 
+                <button id="btnLogoutSiswa" class="btn-logout-siswa" style="display:none;" onclick="keluarSiswa()">
+                    <i class="fas fa-right-from-bracket"></i> Keluar
+                </button>
+
                 <a href="#" id="guruModeBtn" class="login-guru">
                     <i class="fas fa-user-tie"></i>
                     <span id="guruModeText">Login Guru</span>
@@ -1191,6 +1224,7 @@
         const guruModeText = document.getElementById("guruModeText");
         const navUserInfo = document.getElementById("navUserInfo");
         const navUserText = document.getElementById("navUserText");
+        const btnLogoutSiswa = document.getElementById("btnLogoutSiswa");
 
         const greetingBanner = document.getElementById("greetingBanner");
         const greetingIcon = document.getElementById("greetingIcon");
@@ -1204,12 +1238,7 @@
             const userMode = sessionStorage.getItem("userMode");
 
             if (!userMode) {
-                splashScreen.classList.remove("hidden");
-                splashChoice.classList.remove("hidden-form");
-                splashFormSiswa.classList.add("hidden-form");
-                guruModeBtn.style.display = "none";
-                navUserInfo.style.display = "none";
-                greetingBanner.style.display = "none";
+                tampilkanSplash();
             } else {
                 splashScreen.classList.add("hidden");
                 await updateTombolGuru(userMode);
@@ -1219,7 +1248,24 @@
         }
 
         // =====================================================
-        // 4. TAMPILKAN FORM SISWA
+        // 4. TAMPILKAN SPLASH
+        // =====================================================
+        function tampilkanSplash() {
+            splashScreen.classList.remove("hidden");
+            splashChoice.classList.remove("hidden-form");
+            splashFormSiswa.classList.add("hidden-form");
+            guruModeBtn.style.display = "none";
+            navUserInfo.style.display = "none";
+            btnLogoutSiswa.style.display = "none";
+            greetingBanner.style.display = "none";
+
+            // Reset form
+            document.getElementById("siswaNama").value = "";
+            document.getElementById("siswaKelas").value = "";
+        }
+
+        // =====================================================
+        // 5. TAMPILKAN FORM SISWA
         // =====================================================
         function showFormSiswa() {
             splashChoice.classList.add("hidden-form");
@@ -1233,7 +1279,7 @@
         }
 
         // =====================================================
-        // 5. SIMPAN DATA SISWA
+        // 6. SIMPAN DATA SISWA
         // =====================================================
         function simpanDataSiswa() {
             const nama = document.getElementById("siswaNama").value.trim();
@@ -1271,7 +1317,31 @@
         }
 
         // =====================================================
-        // 6. TAMPILKAN BANNER SAPAAN
+        // 7. KELUAR SISWA
+        // =====================================================
+        function keluarSiswa() {
+            const nama = sessionStorage.getItem("siswaNama");
+
+            if (!confirm(`Keluar dari akun "${nama}"?\n\nAnda akan kembali ke halaman login siswa.`)) {
+                return;
+            }
+
+            // Hapus semua data siswa
+            sessionStorage.removeItem("userMode");
+            sessionStorage.removeItem("siswaNama");
+            sessionStorage.removeItem("siswaKelas");
+
+            // Reset UI
+            tampilkanSplash();
+
+            // Update tombol guru (kembali ke login guru)
+            guruModeBtn.style.display = "none";
+
+            console.log("✅ Siswa keluar");
+        }
+
+        // =====================================================
+        // 8. TAMPILKAN BANNER SAPAAN
         // =====================================================
         async function tampilkanSapaan(mode) {
             if (mode === "siswa") {
@@ -1307,7 +1377,7 @@
         }
 
         // =====================================================
-        // 7. UPDATE IDENTITAS SISWA DI NAVBAR
+        // 9. UPDATE IDENTITAS SISWA DI NAVBAR
         // =====================================================
         function updateIdentitasSiswa() {
             const userMode = sessionStorage.getItem("userMode");
@@ -1317,13 +1387,15 @@
             if (userMode === "siswa" && nama && kelas) {
                 navUserInfo.style.display = "inline-flex";
                 navUserText.textContent = `${nama} · ${kelas}`;
+                btnLogoutSiswa.style.display = "inline-flex";
             } else {
                 navUserInfo.style.display = "none";
+                btnLogoutSiswa.style.display = "none";
             }
         }
 
         // =====================================================
-        // 8. UPDATE TOMBOL GURU DI NAVBAR
+        // 10. UPDATE TOMBOL GURU DI NAVBAR
         // =====================================================
         async function updateTombolGuru(mode) {
             guruModeBtn.style.display = "inline-flex";
@@ -1350,7 +1422,7 @@
         }
 
         // =====================================================
-        // 9. MASUK SEBAGAI GURU
+        // 11. MASUK SEBAGAI GURU
         // =====================================================
         async function masukSebagaiGuru() {
             sessionStorage.setItem("userMode", "guru");
@@ -1368,7 +1440,7 @@
         }
 
         // =====================================================
-        // 10. MONITOR PERUBAHAN LOGIN
+        // 12. MONITOR PERUBAHAN LOGIN
         // =====================================================
         supabaseClient.auth.onAuthStateChange(async function(event, session) {
             const userMode = sessionStorage.getItem("userMode");
@@ -1379,7 +1451,7 @@
         });
 
         // =====================================================
-        // 11. TOMBOL KEMBALI KE ATAS
+        // 13. TOMBOL KEMBALI KE ATAS
         // =====================================================
         const mybutton = document.getElementById("myBtn");
 
@@ -1396,7 +1468,7 @@
         };
 
         // =====================================================
-        // 12. DARK MODE
+        // 14. DARK MODE
         // =====================================================
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = darkModeToggle.querySelector('i');
@@ -1422,7 +1494,7 @@
         });
 
         // =====================================================
-        // 13. ANIMASI SCROLL
+        // 15. ANIMASI SCROLL
         // =====================================================
         const observerOptions = {
             threshold: 0.1,
@@ -1444,7 +1516,7 @@
         });
 
         // =====================================================
-        // 14. MENANDAI MENU AKTIF
+        // 16. MENANDAI MENU AKTIF
         // =====================================================
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname.split("/").pop() || "index.html";
@@ -1463,11 +1535,11 @@
         });
 
         // =====================================================
-        // 15. START
+        // 17. START
         // =====================================================
         cekModeAwal();
 
-        console.log("✅ Beranda + Form Siswa + Sapaan siap!");
+        console.log("✅ Beranda + Form Siswa + Logout Siswa siap!");
     </script>
 
 </body>
