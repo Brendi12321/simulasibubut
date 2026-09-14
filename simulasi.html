@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulasi 3D Pro - Mesin Bubut</title>
+    <title>Simulasi Mesin Bubut - SMK N 5 Medan</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- SUPABASE -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
@@ -27,260 +24,246 @@
             --footer-bg: #0a0f1a; --shadow-color: rgba(0,0,0,0.4);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.4s, color 0.4s; }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg-color);
+            color: var(--text-color); display: flex; flex-direction: column;
+            min-height: 100vh; transition: background-color 0.4s, color 0.4s;
+        }
 
-        .navbar { background: var(--navbar-bg); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px var(--shadow-color); border-bottom: 2px solid #2a4b6e; }
-        .navbar .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.1rem; padding: 12px 0; }
+        /* ============ NAVBAR ============ */
+        .navbar {
+            background: var(--navbar-bg); padding: 0 24px; display: flex;
+            align-items: center; justify-content: space-between; flex-wrap: wrap;
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border-bottom: 2px solid #2a4b6e;
+        }
+        .navbar .logo {
+            display: flex; align-items: center; gap: 10px; color: #fff;
+            font-weight: 800; font-size: 1.1rem; padding: 12px 0;
+        }
         .navbar .logo i { color: #60a5fa; font-size: 1.4rem; }
         .navbar .logo span { color: #94b8d9; font-weight: 400; }
-        .dark-toggle { background: transparent; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; padding: 10px; }
+        .dark-toggle {
+            background: transparent; border: none; color: #fff;
+            font-size: 1.3rem; cursor: pointer; padding: 10px;
+        }
         .dark-toggle:hover { color: #fbbf24; }
         .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; align-items: center; }
-        .nav-links a { color: var(--nav-text); padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: 0.2s; display: flex; align-items: center; gap: 6px; text-decoration: none; }
+        .nav-links a {
+            color: var(--nav-text); padding: 8px 16px; border-radius: 40px;
+            font-weight: 600; font-size: 0.85rem; transition: 0.2s;
+            display: flex; align-items: center; gap: 6px; text-decoration: none;
+        }
         .nav-links a:hover { background: #1a334d; color: #fff; }
-        .nav-links a.active { background: var(--nav-active); color: #fff; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
-        .nav-links a.login-guru { background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(96, 165, 250, 0.25); color: #93c5fd; }
-        .nav-links a.login-guru:hover { background: #2563eb; color: white; }
-        .nav-links a.dashboard-guru { background: #16a34a; color: white; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25); }
-        .nav-links a.dashboard-guru:hover { background: #15803d; }
-        .nav-links button.btn-logout-siswa {
-            background: rgba(220, 38, 38, 0.15);
-            border: 1px solid rgba(220, 38, 38, 0.3);
-            color: #fca5a5;
-            padding: 8px 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.78rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-family: inherit;
-            margin-left: 4px;
+        .nav-links a.active {
+            background: var(--nav-active); color: #fff;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
         }
-        .nav-links button.btn-logout-siswa:hover { background: #dc2626; color: #fff; border-color: #dc2626; }
-        .nav-user-info {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(22, 163, 74, 0.15);
-            border: 1px solid rgba(22, 163, 74, 0.3);
-            color: #4ade80;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            margin-left: 6px;
+        @media (max-width: 780px) {
+            .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; }
+            .nav-links { justify-content: center; padding-bottom: 10px; }
+            .nav-links a { font-size: 0.7rem; padding: 6px 12px; }
         }
-        .nav-user-info i { font-size: 0.85rem; }
-        @media (max-width: 900px) {
-            .nav-user-info { font-size: 0.7rem; padding: 5px 10px; }
-            .nav-links button.btn-logout-siswa { font-size: 0.7rem; padding: 6px 10px; }
+        @media (max-width: 500px) {
+            .nav-links a { font-size: 0.6rem; padding: 4px 8px; }
+            .nav-links a i { display: none; }
         }
-        @media (max-width: 780px) { .navbar { flex-direction: column; align-items: stretch; padding: 0 12px; } .nav-links { justify-content: center; padding-bottom: 10px; } .nav-links a { font-size: 0.7rem; padding: 6px 12px; } }
-        @media (max-width: 500px) { .nav-links a { font-size: 0.6rem; padding: 4px 8px; } .nav-links a i { display: none; } .nav-links button.btn-logout-siswa i { display: inline; } }
 
-        .main-content { flex: 1; max-width: 1280px; width: 100%; margin: 0 auto; padding: 30px 24px 40px; }
-        footer { text-align: center; padding: 24px 0 10px; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 20px; background: var(--footer-bg); }
-
-        .page-title { font-size: 1.8rem; font-weight: 800; color: var(--text-color); margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
+        /* ============ MAIN ============ */
+        .main-content {
+            flex: 1; max-width: 1280px; width: 100%;
+            margin: 0 auto; padding: 30px 24px 40px;
+        }
+        footer {
+            text-align: center; padding: 24px 0 10px; color: #94a3b8;
+            font-size: 0.85rem; border-top: 1px solid var(--border-color);
+            margin-top: 20px; background: var(--footer-bg);
+        }
+        .page-title {
+            font-size: 1.8rem; font-weight: 800; color: var(--text-color);
+            margin-bottom: 6px; display: flex; align-items: center; gap: 12px;
+        }
         .page-title i { color: #2563eb; }
-        .page-sub { color: var(--sub-text-color); margin-bottom: 28px; border-left: 4px solid #2563eb; padding-left: 16px; font-weight: 500; }
+        .page-sub {
+            color: var(--sub-text-color); margin-bottom: 28px;
+            border-left: 4px solid #2563eb; padding-left: 16px; font-weight: 500;
+        }
 
-        #simulasi .sim-container { background: #0b0e14; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 40px var(--shadow-color); position: relative; }
-        #simulasi #sim3d-container { width: 100%; height: 600px; display: block; background: #0a0d14; }
-        #simulasi .sim-overlay-info { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 12px 20px; border-radius: 40px; color: #cbd5e1; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.06); pointer-events: none; z-index: 10; }
+        /* ============ ANIMASI BAGIAN MESIN BUBUT ============ */
+        .part-buttons {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;
+        }
+        .part-btn {
+            background: var(--card-bg); color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 9px 18px; border-radius: 30px;
+            font-family: inherit; font-weight: 600; font-size: 0.82rem;
+            cursor: pointer; transition: 0.2s;
+            display: inline-flex; align-items: center; gap: 7px;
+        }
+        .part-btn:hover { border-color: #2563eb; color: #2563eb; transform: translateY(-2px); }
+        .part-btn.active {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff; border-color: transparent;
+            box-shadow: 0 6px 18px rgba(37,99,235,0.35);
+        }
+        .part-stage {
+            display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px;
+            background: var(--card-bg); border-radius: 20px;
+            padding: 20px; box-shadow: 0 8px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+        @media (max-width: 820px) { .part-stage { grid-template-columns: 1fr; } }
+
+        #latheSvg { width: 100%; height: auto; display: block; }
+        #latheSvg .part-svg {
+            cursor: pointer; transition: 0.3s;
+            transform-origin: center; transform-box: fill-box;
+        }
+        #latheSvg .part-svg:hover { filter: brightness(1.25); }
+        #latheSvg .part-svg.active {
+            filter: drop-shadow(0 0 12px #fbbf24) brightness(1.35);
+        }
+        #latheSvg .part-svg.active.pulse { animation: partPulse 1.1s ease-in-out infinite; }
+        @keyframes partPulse {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.05); }
+        }
+        #latheSvg #svg-cekam.active { animation: chuckWiggle 1.2s ease-in-out infinite; }
+        @keyframes chuckWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25%      { transform: rotate(-5deg); }
+            75%      { transform: rotate(5deg); }
+        }
+
+        .part-card {
+            background: linear-gradient(150deg, #0f1722, #1a2639);
+            border-radius: 16px; padding: 22px;
+            border: 1px solid #2a4b6e; color: #cbd5e1;
+            display: flex; flex-direction: column; justify-content: center;
+            animation: cardIn 0.4s ease;
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .part-card-icon { font-size: 2.4rem; margin-bottom: 8px; }
+        .part-card h3 { color: #fff; font-size: 1.25rem; font-weight: 800; margin-bottom: 10px; }
+        .part-card p  { color: #cbd5e1; font-size: 0.9rem; line-height: 1.7; }
+
+        /* ============ SIMULASI 3D ============ */
+        #simulasi .sim-container {
+            background: #0b0e14; border-radius: 24px; overflow: hidden;
+            box-shadow: 0 12px 40px var(--shadow-color); position: relative;
+        }
+        #simulasi #sim3d-container {
+            width: 100%; height: 600px; display: block; background: #0a0d14;
+        }
+        #simulasi .sim-overlay-info {
+            position: absolute; bottom: 20px; left: 20px;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+            padding: 12px 20px; border-radius: 40px; color: #cbd5e1;
+            font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.06);
+            pointer-events: none; z-index: 10;
+        }
         #simulasi .sim-overlay-info i { color: #60a5fa; margin-right: 8px; }
 
-        .phase-indicator { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 40px; color: #fff; font-size: 0.78rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.1); z-index: 15; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
-        .phase-indicator .dot { width: 10px; height: 10px; border-radius: 50%; background: #94a3b8; transition: 0.3s; }
+        .phase-indicator {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+            padding: 8px 18px; border-radius: 40px; color: #fff;
+            font-size: 0.78rem; font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.1); z-index: 15;
+            display: flex; align-items: center; gap: 10px; transition: 0.3s;
+        }
+        .phase-indicator .dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: #94a3b8; transition: 0.3s;
+        }
         .phase-indicator.phase-idle .dot { background: #94a3b8; }
         .phase-indicator.phase-approaching .dot { background: #fbbf24; animation: pulse 1s infinite; }
         .phase-indicator.phase-cutting .dot { background: #ef4444; animation: pulse 0.5s infinite; }
         .phase-indicator.phase-retracting .dot { background: #3b82f6; animation: pulse 1s infinite; }
         .phase-indicator.phase-done .dot { background: #22c55e; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
 
-        .material-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.4s, visibility 0.4s; }
-        .material-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        .material-modal-content { background: linear-gradient(135deg, #1a2639, #0b1a2e); border-radius: 24px; max-width: 720px; width: 100%; padding: 32px 36px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); border: 1px solid #2a4b6e; animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); max-height: 90vh; overflow-y: auto; }
-        @keyframes modalPop { from { transform: scale(0.9) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-        .material-modal-content .modal-icon { font-size: 3rem; text-align: center; margin-bottom: 8px; }
-        .material-modal-content h2 { color: #fff; font-size: 1.5rem; text-align: center; margin-bottom: 6px; font-weight: 800; }
-        .material-modal-content .sub { color: #94a3b8; text-align: center; font-size: 0.9rem; margin-bottom: 24px; }
-
-        .material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-        @media (max-width: 600px) { .material-grid { grid-template-columns: repeat(2, 1fr); } .material-modal-content { padding: 24px 20px; } }
-
-        .material-card { background: rgba(255,255,255,0.04); border: 2px solid transparent; border-radius: 14px; padding: 14px 12px; cursor: pointer; text-align: center; transition: 0.2s; position: relative; }
-        .material-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
-        .material-card.selected { border-color: #60a5fa; background: rgba(96,165,250,0.15); box-shadow: 0 0 0 3px rgba(96,165,250,0.2); }
-        .material-card.selected::after { content: '✓'; position: absolute; top: 6px; right: 8px; color: #60a5fa; font-weight: 900; font-size: 0.9rem; }
-        .material-card .mat-swatch { width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset -4px -4px 8px rgba(0,0,0,0.2); }
-        .material-card .mat-name { color: #fff; font-weight: 700; font-size: 0.8rem; margin-bottom: 2px; }
-        .material-card .mat-desc { color: #94a3b8; font-size: 0.65rem; line-height: 1.3; }
-        .material-card .mat-rpm { color: #60a5fa; font-size: 0.65rem; font-weight: 700; margin-top: 4px; }
-
-        .modal-actions { display: flex; justify-content: center; gap: 10px; }
-        .btn-pick { background: linear-gradient(135deg, #2563eb, #7c3aed); border: none; color: #fff; padding: 14px 36px; border-radius: 40px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; font-family: inherit; }
-        .btn-pick:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
-        .btn-pick:disabled { background: #4a5a6a; cursor: not-allowed; opacity: 0.6; }
-
-        .result-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 20; }
-        .result-overlay.active { opacity: 1; pointer-events: auto; }
-        .analysis-panel { background: linear-gradient(150deg, #0f1722, #1a2639); border-radius: 24px; width: 100%; max-width: 780px; max-height: 90%; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.7); border: 1px solid #2a4b6e; transform: scale(0.9) translateY(20px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; }
-        .result-overlay.active .analysis-panel { transform: scale(1) translateY(0); }
-
-        .analysis-header { background: linear-gradient(135deg, #16a34a, #22c55e); padding: 20px 28px; display: flex; align-items: center; gap: 16px; border-radius: 24px 24px 0 0; }
-        .analysis-header .icon-circle { width: 52px; height: 52px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; flex-shrink: 0; }
-        .analysis-header .header-text h3 { color: #fff; font-size: 1.3rem; font-weight: 800; margin-bottom: 2px; }
-        .analysis-header .header-text p { color: rgba(255,255,255,0.85); font-size: 0.85rem; }
-
-        .analysis-body { padding: 22px 28px; }
-        .result-image-box { background: linear-gradient(135deg, #0a0d14, #1a2639); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid #2a4b6e; text-align: center; }
-        .result-image-box .ri-label { color: #94a3b8; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .result-image-box .ri-label i { color: #22c55e; }
-        .result-image-box svg { max-width: 100%; height: auto; max-height: 180px; }
-        .result-image-box .ri-caption { color: #cbd5e1; font-size: 0.82rem; margin-top: 12px; line-height: 1.5; }
-
-        .analysis-section-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #2a3a4e; }
-        .analysis-section-title i { color: #60a5fa; }
-
-        .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .analysis-item { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px; border-left: 3px solid #2563eb; }
-        .analysis-item .ai-label { color: #94a3b8; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .analysis-item .ai-value { color: #fff; font-size: 1.05rem; font-weight: 800; }
-        .analysis-item .ai-value small { font-size: 0.72rem; font-weight: 500; color: #94a3b8; margin-left: 2px; }
-        .analysis-item.green { border-left-color: #22c55e; }
-        .analysis-item.orange { border-left-color: #f59e0b; }
-        .analysis-item.purple { border-left-color: #a855f7; }
-        .analysis-item.cyan { border-left-color: #06b6d4; }
-
-        .quality-card { background: rgba(255,255,255,0.04); border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; border-left: 4px solid #2563eb; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-        .quality-card .quality-stars { font-size: 1.6rem; letter-spacing: 2px; color: #fbbf24; white-space: nowrap; }
-        .quality-card .quality-stars .empty { color: #475569; }
-        .quality-card .quality-info { flex: 1; min-width: 200px; }
-        .quality-card .quality-info .q-title { color: #fff; font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
-        .quality-card .quality-info .q-desc { color: #94a3b8; font-size: 0.82rem; line-height: 1.5; }
-
-        .analysis-notes { background: rgba(37,99,235,0.1); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; border-left: 3px solid #2563eb; }
-        .analysis-notes h5 { color: #60a5fa; font-size: 0.82rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        .analysis-notes ul { list-style: none; padding: 0; color: #cbd5e1; font-size: 0.82rem; line-height: 1.7; }
-        .analysis-notes ul li { padding-left: 18px; position: relative; }
-        .analysis-notes ul li::before { content: '▸'; position: absolute; left: 0; color: #60a5fa; font-weight: 700; }
-
-        .analysis-actions { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid #2a3a4e; }
-        .btn-analysis { flex: 1; min-width: 140px; padding: 12px 20px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; border: none; }
-        .btn-analysis.primary { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; box-shadow: 0 6px 16px rgba(37,99,235,0.3); }
-        .btn-analysis.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,99,235,0.4); }
-        .btn-analysis.secondary { background: rgba(255,255,255,0.06); color: #cbd5e1; border: 2px solid #334155; }
-        .btn-analysis.secondary:hover { background: rgba(255,255,255,0.12); color: #fff; }
-
-        .segment-editor { background: #1a2639; padding: 20px 24px; border-top: 1px solid #2a3a4e; }
-        .segment-editor .editor-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #2a3a4e; }
-        .segment-editor .editor-title { color: #fff; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
-        .segment-editor .editor-title i { color: #a855f7; }
-        .segment-editor .total-info { color: #94a3b8; font-size: 0.8rem; }
-        .segment-editor .total-info strong { color: #60a5fa; font-size: 0.95rem; }
-
-        .segments-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; max-height: 220px; overflow-y: auto; padding-right: 4px; }
-        .segments-list::-webkit-scrollbar { width: 6px; }
-        .segments-list::-webkit-scrollbar-thumb { background: #4a5a6a; border-radius: 10px; }
-
-        .segment-row { display: grid; grid-template-columns: 36px 1fr 1fr 70px 36px; gap: 10px; align-items: center; background: #0f1722; padding: 10px 12px; border-radius: 10px; border-left: 4px solid #2563eb; }
-        .segment-row .seg-num { color: #fff; font-weight: 800; font-size: 0.85rem; text-align: center; background: rgba(37,99,235,0.2); border-radius: 6px; padding: 4px 0; }
-        .segment-row select, .segment-row input[type="range"] { background: #1a2639; color: #fff; border: 1px solid #334155; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 0.78rem; outline: none; cursor: pointer; }
-        .segment-row input[type="range"] { padding: 0; accent-color: #2563eb; width: 100%; }
-        .segment-row .seg-len-val { color: #fff; font-weight: 700; font-size: 0.8rem; text-align: center; background: rgba(96,165,250,0.15); padding: 4px 0; border-radius: 6px; }
-        .segment-row .remove-btn { background: #7f1d1d; border: none; color: #fff; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: 0.2s; }
-        .segment-row .remove-btn:hover { background: #dc2626; transform: scale(1.1); }
-
-        .segment-row[data-shape="silinder"] { border-left-color: #3b82f6; }
-        .segment-row[data-shape="taper_naik"] { border-left-color: #22c55e; }
-        .segment-row[data-shape="taper_turun"] { border-left-color: #eab308; }
-        .segment-row[data-shape="alur"] { border-left-color: #f97316; }
-        .segment-row[data-shape="ulir"] { border-left-color: #a855f7; }
-        .segment-row[data-shape="chamfer"] { border-left-color: #06b6d4; }
-        .segment-row[data-shape="bulat"] { border-left-color: #ec4899; }
-        .segment-row[data-shape="kepala_baut"] { border-left-color: #ef4444; }
-        .segment-row[data-shape="pulley_alur"] { border-left-color: #14b8a6; }
-        .segment-row[data-shape="pasak"] { border-left-color: #8b5cf6; }
-
-        .editor-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-        .btn-add-seg { background: #16a34a; border: none; color: #fff; padding: 8px 18px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
-        .btn-add-seg:hover { background: #22c55e; transform: scale(1.02); }
-        .btn-add-seg:disabled { background: #4a5a6a; cursor: not-allowed; opacity: 0.5; }
-        .btn-preset { background: #334155; border: none; color: #cbd5e1; padding: 6px 14px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 0.72rem; transition: 0.2s; }
-        .btn-preset:hover { background: #475569; color: #fff; }
-        .btn-preset.highlight { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; }
-
-        .tool-selector-wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid #2a3a4e; }
-        .tool-selector-wrap .ts-label { color: #f97316; font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; gap: 6px; margin-right: 4px; }
-        .tool-selector-wrap .ts-label.chuck-label { color: #22c55e; }
-        .tool-chip { background: #0f1722; border: 2px solid #334155; color: #cbd5e1; padding: 6px 14px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 0.75rem; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
-        .tool-chip:hover { background: #1a2639; border-color: #60a5fa; color: #fff; transform: translateY(-1px); }
-        .tool-chip.active { background: linear-gradient(135deg, #f97316, #ea580c); border-color: #f97316; color: #fff; box-shadow: 0 4px 12px rgba(249,115,22,0.35); }
-        .tool-chip.chuck-chip.active { background: linear-gradient(135deg, #22c55e, #16a34a); border-color: #22c55e; box-shadow: 0 4px 12px rgba(34,197,94,0.35); }
-
-        .sim-controls-bar { display: flex; flex-direction: column; gap: 16px; background: #1a2639; padding: 20px 24px; border-radius: 0 0 24px 24px; border-top: 1px solid #2a3a4e; }
-        .controls-row { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; }
-        .sim-controls-bar label { display: flex; align-items: center; gap: 8px; color: #b0c9e0; font-weight: 500; font-size: 0.8rem; }
-        .sim-controls-bar input[type="range"] { width: 100px; accent-color: #2563eb; background: transparent; }
-        .sim-controls-bar .val { color: #fff; font-weight: 700; min-width: 40px; font-size: 0.85rem; text-align: right; }
-        .sim-controls-bar label.carriage-label { background: rgba(251,191,36,0.12); padding: 4px 12px; border-radius: 30px; border: 1px solid rgba(251,191,36,0.3); }
-        .sim-controls-bar label.carriage-label span:first-child { color: #fbbf24; }
-
-        .btn-sim { background: #2563eb; border: none; color: #fff; padding: 8px 20px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; }
+        /* ============ CONTROL BAR ============ */
+        .sim-controls-bar {
+            display: flex; flex-direction: column; gap: 16px;
+            background: #1a2639; padding: 20px 24px;
+            border-radius: 0 0 24px 24px; border-top: 1px solid #2a3a4e;
+        }
+        .controls-row {
+            display: flex; flex-wrap: wrap; gap: 16px 24px;
+            align-items: center; justify-content: space-between;
+        }
+        .sim-controls-bar label {
+            display: flex; align-items: center; gap: 8px;
+            color: #b0c9e0; font-weight: 500; font-size: 0.8rem;
+        }
+        .sim-controls-bar input[type="range"] {
+            width: 120px; accent-color: #2563eb; background: transparent;
+        }
+        .sim-controls-bar .val {
+            color: #fff; font-weight: 700; min-width: 50px;
+            font-size: 0.85rem; text-align: right;
+        }
+        .btn-sim {
+            background: #2563eb; border: none; color: #fff;
+            padding: 8px 20px; border-radius: 30px; font-weight: 600;
+            cursor: pointer; transition: 0.2s; font-size: 0.8rem;
+            display: inline-flex; align-items: center; gap: 6px;
+            font-family: inherit;
+        }
         .btn-sim:hover { background: #3b82f6; transform: scale(1.02); }
         .btn-sim:disabled { background: #4a5a6a; cursor: not-allowed; opacity: 0.5; transform: none; }
         .btn-sim.danger { background: #b91c1c; }
         .btn-sim.danger:hover { background: #dc2626; }
         .btn-sim.outline { background: transparent; border: 2px solid #4a5a6a; color: #b0c9e0; }
         .btn-sim.outline:hover { background: #2a3a4e; }
-        .btn-sim.material-btn { background: #7c3aed; }
-        .btn-sim.material-btn:hover { background: #a855f7; }
 
         .info-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-        .info-group .info-item { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 4px 14px; border-radius: 30px; }
+        .info-group .info-item {
+            display: flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 14px; border-radius: 30px;
+        }
         .info-group .info-item i { color: #60a5fa; font-size: 0.7rem; }
         .info-group .info-item span { color: #cbd5e1; font-size: 0.75rem; }
         .info-group .info-item strong { color: #fff; }
 
-        @media (max-width: 900px) { 
+        @media (max-width: 900px) {
             .controls-row { flex-direction: column; align-items: stretch; }
             .sim-controls-bar label { justify-content: space-between; }
             #simulasi #sim3d-container { height: 400px; }
-            .segment-row { grid-template-columns: 30px 1fr 60px 30px; }
-            .segment-row .seg-len-val { display: none; }
-        }
-        @media (max-width: 600px) {
-            .analysis-panel { max-height: 94%; }
-            .analysis-header { padding: 16px 20px; }
-            .analysis-body { padding: 16px 18px; }
-            .analysis-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        #myBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--nav-active); color: white; cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px; }
+        /* ============ SCROLL TOP ============ */
+        #myBtn {
+            display: none; position: fixed; bottom: 20px; right: 20px;
+            z-index: 99; border: none; outline: none;
+            background-color: var(--nav-active); color: white;
+            cursor: pointer; padding: 15px; border-radius: 10px; font-size: 18px;
+        }
         #myBtn:hover { background-color: #1d4ed8; transform: translateY(-3px); }
 
-        .reveal { opacity: 0; transform: translateY(30px); filter: blur(10px); transition: opacity 0.8s, transform 0.8s, filter 0.8s; }
+        /* ============ REVEAL ============ */
+        .reveal {
+            opacity: 0; transform: translateY(30px); filter: blur(10px);
+            transition: opacity 0.8s, transform 0.8s, filter 0.8s;
+        }
         .reveal.is-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
-        .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
     </style>
 </head>
 <body>
 
-    <div class="material-modal" id="materialModal">
-        <div class="material-modal-content">
-            <div class="modal-icon">🔩</div>
-            <h2>Pilih Material Benda Kerja</h2>
-            <p class="sub">Tentukan jenis bahan sebelum memasukkan benda kerja ke chuck</p>
-            <div class="material-grid" id="materialGrid"></div>
-            <div class="modal-actions">
-                <button class="btn-pick" id="materialPickBtn" disabled><i class="fas fa-check"></i> Pasang & Siapkan</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- ============ NAVBAR ============ -->
     <nav class="navbar">
         <div class="logo"><i class="fas fa-cogs"></i><span>SMK N 5 Medan</span> · Bubut</div>
         <div style="display: flex; align-items: center;">
@@ -291,29 +274,100 @@
                 <a href="simulasi.html" class="active"><i class="fas fa-cubes"></i> Simulasi</a>
                 <a href="kuiz.html"><i class="fas fa-clipboard-check"></i> Kuiz</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
-
-                <span id="navUserInfo" class="nav-user-info" style="display:none;">
-                    <i class="fas fa-user"></i>
-                    <span id="navUserText">-</span>
-                </span>
-
-                <button id="btnLogoutSiswa" class="btn-logout-siswa" style="display:none;" onclick="keluarSiswa()">
-                    <i class="fas fa-right-from-bracket"></i> Keluar
-                </button>
-
-                <a href="#" id="guruModeBtn" class="login-guru" style="display:none;">
-                    <i class="fas fa-user-tie"></i>
-                    <span id="guruModeText">Login Guru</span>
-                </a>
             </div>
             <button class="dark-toggle" id="darkModeToggle" title="Ganti Mode"><i class="fas fa-moon"></i></button>
         </div>
     </nav>
 
+    <!-- ============ MAIN CONTENT ============ -->
     <div class="main-content">
+
+        <!-- ============ ANIMASI BAGIAN MESIN BUBUT ============ -->
+        <section id="animasiBagian" class="reveal" style="margin-bottom:40px;">
+            <h2 class="page-title"><i class="fas fa-hand-pointer"></i> Animasi Bagian Mesin Bubut</h2>
+            <p class="page-sub">Klik salah satu tombol untuk melihat bagian mesin bubut dan fungsinya.</p>
+
+            <div class="part-buttons">
+                <button class="part-btn" data-part="cekam"><i class="fas fa-circle-notch"></i> Cekam</button>
+                <button class="part-btn" data-part="pahat"><i class="fas fa-tools"></i> Pahat</button>
+                <button class="part-btn" data-part="eretan"><i class="fas fa-arrows-alt-h"></i> Eretan</button>
+                <button class="part-btn" data-part="kepala"><i class="fas fa-cog"></i> Kepala Tetap</button>
+                <button class="part-btn" data-part="ekor"><i class="fas fa-compass"></i> Kepala Lepas</button>
+                <button class="part-btn" data-part="bed"><i class="fas fa-align-justify"></i> Landasan</button>
+                <button class="part-btn" data-part="poros"><i class="fas fa-bolt"></i> Poros Transportir</button>
+            </div>
+
+            <div class="part-stage">
+                <!-- SVG MESIN BUBUT -->
+                <svg id="latheSvg" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Landasan / Bed -->
+                    <rect id="svg-bed" class="part-svg" data-part="bed"
+                          x="80" y="250" width="740" height="40" rx="6"
+                          fill="#4b5563" stroke="#1f2937" stroke-width="2"/>
+                    <rect x="120" y="290" width="60" height="55" fill="#374151"/>
+                    <rect x="720" y="290" width="60" height="55" fill="#374151"/>
+
+                    <!-- Kepala Tetap -->
+                    <rect id="svg-kepala" class="part-svg" data-part="kepala"
+                          x="80" y="120" width="150" height="130" rx="10"
+                          fill="#6b7280" stroke="#1f2937" stroke-width="2"/>
+                    <text x="155" y="190" text-anchor="middle" fill="#fff"
+                          font-size="13" font-weight="700">Kepala Tetap</text>
+
+                    <!-- Cekam -->
+                    <g id="svg-cekam" class="part-svg" data-part="cekam">
+                        <circle cx="270" cy="185" r="48" fill="#9ca3af" stroke="#1f2937" stroke-width="2"/>
+                        <circle cx="270" cy="185" r="16" fill="#4b5563"/>
+                        <line x1="270" y1="137" x2="270" y2="233" stroke="#4b5563" stroke-width="6"/>
+                        <line x1="222" y1="185" x2="318" y2="185" stroke="#4b5563" stroke-width="6"/>
+                        <line x1="236" y1="151" x2="304" y2="219" stroke="#4b5563" stroke-width="6"/>
+                    </g>
+
+                    <!-- Benda Kerja -->
+                    <rect x="300" y="170" width="280" height="30" rx="6"
+                          fill="#c9a961" stroke="#92400e" stroke-width="2"/>
+
+                    <!-- Kepala Lepas -->
+                    <rect id="svg-ekor" class="part-svg" data-part="ekor"
+                          x="640" y="150" width="130" height="100" rx="10"
+                          fill="#6b7280" stroke="#1f2937" stroke-width="2"/>
+                    <text x="705" y="205" text-anchor="middle" fill="#fff"
+                          font-size="12" font-weight="700">Kepala Lepas</text>
+                    <circle cx="770" cy="200" r="22" fill="none" stroke="#4b5563" stroke-width="5"/>
+
+                    <!-- Eretan -->
+                    <g id="svg-eretan" class="part-svg" data-part="eretan">
+                        <rect x="380" y="215" width="120" height="35" rx="6"
+                              fill="#a8aeb5" stroke="#1f2937" stroke-width="2"/>
+                        <rect x="420" y="180" width="40" height="35" rx="4" fill="#3a3a3a"/>
+                    </g>
+
+                    <!-- Pahat -->
+                    <g id="svg-pahat" class="part-svg" data-part="pahat">
+                        <rect x="430" y="160" width="70" height="14" rx="3"
+                              fill="#f97316" stroke="#9a3412" stroke-width="2"/>
+                        <polygon points="430,174 418,182 430,182" fill="#fbbf24"/>
+                    </g>
+
+                    <!-- Poros Transportir -->
+                    <line id="svg-poros" class="part-svg" data-part="poros"
+                          x1="230" y1="262" x2="640" y2="262"
+                          stroke="#60a5fa" stroke-width="6" stroke-linecap="round"/>
+                </svg>
+
+                <!-- Kartu Penjelasan -->
+                <div class="part-card" id="partCard">
+                    <div class="part-card-icon" id="partIcon">🖱️</div>
+                    <h3 id="partTitle">Klik salah satu tombol</h3>
+                    <p id="partDesc">Pilih bagian mesin bubut untuk melihat penjelasan fungsinya.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SIMULASI 3D ============ -->
         <div id="simulasi">
-            <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D Pro</h2>
-            <p class="page-sub reveal delay-1">Pahat kini menghadap splash guard, carriage datar, dan bisa digeser kanan-kiri sebelum mulai bubut.</p>
+            <h2 class="page-title reveal"><i class="fas fa-cubes"></i> Simulasi Mesin Bubut 3D</h2>
+            <p class="page-sub reveal delay-1">Atur RPM, kedalaman potong, dan feed, lalu tekan Mulai untuk melihat proses pembubutan.</p>
 
             <div class="sim-container reveal delay-2">
                 <div id="sim3d-container"></div>
@@ -323,91 +377,14 @@
                     <span id="phaseText">Siap — Pahat di posisi mundur</span>
                 </div>
 
-                <div class="result-overlay" id="resultOverlay">
-                    <div class="analysis-panel">
-                        <div class="analysis-header">
-                            <div class="icon-circle"><i class="fas fa-check"></i></div>
-                            <div class="header-text">
-                                <h3>Benda Kerja Selesai!</h3>
-                                <p>Hasil pembubutan telah keluar dari mesin</p>
-                            </div>
-                        </div>
-                        <div class="analysis-body">
-                            <div class="result-image-box">
-                                <div class="ri-label"><i class="fas fa-image"></i> Hasil Pembubutan</div>
-                                <div id="resultSvgContainer"></div>
-                                <div class="ri-caption" id="resultCaption"></div>
-                            </div>
-                            <div class="analysis-section-title">
-                                <i class="fas fa-chart-bar"></i> Analisis Parameter Pemotongan
-                            </div>
-                            <div class="analysis-grid" id="analysisGrid"></div>
-                            <div class="quality-card">
-                                <div class="quality-stars" id="qualityStars"></div>
-                                <div class="quality-info">
-                                    <div class="q-title" id="qualityTitle">Penilaian</div>
-                                    <div class="q-desc" id="qualityDesc"></div>
-                                </div>
-                            </div>
-                            <div class="analysis-notes" id="analysisNotes" style="display: none;">
-                                <h5><i class="fas fa-lightbulb"></i> Catatan & Saran</h5>
-                                <ul id="notesList"></ul>
-                            </div>
-                            <div class="analysis-actions">
-                                <button class="btn-analysis primary" id="btnBackToMachine"><i class="fas fa-undo"></i> Kembali ke Mesin</button>
-                                <button class="btn-analysis secondary" id="btnNewDesign"><i class="fas fa-plus"></i> Rancang Ulang</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="segment-editor">
-                    <div class="editor-header">
-                        <div class="editor-title"><i class="fas fa-shapes"></i> Editor Bentuk Benda Kerja</div>
-                        <div class="total-info">Total: <strong id="totalLengthDisplay">120</strong> mm • Segmen: <strong id="segmentCountDisplay">5</strong></div>
-                    </div>
-                    <div class="segments-list" id="segmentsList"></div>
-                    <div class="editor-actions">
-                        <button class="btn-add-seg" id="addSegmentBtn"><i class="fas fa-plus"></i> Tambah Segmen</button>
-                        <span style="color:#64748b; font-size:0.75rem; margin: 0 4px;">|</span>
-                        <span style="color:#94a3b8; font-size:0.72rem; font-weight:600; margin-right:4px;">Preset:</span>
-                        <button class="btn-preset highlight" data-preset="baut">🔩 Baut</button>
-                        <button class="btn-preset highlight" data-preset="mur">🔘 Mur</button>
-                        <button class="btn-preset highlight" data-preset="pipa">🚰 Pipa</button>
-                        <button class="btn-preset" data-preset="poros">Poros Bertingkat</button>
-                        <button class="btn-preset" data-preset="ulir">Baut Berulir</button>
-                        <button class="btn-preset" data-preset="tirus">Poros Tirus</button>
-                        <button class="btn-preset" data-preset="alur">Poros Beralur</button>
-                        <button class="btn-preset" data-preset="pasak">Pasak</button>
-                        <button class="btn-preset" data-preset="pulley">Pulley</button>
-                    </div>
-                </div>
-
-                <div class="sim-controls-bar" id="simControls">
-                    <div class="tool-selector-wrap">
-                        <span class="ts-label chuck-label"><i class="fas fa-circle-notch"></i> Chuck:</span>
-                        <button class="tool-chip chuck-chip active" data-chuck="3"><i class="fas fa-circle"></i> 3 Rahang</button>
-                        <button class="tool-chip chuck-chip" data-chuck="4"><i class="fas fa-circle-notch"></i> 4 Rahang</button>
-                        <span style="width: 1px; height: 20px; background: #334155; margin: 0 4px;"></span>
-                        <span class="ts-label"><i class="fas fa-tools"></i> Pahat:</span>
-                        <button class="tool-chip active" data-tool="turning"><i class="fas fa-grip-lines"></i> Bubut Luar</button>
-                        <button class="tool-chip" data-tool="facing"><i class="fas fa-square"></i> Facing</button>
-                        <button class="tool-chip" data-tool="threading"><i class="fas fa-bolt"></i> Ulir</button>
-                        <button class="tool-chip" data-tool="grooving"><i class="fas fa-minus"></i> Alur</button>
-                        <button class="tool-chip" data-tool="parting"><i class="fas fa-cut"></i> Potong</button>
-                        <button class="tool-chip" data-tool="boring"><i class="fas fa-circle-notch"></i> Boring</button>
-                    </div>
-
+                <div class="sim-controls-bar">
                     <div class="controls-row">
                         <div style="display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center;">
-                            <label>Diameter (mm) <input type="range" id="workDiameter" min="15" max="50" value="25" step="5"><span class="val" id="workDiameterVal">25</span></label>
                             <label>RPM <input type="range" id="simRpm" min="100" max="3000" value="800" step="50"><span class="val" id="simRpmVal">800</span></label>
                             <label>Kedalaman <input type="range" id="simDepth" min="0.1" max="2.0" value="0.8" step="0.1"><span class="val" id="simDepthVal">0.8</span></label>
                             <label>Feed <input type="range" id="simFeed" min="0.05" max="0.5" value="0.2" step="0.05"><span class="val" id="simFeedVal">0.20</span></label>
-                            <label class="carriage-label"><span><i class="fas fa-arrows-alt-h"></i> Posisi Carriage</span> <input type="range" id="carriageManual" min="-1.5" max="1.5" value="0" step="0.1" style="accent-color:#fbbf24;"><span class="val" id="carriageManualVal" style="color:#fbbf24;">0.0</span></label>
                         </div>
                         <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                            <button class="btn-sim material-btn" id="simChangeMaterial"><i class="fas fa-cube"></i> Ganti Material</button>
                             <button class="btn-sim" id="simStart"><i class="fas fa-play"></i> Mulai</button>
                             <button class="btn-sim danger" id="simStop"><i class="fas fa-stop"></i> Stop</button>
                             <button class="btn-sim outline" id="simReset"><i class="fas fa-undo-alt"></i> Reset</button>
@@ -420,14 +397,12 @@
                             <div class="info-item"><i class="fas fa-arrows-alt-h"></i> <span>Pahat X: <strong id="simToolPos" style="color:#f97316;">0.0</strong> mm</span></div>
                             <div class="info-item"><i class="fas fa-tachometer-alt"></i> <span>Vc: <strong id="simVc">0.0</strong> m/min</span></div>
                             <div class="info-item"><i class="fas fa-clock"></i> <span>Waktu: <strong id="simTime">0.0</strong> s</span></div>
-                            <div class="info-item" style="background: rgba(168,85,247,0.15);"><i class="fas fa-layer-group" style="color:#a855f7;"></i> <span>Segmen: <strong id="currentSegment">1 / 5</strong></span></div>
-                            <div class="info-item" style="background: rgba(34,197,94,0.15);"><i class="fas fa-cube" style="color:#22c55e;"></i> <span>Material: <strong id="materialDisplay">Baja</strong></span></div>
-                            <div class="info-item" style="background: rgba(249,115,22,0.15);"><i class="fas fa-tools" style="color:#f97316;"></i> <span>Pahat: <strong id="toolDisplay">Bubut Luar</strong></span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <footer><i class="fas fa-copyright"></i> 2026 SMK Negeri 5 Medan – Media Pembelajaran Interaktif Mesin Bubut</footer>
     </div>
 
@@ -443,81 +418,20 @@
     </script>
 
     <script>
-        // =====================================================
-        // CEK IDENTITAS SISWA (di luar module)
-        // =====================================================
-        const SUPABASE_URL = "https://fxsshzwljalwxpxpbjgn.supabase.co";
-        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NKJ5SdPRmPihu8w_IKg9G_Tf".replace("NKJ5","NKOVw8rMBJ5");
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-
-        function cekIdentitasSiswa() {
-            const userMode = sessionStorage.getItem("userMode");
-            const siswaNama = sessionStorage.getItem("siswaNama");
-            const siswaKelas = sessionStorage.getItem("siswaKelas");
-
-            const navUserInfo = document.getElementById("navUserInfo");
-            const navUserText = document.getElementById("navUserText");
-            const btnLogoutSiswa = document.getElementById("btnLogoutSiswa");
-            const guruModeBtn = document.getElementById("guruModeBtn");
-            const guruModeText = document.getElementById("guruModeText");
-
-            if (userMode === "siswa" && siswaNama && siswaKelas) {
-                navUserInfo.style.display = "inline-flex";
-                navUserText.textContent = `${siswaNama} · ${siswaKelas}`;
-                btnLogoutSiswa.style.display = "inline-flex";
-
-                guruModeBtn.style.display = "inline-flex";
-                guruModeBtn.className = "login-guru";
-                guruModeBtn.href = "login.html";
-                guruModeText.textContent = "Login Guru";
-            } else if (userMode === "guru") {
-                guruModeBtn.style.display = "inline-flex";
-                supabaseClient.auth.getSession().then(({ data }) => {
-                    if (data.session) {
-                        guruModeBtn.className = "dashboard-guru";
-                        guruModeBtn.href = "guru.html";
-                        guruModeText.textContent = "Dashboard Guru";
-                    } else {
-                        guruModeBtn.className = "login-guru";
-                        guruModeBtn.href = "login.html";
-                        guruModeText.textContent = "Login Guru";
-                    }
-                });
-            } else {
-                guruModeBtn.style.display = "inline-flex";
-                guruModeBtn.className = "login-guru";
-                guruModeBtn.href = "login.html";
-                guruModeText.textContent = "Login Guru";
-            }
-        }
-
-        function keluarSiswa() {
-            const nama = sessionStorage.getItem("siswaNama");
-            if (!confirm(`Keluar dari akun "${nama}"?\n\nAnda akan kembali ke halaman login siswa.`)) {
-                return;
-            }
-            sessionStorage.removeItem("userMode");
-            sessionStorage.removeItem("siswaNama");
-            sessionStorage.removeItem("siswaKelas");
-            window.location.href = "index.html";
-        }
-
-        cekIdentitasSiswa();
-    </script>
-
-    <script type="module">
-        // ============ UI ============
+        // ============ SCROLL TOP ============
         const mybutton = document.getElementById("myBtn");
         window.onscroll = () => {
             mybutton.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "block" : "none";
         };
         mybutton.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
+        // ============ DARK MODE ============
         const darkToggle = document.getElementById('darkModeToggle');
         const darkIcon = darkToggle.querySelector('i');
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
-            darkIcon.classList.remove('fa-moon'); darkIcon.classList.add('fa-sun');
+            darkIcon.classList.remove('fa-moon');
+            darkIcon.classList.add('fa-sun');
         }
         darkToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
@@ -526,75 +440,82 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
 
+        // ============ REVEAL ANIMATION ============
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => e.target.classList.toggle('is-visible', e.isIntersecting));
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // ============ DATA ============
-        const MATERIALS = {
-            baja:      { name: 'Baja Karbon',     color: 0x8a9bb0, emissive: 0x112233, rpm: 800,  desc: 'Material umum, kuat' },
-            aluminium: { name: 'Aluminium',       color: 0xc8ccd2, emissive: 0x223344, rpm: 1200, desc: 'Ringan & soft' },
-            kuningan:  { name: 'Kuningan',        color: 0xc9a961, emissive: 0x332211, rpm: 1000, desc: 'Permukaan halus' },
-            tembaga:   { name: 'Tembaga',         color: 0xb87333, emissive: 0x331100, rpm: 900,  desc: 'Konduktor, mengkilap' },
-            besi_cor:  { name: 'Besi Cor',        color: 0x4a4a4a, emissive: 0x111111, rpm: 600,  desc: 'Keras, getas' },
-            stainless: { name: 'Stainless Steel', color: 0xd0d8e0, emissive: 0x223344, rpm: 500,  desc: 'Tahan karat, keras' }
+        // ============ ANIMASI BAGIAN MESIN BUBUT ============
+        const PART_INFO = {
+            cekam: {
+                icon: '🔩', title: 'Cekam (Chuck)',
+                desc: 'Berfungsi untuk menjepit benda kerja agar tetap pada posisi yang tepat selama proses pembubutan. Cekam umumnya memiliki 3 atau 4 rahang yang dapat digerakkan secara bersamaan untuk memusatkan benda kerja.'
+            },
+            pahat: {
+                icon: '🛠️', title: 'Pahat Bubut',
+                desc: 'Berfungsi untuk menyayat atau memotong benda kerja yang berputar. Jenis pahat disesuaikan dengan pekerjaan, misalnya pahat bubut luar, pahat facing, pahat ulir, pahat alur, dan pahat potong.'
+            },
+            eretan: {
+                icon: '↔️', title: 'Eretan (Carriage)',
+                desc: 'Berfungsi untuk menggerakkan pahat secara memanjang (longitudinal) dan melintang (cross). Eretan terdiri dari eretan memanjang, eretan melintang, dan eretan atas yang dapat diputar sesuai sudut yang diinginkan.'
+            },
+            kepala: {
+                icon: '⚙️', title: 'Kepala Tetap (Headstock)',
+                desc: 'Berfungsi sebagai tempat poros spindel dan cekam. Di dalamnya terdapat roda gigi transmisi yang mengatur kecepatan putaran spindel sesuai kebutuhan pembubutan.'
+            },
+            ekor: {
+                icon: '🧭', title: 'Kepala Lepas (Tailstock)',
+                desc: 'Berfungsi untuk menopang ujung benda kerja yang panjang agar tidak bergetar, serta sebagai tempat memasang bor, senter, atau alat potong lain seperti reamer dan tap.'
+            },
+            bed: {
+                icon: '📏', title: 'Landasan (Bed)',
+                desc: 'Berfungsi sebagai rel tempat eretan dan kepala lepas bergerak. Landasan dibuat sangat rata dan presisi agar gerakan pahat tetap lurus dan hasil pembubutan akurat.'
+            },
+            poros: {
+                icon: '🔗', title: 'Poros Transportir',
+                desc: 'Berfungsi untuk memindahkan gerakan putaran dari kepala tetap ke eretan, sehingga eretan dapat bergerak otomatis memanjang saat proses pembubutan dilakukan.'
+            }
         };
 
-        const TOOL_TYPES = {
-            turning:   { name: 'Bubut Luar', color: 0xff6633 },
-            facing:    { name: 'Facing',     color: 0x60a5fa },
-            threading: { name: 'Ulir',       color: 0xa855f7 },
-            grooving:  { name: 'Alur',       color: 0xf59e0b },
-            parting:   { name: 'Potong',     color: 0xef4444 },
-            boring:    { name: 'Boring',     color: 0x06b6d4 }
-        };
+        const svgParts = document.querySelectorAll('#latheSvg .part-svg');
+        const partBtns = document.querySelectorAll('.part-btn');
+        const partCard = document.getElementById('partCard');
+        const partIcon = document.getElementById('partIcon');
+        const partTitle = document.getElementById('partTitle');
+        const partDesc = document.getElementById('partDesc');
 
-        let selectedMaterial = null;
-        let selectedMaterialKey = null;
-        let selectedToolType = 'turning';
-        let selectedChuckJaws = 3;
-        let carriageManualOffset = 0;
+        function showPart(partKey) {
+            svgParts.forEach(el => el.classList.remove('active', 'pulse'));
+            partBtns.forEach(b => b.classList.remove('active'));
 
-        function buildMaterialGrid() {
-            const grid = document.getElementById('materialGrid');
-            grid.innerHTML = '';
-            Object.entries(MATERIALS).forEach(([key, mat]) => {
-                const card = document.createElement('div');
-                card.className = 'material-card';
-                card.dataset.key = key;
-                const colorHex = '#' + mat.color.toString(16).padStart(6, '0');
-                card.innerHTML = `
-                    <div class="mat-swatch" style="background: linear-gradient(135deg, ${colorHex}, #${mat.emissive.toString(16).padStart(6, '0')});"></div>
-                    <div class="mat-name">${mat.name}</div>
-                    <div class="mat-desc">${mat.desc}</div>
-                    <div class="mat-rpm">${mat.rpm} RPM</div>
-                `;
-                card.addEventListener('click', () => {
-                    document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    selectedMaterial = mat;
-                    selectedMaterialKey = key;
-                    document.getElementById('materialPickBtn').disabled = false;
-                });
-                grid.appendChild(card);
-            });
+            const info = PART_INFO[partKey];
+            if (!info) return;
+
+            document.querySelectorAll(`#latheSvg [data-part="${partKey}"]`)
+                .forEach(el => el.classList.add('active', 'pulse'));
+            document.querySelector(`.part-btn[data-part="${partKey}"]`)?.classList.add('active');
+
+            partCard.style.animation = 'none';
+            void partCard.offsetWidth;
+            partCard.style.animation = 'cardIn 0.4s ease';
+            partIcon.textContent = info.icon;
+            partTitle.textContent = info.title;
+            partDesc.textContent = info.desc;
         }
-        buildMaterialGrid();
 
-        document.getElementById('materialPickBtn').addEventListener('click', () => {
-            if (!selectedMaterial) return;
-            applyMaterial(selectedMaterialKey);
-            document.getElementById('materialModal').classList.add('hidden');
+        partBtns.forEach(btn => {
+            btn.addEventListener('click', () => showPart(btn.dataset.part));
         });
-        document.getElementById('simChangeMaterial').addEventListener('click', () => {
-            document.getElementById('materialModal').classList.remove('hidden');
+        svgParts.forEach(el => {
+            el.addEventListener('click', () => showPart(el.dataset.part));
         });
+    </script>
 
+    <script type="module">
         // ============ THREE.JS ============
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
         const container = document.getElementById('sim3d-container');
         const width = container.clientWidth;
@@ -616,14 +537,6 @@
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.2;
         container.appendChild(renderer.domElement);
-
-        const labelRenderer = new CSS2DRenderer();
-        labelRenderer.setSize(width, height);
-        labelRenderer.domElement.style.position = 'absolute';
-        labelRenderer.domElement.style.top = '0';
-        labelRenderer.domElement.style.left = '0';
-        labelRenderer.domElement.style.pointerEvents = 'none';
-        container.appendChild(labelRenderer.domElement);
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
@@ -657,11 +570,9 @@
         scene.add(gridHelper);
 
         // ============ MATERIALS ============
-        const matDarkBase = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6, metalness: 0.4 });
         const matMachineBody = new THREE.MeshStandardMaterial({ color: 0xa8aeb5, roughness: 0.45, metalness: 0.55 });
         const matMachineDark = new THREE.MeshStandardMaterial({ color: 0x7a8088, roughness: 0.5, metalness: 0.5 });
         const matMachineLight = new THREE.MeshStandardMaterial({ color: 0xc8ccd0, roughness: 0.4, metalness: 0.6 });
-        const matMetal = new THREE.MeshStandardMaterial({ color: 0x9abada, roughness: 0.2, metalness: 0.9 });
         const matChuck = new THREE.MeshStandardMaterial({ color: 0x6a7a8a, roughness: 0.35, metalness: 0.85 });
         const matSilver = new THREE.MeshStandardMaterial({ color: 0xd0d4d8, roughness: 0.25, metalness: 0.95 });
         const matDarkMetal = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.4, metalness: 0.85 });
@@ -673,10 +584,10 @@
         const machineGroup = new THREE.Group();
         scene.add(machineGroup);
 
+        // Splash guard
         const backSplash = new THREE.Mesh(new THREE.BoxGeometry(13.5, 3.8, 0.15), matSplashBlack);
         backSplash.position.set(0, 1.6, -1.55);
-        backSplash.castShadow = true;
-        backSplash.receiveShadow = true;
+        backSplash.castShadow = true; backSplash.receiveShadow = true;
         machineGroup.add(backSplash);
 
         const leftSplash = new THREE.Mesh(new THREE.BoxGeometry(0.15, 3.8, 2.6), matSplashBlack);
@@ -689,18 +600,11 @@
         rightSplash.castShadow = true;
         machineGroup.add(rightSplash);
 
+        // Cabinet
         const cabinet = new THREE.Mesh(new THREE.BoxGeometry(15, 2.2, 2.2), matMachineDark);
         cabinet.position.set(0, -1.4, -0.5);
         cabinet.castShadow = true; cabinet.receiveShadow = true;
         machineGroup.add(cabinet);
-
-        const panelFootMat = new THREE.MeshStandardMaterial({ color: 0x5a5f66, roughness: 0.7, metalness: 0.3 });
-        const panelLeft = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.2, 0.05), panelFootMat);
-        panelLeft.position.set(-6.5, -1.5, 0.62);
-        machineGroup.add(panelLeft);
-        const panelRight = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.2, 0.05), panelFootMat);
-        panelRight.position.set(6.5, -1.5, 0.62);
-        machineGroup.add(panelRight);
 
         [[-6.5,-2.1,-1.0],[6.5,-2.1,-1.0],[-6.5,-2.1,0.4],[6.5,-2.1,0.4]].forEach(p => {
             const leg = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), matMachineDark);
@@ -708,6 +612,7 @@
             machineGroup.add(leg);
         });
 
+        // Bed
         const bed = new THREE.Mesh(new THREE.BoxGeometry(13, 0.8, 2.4), matMachineBody);
         bed.position.set(0, 0.2, -0.3);
         bed.castShadow = true; bed.receiveShadow = true;
@@ -718,40 +623,6 @@
             rail.position.set(0, 0.6, z);
             machineGroup.add(rail);
         });
-
-        const electricalPanelGroup = new THREE.Group();
-        electricalPanelGroup.position.set(-6.8, 1.5, -0.2);
-        machineGroup.add(electricalPanelGroup);
-
-        const panelBox = new THREE.Mesh(new THREE.BoxGeometry(0.15, 2.2, 2.2), matMachineLight);
-        panelBox.castShadow = true;
-        electricalPanelGroup.add(panelBox);
-
-        const panelFace = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.5, 1.5), matPanelDark);
-        panelFace.position.set(-0.1, 0.1, 0);
-        electricalPanelGroup.add(panelFace);
-
-        const btnRedMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, emissive: 0x660000, emissiveIntensity: 0.4, roughness: 0.4 });
-        const btnGreenMat = new THREE.MeshStandardMaterial({ color: 0x16a34a, emissive: 0x004400, emissiveIntensity: 0.4, roughness: 0.4 });
-        const btnRed = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.06, 16), btnRedMat);
-        btnRed.rotation.z = Math.PI / 2;
-        btnRed.position.set(-0.15, 0.5, -0.35);
-        electricalPanelGroup.add(btnRed);
-        const btnGreen = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.06, 16), btnGreenMat);
-        btnGreen.rotation.z = Math.PI / 2;
-        btnGreen.position.set(-0.15, 0.5, 0.35);
-        electricalPanelGroup.add(btnGreen);
-
-        const knobMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.5, metalness: 0.4 });
-        for (let i = 0; i < 2; i++) {
-            const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.08, 16), knobMat);
-            knob.rotation.z = Math.PI / 2;
-            knob.position.set(-0.15, -0.1 - i * 0.5, 0.25);
-            electricalPanelGroup.add(knob);
-            const indicator = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.08, 0.02), matSilver);
-            indicator.position.set(-0.20, -0.1 - i * 0.5, 0.25);
-            electricalPanelGroup.add(indicator);
-        }
 
         // ============ HEADSTOCK ============
         const headGroup = new THREE.Group();
@@ -768,11 +639,8 @@
         headUpper.castShadow = true;
         headGroup.add(headUpper);
 
-        const decorLine = new THREE.Mesh(new THREE.BoxGeometry(2.7, 0.05, 0.05), matMachineDark);
-        decorLine.position.set(0, 1.8, 1.11);
-        headGroup.add(decorLine);
-
-        const nameplate = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.5, 0.02), new THREE.MeshStandardMaterial({ color: 0xc9a961, roughness: 0.3, metalness: 0.85 }));
+        const nameplate = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.5, 0.02),
+            new THREE.MeshStandardMaterial({ color: 0xc9a961, roughness: 0.3, metalness: 0.85 }));
         nameplate.position.set(-0.6, 2.1, 1.12);
         headGroup.add(nameplate);
 
@@ -787,60 +655,24 @@
         chuckGroup.position.set(1.6, 1.25, 0);
         headGroup.add(chuckGroup);
 
-        let currentChuckBody = null;
-        let currentJaws = [];
-        let chuckLabelObj = null;
+        const chuckBody = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.1, 0.7, 12), matChuck);
+        chuckBody.rotation.z = Math.PI / 2;
+        chuckBody.position.set(0.55, 0, 0);
+        chuckBody.castShadow = true;
+        chuckGroup.add(chuckBody);
 
-        function buildChuck(jawCount) {
-            if (currentChuckBody) chuckGroup.remove(currentChuckBody);
-            currentJaws.forEach(j => chuckGroup.remove(j));
-            currentJaws = [];
-
-            const bodyGeo = new THREE.CylinderGeometry(1.1, 1.1, 0.7, jawCount === 3 ? 12 : 16);
-            currentChuckBody = new THREE.Mesh(bodyGeo, matChuck);
-            currentChuckBody.rotation.z = Math.PI / 2;
-            currentChuckBody.position.set(0.55, 0, 0);
-            currentChuckBody.castShadow = true;
-            chuckGroup.add(currentChuckBody);
-
-            const jawMat = new THREE.MeshStandardMaterial({ color: 0x8a9aa8, roughness: 0.4, metalness: 0.85 });
-            for (let i = 0; i < jawCount; i++) {
-                const angle = (i / jawCount) * Math.PI * 2;
-                const jaw = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.5, 0.42), jawMat);
-                jaw.position.set(0.95, Math.sin(angle) * 0.55, Math.cos(angle) * 0.55);
-                jaw.rotation.z = Math.PI / 2;
-                jaw.rotation.y = -angle;
-                jaw.castShadow = true;
-                chuckGroup.add(jaw);
-                currentJaws.push(jaw);
-            }
+        const jawMat = new THREE.MeshStandardMaterial({ color: 0x8a9aa8, roughness: 0.4, metalness: 0.85 });
+        const jaws = [];
+        for (let i = 0; i < 3; i++) {
+            const angle = (i / 3) * Math.PI * 2;
+            const jaw = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.5, 0.42), jawMat);
+            jaw.position.set(0.95, Math.sin(angle) * 0.55, Math.cos(angle) * 0.55);
+            jaw.rotation.z = Math.PI / 2;
+            jaw.rotation.y = -angle;
+            jaw.castShadow = true;
+            chuckGroup.add(jaw);
+            jaws.push(jaw);
         }
-        buildChuck(3);
-
-        const leadScrewMat = new THREE.MeshStandardMaterial({ color: 0x9aa0a8, roughness: 0.35, metalness: 0.9 });
-        const leadScrew = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.10, 12, 16), leadScrewMat);
-        leadScrew.rotation.z = Math.PI / 2;
-        leadScrew.position.set(0, 0.55, 0.6);
-        leadScrew.castShadow = true;
-        machineGroup.add(leadScrew);
-        for (let i = -5.5; i <= 5.5; i += 0.15) {
-            const ring = new THREE.Mesh(new THREE.TorusGeometry(0.10, 0.015, 4, 8), matMachineDark);
-            ring.rotation.y = Math.PI / 2;
-            ring.position.set(i, 0.55, 0.6);
-            machineGroup.add(ring);
-        }
-
-        const feedShaft = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 12, 16), matSilver);
-        feedShaft.rotation.z = Math.PI / 2;
-        feedShaft.position.set(0, 0.55, 0.85);
-        feedShaft.castShadow = true;
-        machineGroup.add(feedShaft);
-
-        [[-6.2, 0.55, 0.6], [6.2, 0.55, 0.6], [-6.2, 0.55, 0.85], [6.2, 0.55, 0.85]].forEach(pos => {
-            const bracket = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.5, 0.2), matMachineDark);
-            bracket.position.set(pos[0], pos[1] - 0.15, pos[2]);
-            machineGroup.add(bracket);
-        });
 
         // ============ TAILSTOCK ============
         const tailGroup = new THREE.Group();
@@ -868,17 +700,6 @@
         quill.castShadow = true;
         tailGroup.add(quill);
 
-        const lockLeverStem = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.12, 12), matDarkMetal);
-        lockLeverStem.position.set(-0.1, 2.05, 0);
-        tailGroup.add(lockLeverStem);
-        const lockLeverArm = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.55, 10), matDarkMetal);
-        lockLeverArm.position.set(-0.1, 2.2, 0.22);
-        lockLeverArm.rotation.x = Math.PI / 2.6;
-        tailGroup.add(lockLeverArm);
-        const lockLeverKnob = new THREE.Mesh(new THREE.SphereGeometry(0.09, 14, 14), matBlackRubber);
-        lockLeverKnob.position.set(-0.1, 2.4, 0.45);
-        tailGroup.add(lockLeverKnob);
-
         const wheelMat = new THREE.MeshStandardMaterial({ color: 0xb8b8b8, roughness: 0.35, metalness: 0.9 });
         const tailWheel = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.055, 10, 28), wheelMat);
         tailWheel.rotation.y = Math.PI / 2;
@@ -898,14 +719,6 @@
         wheelHub.position.set(1.0, 0.95, 0);
         tailGroup.add(wheelHub);
 
-        const wheelHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.32, 10), wheelMat);
-        wheelHandle.rotation.x = Math.PI / 2;
-        wheelHandle.position.set(1.0, 1.25, 0.18);
-        tailGroup.add(wheelHandle);
-        const wheelHandleKnob = new THREE.Mesh(new THREE.SphereGeometry(0.075, 12, 12), matBlackRubber);
-        wheelHandleKnob.position.set(1.0, 1.25, 0.34);
-        tailGroup.add(wheelHandleKnob);
-
         // ============ CARRIAGE ============
         const carriageGroup = new THREE.Group();
         carriageGroup.position.set(0, 0.6, 0);
@@ -913,8 +726,7 @@
 
         const saddle = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.5, 2.2), matMachineBody);
         saddle.position.set(0, 0.25, 0.4);
-        saddle.castShadow = true;
-        saddle.receiveShadow = true;
+        saddle.castShadow = true; saddle.receiveShadow = true;
         carriageGroup.add(saddle);
 
         const crossSlide = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.32, 1.3), matMachineLight);
@@ -927,17 +739,6 @@
         crossWheel.rotation.y = Math.PI / 2;
         crossWheel.position.set(0.92, 0.66, -0.05);
         carriageGroup.add(crossWheel);
-        const crossWheelHub = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.15, 10), wheelMat2);
-        crossWheelHub.rotation.z = Math.PI / 2;
-        crossWheelHub.position.set(0.92, 0.66, -0.05);
-        carriageGroup.add(crossWheelHub);
-        const crossWheelHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.25, 10), wheelMat2);
-        crossWheelHandle.rotation.x = Math.PI / 2;
-        crossWheelHandle.position.set(1.02, 0.66, 0.15);
-        carriageGroup.add(crossWheelHandle);
-        const crossWheelKnob = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 10), matBlackRubber);
-        crossWheelKnob.position.set(1.02, 0.66, 0.30);
-        carriageGroup.add(crossWheelKnob);
 
         const compoundBase = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.6, 0.22, 16), matMachineDark);
         compoundBase.position.set(-0.15, 0.75, -0.15);
@@ -949,14 +750,6 @@
         compoundRest.castShadow = true;
         carriageGroup.add(compoundRest);
 
-        const compHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.35, 10), wheelMat2);
-        compHandle.rotation.z = Math.PI / 2;
-        compHandle.position.set(0.72, 0.95, -0.15);
-        carriageGroup.add(compHandle);
-        const compKnob = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), matBlackRubber);
-        compKnob.position.set(0.90, 0.95, -0.15);
-        carriageGroup.add(compKnob);
-
         const toolPostBase = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.28, 0.7), matDarkMetal);
         toolPostBase.position.set(-0.15, 1.1, -0.15);
         toolPostBase.castShadow = true;
@@ -967,45 +760,11 @@
         toolPostTop.castShadow = true;
         carriageGroup.add(toolPostTop);
 
-        const boltMat = new THREE.MeshStandardMaterial({ color: 0xc8c8c8, roughness: 0.25, metalness: 0.95 });
-        for (let i = 0; i < 4; i++) {
-            const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
-            const bx = -0.15 + Math.cos(angle) * 0.28;
-            const bz = -0.15 + Math.sin(angle) * 0.28;
-            const boltHead = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 0.08, 6), boltMat);
-            boltHead.position.set(bx, 1.22, bz);
-            carriageGroup.add(boltHead);
-        }
-
+        // Apron
         const apron = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.1, 0.35), matMachineBody);
         apron.position.set(0, 0.4, 1.55);
         apron.castShadow = true;
         carriageGroup.add(apron);
-
-        const apronPanel = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.5, 0.05), matMachineDark);
-        apronPanel.position.set(0, 0.55, 1.74);
-        carriageGroup.add(apronPanel);
-
-        const lever1 = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.35, 10), matDarkMetal);
-        lever1.position.set(-0.3, 0.35, 1.78);
-        lever1.rotation.z = Math.PI / 2;
-        carriageGroup.add(lever1);
-        const lever1Knob = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), matBlackRubber);
-        lever1Knob.position.set(-0.5, 0.35, 1.78);
-        carriageGroup.add(lever1Knob);
-
-        const lever2 = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.28, 10), matDarkMetal);
-        lever2.position.set(0.15, 0.5, 1.78);
-        lever2.rotation.x = Math.PI / 2;
-        carriageGroup.add(lever2);
-        const lever2Knob = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), matBlackRubber);
-        lever2Knob.position.set(0.15, 0.5, 1.96);
-        carriageGroup.add(lever2Knob);
-
-        const lever3 = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.06, 12), boltMat);
-        lever3.rotation.x = Math.PI / 2;
-        lever3.position.set(0.35, 0.55, 1.78);
-        carriageGroup.add(lever3);
 
         const apronWheel = new THREE.Mesh(new THREE.TorusGeometry(0.40, 0.055, 10, 28), wheelMat2);
         apronWheel.position.set(0, 0.35, 2.0);
@@ -1013,27 +772,7 @@
         apronWheel.castShadow = true;
         carriageGroup.add(apronWheel);
 
-        for (let i = 0; i < 3; i++) {
-            const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.68, 0.035), wheelMat2);
-            spoke.position.set(0, 0.35, 2.0);
-            spoke.rotation.x = (i / 3) * Math.PI;
-            carriageGroup.add(spoke);
-        }
-
-        const apronHub = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.15, 12), wheelMat2);
-        apronHub.rotation.z = Math.PI / 2;
-        apronHub.position.set(0, 0.35, 2.0);
-        carriageGroup.add(apronHub);
-
-        const apronHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.28, 10), wheelMat2);
-        apronHandle.rotation.x = Math.PI / 2;
-        apronHandle.position.set(0, 0.35, 2.2);
-        carriageGroup.add(apronHandle);
-        const apronHandleKnob = new THREE.Mesh(new THREE.SphereGeometry(0.07, 12, 12), matBlackRubber);
-        apronHandleKnob.position.set(0, 0.35, 2.37);
-        carriageGroup.add(apronHandleKnob);
-
-        // ============ TOOL BIT ============
+        // ============ PAHAT ============
         const toolBitGroup = new THREE.Group();
         toolBitGroup.position.set(-0.15, 1.42, -0.15);
         carriageGroup.add(toolBitGroup);
@@ -1045,93 +784,26 @@
         shank.castShadow = true;
         toolBitGroup.add(shank);
 
-        let currentToolTip = null;
+        const tipMat = new THREE.MeshStandardMaterial({
+            color: 0xff6633, roughness: 0.25, metalness: 0.7,
+            emissive: 0xff6633, emissiveIntensity: 0.2
+        });
+        const insert = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.1, 0.25), tipMat);
+        insert.position.set(-shankLen - 0.05, 0, -0.125);
+        toolBitGroup.add(insert);
 
-        function createToolTip(type) {
-            if (currentToolTip) toolBitGroup.remove(currentToolTip);
-            const tipGroup = new THREE.Group();
-            const toolInfo = TOOL_TYPES[type] || TOOL_TYPES.turning;
-            const tipMat = new THREE.MeshStandardMaterial({
-                color: toolInfo.color, roughness: 0.25, metalness: 0.7,
-                emissive: toolInfo.color, emissiveIntensity: 0.2
-            });
-
-            const tipX = -shankLen - 0.05;
-
-            if (type === 'turning') {
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.1, 0.25), tipMat);
-                insert.position.set(tipX, 0, -0.125);
-                tipGroup.add(insert);
-            } else if (type === 'facing') {
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.1, 0.22), tipMat);
-                insert.position.set(tipX, 0, -0.11);
-                tipGroup.add(insert);
-            } else if (type === 'threading') {
-                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.2, 3), tipMat);
-                insert.rotation.x = -Math.PI / 2;
-                insert.position.set(tipX, 0, -0.1);
-                tipGroup.add(insert);
-            } else if (type === 'grooving') {
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.05, 0.15), tipMat);
-                insert.position.set(tipX, 0, -0.075);
-                tipGroup.add(insert);
-            } else if (type === 'parting') {
-                const insert = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.15, 0.2), tipMat);
-                insert.position.set(tipX, 0, -0.1);
-                tipGroup.add(insert);
-            } else if (type === 'boring') {
-                const insert = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.18, 4), tipMat);
-                insert.rotation.x = -Math.PI / 2;
-                insert.position.set(tipX, 0, -0.09);
-                tipGroup.add(insert);
-            }
-            currentToolTip = tipGroup;
-            toolBitGroup.add(tipGroup);
-        }
-        createToolTip('turning');
-
-        // ============ SEGMENT SYSTEM ============
+        // ============ BENDA KERJA ============
         const SCALE_FACTOR = 40;
         const WORKPIECE_LEFT_EDGE = -2.8;
         const CHUCK_FRONT_EDGE = -2.6;
         const CUT_START_X = CHUCK_FRONT_EDGE + 0.5;
         const APPROACH_GAP = 2.5;
 
-        const SHAPE_NAMES = {
-            silinder: 'Silinder (rata)', taper_naik: 'Tirus Naik', taper_turun: 'Tirus Turun',
-            alur: 'Beralur', ulir: 'Berulir', chamfer: 'Chamfer', bulat: 'Bulat (radius)',
-            kepala_baut: 'Kepala Baut', pulley_alur: 'Pulley (alur V)', pasak: 'Pasak', mur_segi: 'Mur Segi'
-        };
+        const workpieceLengthScene = 3.0;
+        const originalRadiusScene = 0.33;
 
-        const PRESETS = {
-            baut: [{ shape: 'kepala_baut', length: 12 }, { shape: 'silinder', length: 40 }, { shape: 'ulir', length: 40 }, { shape: 'chamfer', length: 12 }],
-            mur: [{ shape: 'mur_segi', length: 25 }, { shape: 'chamfer', length: 15 }],
-            pipa: [{ shape: 'chamfer', length: 15 }, { shape: 'silinder', length: 70 }, { shape: 'chamfer', length: 15 }],
-            poros: [{ shape: 'silinder', length: 25 }, { shape: 'taper_turun', length: 15 }, { shape: 'silinder', length: 30 }, { shape: 'taper_turun', length: 15 }, { shape: 'silinder', length: 25 }],
-            ulir: [{ shape: 'silinder', length: 20 }, { shape: 'ulir', length: 60 }, { shape: 'chamfer', length: 15 }],
-            tirus: [{ shape: 'taper_turun', length: 55 }, { shape: 'taper_naik', length: 55 }],
-            alur: [{ shape: 'silinder', length: 30 }, { shape: 'alur', length: 40 }, { shape: 'silinder', length: 35 }],
-            pasak: [{ shape: 'kepala_baut', length: 10 }, { shape: 'pasak', length: 70 }, { shape: 'chamfer', length: 10 }],
-            pulley: [{ shape: 'silinder', length: 15 }, { shape: 'pulley_alur', length: 25 }, { shape: 'silinder', length: 10 }, { shape: 'pulley_alur', length: 25 }, { shape: 'silinder', length: 15 }]
-        };
-
-        let segments = JSON.parse(JSON.stringify(PRESETS.baut));
-        let totalLength = segments.reduce((a, s) => a + s.length, 0);
-        let originalRadiusScene = 0.33;
-        let lengthScene = 3;
-        let cutDepthScene = 0.01;
-        let toolProgress = 0;
         let workpieceMesh = null;
         let workpieceTexture = null;
-
-        let phase = 'idle';
-        let phaseT = 0;
-        const APPROACH_DURATION = 1.2;
-        const RETRACT_DURATION = 1.2;
-
-        function getApproachX() { return CUT_START_X + lengthScene + APPROACH_GAP; }
-        function getEndCutX() { return CUT_START_X + maxTravel; }
-        function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
         function createRotationTexture() {
             const canvas = document.createElement('canvas');
@@ -1159,127 +831,12 @@
         }
         workpieceTexture = createRotationTexture();
 
-        function renderSegments() {
-            const list = document.getElementById('segmentsList');
-            list.innerHTML = '';
-            segments.forEach((seg, i) => {
-                const row = document.createElement('div');
-                row.className = 'segment-row';
-                row.dataset.shape = seg.shape;
-                const shapeOpts = Object.entries(SHAPE_NAMES).map(([k, v]) =>
-                    `<option value="${k}" ${seg.shape === k ? 'selected' : ''}>${v}</option>`
-                ).join('');
-                row.innerHTML = `
-                    <span class="seg-num">${i + 1}</span>
-                    <select data-key="shape">${shapeOpts}</select>
-                    <input type="range" data-key="length" min="10" max="100" value="${seg.length}" step="5">
-                    <span class="seg-len-val">${seg.length}mm</span>
-                    <button class="remove-btn" title="Hapus">×</button>
-                `;
-                row.querySelector('select').addEventListener('change', (e) => {
-                    segments[i].shape = e.target.value;
-                    row.dataset.shape = e.target.value;
-                    resetSimulation();
-                });
-                row.querySelector('input[type="range"]').addEventListener('input', (e) => {
-                    segments[i].length = parseInt(e.target.value);
-                    row.querySelector('.seg-len-val').textContent = segments[i].length + 'mm';
-                    updateTotalDisplay();
-                    onSegmentChange();
-                });
-                row.querySelector('.remove-btn').addEventListener('click', () => {
-                    if (segments.length <= 1) { alert('Minimal 1 segmen!'); return; }
-                    segments.splice(i, 1);
-                    renderSegments();
-                    onSegmentChange();
-                });
-                list.appendChild(row);
-            });
-            const addBtn = document.getElementById('addSegmentBtn');
-            if (segments.length >= 8) {
-                addBtn.disabled = true;
-                addBtn.innerHTML = '<i class="fas fa-ban"></i> Maks. 8';
-            } else {
-                addBtn.disabled = false;
-                addBtn.innerHTML = '<i class="fas fa-plus"></i> Tambah Segmen';
-            }
-        }
-
-        function updateTotalDisplay() {
-            totalLength = segments.reduce((a, s) => a + s.length, 0);
-            lengthScene = totalLength / SCALE_FACTOR;
-            document.getElementById('totalLengthDisplay').textContent = totalLength;
-            document.getElementById('segmentCountDisplay').textContent = segments.length;
-        }
-
-        function onSegmentChange() {
-            updateTotalDisplay();
-            if (workpieceMesh) {
-                machineGroup.remove(workpieceMesh);
-                workpieceMesh.geometry.dispose();
-            }
-            createWorkpiece(parseFloat(document.getElementById('workDiameter').value));
-            resetSimulation();
-        }
-
-        function applyShape(shape, localT, origR, depth) {
-            switch (shape) {
-                case 'silinder': return Math.max(origR - depth, 0.02);
-                case 'taper_naik': { const f = 0.2 + localT * 0.8; return Math.max(origR - depth * (2 - f * 1.5), 0.02); }
-                case 'taper_turun': { const f = 1 - localT * 0.85; return Math.max(origR - depth * (0.5 + (1 - f) * 1.2), 0.02); }
-                case 'alur': {
-                    const base = Math.max(origR - depth * 0.4, 0.02);
-                    const phase = (localT * 3) % 1;
-                    if (phase > 0.35 && phase < 0.65) return Math.max(origR - depth * 2.8, 0.02);
-                    return base;
-                }
-                case 'ulir': {
-                    const base = Math.max(origR - depth * 1.2, 0.02);
-                    const tooth = Math.sin(localT * Math.PI * 40);
-                    return Math.max(base + tooth * depth * 0.5, 0.02);
-                }
-                case 'chamfer': {
-                    if (localT < 0.3) return Math.max(origR - depth * (1 - localT * 3), 0.02);
-                    return Math.max(origR - depth * 2.5, 0.02);
-                }
-                case 'bulat': { const curve = Math.sin(localT * Math.PI); return Math.max(origR - depth * (0.2 + curve * 1.5), 0.02); }
-                case 'kepala_baut': {
-                    const edge = Math.min(localT, 1 - localT);
-                    if (edge < 0.08) return Math.max(origR - depth * (1 - edge * 12), 0.02);
-                    return origR;
-                }
-                case 'pulley_alur': {
-                    const base = Math.max(origR - depth * 0.3, 0.02);
-                    const groove = Math.sin(localT * Math.PI);
-                    return Math.max(base - Math.abs(groove) * depth * 2, 0.02);
-                }
-                case 'pasak': return Math.max(origR - depth * 2, 0.02);
-                case 'mur_segi': {
-                    const wobble = Math.sin(localT * Math.PI * 6) * 0.05;
-                    return Math.max(origR - depth * (0.4 + Math.abs(wobble)), 0.02);
-                }
-            }
-            return Math.max(origR - depth, 0.02);
-        }
-
-        function getRadiusAt(t, origR, depth) {
-            let cum = 0;
-            const total = segments.reduce((a, s) => a + s.length, 0);
-            let activeSeg = segments[segments.length - 1];
-            let localT = 1;
-            for (const seg of segments) {
-                const segFrac = seg.length / total;
-                if (t <= cum + segFrac + 0.0001) {
-                    localT = (t - cum) / segFrac;
-                    localT = Math.max(0, Math.min(1, localT));
-                    activeSeg = seg;
-                    break;
-                }
-                cum += segFrac;
-            }
-            if (t > toolProgress) return origR;
-            return applyShape(activeSeg.shape, localT, origR, depth);
-        }
+        const workMat = new THREE.MeshStandardMaterial({
+            color: 0x8a9bb0, map: workpieceTexture,
+            roughness: 0.45, metalness: 0.75,
+            emissive: 0x112233, emissiveIntensity: 0.08,
+            side: THREE.DoubleSide
+        });
 
         function buildWorkpieceGeometry(lengthInScene, radiusFn) {
             const segLength = 160, segAngle = 48;
@@ -1339,102 +896,64 @@
             return geo;
         }
 
-        const workMat = new THREE.MeshStandardMaterial({
-            color: 0x8a9bb0, map: workpieceTexture,
-            roughness: 0.45, metalness: 0.75,
-            emissive: 0x112233, emissiveIntensity: 0.1,
-            side: THREE.DoubleSide
-        });
-
-        function applyMaterial(key) {
-            const mat = MATERIALS[key];
-            if (!mat) return;
-            workMat.color.setHex(mat.color);
-            workMat.emissive.setHex(mat.emissive);
-            workMat.emissiveIntensity = 0.08;
-            document.getElementById('materialDisplay').textContent = mat.name;
-            document.getElementById('simRpm').value = mat.rpm;
-            document.getElementById('simRpmVal').textContent = mat.rpm;
-            rpm = mat.rpm;
-            updateVc();
+        function createWorkpiece() {
+            const radiusFn = () => originalRadiusScene;
+            const geo = buildWorkpieceGeometry(workpieceLengthScene, radiusFn);
+            workpieceMesh = new THREE.Mesh(geo, workMat);
+            workpieceMesh.position.set(WORKPIECE_LEFT_EDGE, 0.6 + 1.25, 0);
+            workpieceMesh.castShadow = true;
+            workpieceMesh.receiveShadow = true;
+            machineGroup.add(workpieceMesh);
         }
+        createWorkpiece();
 
-        function createLabel(text, color) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            div.style.color = color;
-            div.style.fontSize = '12px';
-            div.style.fontWeight = '700';
-            div.style.textShadow = '0 0 10px rgba(0,0,0,0.9)';
-            div.style.background = 'rgba(0,0,0,0.75)';
-            div.style.padding = '3px 12px';
-            div.style.borderRadius = '12px';
-            div.style.border = '1px solid ' + color;
-            div.style.backdropFilter = 'blur(4px)';
-            div.style.fontFamily = 'Inter, sans-serif';
-            div.style.whiteSpace = 'nowrap';
-            return new CSS2DObject(div);
-        }
-
-        const headLabelObj = createLabel('Headstock', '#60a5fa');
-        headLabelObj.position.set(-0.5, 3.4, 0);
-        headGroup.add(headLabelObj);
-
-        chuckLabelObj = createLabel('Chuck', '#22c55e');
-        chuckLabelObj.position.set(2.2, 2.6, 0);
-        headGroup.add(chuckLabelObj);
-
-        const panelLabelObj = createLabel('Panel Listrik', '#fbbf24');
-        panelLabelObj.position.set(0, 3.0, 0);
-        electricalPanelGroup.add(panelLabelObj);
-
-        const tailLabelObj = createLabel('Tailstock', '#60a5fa');
-        tailLabelObj.position.set(-0.5, 3.2, 0);
-        tailGroup.add(tailLabelObj);
-
-        const carriageLabelObj = createLabel('Carriage', '#fbbf24');
-        carriageLabelObj.position.set(-0.9, 1.3, 1.9);
-        carriageGroup.add(carriageLabelObj);
-
-        const toolLabelObj = createLabel('Pahat', '#f97316');
-        toolLabelObj.position.set(-0.9, 0.5, -0.4);
-        toolBitGroup.add(toolLabelObj);
-
-        const workLabelObj = createLabel('Benda Kerja', '#a855f7');
-        workLabelObj.position.set(0, 3.8, 0);
-        scene.add(workLabelObj);
-
-        let simTime = 0;
-        let toolPosX = 0;
-        let toolFeed = 0.2;
+        // ============ STATE SIMULASI ============
         let rpm = 800;
         let depthOfCut = 0.8;
-        let maxTravel = 3;
-        let showResultMode = false;
-        let resultAnimT = 0;
+        let toolFeed = 0.2;
+        let cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
+        let toolProgress = 0;
+        let toolPosX = 0;
+        let maxTravel = workpieceLengthScene;
+        let simTime = 0;
+        let phase = 'idle';
+        let phaseT = 0;
+        let rotationAngle = 0;
+        const APPROACH_DURATION = 1.2;
+        const RETRACT_DURATION = 1.2;
 
         const rpmSlider = document.getElementById('simRpm');
         const depthSlider = document.getElementById('simDepth');
         const feedSlider = document.getElementById('simFeed');
-        const workDiaSlider = document.getElementById('workDiameter');
-        const carriageManualSlider = document.getElementById('carriageManual');
         const rpmVal = document.getElementById('simRpmVal');
         const depthVal = document.getElementById('simDepthVal');
         const feedVal = document.getElementById('simFeedVal');
-        const workDiaVal = document.getElementById('workDiameterVal');
-        const carriageManualVal = document.getElementById('carriageManualVal');
         const diamDisplay = document.getElementById('simDiameter');
         const toolPosDisplay = document.getElementById('simToolPos');
         const vcDisplay = document.getElementById('simVc');
         const timeDisplay = document.getElementById('simTime');
-        const currentSegmentDisplay = document.getElementById('currentSegment');
         const startBtn = document.getElementById('simStart');
         const stopBtn = document.getElementById('simStop');
         const resetBtn = document.getElementById('simReset');
-        const resultOverlay = document.getElementById('resultOverlay');
         const phaseIndicator = document.getElementById('phaseIndicator');
         const phaseText = document.getElementById('phaseText');
-        const toolDisplay = document.getElementById('toolDisplay');
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function getRadiusAt(t, origR, depth) {
+            if (t > toolProgress) return origR;
+            return Math.max(origR - depth, 0.02);
+        }
+
+        function updateWorkpieceGeometry() {
+            if (!workpieceMesh) return;
+            const radiusFn = (t) => getRadiusAt(t, originalRadiusScene, cutDepthScene);
+            const newGeo = buildWorkpieceGeometry(workpieceLengthScene, radiusFn);
+            workpieceMesh.geometry.dispose();
+            workpieceMesh.geometry = newGeo;
+        }
 
         function updatePhaseIndicator() {
             phaseIndicator.className = 'phase-indicator phase-' + phase;
@@ -1443,79 +962,10 @@
                 approaching: 'Pahat maju mendekati benda kerja...',
                 cutting: 'Sedang membubut...',
                 retracting: 'Pahat mundur setelah selesai',
-                showing: 'Benda kerja selesai!'
+                done: 'Benda kerja selesai!'
             };
             phaseText.textContent = labels[phase] || 'Ready';
         }
-
-        document.querySelectorAll('.tool-chip[data-tool]').forEach(chip => {
-            chip.addEventListener('click', () => {
-                if (phase !== 'idle') return;
-                document.querySelectorAll('.tool-chip[data-tool]').forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
-                selectedToolType = chip.dataset.tool;
-                toolDisplay.textContent = TOOL_TYPES[selectedToolType].name;
-                createToolTip(selectedToolType);
-            });
-        });
-        document.querySelectorAll('.tool-chip[data-chuck]').forEach(chip => {
-            chip.addEventListener('click', () => {
-                if (phase !== 'idle') return;
-                document.querySelectorAll('.tool-chip[data-chuck]').forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
-                selectedChuckJaws = parseInt(chip.dataset.chuck);
-                buildChuck(selectedChuckJaws);
-            });
-        });
-
-        document.getElementById('addSegmentBtn').addEventListener('click', () => {
-            if (segments.length >= 8) return;
-            segments.push({ shape: 'silinder', length: 30 });
-            renderSegments();
-            onSegmentChange();
-        });
-
-        document.querySelectorAll('.btn-preset').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const preset = btn.dataset.preset;
-                if (PRESETS[preset]) {
-                    segments = JSON.parse(JSON.stringify(PRESETS[preset]));
-                    renderSegments();
-                    onSegmentChange();
-                }
-            });
-        });
-
-        rpmSlider.addEventListener('input', () => { rpm = parseFloat(rpmSlider.value); rpmVal.textContent = rpm; updateVc(); });
-        depthSlider.addEventListener('input', () => {
-            depthOfCut = parseFloat(depthSlider.value);
-            depthVal.textContent = depthOfCut.toFixed(1);
-            cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
-        });
-        feedSlider.addEventListener('input', () => { toolFeed = parseFloat(feedSlider.value); feedVal.textContent = toolFeed.toFixed(2); });
-
-        carriageManualSlider.addEventListener('input', () => {
-            if (phase !== 'idle') return;
-            carriageManualOffset = parseFloat(carriageManualSlider.value);
-            carriageManualVal.textContent = carriageManualOffset.toFixed(1);
-            carriageGroup.position.x = CUT_START_X + carriageManualOffset;
-        });
-
-        workDiaSlider.addEventListener('input', () => {
-            workDiaVal.textContent = workDiaSlider.value;
-            if (phase === 'idle' && workpieceMesh) {
-                machineGroup.remove(workpieceMesh);
-                workpieceMesh.geometry.dispose();
-                createWorkpiece(parseFloat(workDiaSlider.value));
-                resetSimulation();
-            }
-        });
-
-        document.getElementById('btnBackToMachine').addEventListener('click', hideResultShow);
-        document.getElementById('btnNewDesign').addEventListener('click', () => {
-            hideResultShow();
-            resetSimulation();
-        });
 
         function updateVc() {
             const d = originalRadiusScene * 2 * SCALE_FACTOR;
@@ -1523,274 +973,52 @@
             vcDisplay.textContent = vc.toFixed(1);
         }
 
-        function getCurrentSegmentIndex() {
-            const total = segments.reduce((a, s) => a + s.length, 0);
-            let cum = 0;
-            for (let i = 0; i < segments.length; i++) {
-                cum += segments[i].length / total;
-                if (toolProgress <= cum) return i;
-            }
-            return segments.length - 1;
-        }
-
         function updateUI() {
             const r = getRadiusAt(toolProgress, originalRadiusScene, cutDepthScene);
             diamDisplay.textContent = (r * 2 * SCALE_FACTOR).toFixed(1);
-            toolPosDisplay.textContent = (toolProgress * lengthScene * SCALE_FACTOR).toFixed(1);
+            toolPosDisplay.textContent = (toolProgress * workpieceLengthScene * SCALE_FACTOR).toFixed(1);
             timeDisplay.textContent = simTime.toFixed(1);
-            currentSegmentDisplay.textContent = `${getCurrentSegmentIndex() + 1} / ${segments.length}`;
             updateVc();
         }
 
-        function createWorkpiece(diameter) {
-            originalRadiusScene = (diameter / 2) / SCALE_FACTOR;
-            updateTotalDisplay();
-            const radiusFn = () => originalRadiusScene;
-            const geo = buildWorkpieceGeometry(lengthScene, radiusFn);
-            workpieceMesh = new THREE.Mesh(geo, workMat);
-            workpieceMesh.position.set(WORKPIECE_LEFT_EDGE, 0.6 + 1.25, 0);
-            workpieceMesh.castShadow = true;
-            workpieceMesh.receiveShadow = true;
-            machineGroup.add(workpieceMesh);
-
-            const rightEdgeX = WORKPIECE_LEFT_EDGE + lengthScene;
-            tailGroup.position.x = rightEdgeX + 1.25;
-
-            workLabelObj.position.set(WORKPIECE_LEFT_EDGE + lengthScene / 2, 0.6 + 1.25 + 2.3, 0);
-        }
-
-        function updateWorkpieceGeometry() {
-            if (!workpieceMesh) return;
-            const depthScene = cutDepthScene;
-            const radiusFn = (t) => getRadiusAt(t, originalRadiusScene, depthScene);
-            const newGeo = buildWorkpieceGeometry(lengthScene, radiusFn);
-            workpieceMesh.geometry.dispose();
-            workpieceMesh.geometry = newGeo;
-        }
-
         function resetSimulation() {
-            phase = 'idle'; phaseT = 0; showResultMode = false; resultAnimT = 0;
-            resultOverlay.classList.remove('active');
+            phase = 'idle'; phaseT = 0;
             simTime = 0; toolPosX = 0; toolProgress = 0;
             cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
-            maxTravel = lengthScene;
+            maxTravel = workpieceLengthScene;
 
-            carriageGroup.position.set(CUT_START_X + carriageManualOffset, 0.6, originalRadiusScene + 0.4);
+            carriageGroup.position.set(CUT_START_X, 0.6, originalRadiusScene + 0.4);
 
             if (workpieceMesh) {
                 workpieceMesh.position.set(WORKPIECE_LEFT_EDGE, 0.6 + 1.25, 0);
                 workpieceMesh.rotation.set(0, 0, 0);
                 workpieceMesh.scale.set(1, 1, 1);
             }
-            const rightEdgeX = WORKPIECE_LEFT_EDGE + lengthScene;
-            tailGroup.position.x = rightEdgeX + 1.25;
-            startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
-            workLabelObj.visible = true;
-            chuckLabelObj.visible = true;
-            tailLabelObj.visible = true;
-            toolLabelObj.visible = true;
-            carriageLabelObj.visible = true;
-            headLabelObj.visible = true;
-            panelLabelObj.visible = true;
 
+            startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
             workMat.emissiveIntensity = 0.08;
             updateWorkpieceGeometry();
             updateUI();
             updatePhaseIndicator();
         }
 
-        function buildResultSvg() {
-            const w = 700, h = 160, pad = 40;
-            const drawW = w - pad * 2;
-            const centerY = h / 2;
-            const maxR = originalRadiusScene;
-            const scaleY = 55 / maxR;
-
-            const N = 200;
-            const topPts = [], botPts = [];
-            for (let i = 0; i <= N; i++) {
-                const t = i / N;
-                const r = getRadiusAt(t, originalRadiusScene, cutDepthScene);
-                const x = pad + t * drawW;
-                topPts.push(`${x.toFixed(2)},${(centerY - r * scaleY).toFixed(2)}`);
-                botPts.push(`${x.toFixed(2)},${(centerY + r * scaleY).toFixed(2)}`);
-            }
-            botPts.reverse();
-            const polygonPts = topPts.concat(botPts).join(' ');
-
-            const mat = selectedMaterial || MATERIALS.baja;
-            const colorHex = '#' + mat.color.toString(16).padStart(6, '0');
-
-            document.getElementById('resultSvgContainer').innerHTML = `
-                <svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="gradMetal" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="#cbd5e1"/>
-                            <stop offset="40%" stop-color="${colorHex}"/>
-                            <stop offset="60%" stop-color="${colorHex}"/>
-                            <stop offset="100%" stop-color="#475569"/>
-                        </linearGradient>
-                    </defs>
-                    <polygon points="${polygonPts}" fill="url(#gradMetal)" stroke="#1e293b" stroke-width="1.5"/>
-                </svg>
-            `;
-
-            const rAkhir = getRadiusAt(1, originalRadiusScene, cutDepthScene);
-            const diaAwal = originalRadiusScene * 2 * SCALE_FACTOR;
-            const diaAkhir = rAkhir * 2 * SCALE_FACTOR;
-            document.getElementById('resultCaption').textContent =
-                `${mat.name} • Ø${diaAwal.toFixed(1)} → Ø${diaAkhir.toFixed(1)} mm • Panjang ${totalLength} mm • Chuck ${selectedChuckJaws} Rahang`;
-        }
-
-        function buildAnalysis() {
-            const mat = selectedMaterial || MATERIALS.baja;
-            const diameterAwal = originalRadiusScene * 2 * SCALE_FACTOR;
-            const rAkhir = getRadiusAt(1, originalRadiusScene, cutDepthScene);
-            const diameterAkhir = rAkhir * 2 * SCALE_FACTOR;
-            const vc = (Math.PI * diameterAwal * rpm) / 1000;
-            const feedMmPerMin = toolFeed * rpm;
-
-            let score = 0, totalWeight = 0;
-            const notes = [];
-
-            const rpmDeviation = Math.abs(rpm - mat.rpm) / mat.rpm;
-            const rpmScore = Math.max(0, 1 - rpmDeviation * 1.5);
-            score += rpmScore * 30; totalWeight += 30;
-            if (rpmDeviation > 0.4) notes.push(`RPM (${rpm}) terlalu ${rpm > mat.rpm ? 'tinggi' : 'rendah'} untuk ${mat.name}. Rekomendasi: ${mat.rpm} RPM.`);
-
-            const docScore = (depthOfCut >= 0.3 && depthOfCut <= 1.5) ? 1 : (depthOfCut < 0.3 ? 0.6 : 0.7);
-            score += docScore * 25; totalWeight += 25;
-            if (depthOfCut > 1.5) notes.push(`Kedalaman potong (${depthOfCut} mm) terlalu dalam → pahat cepat aus.`);
-            if (depthOfCut < 0.3) notes.push(`Kedalaman potong (${depthOfCut} mm) terlalu tipis → proses jadi lama.`);
-
-            const feedScore = (toolFeed >= 0.1 && toolFeed <= 0.3) ? 1 : (toolFeed < 0.1 ? 0.7 : 0.6);
-            score += feedScore * 25; totalWeight += 25;
-            if (toolFeed > 0.3) notes.push(`Feed (${toolFeed} mm/rev) terlalu besar → permukaan kasar.`);
-            if (toolFeed < 0.1) notes.push(`Feed (${toolFeed} mm/rev) sangat kecil → memakan waktu lama.`);
-
-            const vcScore = (vc >= 15 && vc <= 90) ? 1 : 0.7;
-            score += vcScore * 20; totalWeight += 20;
-
-            const finalScore = score / totalWeight;
-            const stars = Math.round(finalScore * 5);
-            const starsHtml = '★'.repeat(stars) + '<span class="empty">' + '★'.repeat(5 - stars) + '</span>';
-
-            let qualityTitle, qualityDesc;
-            if (finalScore >= 0.85) { qualityTitle = 'Kualitas Sangat Baik'; qualityDesc = 'Parameter pemotongan dalam rentang optimal. Permukaan hasil halus dan presisi.'; }
-            else if (finalScore >= 0.65) { qualityTitle = 'Kualitas Baik'; qualityDesc = 'Parameter sudah cukup baik, namun masih ada ruang untuk peningkatan.'; }
-            else if (finalScore >= 0.45) { qualityTitle = 'Kualitas Cukup'; qualityDesc = 'Beberapa parameter perlu disesuaikan untuk hasil lebih baik.'; }
-            else { qualityTitle = 'Kualitas Kurang Optimal'; qualityDesc = 'Parameter perlu disesuaikan signifikan agar hasil lebih baik.'; }
-
-            if (notes.length === 0) notes.push('Semua parameter dalam kondisi optimal — hasil terbaik!');
-
-            document.getElementById('analysisGrid').innerHTML = `
-                <div class="analysis-item green"><div class="ai-label">Material</div><div class="ai-value">${mat.name}</div></div>
-                <div class="analysis-item cyan"><div class="ai-label">Chuck</div><div class="ai-value">${selectedChuckJaws} Rahang</div></div>
-                <div class="analysis-item"><div class="ai-label">Panjang Potong</div><div class="ai-value">${totalLength}<small>mm</small></div></div>
-                <div class="analysis-item"><div class="ai-label">Diameter</div><div class="ai-value">${diameterAwal.toFixed(1)} → ${diameterAkhir.toFixed(1)}<small>mm</small></div></div>
-                <div class="analysis-item orange"><div class="ai-label">Kedalaman Potong</div><div class="ai-value">${depthOfCut.toFixed(1)}<small>mm</small></div></div>
-                <div class="analysis-item purple"><div class="ai-label">RPM</div><div class="ai-value">${rpm}<small>rpm</small></div></div>
-                <div class="analysis-item"><div class="ai-label">Feed</div><div class="ai-value">${toolFeed.toFixed(2)}<small>mm/rev</small></div></div>
-                <div class="analysis-item"><div class="ai-label">Kecepatan Potong</div><div class="ai-value">${vc.toFixed(1)}<small>m/min</small></div></div>
-                <div class="analysis-item orange"><div class="ai-label">Waktu</div><div class="ai-value">${simTime.toFixed(1)}<small>s</small></div></div>
-                <div class="analysis-item green"><div class="ai-label">Feed Rate</div><div class="ai-value">${feedMmPerMin.toFixed(0)}<small>mm/min</small></div></div>
-            `;
-
-            document.getElementById('qualityStars').innerHTML = starsHtml;
-            document.getElementById('qualityTitle').textContent = qualityTitle + ' — ' + Math.round(finalScore * 100) + '%';
-            document.getElementById('qualityDesc').textContent = qualityDesc;
-
-            document.getElementById('notesList').innerHTML = notes.map(n => `<li>${n}</li>`).join('');
-            document.getElementById('analysisNotes').style.display = 'block';
-
-            buildResultSvg();
-        }
-
-        function triggerResultShow() {
-            showResultMode = true; resultAnimT = 0;
-            phase = 'showing';
-            updatePhaseIndicator();
-            chuckLabelObj.visible = false;
-            tailLabelObj.visible = false;
-            toolLabelObj.visible = false;
-            carriageLabelObj.visible = false;
-            headLabelObj.visible = false;
-            panelLabelObj.visible = false;
-            buildAnalysis();
-            setTimeout(() => resultOverlay.classList.add('active'), 400);
-        }
-
-        function hideResultShow() {
-            showResultMode = false; resultAnimT = 0;
-            resultOverlay.classList.remove('active');
-            phase = 'idle';
-            updatePhaseIndicator();
-            if (workpieceMesh) {
-                workpieceMesh.position.set(WORKPIECE_LEFT_EDGE, 0.6 + 1.25, 0);
-                workpieceMesh.rotation.set(0, 0, 0);
-                workpieceMesh.scale.set(1, 1, 1);
-            }
-            workLabelObj.position.set(WORKPIECE_LEFT_EDGE + lengthScene / 2, 0.6 + 1.25 + 2.3, 0);
-            carriageGroup.position.x = CUT_START_X + carriageManualOffset;
-            chuckLabelObj.visible = true;
-            tailLabelObj.visible = true;
-            toolLabelObj.visible = true;
-            carriageLabelObj.visible = true;
-            headLabelObj.visible = true;
-            panelLabelObj.visible = true;
-        }
-
-        function updateResultAnimation(deltaTime) {
-            if (!showResultMode || !workpieceMesh) return;
-            resultAnimT += deltaTime;
-            const t = Math.min(resultAnimT / 1.8, 1);
-            const e = 1 - Math.pow(1 - t, 3);
-
-            const startX = WORKPIECE_LEFT_EDGE;
-            const startY = 0.6 + 1.25;
-            const startZ = 0;
-            const targetX = -lengthScene / 2;
-            const targetY = 4;
-            const targetZ = 2.5;
-
-            workpieceMesh.position.x = startX + (targetX - startX) * e;
-            workpieceMesh.position.y = startY + (targetY - startY) * e;
-            workpieceMesh.position.z = startZ + (targetZ - startZ) * e;
-
-            workpieceMesh.rotation.z = -Math.PI / 2 * e;
-            workpieceMesh.rotation.x = 0;
-            workpieceMesh.rotation.y += deltaTime * 0.8;
-
-            const scalePop = 1 + Math.sin(t * Math.PI) * 0.15;
-            workpieceMesh.scale.setScalar(scalePop);
-
-            workLabelObj.position.set(workpieceMesh.position.x, workpieceMesh.position.y + 2.3, workpieceMesh.position.z);
-        }
-
-        let lastTime = 0;
-        let rotationAngle = 0;
-        let frameCounter = 0;
-
         function simulate(deltaTime) {
             if (!workpieceMesh) return;
 
-            const activePhases = ['approaching', 'cutting', 'retracting'];
-            if (activePhases.includes(phase)) {
+            if (['approaching', 'cutting', 'retracting'].includes(phase)) {
                 const revPerSec = rpm / 60;
                 const anglePerSec = revPerSec * Math.PI * 2;
                 rotationAngle += anglePerSec * deltaTime;
                 workpieceMesh.rotation.x = rotationAngle;
-                if (currentChuckBody) currentChuckBody.rotation.x = rotationAngle;
-                currentJaws.forEach(j => { j.rotation.x = rotationAngle; });
+                chuckBody.rotation.x = rotationAngle;
+                jaws.forEach(j => { j.rotation.x = rotationAngle; });
             }
-
-            if (showResultMode) { updateResultAnimation(deltaTime); return; }
 
             if (phase === 'approaching') {
                 phaseT += deltaTime;
                 const t = Math.min(phaseT / APPROACH_DURATION, 1);
                 const e = easeInOutCubic(t);
-                const startX = CUT_START_X + carriageManualOffset;
+                const startX = CUT_START_X;
                 carriageGroup.position.x = startX + (CUT_START_X - startX) * e;
                 carriageGroup.position.z = originalRadiusScene + 0.4;
 
@@ -1819,8 +1047,7 @@
                 carriageGroup.position.x = CUT_START_X + toolPosX;
                 carriageGroup.position.z = originalRadiusScene + 0.4;
 
-                frameCounter++;
-                if (frameCounter % 2 === 0) updateWorkpieceGeometry();
+                updateWorkpieceGeometry();
 
                 const heatFactor = toolProgress * 0.5;
                 workMat.emissiveIntensity = 0.08 + heatFactor * 0.3;
@@ -1834,26 +1061,37 @@
                 phaseT += deltaTime;
                 const t = Math.min(phaseT / RETRACT_DURATION, 1);
                 const e = easeInOutCubic(t);
-                const endCutX = getEndCutX();
-                const finalIdleX = CUT_START_X + carriageManualOffset;
+                const endCutX = CUT_START_X + maxTravel;
+                const finalIdleX = CUT_START_X;
                 carriageGroup.position.x = endCutX + (finalIdleX - endCutX) * e;
 
                 if (t >= 1) {
-                    phase = 'showing';
+                    phase = 'done';
                     startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
                     updatePhaseIndicator();
-                    setTimeout(triggerResultShow, 300);
                 }
                 return;
             }
         }
 
-        startBtn.addEventListener('click', () => {
-            if (!selectedMaterial) { document.getElementById('materialModal').classList.remove('hidden'); return; }
-            if (showResultMode) hideResultShow();
-            if (phase === 'showing') resetSimulation();
-            if (phase !== 'idle') return;
+        rpmSlider.addEventListener('input', () => {
+            rpm = parseFloat(rpmSlider.value);
+            rpmVal.textContent = rpm;
+            updateVc();
+        });
+        depthSlider.addEventListener('input', () => {
+            depthOfCut = parseFloat(depthSlider.value);
+            depthVal.textContent = depthOfCut.toFixed(1);
+            cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
+        });
+        feedSlider.addEventListener('input', () => {
+            toolFeed = parseFloat(feedSlider.value);
+            feedVal.textContent = toolFeed.toFixed(2);
+        });
 
+        startBtn.addEventListener('click', () => {
+            if (phase === 'done') resetSimulation();
+            if (phase !== 'idle') return;
             phase = 'approaching'; phaseT = 0;
             startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
             workMat.emissiveIntensity = 0.15;
@@ -1861,23 +1099,23 @@
         });
 
         stopBtn.addEventListener('click', () => {
-            if (phase === 'idle' || phase === 'showing') return;
+            if (phase === 'idle' || phase === 'done') return;
             phase = 'idle'; phaseT = 0;
             startBtn.innerHTML = '<i class="fas fa-play"></i> Mulai';
-            carriageGroup.position.x = CUT_START_X + carriageManualOffset;
+            carriageGroup.position.x = CUT_START_X;
             carriageGroup.position.z = originalRadiusScene + 0.4;
             updateWorkpieceGeometry(); updateUI(); updatePhaseIndicator();
         });
 
         resetBtn.addEventListener('click', resetSimulation);
 
+        let lastTime = 0;
         function animate(time) {
             const delta = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0.016;
             lastTime = time;
             simulate(delta);
             controls.update();
             renderer.render(scene, camera);
-            labelRenderer.render(scene, camera);
             requestAnimationFrame(animate);
         }
 
@@ -1887,19 +1125,14 @@
             camera.aspect = w / h;
             camera.updateProjectionMatrix();
             renderer.setSize(w, h);
-            labelRenderer.setSize(w, h);
         }
         window.addEventListener('resize', resize);
 
-        renderSegments();
-        updateTotalDisplay();
-        createWorkpiece(parseFloat(workDiaVal.textContent));
-        cutDepthScene = (depthOfCut / 2) / SCALE_FACTOR;
         resetSimulation();
         updateUI();
         animate(0);
 
-        console.log('✅ Simulasi siap! Pahat menghadap splash guard, carriage datar & bisa digeser.');
+        console.log('✅ Simulasi Mesin Bubut siap!');
     </script>
 </body>
 </html>
