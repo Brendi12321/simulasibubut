@@ -177,11 +177,139 @@
             padding: 0 28px 28px;
         }
 
-        .accordion-body p { color: var(--sub-text-color); line-height: 1.85; font-size: 0.96rem; margin-bottom: 10px; }
-        .accordion-body ul, .accordion-body ol { padding-left: 24px; color: var(--sub-text-color); line-height: 1.85; font-size: 0.94rem; margin-bottom: 10px; }
-        .accordion-body ul li, .accordion-body ol li { margin-bottom: 6px; }
-        .accordion-body ul li b, .accordion-body ol li b { color: var(--text-color); }
-        .accordion-body .sub-heading { font-weight: 700; color: var(--accent); margin-top: 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        /* ============================================
+           MATERI CONTENT — RENDER HTML DARI DATABASE
+           ============================================ */
+        .materi-content {
+            color: var(--sub-text-color);
+            line-height: 1.85;
+            font-size: 0.96rem;
+            word-wrap: break-word;
+        }
+        .materi-content h1,
+        .materi-content h2,
+        .materi-content h3,
+        .materi-content h4 {
+            color: var(--text-color);
+            font-weight: 800;
+            margin-top: 22px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .materi-content h1 { font-size: 1.35rem; border-bottom: 2px solid var(--accent-light); padding-bottom: 6px; }
+        .materi-content h2 { font-size: 1.2rem; border-bottom: 2px solid var(--accent-light); padding-bottom: 5px; }
+        .materi-content h3 { font-size: 1.1rem; color: var(--accent); }
+        .materi-content h4 { font-size: 1rem; color: var(--accent); }
+
+        .materi-content p {
+            margin-bottom: 12px;
+            color: var(--sub-text-color);
+            line-height: 1.85;
+        }
+        .materi-content ul,
+        .materi-content ol {
+            padding-left: 24px;
+            margin-bottom: 14px;
+            color: var(--sub-text-color);
+            line-height: 1.85;
+        }
+        .materi-content ul li,
+        .materi-content ol li {
+            margin-bottom: 6px;
+        }
+        .materi-content ul li::marker { color: var(--accent); }
+        .materi-content ol li::marker { color: var(--accent); font-weight: 700; }
+        .materi-content b,
+        .materi-content strong { color: var(--text-color); font-weight: 700; }
+        .materi-content i,
+        .materi-content em { color: var(--sub-text-color); }
+        .materi-content a {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        .materi-content a:hover { color: #1d4ed8; }
+        .materi-content blockquote {
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+            color: var(--text-color);
+            font-style: italic;
+        }
+        .materi-content code {
+            background: var(--box-bg);
+            color: #dc2626;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88rem;
+        }
+        .materi-content pre {
+            background: #0f1722;
+            color: #e5e7eb;
+            padding: 14px 16px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-size: 0.85rem;
+        }
+        .materi-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .materi-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 0.9rem;
+        }
+        .materi-content table th,
+        .materi-content table td {
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .materi-content table th {
+            background: var(--accent-light);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* OBJECTIVES */
+        .materi-objectives {
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin: 14px 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        .materi-objectives strong { color: var(--accent); display: block; margin-bottom: 6px; }
+
+        .materi-description {
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 14px;
+            line-height: 1.7;
+        }
+
+        .badge-category {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-left: 6px;
+            text-transform: capitalize;
+        }
 
         /* TOPIC NUMBER */
         .topic-num {
@@ -196,40 +324,6 @@
             font-size: 0.9rem;
             margin-right: 6px;
             flex-shrink: 0;
-        }
-
-        /* MATERI CONTENT FROM SUPABASE */
-        .materi-content {
-            color: var(--sub-text-color);
-            line-height: 1.85;
-            font-size: 0.96rem;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .materi-content p { margin-bottom: 10px; }
-
-        .materi-objectives {
-            background: var(--accent-light);
-            border-left: 4px solid var(--accent);
-            padding: 14px 18px;
-            border-radius: 10px;
-            margin: 14px 0;
-            font-size: 0.9rem;
-            color: var(--text-color);
-            line-height: 1.7;
-        }
-        .materi-objectives strong { color: var(--accent); display: block; margin-bottom: 6px; }
-
-        .badge-category {
-            display: inline-block;
-            background: var(--accent-light);
-            color: var(--accent);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            margin-left: 6px;
-            text-transform: capitalize;
         }
 
         /* LOADING & EMPTY */
@@ -337,7 +431,7 @@
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
         /* =====================================================
-           ESCAPE HTML
+           ESCAPE HTML (untuk bagian yang TIDAK boleh HTML)
         ===================================================== */
         function escapeHtml(text) {
             if (text === null || text === undefined) return "";
@@ -347,6 +441,23 @@
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
+        }
+
+        /* =====================================================
+           SANITASI HTML (untuk konten materi — izinkan tag aman)
+           Menghapus <script>, onclick, onerror, dll.
+        ===================================================== */
+        function sanitizeHtml(html) {
+            if (!html) return "";
+            // Buang tag berbahaya
+            let clean = String(html)
+                .replace(/<script[\s\S]*?<\/script>/gi, "")
+                .replace(/<style[\s\S]*?<\/style>/gi, "")
+                .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+                .replace(/\son\w+\s*=\s*"[^"]*"/gi, "")
+                .replace(/\son\w+\s*=\s*'[^']*'/gi, "")
+                .replace(/javascript:/gi, "");
+            return clean;
         }
 
         /* =====================================================
@@ -386,7 +497,6 @@
                     }
                 });
             } else {
-                // Belum login → tetap tampilkan Login Guru
                 guruModeBtn.style.display = "inline-flex";
                 guruModeBtn.className = "login-guru";
                 guruModeBtn.href = "login.html";
@@ -447,28 +557,33 @@
                 return;
             }
 
+            // =====================================================
+            // RENDER SETIAP MATERI
+            // - title, category, description, objectives → di-escape (teks biasa)
+            // - content → di-render sebagai HTML (agar tag <h3>, <p>, <ul> tampil rapi)
+            // =====================================================
             container.innerHTML = data.map((materi, index) => `
-                <div class="accordion-item reveal" id="materi-${materi.id}">
+                <div class="accordion-item reveal delay-${Math.min(index + 1, 10)}" id="materi-${materi.id}">
                     <div class="accordion-header" data-toggle="accordion">
                         <div class="accordion-header-left">
                             <h3>
                                 <span class="topic-num">${index + 1}</span>
                                 <i class="fas fa-bookmark"></i>
                                 ${escapeHtml(materi.title)}
-                                <span class="badge-category">${escapeHtml(materi.category || "umum")}</span>
+                                ${materi.category ? `<span class="badge-category">${escapeHtml(materi.category)}</span>` : ""}
                             </h3>
                         </div>
                         <i class="fas fa-chevron-down accordion-arrow"></i>
                     </div>
                     <div class="accordion-body">
-                        ${materi.description ? `<p><strong>${escapeHtml(materi.description)}</strong></p>` : ""}
+                        ${materi.description ? `<p class="materi-description">${escapeHtml(materi.description)}</p>` : ""}
                         ${materi.objectives ? `
                             <div class="materi-objectives">
                                 <strong><i class="fas fa-bullseye"></i> Tujuan Pembelajaran:</strong>
                                 ${escapeHtml(materi.objectives)}
                             </div>
                         ` : ""}
-                        <div class="materi-content">${escapeHtml(materi.content || "Belum ada isi materi.")}</div>
+                        <div class="materi-content">${sanitizeHtml(materi.content || "<p><em>Belum ada isi materi.</em></p>")}</div>
                     </div>
                 </div>
             `).join("");
