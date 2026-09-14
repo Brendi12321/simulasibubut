@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuis - Media Pembelajaran Mesin Bubut</title>
+    <title>Kuiz - Media Pembelajaran Mesin Bubut</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,7 +120,7 @@
             .greeting-text p { font-size: 0.8rem; }
         }
 
-        /* KUIS */
+        /* KUIZ */
         #kuis .eval-section { background: var(--card-bg); border-radius: 24px; padding: 28px 26px 32px; box-shadow: 0 4px 16px var(--shadow-color); border-top: 5px solid var(--nav-active); transition: background-color 0.4s; }
         #kuis .eval-section .section-title { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; font-weight: 700; color: var(--text-color); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border-color); }
         #kuis .eval-section .section-title i { color: var(--nav-active); font-size: 1.4rem; }
@@ -205,7 +205,7 @@
                 <a href="materi.html"><i class="fas fa-book"></i> Materi</a>
                 <a href="video.html"><i class="fas fa-play-circle"></i> Video</a>
                 <a href="simulasi.html"><i class="fas fa-cubes"></i> Simulasi</a>
-                <a href="evaluasi.html" class="active"><i class="fas fa-clipboard-check"></i> Kuis</a>
+                <a href="kuiz.html" class="active"><i class="fas fa-clipboard-check"></i> Kuiz</a>
                 <a href="profil.html"><i class="fas fa-user-graduate"></i> Profil</a>
 
                 <span id="navUserInfo" class="nav-user-info" style="display:none;">
@@ -229,21 +229,21 @@
             <div class="greeting-icon"><i class="fas fa-clipboard-check"></i></div>
             <div class="greeting-text">
                 <h2 id="greetingTitle">Halo, Siswa!</h2>
-                <p id="greetingSub">Kerjakan kuis dengan jujur dan teliti. Semoga sukses!</p>
+                <p id="greetingSub">Kerjakan kuiz dengan jujur dan teliti. Semoga sukses!</p>
             </div>
         </div>
 
         <div id="kuis">
-            <h2 class="page-title"><i class="fas fa-clipboard-check"></i> Kuis Pembelajaran</h2>
+            <h2 class="page-title"><i class="fas fa-clipboard-check"></i> Kuiz Pembelajaran</h2>
             <p class="page-sub">
                 <i class="fas fa-arrow-right" style="color:#2563eb;"></i> 
-                Kerjakan <strong>Kuis</strong> berikut yang terdiri dari <strong>20 soal</strong> untuk mengukur pemahaman Anda setelah mempelajari materi mesin bubut.
+                Kerjakan <strong>Kuiz</strong> berikut yang terdiri dari <strong>20 soal</strong> untuk mengukur pemahaman Anda setelah mempelajari materi mesin bubut.
             </p>
 
             <div class="eval-section" id="kuisSection">
                 <div class="section-title">
                     <i class="fas fa-certificate"></i>
-                    Kuis
+                    Kuiz
                     <span class="badge"><i class="fas fa-list-ol"></i> 20 Soal</span>
                 </div>
 
@@ -259,7 +259,7 @@
                 <div id="kuisContainer"></div>
 
                 <button class="btn-submit" id="kuisSubmit" disabled>
-                    <i class="fas fa-paper-plane"></i> Kirim Jawaban Kuis
+                    <i class="fas fa-paper-plane"></i> Kirim Jawaban Kuiz
                 </button>
 
                 <button class="btn-ulang" id="btnUlang" onclick="kerjakanUlang()">
@@ -308,7 +308,7 @@
             const greetingSub = document.getElementById("greetingSub");
 
             greetingTitle.textContent = `Halo, ${siswaNama}! 👋`;
-            greetingSub.textContent = `Kamu dari kelas ${siswaKelas}. Kerjakan kuis dengan jujur dan teliti. Semangat!`;
+            greetingSub.textContent = `Kamu dari kelas ${siswaKelas}. Kerjakan kuiz dengan jujur dan teliti. Semangat!`;
             greetingBanner.style.display = "flex";
 
             const navUserInfo = document.getElementById("navUserInfo");
@@ -337,7 +337,7 @@
         }
 
         // =====================================================
-        // 3. DATA SOAL KUIS
+        // 3. DATA SOAL KUIZ
         // =====================================================
         const kuisData = [
             { q: 'Mesin bubut digunakan untuk memproses benda kerja yang...', o: ['Berputar', 'Diam', 'Bergerak translasi', 'Bergetar'], a: 0 },
@@ -581,7 +581,7 @@
         // 9. KERJAKAN ULANG
         // =====================================================
         function kerjakanUlang() {
-            if (!confirm("Kerjakan ulang kuis?\n\nJawaban sebelumnya akan dihapus, tetapi hasil yang sudah tersimpan di server tetap ada.")) {
+            if (!confirm("Kerjakan ulang kuiz?\n\nJawaban sebelumnya akan dihapus, tetapi hasil yang sudah tersimpan di server tetap ada.")) {
                 return;
             }
 
@@ -619,7 +619,7 @@
                 return;
             }
 
-            hitungSkorDanSimpan(kuisData, prefix, 'kuisResult', 'Kuis');
+            hitungSkorDanSimpan(kuisData, prefix, 'kuisResult', 'Kuiz');
         });
 
         // =====================================================
@@ -648,7 +648,7 @@
             localStorage.setItem('theme', theme);
         });
 
-        console.log('✅ Kuis (20 soal) siap! Hasil akan tersimpan di Supabase.');
+        console.log('✅ Kuiz (20 soal) siap! Hasil akan tersimpan di Supabase.');
     </script>
 
 </body>
