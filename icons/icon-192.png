@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Buat icon-192.png</title>
+<style>
+  body { font-family: system-ui, sans-serif; background:#0f172a; color:#e2e8f0;
+         display:flex; flex-direction:column; align-items:center; padding:32px; gap:20px; }
+  canvas { border-radius:12px; box-shadow:0 6px 20px #0006; }
+  button { padding:14px 32px; font-size:16px; font-weight:600; border:none; border-radius:10px;
+           background:#60a5fa; color:#0b1a2e; cursor:pointer; }
+  button:hover { background:#3b82f6; }
+  code { color:#60a5fa; }
+</style>
+</head>
+<body>
+
+<h2>icon-192.png — 192 × 192 px</h2>
+<canvas id="c" width="192" height="192"></canvas>
+<button id="dl">⬇ Download icon-192.png</button>
+
+<script>
+const SIZE  = 192;
+const SCALE = 1.00;            // gear penuh
+const BG    = '#0b1a2e';
+const FG    = '#60a5fa';
+const OUT   = 'icon-192.png';
+
+function drawGear(ctx, size, scale) {
+  const SS = 4, W = size * SS;
+  const off = document.createElement('canvas');
+  off.width = off.height = W;
+  const c = off.getContext('2d');
+
+  c.fillStyle = BG; c.fillRect(0, 0, W, W);
+
+  const cx = W/2, cy = W/2;
+  const R = W * 0.35 * scale;
+  const TEETH = 8;
+  const TH = W * 0.07 * scale;
+  const TW = W * 0.16 * scale;
+
+  c.fillStyle = FG;
+  for (let i = 0; i < TEETH; i++) {
+    const a  = (2*Math.PI*i)/TEETH;
+    const tx = cx + (R + TH/2)*Math.cos(a);
+    const ty = cy + (R + TH/2)*Math.sin(a);
+    const pts = [[-TH/2,-TW/2],[TH/2,-TW/2],[TH/2,TW/2],[-TH/2,TW/2]];
+    c.beginPath();
+    pts.forEach(([dr,dt], k) => {
+      const px = tx + dr*Math.cos(a) - dt*Math.sin(a);
+      const py = ty + dr*Math.sin(a) + dt*Math.cos(a);
+      k === 0 ? c.moveTo(px,py) : c.lineTo(px,py);
+    });
+    c.closePath(); c.fill();
+  }
+
+  c.beginPath(); c.arc(cx, cy, R, 0, 2*Math.PI); c.fill();
+
+  c.fillStyle = BG;
+  c.beginPath(); c.arc(cx, cy, R*0.45, 0, 2*Math.PI); c.fill();
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.clearRect(0,0,size,size);
+  ctx.drawImage(off, 0,0,W,W, 0,0,size,size);
+}
+
+const canvas = document.getElementById('c');
+drawGear(canvas.getContext('2d'), SIZE, SCALE);
+
+document.getElementById('dl').onclick = () => {
+  canvas.toBlob(b => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = OUT;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }, 'image/png');
+};
+</script>
+</body>
+</html>
