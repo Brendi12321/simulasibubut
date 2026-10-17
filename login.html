@@ -6,6 +6,11 @@
 
     <title>Login Guru - Media Pembelajaran Mesin Bubut</title>
 
+    <!-- ===== B.1 : PWA manifest & theme-color ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <!-- ===== /B.1 ===== -->
+
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -827,6 +832,18 @@
         );
 
     </script>
+
+    <!-- ===== B.2 : Registrasi Service Worker (PWA) ===== -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((reg) => console.log('✅ SW aktif, scope:', reg.scope))
+                    .catch((err) => console.error('❌ SW gagal:', err));
+            });
+        }
+    </script>
+    <!-- ===== /B.2 ===== -->
 
 </body>
 </html>
