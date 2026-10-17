@@ -524,49 +524,124 @@
         }
 
         /* =====================================================
-           LOAD MATERI DARI SUPABASE
+           C.1a — KONFIG CACHE MATERI
+        ===================================================== */
+        const CACHE_KEY_MATERI = "cache_materi_v1";
+
+        /* =====================================================
+           C.1a — BANNER STATUS SUMBER DATA (online/cache/empty)
+        ===================================================== */
+        function tampilkanBannerSumber(source) {
+            const old = document.getElementById("cacheBanner");
+            if (old) old.remove();
+            if (source === "network") return;
+
+            const cfg = source === "cache"
+                ? { bg: "#fef3c7", bd: "#fbbf24", tx: "#92400e",
+                    ic: "fa-wifi",
+                    msg: "<strong>Mode Offline</strong> — Menampilkan materi dari penyimpanan lokal. Buka dengan internet untuk memperbarui." }
+                : { bg: "#fee2e2", bd: "#f87171", tx: "#991b1b",
+                    ic: "fa-triangle-exclamation",
+                    msg: "<strong>Belum Ada Data</strong> — Materi belum pernah tersimpan. Buka halaman ini sekali saat online." };
+
+            const banner = document.createElement("div");
+            banner.id = "cacheBanner";
+            banner.style.cssText = `
+                background:${cfg.bg}; border:1px solid ${cfg.bd}; color:${cfg.tx};
+                padding:12px 18px; border-radius:10px; margin-bottom:18px;
+                font-size:0.85rem; display:flex; align-items:center; gap:12px;
+                line-height:1.5;
+            `;
+            banner.innerHTML = `
+                <i class="fas ${cfg.ic}" style="font-size:1.3rem; flex-shrink:0;"></i>
+                <span>${cfg.msg}</span>
+            `;
+            const container = document.getElementById("materiContainer");
+            container.parentNode.insertBefore(banner, container);
+        }
+
+        /* =====================================================
+           C.1b — LOAD MATERI — Supabase + fallback localStorage
         ===================================================== */
         async function loadMateriFromSupabase() {
             const container = document.getElementById("materiContainer");
 
-            const { data, error } = await supabaseClient
-                .from("materials")
-                .select("*")
-                .eq("active", true)
-                .order("sort_order", { ascending: true });
+            container.innerHTML = `
+                <div class="loading-box">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Memuat materi...</p>
+                </div>
+            `;
 
-            if (error) {
-                console.error("Error load materi:", error);
-                container.innerHTML = `
-                    <div class="empty-box">
-                        <i class="fas fa-triangle-exclamation" style="color:#dc2626;"></i>
-                        <p>Gagal memuat materi dari database.</p>
-                        <p style="font-size:0.8rem;margin-top:8px;color:#94a3b8;">
-                            ${escapeHtml(error.message)}
-                        </p>
-                    </div>
-                `;
-                return;
+            let data = null;
+            let source = "unknown";
+            let fetchError = null;
+
+            // ---------- 1. COBA FETCH DARI SUPABASE ----------
+            try {
+                const { data: fetched, error } = await supabaseClient
+                    .from("materials")
+                    .select("*")
+                    .eq("active", true)
+                    .order("sort_order", { ascending: true });
+
+                if (error) throw error;
+
+                data = fetched || [];
+                source = "network";
+
+                // Simpan ke localStorage
+                if (data.length > 0) {
+                    try {
+                        localStorage.setItem(CACHE_KEY_MATERI, JSON.stringify({
+                            timestamp: Date.now(),
+                            data: data
+                        }));
+                        console.log("✅ Materi disimpan ke cache:", data.length, "item");
+                    } catch (e) {
+                        console.warn("⚠️ Gagal simpan cache:", e);
+                    }
+                }
+            } catch (err) {
+                fetchError = err;
+                console.warn("⚠️ Fetch gagal, coba cache:", err);
             }
 
+            // ---------- 2. FALLBACK KE CACHE ----------
+            if (data === null) {
+                const cached = localStorage.getItem(CACHE_KEY_MATERI);
+                if (cached) {
+                    try {
+                        const parsed = JSON.parse(cached);
+                        data = parsed.data || [];
+                        source = "cache";
+                        console.log("📦 Materi dari cache:", data.length, "item");
+                    } catch (e) {
+                        console.warn("⚠️ Cache rusak:", e);
+                        data = null;
+                    }
+                }
+            }
+
+            // ---------- 3. BANNER ----------
+            tampilkanBannerSumber(source);
+
+            // ---------- 4. TAMPILKAN DATA ----------
             if (!data || data.length === 0) {
                 container.innerHTML = `
                     <div class="empty-box">
-                        <i class="fas fa-book-open"></i>
-                        <p>Belum ada materi yang ditambahkan oleh guru.</p>
-                        <p style="font-size:0.8rem;margin-top:8px;color:#94a3b8;">
-                            Silakan tambahkan materi melalui Dashboard Guru.
+                        <i class="fas fa-wifi" style="color:#f59e0b;"></i>
+                        <p><strong>Materi belum tersedia offline.</strong></p>
+                        <p style="font-size:0.85rem; margin-top:10px; color:#94a3b8; line-height:1.6;">
+                            Buka halaman ini sekali saat terhubung internet
+                            agar materi tersimpan otomatis dan bisa dibaca offline.
                         </p>
+                        ${fetchError ? `<p style="font-size:0.75rem; margin-top:8px; color:#cbd5e1;">(${escapeHtml(fetchError.message || 'koneksi gagal')})</p>` : ""}
                     </div>
                 `;
                 return;
             }
 
-            // =====================================================
-            // RENDER SETIAP MATERI
-            // - title, category, description, objectives → di-escape (teks biasa)
-            // - content → di-render sebagai HTML (agar tag <h3>, <p>, <ul> tampil rapi)
-            // =====================================================
             container.innerHTML = data.map((materi, index) => `
                 <div class="accordion-item reveal delay-${Math.min(index + 1, 10)}" id="materi-${materi.id}">
                     <div class="accordion-header" data-toggle="accordion">
@@ -685,7 +760,19 @@
         cekIdentitasSiswa();
         loadMateriFromSupabase();
 
-        console.log('✅ Materi dinamis dari Supabase siap!');
+        console.log('✅ Materi dinamis dari Supabase + cache offline siap!');
+
+        /* =====================================================
+           C.2 — LISTENER ONLINE / OFFLINE
+        ===================================================== */
+        window.addEventListener("online", () => {
+            console.log("🌐 Online kembali — memperbarui materi...");
+            loadMateriFromSupabase();
+        });
+
+        window.addEventListener("offline", () => {
+            console.log("📴 Offline — memakai data cache.");
+        });
     </script>
 
     <!-- ===== B.2 : Registrasi Service Worker (PWA) ===== -->
