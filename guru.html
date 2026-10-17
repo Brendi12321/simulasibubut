@@ -6,6 +6,11 @@
 
 <title>Dashboard Guru | Media Pembelajaran Mesin Bubut</title>
 
+<!-- ===== B.1 : PWA manifest & theme-color ===== -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
+<!-- ===== /B.1 ===== -->
+
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -3585,6 +3590,18 @@ function escapeHtml(text) {
 checkLogin();
 
 </script>
+
+<!-- ===== B.2 : Registrasi Service Worker (PWA) ===== -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then((reg) => console.log('✅ SW aktif, scope:', reg.scope))
+                .catch((err) => console.error('❌ SW gagal:', err));
+        });
+    }
+</script>
+<!-- ===== /B.2 ===== -->
 
 </body>
 </html>
