@@ -5,7 +5,6 @@
 
 const CACHE_NAME = 'bubut-v1';
 
-// Semua file INTI yang wajib tersedia offline
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -25,7 +24,7 @@ const CORE_ASSETS = [
 ];
 
 // ============================================================
-// INSTALL — simpan aset inti
+// INSTALL
 // ============================================================
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -37,7 +36,7 @@ self.addEventListener('install', (event) => {
 });
 
 // ============================================================
-// ACTIVATE — bersihkan cache versi lama
+// ACTIVATE
 // ============================================================
 self.addEventListener('activate', (event) => {
   event.waitUntil(
@@ -50,13 +49,13 @@ self.addEventListener('activate', (event) => {
 });
 
 // ============================================================
-// FETCH — strategi caching berdasarkan asal request
+// FETCH
 // ============================================================
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // ---------- 1. SUPABASE: selalu network, fallback JSON error ----------
+  // ---------- 1. SUPABASE ----------
   if (url.hostname.includes('supabase.co')) {
     event.respondWith(
       fetch(request).catch(() =>
@@ -69,7 +68,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // ---------- 2. ORIGIN SENDIRI (HTML, CSS, JS, ikon): Cache First ----------
+  // ---------- 2. ORIGIN SENDIRI ----------
   if (url.origin === self.location.origin) {
     event.respondWith(
       caches.match(request).then((cached) => {
@@ -81,7 +80,6 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         }).catch(() => {
-          // Saat offline + belum ada di cache
           if (request.mode === 'navigate') {
             return caches.match('./index.html');
           }
@@ -92,17 +90,22 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // ---------- 3. CDN EKSTERNAL (Three.js, Font Awesome, Google Fonts, YouTube): SWR ----------
+  // ---------- 3. CDN EKSTERNAL (Google Fonts, Font Awesome, Three.js, dll) ----------
   event.respondWith(
     caches.match(request).then((cached) => {
       const fetchPromise = fetch(request).then((response) => {
+        // Simpan ke cache jika berhasil (termasuk opaque response untuk font)
         if (response.ok || response.type === 'opaque') {
           const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
         }
         return response;
-      }).catch(() => cached);
+      }).catch(() => {
+        // Jika offline dan tidak ada di cache, jangan lempar error, cukup kosongkan
+        return new Response('', { status: 408, statusText: 'Offline' });
+      });
 
+      // Kembalikan cache dulu jika ada, sambil update di belakang layar
       return cached || fetchPromise;
     })
   );
