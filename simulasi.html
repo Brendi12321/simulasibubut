@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulasi Mesin Bubut - SMK N 5 Medan</title>
 
+    <!-- ===== B.1 : PWA manifest & theme-color ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <!-- ===== /B.1 ===== -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -343,8 +348,6 @@
             <div class="part-stage">
                 <!-- ============================================================
                      SVG MESIN BUBUT — MODEL HIJAU
-                     - Tabung hitam & biru (benda kerja lama) SUDAH DIHILANGKAN
-                     - Carriage diposisikan di TENGAH antara chuck & tailstock
                      ============================================================ -->
                 <svg id="latheSvg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
                     <!-- BAYANGAN -->
@@ -370,7 +373,6 @@
                               fill="#4ea662" stroke="#1f4a28" stroke-width="2"/>
                         <path d="M 130 130 L 290 130 L 295 165 L 125 165 Z"
                               fill="#5cb874" stroke="#1f4a28" stroke-width="2"/>
-                        <!-- nameplate merah -->
                         <rect x="150" y="180" width="110" height="45" rx="3"
                               fill="#8b1a1a" stroke="#4a0a0a" stroke-width="1.5"/>
                         <rect x="155" y="185" width="100" height="35" rx="2" fill="#a52020"/>
@@ -378,16 +380,13 @@
                               font-size="7" font-weight="800">MESIN BUBUT</text>
                         <text x="205" y="212" text-anchor="middle" fill="#fff"
                               font-size="6" font-weight="700">SMK N 5 MEDAN</text>
-                        <!-- tuas -->
                         <rect x="140" y="250" width="30" height="8" rx="2" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
                         <rect x="140" y="280" width="30" height="8" rx="2" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
-                        <!-- roda gigi / handle besar -->
                         <circle cx="200" cy="300" r="28" fill="#3d8a4e" stroke="#1f4a28" stroke-width="2"/>
                         <circle cx="200" cy="300" r="18" fill="#4ea662" stroke="#1f4a28" stroke-width="1.5"/>
                         <circle cx="200" cy="300" r="6" fill="#1f4a28"/>
                         <line x1="230" y1="290" x2="270" y2="250" stroke="#2a2a2a" stroke-width="4" stroke-linecap="round"/>
                         <circle cx="270" cy="250" r="6" fill="#1a1a1a"/>
-                        <!-- panel -->
                         <rect x="140" y="320" width="100" height="30" rx="3" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
                         <circle cx="160" cy="335" r="5" fill="#dc2626"/>
                         <circle cx="180" cy="335" r="5" fill="#16a34a"/>
@@ -411,23 +410,12 @@
                         <line x1="380" y1="245" x2="430" y2="245" stroke="#5a6058" stroke-width="1"/>
                     </g>
 
-                    <!-- ============================================================
-                         BENDA KERJA (tabung hitam & biru DIHAPUS — diganti benda kerja
-                         ringan saja supaya fokus ke carriage di tengah)
-                         ============================================================ -->
-
-                    <!-- ============================================================
-                         CARRIAGE DIPOSISIKAN DI TENGAH ANTARA CHUCK & TAILSTOCK
-                         (x ≈ 560, di antara chuck x=405 dan tailstock x=790)
-                         ============================================================ -->
+                    <!-- CARRIAGE -->
                     <g id="svg-carriage" class="part-svg" data-part="carriage">
-                        <!-- Saddle / alas di atas bed -->
                         <rect x="480" y="290" width="180" height="25" rx="3"
                               fill="#3d8a4e" stroke="#1f4a28" stroke-width="2"/>
-                        <!-- Apron / badan carriage menghadap depan -->
                         <path d="M 490 315 L 650 315 L 655 375 L 485 375 Z"
                               fill="#4ea662" stroke="#1f4a28" stroke-width="2"/>
-                        <!-- Roda tangan apron (besar) -->
                         <circle cx="570" cy="340" r="30" fill="#a8b0a8" stroke="#1f4a28" stroke-width="2.5"/>
                         <circle cx="570" cy="340" r="22" fill="none" stroke="#3d8a4e" stroke-width="2"/>
                         <circle cx="570" cy="340" r="9" fill="#4a5048" stroke="#1f4a28" stroke-width="1.5"/>
@@ -435,49 +423,38 @@
                         <line x1="542" y1="340" x2="598" y2="340" stroke="#4a5048" stroke-width="2"/>
                         <line x1="552" y1="322" x2="588" y2="358" stroke="#4a5048" stroke-width="2"/>
                         <line x1="588" y1="322" x2="552" y2="358" stroke="#4a5048" stroke-width="2"/>
-                        <!-- Handel kecil kiri -->
                         <rect x="495" y="325" width="18" height="6" rx="2" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
                         <rect x="495" y="350" width="18" height="6" rx="2" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
-                        <!-- Handel kecil kanan -->
                         <rect x="630" y="330" width="15" height="6" rx="2" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
                         <circle cx="637" cy="360" r="6" fill="#3d8a4e" stroke="#1f4a28" stroke-width="1.5"/>
-                        <!-- roda tangan kecil (3b) di sisi kiri apron -->
                         <circle cx="465" cy="345" r="14" fill="#a8b0a8" stroke="#1f4a28" stroke-width="2"/>
                         <circle cx="465" cy="345" r="5" fill="#4a5048"/>
                         <line x1="451" y1="345" x2="479" y2="345" stroke="#4a5048" stroke-width="1.5"/>
                         <line x1="465" y1="331" x2="465" y2="359" stroke="#4a5048" stroke-width="1.5"/>
                     </g>
 
-                    <!-- COMPOUND REST (di atas carriage, posisi tengah) -->
+                    <!-- COMPOUND REST -->
                     <g id="svg-compound" class="part-svg" data-part="compound">
-                        <!-- Base compound -->
                         <rect x="520" y="268" width="110" height="22" rx="2"
                               fill="#4ea662" stroke="#1f4a28" stroke-width="2"/>
-                        <!-- Bodi compound -->
                         <rect x="535" y="245" width="80" height="25" rx="2"
                               fill="#5cb874" stroke="#1f4a28" stroke-width="2"/>
-                        <!-- Roda tangan compound (2a) di sisi kanan -->
                         <circle cx="625" cy="257" r="11" fill="#a8b0a8" stroke="#1f4a28" stroke-width="1.5"/>
                         <circle cx="625" cy="257" r="4" fill="#4a5048"/>
                         <line x1="625" y1="246" x2="625" y2="268" stroke="#4a5048" stroke-width="1"/>
                         <line x1="614" y1="257" x2="636" y2="257" stroke="#4a5048" stroke-width="1"/>
-                        <!-- Handel panjang compound -->
                         <line x1="570" y1="245" x2="580" y2="215" stroke="#2a2a2a" stroke-width="3" stroke-linecap="round"/>
                         <circle cx="580" cy="215" r="5" fill="#1a1a1a"/>
                     </g>
 
-                    <!-- TOOL POST (di atas compound rest) -->
+                    <!-- TOOL POST -->
                     <g id="svg-toolpost" class="part-svg" data-part="toolpost">
-                        <!-- Dudukan tool post -->
                         <rect x="550" y="220" width="50" height="25" rx="2"
                               fill="#3d8a4e" stroke="#1f4a28" stroke-width="2"/>
-                        <!-- Tool post body -->
                         <rect x="558" y="200" width="34" height="22" rx="2"
                               fill="#2a2a2a" stroke="#111" stroke-width="2"/>
-                        <!-- Baut-baut -->
                         <circle cx="568" cy="210" r="3" fill="#a8b0a8" stroke="#111" stroke-width="1"/>
                         <circle cx="582" cy="210" r="3" fill="#a8b0a8" stroke="#111" stroke-width="1"/>
-                        <!-- Pahat / tool bit menghadap kiri ke arah chuck -->
                         <rect x="548" y="202" width="20" height="6" rx="1" fill="#3a3a3a" stroke="#111" stroke-width="1"/>
                         <polygon points="546,202 538,205 546,208" fill="#f97316" stroke="#9a3412" stroke-width="1"/>
                     </g>
@@ -490,12 +467,10 @@
                               fill="#4ea662" stroke="#1f4a28" stroke-width="2"/>
                         <path d="M 730 220 L 845 220 L 838 195 L 738 195 Z"
                               fill="#5cb874" stroke="#1f4a28" stroke-width="2"/>
-                        <!-- Quill -->
                         <rect x="660" y="240" width="60" height="22" rx="2"
                               fill="#a8b0a8" stroke="#1f4a28" stroke-width="2"/>
                         <rect x="648" y="244" width="15" height="14" rx="2"
                               fill="#7a8078" stroke="#1f4a28" stroke-width="1.5"/>
-                        <!-- Roda tangan tailstock -->
                         <circle cx="900" cy="250" r="32" fill="none" stroke="#3d8a4e" stroke-width="6"/>
                         <circle cx="900" cy="250" r="22" fill="none" stroke="#3d8a4e" stroke-width="2"/>
                         <circle cx="900" cy="250" r="7" fill="#1f4a28"/>
@@ -503,7 +478,6 @@
                         <line x1="900" y1="218" x2="900" y2="282" stroke="#3d8a4e" stroke-width="3"/>
                         <line x1="877" y1="227" x2="923" y2="273" stroke="#3d8a4e" stroke-width="3"/>
                         <line x1="923" y1="227" x2="877" y2="273" stroke="#3d8a4e" stroke-width="3"/>
-                        <!-- Handel lock -->
                         <line x1="780" y1="195" x2="800" y2="170" stroke="#2a2a2a" stroke-width="4" stroke-linecap="round"/>
                         <circle cx="800" cy="170" r="6" fill="#1a1a1a"/>
                     </g>
@@ -1305,5 +1279,18 @@
 
         console.log('✅ Simulasi Mesin Bubut siap — carriage di tengah, tanpa tabung hitam/biru!');
     </script>
+
+    <!-- ===== B.2 : Registrasi Service Worker (PWA) ===== -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((reg) => console.log('✅ SW aktif, scope:', reg.scope))
+                    .catch((err) => console.error('❌ SW gagal:', err));
+            });
+        }
+    </script>
+    <!-- ===== /B.2 ===== -->
+
 </body>
 </html>
